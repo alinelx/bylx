@@ -7,14 +7,14 @@ const prefersReducedMotion = window.matchMedia(
 const isDesktop = window.matchMedia("(min-width: 901px)").matches;
 
 const layers = [
-  { selector: ".skyline-far", depth: 4 },
+  { selector: ".skyline", depth: 4 },
   { selector: ".window-frame", depth: 2 },
   { selector: ".table", depth: 3 },
   { selector: ".win-bg", depth: 6 },
   { selector: ".desktop-icons", depth: 8 },
   { selector: ".pixel-window", depth: 9 },
   { selector: ".paint", depth: 10 },
-  { selector: ".toolbar", depth: 11 },
+  { selector: ".toolbar-strip", depth: 11 },
   { selector: ".monitor", depth: 12 },
   { selector: ".keyboard", depth: 15 },
   { selector: ".instax", depth: 16 },
