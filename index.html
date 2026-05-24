@@ -8,15 +8,15 @@
 </head>
 <body>
   <main>
-    <section class="hero" style="width: 100%;" id="hero">
+    <section class="hero hero-scene" id="hero" aria-label="Portfolio hero illustration">
         <div class="bg-wrap" style="width:100%;">
           <img class="bg left" src="assets/hero/gradient.png">
           <img class="bg top" src="assets/hero/gradient.png">
           <img class="bg right" src="assets/hero/gradient.png">
         </div>
         
-        <img class="layer skyline-far" style="left: 50%; top: 33%; width:25%;" src="assets/hero/morro.png" alt="" />
-        <img class="layer skyline-far" style="left: 25%; top: 33%; width:25%; transform: scaleX(-1);" src="assets/hero/morro.png" alt="" />
+        <img class="layer skyline-far morro morro-right" src="assets/hero/morro.png" alt="" aria-hidden="true" />
+        <img class="layer skyline-far flipped" src="assets/hero/morro.png" alt="" />
         <img class="layer skyline-far" style="left: 34%; top: 20%; width: 20%;" src="assets/hero/cristo_redentor.png" alt="" />
         <img class="layer skyline-far" style="left: 15%; top: 40%; width:25%;" src="assets/hero/pao_de_acucar.png" alt="" />
         <img class="layer skyline-far" style="left: 50%; top: 30%; width: 25%;" src="assets/hero/ponte_25abril.png" alt="" />
@@ -71,7 +71,16 @@
         <img class="layer mouse" src="assets/hero/mouse.png" alt="" />
         <img class="layer keyboard" src="assets/hero/keyboard_board.png" alt="" />
         <img class="layer keyboard" src="assets/hero/keyboard_keys.png" alt="" />
+        <div class="hero-copy">
+ <p class="eyebrow">Front-end developer in progress</p>
+  <h1>Designing playful, useful web experiences.</h1>
+  <p>
+    I’m Aline, a software engineering student building creative front-end projects with HTML, CSS, JavaScript and React.
+  </p>
+  <a href="#projects">View projects</a>
+</div>
     </section>
+     
   </main>
 
   <script src="script.js"></script>

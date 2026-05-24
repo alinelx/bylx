@@ -34,6 +34,14 @@ body {
   image-rendering: pixelated;
   user-select: none;
   pointer-events: none;
+  --move-x: 0px;
+  --move-y: 0px;
+  --base-transform: none;
+  transform: var(--base-transform) translate(var(--move-x), var(--move-y));
+}
+
+.flipped {
+  --base-transform: scaleX(-1);
 }
 
 .bg-wrap {
@@ -71,7 +79,7 @@ body {
   width: 25%;
   transform: rotate(-90deg);
   transform-origin: center;
-  z-index: index 0;
+  z-index: 0;
 }
 
 .bottom {
@@ -81,7 +89,7 @@ body {
   height:35%;
   transform: scaleY(-1);
   transform-origin: center;
-  z-index: index 0;
+  z-index: 0;
 }
 
 .pixel-window {
@@ -214,10 +222,14 @@ body {
 .skyline-far {
   inset: 0;
   height: 50%;
-  position: center;
   object-fit: contain;
 }
 
+.morro-right {
+  left: 50%;
+  top: 33%;
+  width: 25%;
+}
 
 .window-frame {
   inset: 0;
@@ -231,8 +243,7 @@ body {
   width: 100%;
   top: 25%;
   height: 100%;
-  position: center;
-  object-fit: fit;
+  object-fit: contain;
 }
 
 .bylx-logo {
