@@ -136,6 +136,20 @@ document.querySelectorAll(".hotspot").forEach((hotspot) => {
   });
 });
 
+const instaxHotspot = document.querySelector(".hotspot-instax");
+
+if (instaxHotspot) {
+  instaxHotspot.addEventListener("click", () => {
+    instaxHotspot.classList.remove("is-active");
+    void instaxHotspot.offsetWidth;
+    instaxHotspot.classList.add("is-active");
+
+    window.setTimeout(() => {
+      instaxHotspot.classList.remove("is-active");
+    }, 650);
+  });
+}
+
 /* Modals */
 
 const modalTriggers = document.querySelectorAll("[data-modal-target]");
@@ -171,6 +185,9 @@ modalTriggers.forEach((trigger) => {
       trigger.classList.remove("is-ringing");
       void trigger.offsetWidth;
       trigger.classList.add("is-ringing");
+      window.setTimeout(() => {
+        trigger.classList.remove("is-ringing");
+      }, 600);
     }
 
     openModal(modalId);

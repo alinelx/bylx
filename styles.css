@@ -344,42 +344,53 @@ img {
   filter: brightness(1.25);
 }
 
-.hotspot-phone.is-ringing {
-  animation-name: hero-float, phone-ring;
-  animation-duration: var(--float-duration), 260ms;
-  animation-timing-function: ease-in-out, steps(2, end);
-  animation-delay: var(--float-delay), 0s;
-  animation-iteration-count: infinite, 2;
-  animation-direction: alternate, normal;
+.hotspot-phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.hotspot-phone.is-ringing img {
+  animation: phone-ring 260ms steps(2, end) 2;
 }
 
 @keyframes phone-ring {
   0% {
-    rotate: 0deg;
+    transform: translate(0, 0) rotate(0deg);
   }
 
   25% {
-    rotate: -2deg;
+    transform: translate(-2px, 0) rotate(-2deg);
   }
 
   50% {
-    rotate: 2deg;
+    transform: translate(2px, 0) rotate(2deg);
   }
 
   75% {
-    rotate: -1deg;
+    transform: translate(-1px, 0) rotate(-1deg);
   }
 
   100% {
-    rotate: 0deg;
+    transform: translate(0, 0) rotate(0deg);
   }
 }
 
-.instax.is-active {
-  width: 128px;
-  height: 128px;
+.instax-sprite {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   background-image: url("assets/hero/instax_spritesheet.png");
+  background-repeat: no-repeat;
   background-size: 800% 100%;
+  background-position: 0 0;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.hotspot-instax.is-active .instax-sprite {
   animation: instax-flash 600ms steps(8) 1;
 }
 
@@ -391,10 +402,6 @@ img {
   to {
     background-position: -800% 0;
   }
-}
-
-.phone.is-ringing {
-  animation: phone-ring 260ms steps(2, end) 2;
 }
 
 
