@@ -1,13 +1,12 @@
 const hero = document.querySelector("#hero");
 
-const prefersReducedMotion = window.matchMedia(
-  "(prefers-reduced-motion: reduce)"
-).matches;
-
-const isDesktop = window.matchMedia("(min-width: 901px)").matches;
-
 const layers = [
+  { selector: ".bg-skyline-left", depth: 1 },
+  { selector: ".bg-skyline-right", depth: 1 },
+  { selector: ".morro", depth: 2 },
   { selector: ".skyline", depth: 4 },
+  { selector: ".bg-wall-left", depth: 1 },
+  { selector: ".bg-wall-right", depth: 1 },
   { selector: ".window-frame", depth: 2 },
   { selector: ".table", depth: 3 },
   { selector: ".win-bg", depth: 6 },
@@ -35,15 +34,14 @@ let currentX = 0;
 let currentY = 0;
 let targetX = 0;
 let targetY = 0;
-let animationFrame = null;
 
 function updateLayers() {
   currentX += (targetX - currentX) * 0.08;
   currentY += (targetY - currentY) * 0.08;
 
   layerElements.forEach(({ depth, elements }) => {
-    const moveX = currentX * depth;
-    const moveY = currentY * depth;
+    const moveX = currentX * depth * 4;
+    const moveY = currentY * depth * 4;
 
     elements.forEach((element) => {
       element.style.setProperty("--move-x", `${moveX}px`);
@@ -51,11 +49,22 @@ function updateLayers() {
     });
   });
 
-  animationFrame = requestAnimationFrame(updateLayers);
+  requestAnimationFrame(updateLayers);
 }
 
-function handleMouseMove(event) {
+function handlePointerMove(event) {
   const rect = hero.getBoundingClientRect();
+
+  const isOutsideHero =
+    event.clientX < rect.left ||
+    event.clientX > rect.right ||
+    event.clientY < rect.top ||
+    event.clientY > rect.bottom;
+
+  if (isOutsideHero) {
+    handlePointerLeave();
+    return;
+  }
 
   const x = (event.clientX - rect.left) / rect.width - 0.5;
   const y = (event.clientY - rect.top) / rect.height - 0.5;
@@ -64,14 +73,16 @@ function handleMouseMove(event) {
   targetY = y;
 }
 
-function handleMouseLeave() {
+function handlePointerLeave() {
   targetX = 0;
   targetY = 0;
 }
 
-if (hero && !prefersReducedMotion && isDesktop) {
-  hero.addEventListener("mousemove", handleMouseMove);
-  hero.addEventListener("mouseleave", handleMouseLeave);
-
+if (hero) {
+  window.addEventListener("pointermove", handlePointerMove);
+  window.addEventListener("mousemove", handlePointerMove);
+  hero.addEventListener("pointerleave", handlePointerLeave);
+  hero.addEventListener("mouseleave", handlePointerLeave);
+  window.addEventListener("blur", handlePointerLeave);
   updateLayers();
 }
