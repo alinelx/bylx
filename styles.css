@@ -4,6 +4,48 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+* {
+  cursor: none !important;
+}
+
+.cursor {
+  width: 32px;
+  height: 32px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  pointer-events: none;
+  z-index: 99999;
+
+  background-image: url("assets/cursor/arrow.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  image-rendering: pixelated;
+
+  transform: translate(-4px, -4px);
+
+  will-change: transform;
+
+  transition:
+    transform 0.08s linear,
+    opacity 0.15s ease;
+}
+
+.cursor.hover {
+  background-image: url("./assets/cursor/pointer.png");
+}
+
+.cursor.click {
+  background-image: url("./assets/cursor/click.png");
+
+  transform: scale(0.95);
+}
+
 :root {
   --bg: #09051b;
   --pink: #ff5dbb;
@@ -888,9 +930,6 @@ h1 {
     font-size: 0.78rem;
   }
 
-  .sushi {
-    display: none;
-  }
 }
 
 @media (max-width: 520px) {
