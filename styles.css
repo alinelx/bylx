@@ -387,11 +387,10 @@ img {
 
 .torre-belem {
   z-index: 4;
-  left: 58%;
-  top: 40%;
-  width: 20%;
+  left: 60%;
+  top: 44%;
+  width: 16%;
   height: auto;
-  filter: saturate(0.72) brightness(1.2) contrast(1.2) hue-rotate(5deg);
   --float-x: 3px;
   --float-y: 4px;
   --float-rotate: -0.2deg;
@@ -504,9 +503,9 @@ img {
 
 .mouse {
   z-index: 7;
-  left: 60%;
-  top: 81%;
-  width: 13%;
+  left: 65%;
+  top: 82%;
+  width: 7%;
   height: auto;
   --float-x: 3px;
   --float-y: 4px;
@@ -518,8 +517,8 @@ img {
   z-index: 8;
   left: 38%;
   top: 42%;
-  width: 25%;
-  height: 30%;
+  width: 24%;
+  height: 31%;
   object-fit: cover;
   --float-x: 1px;
   --float-y: 2px;
@@ -552,8 +551,8 @@ img {
   z-index: 8;
   left: 46.5%;
   top: 44%;
-  width: 12%;
-  height: 22%;
+  width: 10%;
+  height: 30%;
   display: grid;
   grid-template-columns: var(--tile) 1fr var(--tile) var(--tile) var(--tile);
   grid-template-rows: var(--tile) 1fr var(--tile);
@@ -634,8 +633,9 @@ img {
 }
 
 .poster {
-  width: 100%;
-  object-fit: cover;
+  width: 90%;
+  padding: 6% 0% 0% 18%;
+  object-fit: cover; 
   object-position: top left;
 }
 
@@ -668,10 +668,12 @@ img {
 
 .paint {
   z-index: 8;
-  left: 46.5%;
-  top: 45.5%;
-  width: 12%;
-  height: auto;
+  left: 46.6%;
+  top: 45.3%;
+  width: 11.8%;
+  clip-path:inset(0% 17% 0% 0%);
+  height:26.5%;
+  mix-blend-mode: multiply;
   --float-x: 2px;
   --float-y: 3px;
   --float-rotate: -0.3deg;
@@ -683,8 +685,8 @@ img {
   position: absolute;
   z-index: 8;
   left: 38.5%;
-  top: 70%;
-  width: 23%;
+  top: 70.5%;
+  width: 23.2%;
   height: 2%;
   display: flex;
   align-items: stretch;
