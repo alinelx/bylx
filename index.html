@@ -36,9 +36,29 @@
 
           <img class="asset layer cocktail   desk-object" src="assets/hero/cocktail.png"   alt="" />
           <img class="asset layer sushi      desk-object" src="assets/hero/sushi.png"      alt="" />
-          <img class="asset layer instax     desk-object" src="assets/hero/instax.png"     alt="" />
-          <img class="asset layer phone      desk-object" src="assets/hero/phone.png"      alt="" />
-          <img class="asset layer mp3player  desk-object" src="assets/hero/mp3_player.png" alt="" />
+          <button
+            class="asset layer desk-object hotspot hotspot-instax instax"
+            type="button"
+            aria-label="Open image gallery"
+            data-modal-target="gallery-modal"
+          >
+            <img src="assets/hero/instax.png" alt="" />
+          </button>
+          <button
+            class="asset layer desk-object hotspot hotspot-phone phone"
+            type="button"
+            aria-label="Open contact form"
+            data-modal-target="contact-modal"
+          >
+            <img src="assets/hero/phone.png" alt="" />
+          </button>
+          <button
+            class="asset layer desk-object hotspot hotspot-mp3 mp3player"
+            type="button"
+            aria-label="Play random music"
+          >
+            <img src="assets/hero/mp3_player.png" alt="" />
+          </button>
           <img class="asset layer mouse      desk-object" src="assets/hero/mouse.png"      alt="" />
 
           <img class="asset layer win-bg screen-item" src="assets/hero/win_background.png" alt="" />
@@ -93,6 +113,62 @@
     <section class="placeholder-section" id="projects" aria-labelledby="projects-title">
       <h2 id="projects-title">Projects</h2>
     </section>
+    <div class="modal pixel-modal" id="gallery-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
+        <header class="modal-header">
+          <h2 id="gallery-title">Gallery</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close gallery">×</button>
+        </header>
+
+        <div class="modal-body">
+          <p>Gallery content goes here.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="contact-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+        <header class="modal-header">
+          <h2 id="contact-title">Contact</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close contact form">×</button>
+        </header>
+
+        <form class="modal-body contact-form">
+          <label>
+            Name
+            <input type="text" name="name" autocomplete="name" />
+          </label>
+
+          <label>
+            Email
+            <input type="email" name="email" autocomplete="email" />
+          </label>
+
+          <label>
+            Message
+            <textarea name="message" rows="5"></textarea>
+          </label>
+
+          <button type="submit">Send</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="mp3-controls" aria-label="Music controls">
+      <p class="mp3-title">Now playing: <span data-track-title>None</span></p>
+
+      <div class="mp3-buttons">
+        <button type="button" data-audio-action="play">Play</button>
+        <button type="button" data-audio-action="pause">Pause</button>
+        <button type="button" data-audio-action="stop">Stop</button>
+        <button type="button" data-audio-action="volume-down">Vol -</button>
+        <button type="button" data-audio-action="volume-up">Vol +</button>
+      </div>
+    </div>
   </main>
   <div class="cursor" aria-hidden="true"></div>
   <script src="script.js"></script>

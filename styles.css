@@ -41,9 +41,8 @@ body,
 }
 
 .cursor.click {
-  background-image: url("./assets/cursor/click.png");
-
-  transform: scale(0.95);
+  background-image: url("assets/cursor/click.png");
+  transform: translate(-4px, -4px) scale(0.95);
 }
 
 :root {
@@ -165,22 +164,215 @@ img {
   animation: toolbar-scan 3s steps(4, end) infinite;
 }
 
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90000;
+  display: none;
+}
+
+.modal.is-open {
+  display: block;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 5, 27, 0.76);
+}
+
+.modal-window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(520px, calc(100vw - 2rem));
+  max-height: min(680px, calc(100svh - 2rem));
+  overflow: auto;
+  transform: translate(-50%, -50%);
+  color: var(--bg);
+  background: var(--text);
+  border: 4px solid var(--cyan);
+  box-shadow: 8px 8px 0 var(--pink);
+  font-family: var(--font-pixel);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.7rem;
+  color: var(--bg);
+  background: var(--cyan);
+  border-bottom: 4px solid var(--bg);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.modal-close {
+  padding: 0.15rem 0.5rem;
+  border: 2px solid var(--bg);
+  background: var(--pink);
+  color: var(--bg);
+  font: inherit;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 1rem;
+}
+
+.contact-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.contact-form label {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 3px solid var(--bg);
+  background: #fff8ff;
+  color: var(--bg);
+  font: inherit;
+}
+
+.contact-form button,
+.mp3-buttons button {
+  padding: 0.45rem 0.65rem;
+  border: 3px solid var(--bg);
+  background: var(--pink);
+  color: var(--bg);
+  font: inherit;
+  text-transform: uppercase;
+}
+
+.mp3-controls {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 80000;
+  display: none;
+  width: min(360px, calc(100vw - 2rem));
+  padding: 0.75rem;
+  color: var(--text);
+  background: rgba(9, 5, 27, 0.9);
+  border: 4px solid var(--cyan);
+  box-shadow: 6px 6px 0 var(--pink);
+  font-family: var(--font-pixel);
+}
+
+.mp3-controls.is-visible {
+  display: block;
+}
+
+.mp3-title {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  line-height: 1.1;
+}
+
+.mp3-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
 .hotspot {
+  position: absolute;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
   pointer-events: auto;
   cursor: none;
-  transition:
-    transform 120ms steps(2, end),
-    filter 120ms steps(2, end);
+  image-rendering: pixelated;
+}
+
+.hotspot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
 }
 
 .hotspot:hover,
 .hotspot:focus-visible {
-  transform: translateY(-3px) scale(1.04);
   filter: brightness(1.16);
+  outline: none;
+}
+
+.hotspot:focus-visible {
+  box-shadow: 0 0 0 3px rgba(89, 243, 255, 0.9);
 }
 
 .hotspot:active {
-  transform: translateY(1px) scale(0.96);
+  filter: brightness(0.96);
+}
+
+.hotspot::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  opacity: 0;
+  border: 2px solid rgba(89, 243, 255, 0.75);
+  background: rgba(255, 93, 187, 0.08);
+  image-rendering: pixelated;
+  pointer-events: none;
+  transition: opacity 120ms steps(2, end);
+}
+
+.hotspot:hover::after,
+.hotspot:focus-visible::after {
+  opacity: 1;
+}
+
+.hotspot.is-clicked {
+  filter: brightness(1.25);
+}
+
+.hotspot-phone.is-ringing {
+  animation-name: hero-float, phone-ring;
+  animation-duration: var(--float-duration), 260ms;
+  animation-timing-function: ease-in-out, steps(2, end);
+  animation-delay: var(--float-delay), 0s;
+  animation-iteration-count: infinite, 2;
+  animation-direction: alternate, normal;
+}
+
+@keyframes phone-ring {
+  0% {
+    rotate: 0deg;
+  }
+
+  25% {
+    rotate: -2deg;
+  }
+
+  50% {
+    rotate: 2deg;
+  }
+
+  75% {
+    rotate: -1deg;
+  }
+
+  100% {
+    rotate: 0deg;
+  }
 }
 
 .instax.is-active {
@@ -205,27 +397,6 @@ img {
   animation: phone-ring 260ms steps(2, end) 2;
 }
 
-@keyframes phone-ring {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-
-  25% {
-    transform: translate(-2px, 0) rotate(-2deg);
-  }
-
-  50% {
-    transform: translate(2px, 0) rotate(2deg);
-  }
-
-  75% {
-    transform: translate(-1px, 0) rotate(-1deg);
-  }
-
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-}
 
 @keyframes hero-float {
   0% {

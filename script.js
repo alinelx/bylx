@@ -53,6 +53,8 @@ function updateLayers() {
 }
 
 function handlePointerMove(event) {
+  if (!hero) return;
+
   const rect = hero.getBoundingClientRect();
 
   const isOutsideHero =
@@ -80,33 +82,35 @@ function handlePointerLeave() {
 
 if (hero) {
   window.addEventListener("pointermove", handlePointerMove);
-  window.addEventListener("mousemove", handlePointerMove);
   hero.addEventListener("pointerleave", handlePointerLeave);
-  hero.addEventListener("mouseleave", handlePointerLeave);
   window.addEventListener("blur", handlePointerLeave);
   updateLayers();
 }
 
+/* Custom cursor */
+
 const cursor = document.querySelector(".cursor");
 
 if (cursor) {
-  window.addEventListener("mousemove", (e) => {
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
+  window.addEventListener("mousemove", (event) => {
+    cursor.style.left = `${event.clientX}px`;
+    cursor.style.top = `${event.clientY}px`;
   });
 
-  const hoverables = document.querySelectorAll(
-    "a, button, .clickable"
-  );
+  document.addEventListener("mouseover", (event) => {
+    const target = event.target.closest("a, button, .clickable");
 
-  hoverables.forEach((el) => {
-    el.addEventListener("mouseenter", () => {
+    if (target) {
       cursor.classList.add("hover");
-    });
+    }
+  });
 
-    el.addEventListener("mouseleave", () => {
+  document.addEventListener("mouseout", (event) => {
+    const target = event.target.closest("a, button, .clickable");
+
+    if (target) {
       cursor.classList.remove("hover");
-    });
+    }
   });
 
   window.addEventListener("mousedown", () => {
@@ -117,6 +121,77 @@ if (cursor) {
     cursor.classList.remove("click");
   });
 }
+
+/* Hotspot feedback */
+
+document.querySelectorAll(".hotspot").forEach((hotspot) => {
+  hotspot.addEventListener("click", () => {
+    hotspot.classList.remove("is-clicked");
+    void hotspot.offsetWidth;
+    hotspot.classList.add("is-clicked");
+
+    window.setTimeout(() => {
+      hotspot.classList.remove("is-clicked");
+    }, 180);
+  });
+});
+
+/* Modals */
+
+const modalTriggers = document.querySelectorAll("[data-modal-target]");
+const closeModalButtons = document.querySelectorAll("[data-close-modal]");
+
+function openModal(id) {
+  const modal = document.getElementById(id);
+
+  if (!modal) return;
+
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+
+  const firstButton = modal.querySelector("button, input, textarea, a");
+
+  if (firstButton) {
+    firstButton.focus();
+  }
+}
+
+function closeModal(modal) {
+  if (!modal) return;
+
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+modalTriggers.forEach((trigger) => {
+  trigger.addEventListener("click", () => {
+    const modalId = trigger.dataset.modalTarget;
+
+    if (trigger.classList.contains("hotspot-phone")) {
+      trigger.classList.remove("is-ringing");
+      void trigger.offsetWidth;
+      trigger.classList.add("is-ringing");
+    }
+
+    openModal(modalId);
+  });
+});
+
+closeModalButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    closeModal(button.closest(".modal"));
+  });
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+
+  document.querySelectorAll(".modal.is-open").forEach((modal) => {
+    closeModal(modal);
+  });
+});
+
+/* Audio player */
 
 const tracks = [
   "assets/mp3/9jackjack8-japanese-trap-beat-272645.mp3",
@@ -135,17 +210,85 @@ const tracks = [
   "assets/mp3/tavccitypop-labyrinth-of-dreams-442228.mp3",
   "assets/mp3/tavccitypop-neon-dreams-489483.mp3",
   "assets/mp3/tavccitypop-stardust-rhapsody-442232.mp3",
-  "assets/mp3/vibehorn-lofi-beat-lo-fi-music-512500.mp3"
+  "assets/mp3/vibehorn-lofi-beat-lo-fi-music-512500.mp3",
 ];
 
 const audio = new Audio();
+audio.volume = 0.35;
+
 let currentTrack = null;
 
+const mp3Hotspot = document.querySelector(".hotspot-mp3");
+const mp3Controls = document.querySelector(".mp3-controls");
+const trackTitle = document.querySelector("[data-track-title]");
+
+function getTrackName(path) {
+  return path
+    .split("/")
+    .pop()
+    .replace(".mp3", "")
+    .replaceAll("-", " ");
+}
+
 function playRandomTrack() {
+  if (!tracks.length) return;
+
   const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
 
   currentTrack = randomTrack;
   audio.src = randomTrack;
-  audio.volume = 0.35;
   audio.play();
+
+  if (trackTitle) {
+    trackTitle.textContent = getTrackName(randomTrack);
+  }
+
+  if (mp3Controls) {
+    mp3Controls.classList.add("is-visible");
+  }
 }
+
+function stopAudio() {
+  audio.pause();
+  audio.currentTime = 0;
+}
+
+if (mp3Hotspot) {
+  mp3Hotspot.addEventListener("click", () => {
+    playRandomTrack();
+  });
+}
+
+document.querySelectorAll("[data-audio-action]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const action = button.dataset.audioAction;
+
+    if (action === "play") {
+      if (audio.src) {
+        audio.play();
+      } else {
+        playRandomTrack();
+      }
+    }
+
+    if (action === "pause") {
+      audio.pause();
+    }
+
+    if (action === "stop") {
+      stopAudio();
+    }
+
+    if (action === "volume-down") {
+      audio.volume = Math.max(0, audio.volume - 0.1);
+    }
+
+    if (action === "volume-up") {
+      audio.volume = Math.min(1, audio.volume + 0.1);
+    }
+  });
+});
+
+audio.addEventListener("ended", () => {
+  playRandomTrack();
+});
