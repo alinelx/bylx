@@ -3,83 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>bylx.dev</title>
+
   <link rel="icon" href="assets/logo/bylx_logo_semdev.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
+    rel="stylesheet"
+  />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <main>
     <section class="hero hero-scene" id="hero" aria-labelledby="hero-title">
       <div class="hero-artboard" aria-hidden="true">
         <div class="scene" id="hero-scene">
 
-          <img class="asset layer bg-skyline-left flippedY"  src="assets/hero/gradient.png" alt="" />
+          <img class="asset layer bg-skyline-left flippedY" src="assets/hero/gradient.png" alt="" />
           <img class="asset layer bg-skyline-right flippedY" src="assets/hero/gradient.png" alt="" />
 
-          <img class="asset layer morro morro-left  flippedX" src="assets/hero/morro.png" alt="" />
-          <img class="asset layer morro morro-right"         src="assets/hero/morro.png" alt="" />
+          <img class="asset layer morro morro-left flippedX" src="assets/hero/morro.png" alt="" />
+          <img class="asset layer morro morro-right" src="assets/hero/morro.png" alt="" />
 
-          <img class="asset layer skyline cristo"        src="assets/hero/cristo_redentor.png" alt="" />
-          <img class="asset layer skyline pao-de-acucar" src="assets/hero/pao_de_acucar.png"  alt="" />
-          <img class="asset layer skyline ponte"         src="assets/hero/ponte_25abril.png"   alt="" />
-          <img class="asset layer skyline torre-belem"   src="assets/hero/torre_belem.png"     alt="" />
+          <img class="asset layer skyline cristo" src="assets/hero/cristo_redentor.png" alt="" />
+          <img class="asset layer skyline pao-de-acucar" src="assets/hero/pao_de_acucar.png" alt="" />
+          <img class="asset layer skyline ponte" src="assets/hero/ponte_25abril.png" alt="" />
+          <img class="asset layer skyline torre-belem" src="assets/hero/torre_belem.png" alt="" />
 
-          <img class="asset layer bg-wall-left"  src="assets/hero/gradient.png" alt="" />
+          <img class="asset layer bg-wall-left" src="assets/hero/gradient.png" alt="" />
           <img class="asset layer bg-wall-right" src="assets/hero/gradient.png" alt="" />
 
           <img class="asset layer window-frame" src="assets/hero/window_frame.png" alt="" />
 
           <img class="asset layer table" src="assets/hero/table.png" alt="" />
 
-          <img class="asset layer cocktail   desk-object" src="assets/hero/cocktail.png"   alt="" />
-          <img class="asset layer sushi      desk-object" src="assets/hero/sushi.png"      alt="" />
+          <img class="asset layer cocktail desk-object" src="assets/hero/cocktail.png" alt="" />
+          <img class="asset layer sushi desk-object" src="assets/hero/sushi.png" alt="" />
+
           <button
             class="asset layer desk-object hotspot hotspot-instax instax"
             type="button"
             aria-label="Open image gallery"
             data-modal-target="gallery-modal"
           >
-            <span class="instax-sprite" aria-hidden="true"></span>
+            <span class="hotspot-visual instax-sprite" aria-hidden="true"></span>
           </button>
+
           <button
             class="asset layer desk-object hotspot hotspot-phone phone"
             type="button"
             aria-label="Open contact form"
             data-modal-target="contact-modal"
           >
-            <img src="assets/hero/phone.png" alt="" />
+            <span class="hotspot-visual">
+              <img src="assets/hero/phone.png" alt="" />
+            </span>
           </button>
+
           <button
             class="asset layer desk-object hotspot hotspot-mp3 mp3player"
             type="button"
             aria-label="Play random music"
           >
-            <img src="assets/hero/mp3_player.png" alt="" />
+            <span class="hotspot-visual">
+              <img src="assets/hero/mp3_player.png" alt="" />
+            </span>
           </button>
-          <img class="asset layer mouse      desk-object" src="assets/hero/mouse.png"      alt="" />
+
+          <img class="asset layer mouse desk-object" src="assets/hero/mouse.png" alt="" />
 
           <img class="asset layer win-bg screen-item" src="assets/hero/win_background.png" alt="" />
 
           <div class="desktop-icons screen-item">
-            <img class="icon" src="assets/hero/html_icon.png"       alt="" />
-            <img class="icon" src="assets/hero/css_icon.png"        alt="" />
+            <img class="icon" src="assets/hero/html_icon.png" alt="" />
+            <img class="icon" src="assets/hero/css_icon.png" alt="" />
             <img class="icon" src="assets/hero/javascript_icon.png" alt="" />
-            <img class="icon" src="assets/hero/figma_icon.png"      alt="" />
-            <img class="icon" src="assets/hero/wordpress_icon.png"  alt="" />
-            <img class="icon" src="assets/hero/react_icon.png"      alt="" />
-            <img class="icon" src="assets/hero/node_icon.png"       alt="" />
+            <img class="icon" src="assets/hero/figma_icon.png" alt="" />
+            <img class="icon" src="assets/hero/wordpress_icon.png" alt="" />
+            <img class="icon" src="assets/hero/react_icon.png" alt="" />
+            <img class="icon" src="assets/hero/node_icon.png" alt="" />
             <img class="icon" src="assets/hero/typescript_icon.png" alt="" />
           </div>
 
           <div class="pixel-window screen-item">
             <div class="win top-left"></div>
-            <div class="win top-middle"><p class="window-title">nihon.bmp</p></div>
+            <div class="win top-middle">
+              <p class="window-title">nihon.bmp</p>
+            </div>
             <div class="win top-right"></div>
             <div class="win side-left"></div>
-            <div class="win-content"><img src="assets/hero/japan_poster.png" class="poster" alt="" /></div>
+            <div class="win-content">
+              <img src="assets/hero/japan_poster.png" class="poster" alt="" />
+            </div>
             <div class="win side-right"></div>
             <div class="win bottom-left"></div>
             <div class="win bottom-middle"></div>
@@ -90,13 +110,13 @@
 
           <div class="toolbar-strip screen-item">
             <img class="toolbar toolbar-start" src="assets/hero/toolbar.png" alt="" />
-            <img class="toolbar toolbar-fill"  src="assets/hero/toolbar.png" alt="" />
+            <img class="toolbar toolbar-fill" src="assets/hero/toolbar.png" alt="" />
           </div>
 
           <img class="asset layer monitor" src="assets/hero/monitor_frame.png" alt="" />
 
           <img class="asset layer keyboard keyboard-board desk-object" src="assets/hero/keyboard_board.png" alt="" />
-          <img class="asset layer keyboard keyboard-keys  desk-object" src="assets/hero/keyboard_keys.png"  alt="" />
+          <img class="asset layer keyboard keyboard-keys desk-object" src="assets/hero/keyboard_keys.png" alt="" />
 
           <img class="asset layer bylx-logo" src="assets/hero/bylx_logo.png" alt="" />
         </div>
@@ -113,6 +133,7 @@
     <section class="placeholder-section" id="projects" aria-labelledby="projects-title">
       <h2 id="projects-title">Projects</h2>
     </section>
+
     <div class="modal pixel-modal" id="gallery-modal" aria-hidden="true">
       <div class="modal-backdrop" data-close-modal></div>
 
@@ -170,7 +191,9 @@
       </div>
     </div>
   </main>
+
   <div class="cursor" aria-hidden="true"></div>
+
   <script src="script.js"></script>
 </body>
 </html>
