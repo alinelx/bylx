@@ -87,13 +87,13 @@ if (hero) {
   updateLayers();
 }
 
-  const cursor = document.querySelector(".cursor");
+const cursor = document.querySelector(".cursor");
 
-window.addEventListener("mousemove", (e) => {
-  cursor.style.left = `${e.clientX}px`;
-  cursor.style.top = `${e.clientY}px`;
-});
-
+if (cursor) {
+  window.addEventListener("mousemove", (e) => {
+    cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+  });
 
   const hoverables = document.querySelectorAll(
     "a, button, .clickable"
@@ -109,10 +109,43 @@ window.addEventListener("mousemove", (e) => {
     });
   });
 
-    window.addEventListener("mousedown", () => {
+  window.addEventListener("mousedown", () => {
     cursor.classList.add("click");
   });
 
   window.addEventListener("mouseup", () => {
     cursor.classList.remove("click");
   });
+}
+
+const tracks = [
+  "assets/mp3/9jackjack8-japanese-trap-beat-272645.mp3",
+  "assets/mp3/23843807-analog-dreams-synthwave-9497.mp3",
+  "assets/mp3/32256300-expectation-420244.mp3",
+  "assets/mp3/bfcmusic-lofi-lo-fi-511230.mp3",
+  "assets/mp3/bounce-bay-records-traditional-japanese-1-437929.mp3",
+  "assets/mp3/bounce-bay-records-traditional-japanese-3-437933.mp3",
+  "assets/mp3/bounce-bay-records-traditional-japanese-4-437934.mp3",
+  "assets/mp3/hitslab-japan-japanese-music-502006.mp3",
+  "assets/mp3/itswatr-watr-fluid-10149.mp3",
+  "assets/mp3/mondamusic-lofi-lofi-girl-lofi-chill-512853.mp3",
+  "assets/mp3/monume-cyberpunk-519219.mp3",
+  "assets/mp3/monume-cyberpunk-music-519215.mp3",
+  "assets/mp3/sonican-lo-fi-music-loop-sentimental-jazzy-love-473154.mp3",
+  "assets/mp3/tavccitypop-labyrinth-of-dreams-442228.mp3",
+  "assets/mp3/tavccitypop-neon-dreams-489483.mp3",
+  "assets/mp3/tavccitypop-stardust-rhapsody-442232.mp3",
+  "assets/mp3/vibehorn-lofi-beat-lo-fi-music-512500.mp3"
+];
+
+const audio = new Audio();
+let currentTrack = null;
+
+function playRandomTrack() {
+  const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
+
+  currentTrack = randomTrack;
+  audio.src = randomTrack;
+  audio.volume = 0.35;
+  audio.play();
+}

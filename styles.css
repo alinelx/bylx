@@ -37,7 +37,7 @@ body,
 }
 
 .cursor.hover {
-  background-image: url("./assets/cursor/pointer.png");
+  background-image: url("assets/cursor/pointer.png");
 }
 
 .cursor.click {
@@ -163,6 +163,68 @@ img {
 
 .toolbar-fill {
   animation: toolbar-scan 3s steps(4, end) infinite;
+}
+
+.hotspot {
+  pointer-events: auto;
+  cursor: none;
+  transition:
+    transform 120ms steps(2, end),
+    filter 120ms steps(2, end);
+}
+
+.hotspot:hover,
+.hotspot:focus-visible {
+  transform: translateY(-3px) scale(1.04);
+  filter: brightness(1.16);
+}
+
+.hotspot:active {
+  transform: translateY(1px) scale(0.96);
+}
+
+.instax.is-active {
+  width: 128px;
+  height: 128px;
+  background-image: url("assets/hero/instax_spritesheet.png");
+  background-size: 800% 100%;
+  animation: instax-flash 600ms steps(8) 1;
+}
+
+@keyframes instax-flash {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -800% 0;
+  }
+}
+
+.phone.is-ringing {
+  animation: phone-ring 260ms steps(2, end) 2;
+}
+
+@keyframes phone-ring {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(-2px, 0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translate(2px, 0) rotate(2deg);
+  }
+
+  75% {
+    transform: translate(-1px, 0) rotate(-1deg);
+  }
+
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
 }
 
 @keyframes hero-float {
