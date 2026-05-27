@@ -238,9 +238,23 @@ function stopAudio() {
 
 if (mp3Hotspot) {
   mp3Hotspot.addEventListener("click", () => {
-    playRandomTrack();
+    if (!audio.paused) {
+      audio.pause();
+      mp3Hotspot.classList.remove("is-playing");
+    } else if (currentTrack) {
+      audio.play();
+      mp3Hotspot.classList.add("is-playing");
+    } else {
+      playRandomTrack();
+      mp3Hotspot.classList.add("is-playing");
+    }
   });
 }
+
+audio.addEventListener("ended", () => {
+  playRandomTrack();
+  if (mp3Hotspot) mp3Hotspot.classList.add("is-playing");
+});
 
 document.querySelectorAll("[data-audio-action]").forEach((button) => {
   button.addEventListener("click", () => {
