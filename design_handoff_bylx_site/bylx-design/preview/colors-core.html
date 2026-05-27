@@ -1,0 +1,19 @@
+<!-- @dsCard group="Colors" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin: 0; padding: 18px; background: #f7f5fb; }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .sw { aspect-ratio: 1.4 / 1; padding: 10px; border: 4px solid var(--bylx-bg); box-shadow: 5px 5px 0 var(--bylx-pink); display: flex; flex-direction: column; justify-content: space-between; color: var(--bylx-text); }
+  .sw small { font-family: var(--font-ui); font-size: 8px; line-height: 1.4; opacity: .9; }
+  .sw strong { font-family: var(--font-display); font-size: 20px; font-weight: 600; }
+  .sw.is-light { color: var(--bylx-bg); }
+</style></head>
+<body>
+  <div class="row">
+    <div class="sw" style="background:#09051b"><strong>bg</strong><small>#09051b<br>--bylx-bg</small></div>
+    <div class="sw" style="background:#5d3fd3"><strong>purple</strong><small>#5d3fd3<br>--bylx-purple</small></div>
+    <div class="sw" style="background:#ff5dbb"><strong>pink</strong><small>#ff5dbb<br>--bylx-pink</small></div>
+    <div class="sw" style="background:#59f3ff" class="is-light"><strong style="color:#09051b">cyan</strong><small style="color:#09051b">#59f3ff<br>--bylx-cyan</small></div>
+  </div>
+</body></html>

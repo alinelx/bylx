@@ -1,0 +1,54 @@
+/* sakura-cursor.css — petals drop from the cursor, burst on click.
+   Sits BELOW the .bylx-cursor pixel pointer (z 99999) but above everything else. */
+
+.bylx-sakura-cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 99997;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bylx-sakura-bit {
+  position: absolute;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+  transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  opacity: 0;
+  filter: drop-shadow(0 0 4px rgba(255, 93, 187, 0.45));
+  animation-name: bylx-sakura-bit;
+  animation-timing-function: cubic-bezier(0.2, 0.55, 0.4, 1);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  will-change: transform, opacity, filter;
+}
+
+@keyframes bylx-sakura-bit {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  }
+  18% {
+    opacity: 1;
+    transform:
+      translate(calc(-50% + var(--dx, 0px) * 0.18),
+                calc(-50% + var(--dy, 0px) * 0.18))
+      scale(1)
+      rotate(calc(var(--spin, 120deg) * 0.18));
+    filter: drop-shadow(0 0 6px rgba(89, 243, 255, 0.55));
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--dx, 0px)),
+                calc(-50% + var(--dy, 0px)))
+      scale(0.55)
+      rotate(var(--spin, 120deg));
+    filter: drop-shadow(0 0 2px rgba(255, 93, 187, 0.15));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bylx-sakura-bit { animation-duration: 600ms !important; }
+}
