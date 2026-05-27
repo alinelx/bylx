@@ -130,9 +130,112 @@
       </div>
     </section>
 
-    <section class="placeholder-section" id="projects" aria-labelledby="projects-title">
-      <h2 id="projects-title">Projects</h2>
+    <section class="projects" id="projects" aria-labelledby="projects-title">
+      <div class="projects-inner">
+        <div class="projects-header">
+          <p class="eyebrow">Selected work</p>
+          <h2 id="projects-title">Projects</h2>
+        </div>
+
+        <div class="projects-grid">
+
+          <article class="project-card" aria-labelledby="card-dark28-title">
+            <div class="card-preview card-preview--dark28" aria-hidden="true">
+              <span class="card-preview-big-text">28</span>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-tag">Next.js · TypeScript · React · Tailwind</span>
+                <span class="card-status card-status--live">LIVE</span>
+              </div>
+              <h3 id="card-dark28-title">Dark28</h3>
+              <p>Lisbon's Tram 28 reimagined as a dark tourism route — dictatorship, colonialism, and collective memory.</p>
+              <div class="card-links">
+                <a href="https://dark28.pt" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit site</a>
+                <button type="button" class="card-link card-link--case" data-modal-target="casestudy-dark28-modal">Case study</button>
+                <a href="https://github.com/alinelx/dark-28" class="card-link card-link--ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" aria-labelledby="card-bylx-title">
+            <div class="card-preview card-preview--bylx" aria-hidden="true">
+              <img src="assets/logo/bylx_logo_line_cyan.png" alt="" class="card-preview-logo" />
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-tag">HTML · CSS · Vanilla JS</span>
+                <span class="card-status card-status--live">LIVE</span>
+              </div>
+              <h3 id="card-bylx-title">bylx.dev</h3>
+              <p>This portfolio — a pixel-art Y2K cyber-café where Rio de Janeiro and Lisbon share a desk.</p>
+              <div class="card-links">
+                <a href="https://bylx.dev" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit site</a>
+                <a href="https://github.com/alinelx/bylx" class="card-link card-link--ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card project-card--wip" aria-labelledby="card-wip-title">
+            <div class="card-preview card-preview--wip" aria-hidden="true">
+              <span class="card-preview-big-text card-preview-wip-text">?</span>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-tag">Next.js · Figma · Product Design</span>
+                <span class="card-status card-status--wip">IN PROGRESS</span>
+              </div>
+              <h3 id="card-wip-title">Designer Portfolio</h3>
+              <p>Portfolio for a product designer specialised in urban furniture — where physical design meets the web.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
     </section>
+
+    <div class="modal pixel-modal" id="casestudy-dark28-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-dark28-title">
+        <header class="modal-header">
+          <h2 id="casestudy-dark28-title">Dark28 — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p class="cs-stack">Next.js · TypeScript · React · Tailwind CSS · <a href="https://dark28.pt" target="_blank" rel="noopener noreferrer">dark28.pt ↗</a></p>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>Lisbon's Tram 28 passes through layers of history that most tourist guides ignore. I kept finding apps that told the same polished story and skipped the uncomfortable parts — the dictatorship, the colonial memory, the religious weight embedded in the architecture. What if a route helped you understand a city instead of just photograph it?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>An editorial web app that transforms the Tram 28 into a self-guided dark tourism experience. Users discover landmarks filtered by historical theme, read narrative context for each stop, and build a personal plan of places to visit and track.</p>
+          <ul class="cs-list">
+            <li>Editorial homepage with thematic framing</li>
+            <li>Landmark discovery by theme (dictatorship, colonialism, religion, death)</li>
+            <li>Detail pages with narrative context per stop</li>
+            <li>Save landmarks and track visited places</li>
+            <li>Route direction toggle and dark/light theme</li>
+            <li>Fully responsive, mobile-first</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>Next.js (App Router)</strong> — editorial content needs good SEO and fast initial load. Server components simplified data fetching and nested layouts.</p>
+          <p><strong>TypeScript throughout</strong> — enforced clear data contracts between components and caught two broken data shapes before they hit the UI.</p>
+          <p><strong>Tailwind CSS</strong> — rapid iteration on a content-heavy interface without fighting specificity. Consistent spacing without thinking about it.</p>
+          <p><strong>localStorage + custom hooks</strong> — one <code>useLocalStorage</code> hook persisted all user state across four features with no backend required.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>Designing content-first changes the UI. The narrative weight of each stop shaped the information hierarchy — generic card components didn't work because the content resisted being genericised. TypeScript caught real bugs, not theoretical ones. App Router's server/client boundary required rethinking where state lives.</p>
+
+          <div class="cs-footer-links">
+            <a href="https://dark28.pt" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit dark28.pt</a>
+            <a href="https://github.com/alinelx/dark-28" class="card-link card-link--ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <div class="modal pixel-modal" id="gallery-modal" aria-hidden="true">
       <div class="modal-backdrop" data-close-modal></div>
