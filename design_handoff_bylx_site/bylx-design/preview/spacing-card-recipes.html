@@ -1,0 +1,22 @@
+<!-- @dsCard group="Spacing" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin: 0; padding: 22px; background: #09051b; color: var(--bylx-text); }
+  .title { font-family: var(--font-ui); font-size: 9px; color: var(--bylx-cyan); text-transform: uppercase; margin: 0 0 16px; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .card { padding: 14px 16px; border: 4px solid var(--bylx-cyan); background: var(--bylx-bg); box-shadow: 7px 7px 0 var(--bylx-pink); }
+  .card h5 { font-family: var(--font-display); font-size: 18px; margin: 0 0 4px; }
+  .card p { font-family: var(--font-display); font-size: 13px; margin: 0; color: var(--bylx-muted); }
+  .light { background: var(--bylx-paper); color: var(--bylx-bg); border-color: var(--bylx-bg); box-shadow: 7px 7px 0 var(--bylx-pink); }
+  .light p { color: #444; }
+  .alt { background: var(--bylx-bg-ink); box-shadow: 6px 6px 0 var(--bylx-cyan); border-color: var(--bylx-pink); }
+</style></head>
+<body>
+  <p class="title">Card recipes — dark / paper / alt</p>
+  <div class="row">
+    <div class="card"><h5>Dark card</h5><p>Default surface. Pink offset shadow, cyan border, bg fill.</p></div>
+    <div class="card light"><h5>Paper card</h5><p>Use for inputs and modals. Ink border replaces cyan.</p></div>
+    <div class="card alt"><h5>Alt card</h5><p>Inverted accent: pink border, cyan shadow.</p></div>
+  </div>
+</body></html>
