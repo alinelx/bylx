@@ -86,14 +86,30 @@
           <img class="asset layer win-bg screen-item" src="assets/hero/win_background.png" alt="" />
 
           <div class="desktop-icons screen-item">
-            <img class="icon" src="assets/hero/html_icon.png" alt="" />
-            <img class="icon" src="assets/hero/css_icon.png" alt="" />
-            <img class="icon" src="assets/hero/javascript_icon.png" alt="" />
-            <img class="icon" src="assets/hero/figma_icon.png" alt="" />
-            <img class="icon" src="assets/hero/wordpress_icon.png" alt="" />
-            <img class="icon" src="assets/hero/react_icon.png" alt="" />
-            <img class="icon" src="assets/hero/node_icon.png" alt="" />
-            <img class="icon" src="assets/hero/typescript_icon.png" alt="" />
+            <button class="icon-btn" type="button" data-tech="html" aria-label="HTML">
+              <img class="icon" src="assets/hero/html_icon.png" alt="" />
+            </button>
+            <button class="icon-btn" type="button" data-tech="css" aria-label="CSS">
+              <img class="icon" src="assets/hero/css_icon.png" alt="" />
+            </button>
+            <button class="icon-btn" type="button" data-tech="js" aria-label="JavaScript">
+              <img class="icon" src="assets/hero/javascript_icon.png" alt="" />
+            </button>
+            <button class="icon-btn" type="button" data-tech="figma" aria-label="Figma">
+              <img class="icon" src="assets/hero/figma_icon.png" alt="" />
+            </button>
+            <button class="icon-btn" type="button" data-tech="wp" aria-label="WordPress">
+              <img class="icon" src="assets/hero/wordpress_icon.png" alt="" />
+            </button>
+            <button class="icon-btn" type="button" data-tech="react" aria-label="React">
+              <img class="icon" src="assets/hero/react_icon.png" alt="" />
+            </button>
+            <button class="icon-btn" type="button" data-tech="node" aria-label="Node.js">
+              <img class="icon" src="assets/hero/node_icon.png" alt="" />
+            </button>
+            <button class="icon-btn" type="button" data-tech="ts" aria-label="TypeScript">
+              <img class="icon" src="assets/hero/typescript_icon.png" alt="" />
+            </button>
           </div>
 
           <div class="pixel-window screen-item">
@@ -124,7 +140,7 @@
           <img class="asset layer keyboard keyboard-board desk-object" src="assets/hero/keyboard_board.png" alt="" />
           <img class="asset layer keyboard keyboard-keys desk-object" src="assets/hero/keyboard_keys.png" alt="" />
 
-          <img class="asset layer bylx-logo" src="assets/hero/bylx_logo.png" alt="" />
+          <img class="asset layer bylx-logo" src="assets/logo/bylx_logo.png" alt="" />
         </div>
       </div>
 
@@ -320,11 +336,18 @@
     </div>
 
     <div class="mp3-controls" aria-label="Music controls">
-      <p class="mp3-title">Now playing: <span data-track-title>None</span></p>
+      <p class="mp3-title">
+        <span class="mp3-now">Now playing:</span>
+        <span class="mp3-marquee-window">
+          <span class="mp3-marquee-text" data-track-title>None</span>
+        </span>
+      </p>
 
       <div class="mp3-buttons">
+        <button type="button" data-audio-action="prev">Prev</button>
         <button type="button" data-audio-action="play">Play</button>
         <button type="button" data-audio-action="pause">Pause</button>
+        <button type="button" data-audio-action="next">Next</button>
         <button type="button" data-audio-action="stop">Stop</button>
         <button type="button" data-audio-action="volume-down">Vol -</button>
         <button type="button" data-audio-action="volume-up">Vol +</button>
@@ -343,6 +366,7 @@
     </div>
   </footer>
 
+  <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
   <script src="script.js"></script>
