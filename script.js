@@ -232,6 +232,15 @@ function setTrackTitle(path) {
   requestAnimationFrame(updateMarquee);
 }
 
+// Switching src interrupts any pending play(); swallow the benign abort
+// rejection so it doesn't surface as an unhandled promise error.
+function safePlay() {
+  const result = audio.play();
+  if (result && typeof result.catch === "function") {
+    result.catch(() => {});
+  }
+}
+
 function playTrack(index) {
   if (!tracks.length) return;
 
@@ -239,7 +248,7 @@ function playTrack(index) {
   const track = tracks[currentIndex];
 
   audio.src = track;
-  audio.play();
+  safePlay();
 
   setTrackTitle(track);
 
@@ -271,7 +280,7 @@ if (mp3Hotspot) {
     if (!audio.paused) {
       audio.pause();
     } else if (audio.src) {
-      audio.play();
+      safePlay();
     } else {
       playRandomTrack();
     }
@@ -297,7 +306,7 @@ document.querySelectorAll("[data-audio-action]").forEach((button) => {
 
     if (action === "play") {
       if (audio.src) {
-        audio.play();
+        safePlay();
       } else {
         playRandomTrack();
       }
