@@ -5,14 +5,82 @@
 }
 
 :root {
-  --bg: #09051b;
-  --pink: #ff5dbb;
-  --cyan: #59f3ff;
-  --purple: #5d3fd3;
-  --text: #f7f2ff;
-  --muted: #d8d0ff;
+  /* ---------- Core palette (canonical bylx tokens) ---------- */
+  --bylx-bg: #09051b;          /* deep night purple — primary background */
+  --bylx-bg-ink: #1d1640;      /* secondary surface (sections, code) */
+  --bylx-pink: #ff5dbb;        /* neon hot pink — primary accent */
+  --bylx-cyan: #59f3ff;        /* electric cyan — secondary accent, borders */
+  --bylx-purple: #5d3fd3;      /* iris violet — hero wash */
+  --bylx-text: #f7f2ff;        /* near-white, faint lavender tint */
+  --bylx-muted: #d8d0ff;       /* dim text on dark */
+  --bylx-paper: #fff8ff;       /* warm white — inputs / paper surfaces */
+
+  /* ---------- Extended palette (derived) ---------- */
+  --bylx-pink-ink: #c33a8e;
+  --bylx-pink-glow: rgba(255, 93, 187, 0.42);
+  --bylx-cyan-ink: #2bb8c8;
+  --bylx-cyan-glow: rgba(89, 243, 255, 0.42);
+  --bylx-purple-ink: #2a1c84;
+  --bylx-overlay: rgba(9, 5, 27, 0.78);
+  --bylx-overlay-strong: rgba(9, 5, 27, 0.88);
+
+  /* ---------- Short aliases (kept for existing rules) ---------- */
+  --bg: var(--bylx-bg);
+  --pink: var(--bylx-pink);
+  --cyan: var(--bylx-cyan);
+  --purple: var(--bylx-purple);
+  --text: var(--bylx-text);
+  --muted: var(--bylx-muted);
+  --paper: var(--bylx-paper);
+
+  /* ---------- Type ---------- */
   --font-pixel: "Pixelify Sans", system-ui, sans-serif;
   --font-ui: "Press Start 2P", monospace;
+
+  /* ---------- Spacing (4px base) ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* ---------- Borders / hard-offset shadows (never blurred) ---------- */
+  --stroke-1: 2px;
+  --stroke-2: 4px;
+  --stroke-3: 7px;
+  --shadow-chunk-sm: 4px 4px 0 var(--bylx-pink);
+  --shadow-chunk-md: 7px 7px 0 var(--bylx-pink);
+  --shadow-chunk-lg: 9px 9px 0 var(--bylx-pink);
+  --shadow-chunk-cyan: 6px 6px 0 var(--bylx-cyan);
+  --glow-cyan: 0 0 0 3px rgba(89, 243, 255, 0.9);
+
+  /* ---------- Motion (stepped easing — never linear/smooth) ---------- */
+  --ease-step-2: steps(2, end);
+  --ease-step-3: steps(3, end);
+  --ease-step-4: steps(4, end);
+  --dur-flicker: 2.8s;
+  --dur-float: 8s;
+  --dur-pulse: 4.8s;
+}
+
+/* Registered so the mouse-flee offsets can ease back to rest. */
+@property --flee-x {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --flee-y {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --flee-rot {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
 }
 
 html,
@@ -67,6 +135,54 @@ img {
 .cursor.click {
   background-image: url("assets/cursor/click.png");
   transform: translate(-4px, -4px) scale(0.95);
+}
+
+/* Sakura cursor trail — petals drop while moving, burst on click.
+   Sits just below the pixel cursor (z 99999). See script.js. */
+.sakura-cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 99997;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sakura-bit {
+  position: absolute;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+  transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  opacity: 0;
+  filter: drop-shadow(0 0 4px rgba(255, 93, 187, 0.45));
+  animation-name: sakura-bit;
+  animation-timing-function: cubic-bezier(0.2, 0.55, 0.4, 1);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  will-change: transform, opacity;
+}
+
+@keyframes sakura-bit {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  }
+  18% {
+    opacity: 1;
+    transform:
+      translate(calc(-50% + var(--dx, 0px) * 0.18), calc(-50% + var(--dy, 0px) * 0.18))
+      scale(1)
+      rotate(calc(var(--spin, 120deg) * 0.18));
+    filter: drop-shadow(0 0 6px rgba(89, 243, 255, 0.55));
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px)))
+      scale(0.55)
+      rotate(var(--spin, 120deg));
+    filter: drop-shadow(0 0 2px rgba(255, 93, 187, 0.15));
+  }
 }
 
 /* Hero base */
@@ -283,11 +399,11 @@ img {
   will-change: transform;
 }
 
-.desktop-icons .icon:nth-child(2n) {
+.desktop-icons .icon-btn:nth-child(2n) .icon {
   animation-delay: -0.8s;
 }
 
-.desktop-icons .icon:nth-child(3n) {
+.desktop-icons .icon-btn:nth-child(3n) .icon {
   animation-delay: -1.4s;
 }
 
@@ -304,11 +420,11 @@ img {
     transform:
       var(--base-transform)
       translate3d(
-        calc(var(--move-x) - var(--float-x)),
-        calc(var(--move-y) - var(--float-y)),
+        calc(var(--move-x) - var(--float-x) + var(--flee-x, 0px)),
+        calc(var(--move-y) - var(--float-y) + var(--flee-y, 0px)),
         0
       )
-      rotate(calc(var(--float-rotate) * -1))
+      rotate(calc(var(--float-rotate) * -1 + var(--flee-rot, 0deg)))
       scale(var(--float-scale));
   }
 
@@ -316,11 +432,11 @@ img {
     transform:
       var(--base-transform)
       translate3d(
-        calc(var(--move-x) + var(--float-x)),
-        calc(var(--move-y) + var(--float-y)),
+        calc(var(--move-x) + var(--float-x) + var(--flee-x, 0px)),
+        calc(var(--move-y) + var(--float-y) + var(--flee-y, 0px)),
         0
       )
-      rotate(var(--float-rotate))
+      rotate(calc(var(--float-rotate) + var(--flee-rot, 0deg)))
       scale(var(--float-scale));
   }
 }
@@ -690,6 +806,13 @@ img {
   --float-y: 4px;
   --float-rotate: 0.5deg;
   --float-duration: 5s;
+  --flee-x: 0px;
+  --flee-y: 0px;
+  --flee-rot: 0deg;
+  transition:
+    --flee-x 180ms steps(4, end),
+    --flee-y 180ms steps(4, end),
+    --flee-rot 180ms steps(4, end);
 }
 
 .win-bg {
@@ -722,6 +845,77 @@ img {
 
 .icon {
   width: 100%;
+}
+
+/* Clickable desktop icons (open a stack popover — see script.js) */
+.icon-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: none;
+  pointer-events: auto;
+  image-rendering: pixelated;
+}
+
+.icon-btn:hover .icon,
+.icon-btn:focus-visible .icon {
+  filter: brightness(1.16);
+}
+
+.icon-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--glow-cyan);
+}
+
+.icon-btn:active .icon {
+  filter: brightness(0.96);
+}
+
+/* Stack popover — a chunky pixel card pinned in viewport coords */
+.tech-pop {
+  position: fixed;
+  z-index: 90001;
+  min-width: 140px;
+  max-width: 220px;
+  padding: var(--space-3) var(--space-4);
+  color: var(--text);
+  background: var(--bylx-overlay-strong);
+  border: var(--stroke-2) solid var(--cyan);
+  box-shadow: var(--shadow-chunk-sm);
+  transform: translateY(-100%);
+}
+
+.tech-pop-close {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cyan);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  line-height: 1;
+  cursor: none;
+}
+
+.tech-pop-name {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  color: var(--pink);
+}
+
+.tech-pop-sub {
+  margin: 0;
+  font-family: var(--font-pixel);
+  font-size: 0.95rem;
+  line-height: 1.2;
+  color: var(--muted);
 }
 
 /* Pixel window */
@@ -932,6 +1126,16 @@ img {
   z-index: 12;
   --float-y: 3px;
   --float-delay: -0.5s;
+  --rgb-tint: var(--bylx-cyan);
+  transition: filter 220ms steps(3, end);
+}
+
+/* RGB underglow flares when a physical key is pressed (see script.js). */
+.keyboard-keys.is-pressed {
+  filter:
+    drop-shadow(0 0 5px var(--rgb-tint))
+    drop-shadow(0 0 11px var(--rgb-tint))
+    brightness(1.12);
 }
 
 .bylx-logo {
@@ -1480,15 +1684,57 @@ h1 {
 }
 
 .mp3-title {
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
   margin: 0 0 0.6rem;
   font-size: 1rem;
   line-height: 1.1;
+}
+
+.mp3-now {
+  flex: 0 0 auto;
+}
+
+.mp3-marquee-window {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.mp3-marquee-text {
+  display: inline-block;
+  white-space: nowrap;
+  color: var(--cyan);
+  will-change: transform;
+}
+
+/* Only scrolls when the title overflows (script.js toggles the class). */
+.mp3-marquee-window.is-scrolling .mp3-marquee-text {
+  animation: mp3-marquee 7s ease-in-out infinite alternate;
+}
+
+@keyframes mp3-marquee {
+  0%, 14% {
+    transform: translateX(0);
+  }
+  86%, 100% {
+    transform: translateX(calc(var(--mq-shift, 0px) * -1));
+  }
 }
 
 .mp3-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mp3-marquee-window.is-scrolling .mp3-marquee-text {
+    animation: none;
+  }
 }
 
 /* ========================================================
@@ -1795,6 +2041,10 @@ h1 {
     animation: none;
     transition: none;
     will-change: auto;
+  }
+
+  .sakura-bit {
+    animation-duration: 600ms !important;
   }
 
   .hero-copy a:hover,

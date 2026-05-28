@@ -14,7 +14,7 @@ Built from scratch in vanilla HTML, CSS and JavaScript. No frameworks, no build 
 |---|---|
 | Markup | HTML5 — semantic, ARIA-accessible |
 | Styles | CSS3 — custom properties, stepped animations, parallax via CSS variables |
-| Logic | Vanilla JS — parallax with lerp smoothing, modal system, audio player |
+| Logic | Vanilla JS — parallax with lerp smoothing, modal system, audio player, sakura cursor trail, interactive desk props |
 
 ---
 
@@ -33,15 +33,14 @@ python3 -m http.server 8080
 bylx/
 ├── index.html              # single HTML page
 ├── styles.css              # full design system + layout
-├── script.js               # parallax, modals, MP3 player
-├── assets/
-│   ├── hero/               # pixel-art props for the diorama
-│   ├── logo/               # bylx wordmark variants
-│   ├── cursor/             # pixel cursor states (arrow, pointer, click)
-│   └── mp3/                # music tracks
-└── .claude/
-    └── skills/
-        └── bylx-design/    # design system — invoke with /bylx-design
+├── script.js               # parallax, modals, MP3 player, sakura trail, desk interactions
+├── DESIGN.md               # brand + design language reference
+└── assets/
+    ├── hero/               # pixel-art props for the diorama
+    ├── logo/               # bylx wordmark variants
+    ├── cursor/             # pixel cursor states (arrow, pointer, click)
+    ├── particles/          # sakura petal sprites (cursor trail)
+    └── mp3/                # music tracks
 ```
 
 ---
@@ -58,17 +57,13 @@ bylx/
 
 ## Design system
 
-The full design language lives in `.claude/skills/bylx-design/`:
-
-- **SKILL.md** — invoke with `/bylx-design` in Claude Code to get full brand context
-- **colors_and_type.css** — drop-in CSS with all tokens (colors, type, spacing, shadows, motion)
-- **README.md** — visual rules, brand pillars, copy guidelines, hard rules
-- **preview/** — token specimen pages you can open in a browser
-- **ui_kits/site/** — React component library for mocks and prototypes
+The full brand + design language lives in [`DESIGN.md`](DESIGN.md) — voice,
+color, type, spacing, motion, and iconography rules. The canonical design
+tokens are defined in `styles.css` (`:root`).
 
 **Hard rules (never break):**
 - Only Pixelify Sans + Press Start 2P — no system fonts for display copy
-- No `border-radius` anywhere
+- No `border-radius` anywhere (except the cyan focus ring)
 - Hard-offset pixel shadows only — never blurred (`4px 4px 0`, `7px 7px 0`)
 - No gradients outside `gradient.png`
 - No emoji in copy

@@ -195,11 +195,12 @@ const tracks = [
 const audio = new Audio();
 audio.volume = 0.35;
 
-let currentTrack = null;
+let currentIndex = -1;
 
 const mp3Hotspot = document.querySelector(".hotspot-mp3");
 const mp3Controls = document.querySelector(".mp3-controls");
 const trackTitle = document.querySelector("[data-track-title]");
+const marqueeWindow = document.querySelector(".mp3-marquee-window");
 
 function getTrackName(path) {
   return path
@@ -209,26 +210,55 @@ function getTrackName(path) {
     .replaceAll("-", " ");
 }
 
+// Scroll the title only when it overflows its window.
+function updateMarquee() {
+  if (!marqueeWindow || !trackTitle) return;
+
+  marqueeWindow.classList.remove("is-scrolling");
+  marqueeWindow.style.removeProperty("--mq-shift");
+
+  const overflow = trackTitle.scrollWidth - marqueeWindow.clientWidth;
+
+  if (overflow > 4) {
+    marqueeWindow.style.setProperty("--mq-shift", `${overflow + 8}px`);
+    marqueeWindow.classList.add("is-scrolling");
+  }
+}
+
 function setTrackTitle(path) {
   if (!trackTitle) return;
 
   trackTitle.textContent = path ? getTrackName(path) : "None";
+  requestAnimationFrame(updateMarquee);
+}
+
+function playTrack(index) {
+  if (!tracks.length) return;
+
+  currentIndex = ((index % tracks.length) + tracks.length) % tracks.length;
+  const track = tracks[currentIndex];
+
+  audio.src = track;
+  audio.play();
+
+  setTrackTitle(track);
+
+  if (mp3Controls) {
+    mp3Controls.classList.add("is-visible");
+  }
 }
 
 function playRandomTrack() {
   if (!tracks.length) return;
 
-  const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
+  let next = Math.floor(Math.random() * tracks.length);
 
-  currentTrack = randomTrack;
-  audio.src = randomTrack;
-  audio.play();
-
-  setTrackTitle(randomTrack);
-
-  if (mp3Controls) {
-    mp3Controls.classList.add("is-visible");
+  // Avoid repeating the same track back-to-back when we can.
+  if (tracks.length > 1 && next === currentIndex) {
+    next = (next + 1) % tracks.length;
   }
+
+  playTrack(next);
 }
 
 function stopAudio() {
@@ -240,20 +270,25 @@ if (mp3Hotspot) {
   mp3Hotspot.addEventListener("click", () => {
     if (!audio.paused) {
       audio.pause();
-      mp3Hotspot.classList.remove("is-playing");
-    } else if (currentTrack) {
+    } else if (audio.src) {
       audio.play();
-      mp3Hotspot.classList.add("is-playing");
     } else {
       playRandomTrack();
-      mp3Hotspot.classList.add("is-playing");
     }
   });
 }
 
+// Keep the hotspot's playing state in sync with the audio element.
+audio.addEventListener("play", () => {
+  if (mp3Hotspot) mp3Hotspot.classList.add("is-playing");
+});
+
+audio.addEventListener("pause", () => {
+  if (mp3Hotspot) mp3Hotspot.classList.remove("is-playing");
+});
+
 audio.addEventListener("ended", () => {
   playRandomTrack();
-  if (mp3Hotspot) mp3Hotspot.classList.add("is-playing");
 });
 
 document.querySelectorAll("[data-audio-action]").forEach((button) => {
@@ -266,26 +301,280 @@ document.querySelectorAll("[data-audio-action]").forEach((button) => {
       } else {
         playRandomTrack();
       }
-    }
-
-    if (action === "pause") {
+    } else if (action === "pause") {
       audio.pause();
-    }
-
-    if (action === "stop") {
+    } else if (action === "stop") {
       stopAudio();
-    }
-
-    if (action === "volume-down") {
+    } else if (action === "next") {
+      playTrack(currentIndex + 1);
+    } else if (action === "prev") {
+      playTrack(currentIndex - 1);
+    } else if (action === "volume-down") {
       audio.volume = Math.max(0, audio.volume - 0.1);
-    }
-
-    if (action === "volume-up") {
+    } else if (action === "volume-up") {
       audio.volume = Math.min(1, audio.volume + 0.1);
     }
   });
 });
 
-audio.addEventListener("ended", () => {
-  playRandomTrack();
+window.addEventListener("resize", updateMarquee);
+
+/* Sakura cursor trail */
+
+const sakuraLayer = document.querySelector(".sakura-cursor");
+const prefersReducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+if (sakuraLayer) {
+  const TRAIL_INTERVAL = 70; // ms between trail petals
+  const BURST_COUNT = 12; // petals per click
+  const MAX_PETALS = 90; // hard cap to keep the DOM tame
+
+  let lastTrail = 0;
+  let liveCount = 0;
+
+  function spawnPetal(x, y, kind) {
+    if (liveCount >= MAX_PETALS) return;
+
+    const variant = Math.floor(Math.random() * 4) + 1;
+
+    let angle;
+    let power;
+    let gravity;
+    let duration;
+    let size;
+
+    if (kind === "burst") {
+      angle = Math.random() * Math.PI * 2;
+      power = 70 + Math.random() * 70;
+      gravity = 50;
+      duration = 1200 + Math.random() * 700;
+      size = 14 + Math.random() * 16;
+    } else {
+      angle = Math.PI / 2 + (Math.random() - 0.5) * 1.2;
+      power = 10 + Math.random() * 20;
+      gravity = 90;
+      duration = 1500 + Math.random() * 800;
+      size = 14 + Math.random() * 10;
+    }
+
+    const dx = Math.cos(angle) * power;
+    const dy = Math.sin(angle) * power + gravity;
+    const spin = -240 + Math.random() * 480;
+
+    const petal = document.createElement("img");
+    petal.className = "sakura-bit";
+    petal.src = `assets/particles/sakura${variant}.png`;
+    petal.alt = "";
+    petal.style.left = `${x}px`;
+    petal.style.top = `${y}px`;
+    petal.style.width = `${size}px`;
+    petal.style.setProperty("--dx", `${dx.toFixed(1)}px`);
+    petal.style.setProperty("--dy", `${dy.toFixed(1)}px`);
+    petal.style.setProperty("--spin", `${spin.toFixed(1)}deg`);
+    petal.style.animationDuration = `${Math.round(duration)}ms`;
+
+    sakuraLayer.appendChild(petal);
+    liveCount += 1;
+
+    let removed = false;
+    const remove = () => {
+      if (removed) return;
+      removed = true;
+      petal.remove();
+      liveCount -= 1;
+    };
+
+    petal.addEventListener("animationend", remove, { once: true });
+    setTimeout(remove, duration + 250);
+  }
+
+  window.addEventListener(
+    "mousemove",
+    (event) => {
+      if (prefersReducedMotion) return;
+
+      const now = performance.now();
+      if (now - lastTrail < TRAIL_INTERVAL) return;
+      lastTrail = now;
+
+      spawnPetal(event.clientX, event.clientY, "trail");
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    "mousedown",
+    (event) => {
+      if (event.button !== 0) return;
+
+      const count = prefersReducedMotion ? 4 : BURST_COUNT;
+      for (let i = 0; i < count; i += 1) {
+        spawnPetal(event.clientX, event.clientY, "burst");
+      }
+    },
+    { passive: true }
+  );
+}
+
+/* Desk mouse sprite flees the cursor */
+
+const mouseSprite = document.querySelector(".mouse");
+
+if (mouseSprite && hero) {
+  let fleeScheduled = false;
+
+  window.addEventListener(
+    "mousemove",
+    (event) => {
+      if (fleeScheduled) return;
+      fleeScheduled = true;
+
+      requestAnimationFrame(() => {
+        fleeScheduled = false;
+
+        const rect = mouseSprite.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = cx - event.clientX;
+        const dy = cy - event.clientY;
+        const dist = Math.hypot(dx, dy);
+
+        const radius = 220; // start fleeing within this distance
+        const maxOffset = 45; // max displacement in px
+
+        if (dist < radius && dist > 0.5) {
+          const t = (radius - dist) / radius;
+          const ux = dx / dist;
+          const uy = dy / dist;
+
+          mouseSprite.style.setProperty("--flee-x", `${(ux * maxOffset * t).toFixed(1)}px`);
+          // Vertical compressed for the table-perspective.
+          mouseSprite.style.setProperty("--flee-y", `${(uy * maxOffset * t * 0.5).toFixed(1)}px`);
+          const lean = Math.max(-12, Math.min(12, ux * t * 14));
+          mouseSprite.style.setProperty("--flee-rot", `${lean.toFixed(1)}deg`);
+        } else {
+          mouseSprite.style.setProperty("--flee-x", "0px");
+          mouseSprite.style.setProperty("--flee-y", "0px");
+          mouseSprite.style.setProperty("--flee-rot", "0deg");
+        }
+      });
+    },
+    { passive: true }
+  );
+}
+
+/* Keyboard RGB underglow flares on a physical key press */
+
+const keyboardKeys = document.querySelector(".keyboard-keys");
+
+if (keyboardKeys) {
+  const palette = ["#ff5dbb", "#59f3ff", "#5d3fd3", "#f7f2ff", "#ffd45d", "#5dff9b"];
+  let glowTimeout;
+
+  window.addEventListener("keydown", (event) => {
+    const code = event.keyCode || event.which || 0;
+    keyboardKeys.style.setProperty("--rgb-tint", palette[code % palette.length]);
+    keyboardKeys.classList.add("is-pressed");
+
+    clearTimeout(glowTimeout);
+    glowTimeout = setTimeout(() => keyboardKeys.classList.remove("is-pressed"), 220);
+  });
+}
+
+/* Desktop tech-icon stack popovers */
+
+const TECH_INFO = {
+  html: { name: "HTML", sub: "Markup, semantics first." },
+  css: { name: "CSS", sub: "Pixel-perfect layout & motion." },
+  js: { name: "JavaScript", sub: "Interactivity & DOM." },
+  ts: { name: "TypeScript", sub: "Types when the stakes are real." },
+  react: { name: "React", sub: "Component-driven UI." },
+  node: { name: "Node.js", sub: "Server-side & tooling." },
+  figma: { name: "Figma", sub: "UX & design specs." },
+  wp: { name: "WordPress", sub: "CMS for content sites." },
+};
+
+const iconButtons = document.querySelectorAll(".icon-btn[data-tech]");
+let techPop = null;
+let techPopKey = null;
+
+function closeTechPop() {
+  if (techPop) {
+    techPop.remove();
+    techPop = null;
+    techPopKey = null;
+  }
+}
+
+function openTechPop(button) {
+  const key = button.dataset.tech;
+  const info = TECH_INFO[key];
+  if (!info) return;
+
+  closeTechPop();
+
+  const pop = document.createElement("div");
+  pop.className = "tech-pop";
+  pop.setAttribute("role", "dialog");
+  pop.setAttribute("aria-label", info.name);
+
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "tech-pop-close";
+  close.setAttribute("aria-label", "Close");
+  close.textContent = "×";
+
+  const name = document.createElement("p");
+  name.className = "tech-pop-name";
+  name.textContent = info.name;
+
+  const sub = document.createElement("p");
+  sub.className = "tech-pop-sub";
+  sub.textContent = info.sub;
+
+  pop.append(close, name, sub);
+  document.body.appendChild(pop);
+
+  // Position up-and-right of the icon, then nudge back on-screen.
+  const rect = button.getBoundingClientRect();
+  const popRect = pop.getBoundingClientRect();
+  let left = rect.right + 6;
+  if (left + popRect.width > window.innerWidth - 8) {
+    left = Math.max(8, rect.left - popRect.width - 6);
+  }
+  pop.style.left = `${left}px`;
+  pop.style.top = `${Math.max(popRect.height + 8, rect.top - 6)}px`;
+
+  close.addEventListener("click", (event) => {
+    event.stopPropagation();
+    closeTechPop();
+  });
+
+  techPop = pop;
+  techPopKey = key;
+}
+
+iconButtons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+    if (techPopKey === button.dataset.tech) {
+      closeTechPop();
+      return;
+    }
+
+    openTechPop(button);
+  });
+});
+
+document.addEventListener("click", (event) => {
+  if (!techPop) return;
+  if (event.target.closest(".tech-pop") || event.target.closest(".icon-btn")) return;
+  closeTechPop();
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeTechPop();
 });
