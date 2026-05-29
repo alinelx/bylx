@@ -1,10 +1,13 @@
-/* ============================================================
-   BYLX — Hero Scene
-   Parallax artboard, layers, hotspots, animations.
-   ============================================================ */
-
-/* --- Base ------------------------------------------------- */
-
+/* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
+  _               _        
+ | |__    _   _  | | __  __
+ | '_ \  | | | | | | \ \/ /
+ | |_) | | |_| | | |  >  < 
+ |_.__/   \__, | |_| /_/\_\
+          |___/
+*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
+/* ᑲყᥣx hero animations */
+/*
 .hero-scene {
   position: relative;
   width: 100%;
@@ -12,7 +15,6 @@
   min-height: 720px;
   overflow: hidden;
   isolation: isolate;
-  image-rendering: pixelated;
   background: var(--purple);
 }
 
@@ -25,7 +27,6 @@
   min-width: 1024px;
   aspect-ratio: 16 / 9;
   pointer-events: none;
-  animation: artboard-breathe 12s ease-in-out infinite alternate;
   transform: translateX(-50%) translateY(0);
 }
 
@@ -34,7 +35,6 @@
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  animation: scene-glow 9s steps(3, end) infinite;
 }
 
 .layer,
@@ -42,19 +42,14 @@
 .icon,
 .poster,
 .toolbar {
-  image-rendering: pixelated;
   user-select: none;
   pointer-events: none;
 }
 
 .layer,
-.bg {
-  position: absolute;
-}
-
-.layer,
 .bg,
 .screen-item {
+  position: absolute;
   --move-x: 0px;
   --move-y: 0px;
   --base-transform: none;
@@ -62,18 +57,12 @@
   --float-y: 0px;
   --float-rotate: 0deg;
   --float-scale: 1;
-  --float-duration: 8s;
+  --float-duration: 7s;
   --float-delay: 0s;
   animation: hero-float var(--float-duration) ease-in-out var(--float-delay) infinite alternate;
   transform: var(--base-transform) translate3d(var(--move-x), var(--move-y), 0);
   will-change: transform;
 }
-
-.screen-item {
-  position: absolute;
-}
-
-/* --- Hotspots --------------------------------------------- */
 
 .hotspot {
   position: absolute;
@@ -85,14 +74,12 @@
   -webkit-appearance: none;
   pointer-events: auto;
   cursor: none;
-  image-rendering: pixelated;
 }
 
 .hotspot-visual {
   display: block;
   width: 100%;
   height: 100%;
-  image-rendering: pixelated;
   pointer-events: none;
   user-select: none;
 }
@@ -101,7 +88,6 @@
   display: block;
   width: 100%;
   height: auto;
-  image-rendering: pixelated;
   pointer-events: none;
   user-select: none;
   transform-origin: center;
@@ -112,8 +98,6 @@
   position: absolute;
   inset: -12%;
   opacity: 0;
-  background: rgba(255, 93, 187, 0.08);
-  image-rendering: pixelated;
   pointer-events: none;
   transition: opacity 120ms steps(2, end);
 }
@@ -137,14 +121,11 @@
   filter: brightness(0.96);
 }
 
-/* --- Instax hover animation ------------------------------- */
-
 .instax-sprite {
   display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  image-rendering: pixelated;
   pointer-events: none;
   user-select: none;
 }
@@ -158,7 +139,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  image-rendering: pixelated;
 }
 
 .hotspot-instax:hover .instax-sprite::before,
@@ -176,8 +156,6 @@
   to   { transform: translateX(-100%); }
 }
 
-/* --- Phone hover animation -------------------------------- */
-
 .hotspot-phone:hover img,
 .hotspot-phone:focus-visible img {
   animation: phone-ring 260ms steps(2, end) infinite;
@@ -191,8 +169,6 @@
   100% { transform: translateX(0) rotate(0deg); }
 }
 
-/* --- General hero animations ------------------------------ */
-
 .desktop-icons .icon {
   --icon-lift: 2px;
   animation: icon-bob 2.6s ease-in-out infinite alternate;
@@ -202,10 +178,8 @@
 .desktop-icons .icon-btn:nth-child(2n) .icon { animation-delay: -0.8s; }
 .desktop-icons .icon-btn:nth-child(3n) .icon { animation-delay: -1.4s; }
 
-.poster       { animation: poster-shimmer 7s steps(2, end) infinite; }
 .toolbar-fill { animation: toolbar-scan 3s steps(4, end) infinite; }
 
-/* --- Keyframes -------------------------------------------- */
 
 @keyframes hero-float {
   0% {
@@ -235,11 +209,6 @@
 @keyframes icon-bob {
   from { transform: translateY(0); }
   to   { transform: translateY(calc(var(--icon-lift) * -1)); }
-}
-
-@keyframes poster-shimmer {
-  0%, 90%, 100% { filter: none; }
-  92%            { filter: brightness(1.18) hue-rotate(8deg); }
 }
 
 @keyframes toolbar-scan {
@@ -282,12 +251,8 @@
   50%       { filter: brightness(1.12); }
 }
 
-/* --- Transform helpers ------------------------------------ */
-
 .flippedX { --base-transform: scaleX(-1); }
 .flippedY { --base-transform: scaleY(-1); }
-
-/* --- Scene positioning ------------------------------------ */
 
 .bg-skyline-left,
 .bg-skyline-right {
@@ -527,7 +492,6 @@
   -webkit-appearance: none;
   cursor: none;
   pointer-events: auto;
-  image-rendering: pixelated;
 }
 
 .icon-btn:hover .icon,
@@ -544,10 +508,9 @@
   filter: brightness(0.96);
 }
 
-/* Tech stack popover */
 .tech-pop {
   position: fixed;
-  z-index: 90001;
+  z-index: 77;
   min-width: 140px;
   max-width: 220px;
   padding: var(--space-3) var(--space-4);
@@ -587,8 +550,6 @@
   color: var(--muted);
 }
 
-/* Pixel window */
-
 .pixel-window {
   --tile: clamp(8px, 0.72vw, 15px);
   position: absolute;
@@ -600,7 +561,6 @@
   display: grid;
   grid-template-columns: var(--tile) 1fr var(--tile) var(--tile) var(--tile);
   grid-template-rows: var(--tile) 1fr var(--tile);
-  image-rendering: pixelated;
   pointer-events: none;
   --float-x: 2px;
   --float-y: 3px;
@@ -611,7 +571,6 @@
 .win {
   position: relative;
   overflow: hidden;
-  image-rendering: pixelated;
   animation: window-piece-flicker 5.2s steps(2, end) infinite;
 }
 
@@ -709,8 +668,6 @@
   animation-iteration-count: infinite, infinite;
   transform: scaleX(-1);
 }
-
-/* Screen items */
 
 .paint {
   z-index: 8;
@@ -815,3 +772,4 @@
   --float-duration: 5.4s;
   --float-delay: -2.6s;
 }
+*/

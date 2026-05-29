@@ -1,8 +1,12 @@
-/* ============================================================
-   BYLX — Base & Reset
-   Box model, body defaults, global element rules.
-   No component styles here.
-   ============================================================ */
+/* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
+  _               _        
+ | |__    _   _  | | __  __
+ | '_ \  | | | | | | \ \/ /
+ | |_) | | |_| | | |  >  < 
+ |_.__/   \__, | |_| /_/\_\
+          |___/
+*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
+/* ᑲყᥣx base */
 
 html,
 body,
@@ -25,5 +29,6 @@ body {
 
 img {
   display: block;
+  image-rendering: pixelated;
   max-width: 100%;
 }
