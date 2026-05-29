@@ -1,0 +1,364 @@
+{
+  "brand": {
+    "name": "bylx.dev",
+    "style": "clean pixel with selective glow",
+    "baseGrid": 64,
+    "keywords": [
+      "pixel",
+      "retro web",
+      "vaporwave",
+      "kawaii-tech",
+      "frontend",
+      "indie web",
+      "japan-inspired",
+      "dark UI"
+    ]
+  },
+  "palette": {
+    "core": {
+      "midnight": "#0B0820",
+      "deepPurple": "#1B103D",
+      "pixelViolet": "#5D3FD3",
+      "neonCyan": "#59F3FF",
+      "neonPink": "#FF5DBB",
+      "sakuraPink": "#FFC2E2",
+      "softLilac": "#DCCFFF",
+      "crtWhite": "#F7F2FF"
+    },
+    "illustration": {
+      "skinLight": "#F6D2B3",
+      "skinMid": "#DFA77E",
+      "skinShadow": "#9A6A52",
+      "hairDark": "#3A2433",
+      "hairMid": "#5A3A4D",
+      "hairHighlight": "#8A6072",
+      "sakura": "#FFB3D9",
+      "petalShadow": "#D97BB2",
+      "leafCyan": "#72F2E8",
+      "nightBlue": "#13264A",
+      "crtBlue": "#6ED8FF",
+      "terminalGreen": "#8BFFB7",
+      "retroPurple": "#7B5CFF",
+      "monitorShadow": "#1A1635"
+    },
+    "status": {
+      "success": "#8BFFB7",
+      "warning": "#FFE066",
+      "danger": "#FF5D8F",
+      "info": "#59F3FF"
+    }
+  },
+  "colorRules": {
+    "avoid": [
+      "pure black",
+      "pure white",
+      "random saturated colors",
+      "soft gradients",
+      "anti-aliased edges"
+    ],
+    "backgrounds": [
+      "midnight",
+      "deepPurple",
+      "nightBlue"
+    ],
+    "primaryAccents": [
+      "neonCyan",
+      "neonPink",
+      "pixelViolet"
+    ],
+    "highlightAccents": [
+      "sakuraPink",
+      "crtWhite",
+      "terminalGreen"
+    ]
+  },
+  "pixelArt": {
+    "tool": "Pixilart",
+    "baseCanvas": {
+      "small": "64x64",
+      "medium": "128x128",
+      "large": "256x256",
+      "hero": "1920x1080"
+    },
+    "export": {
+      "format": "PNG",
+      "background": "transparent",
+      "scaling": "nearest-neighbor",
+      "antiAliasing": false
+    },
+    "outline": {
+      "defaultColor": "#1B103D",
+      "secondaryColor": "#5D3FD3",
+      "thickness": "1px to 2px depending on asset size"
+    },
+    "glow": {
+      "type": "selective",
+      "allowedOn": [
+        "logo",
+        "monitor screens",
+        "stars",
+        "active buttons",
+        "hover states",
+        "cursor",
+        "neon signs"
+      ],
+      "avoidOn": [
+        "skin",
+        "hair",
+        "large backgrounds",
+        "all card borders at once",
+        "body text"
+      ]
+    }
+  },
+  "typography": {
+    "display": {
+      "font": "Press Start 2P",
+      "usage": [
+        "logo support",
+        "small labels",
+        "section tags",
+        "badges"
+      ]
+    },
+    "body": {
+      "font": "Space Grotesk",
+      "fallback": "Inter, system-ui, sans-serif",
+      "usage": [
+        "paragraphs",
+        "case studies",
+        "project descriptions"
+      ]
+    },
+    "mono": {
+      "font": "JetBrains Mono",
+      "fallback": "monospace",
+      "usage": [
+        "code snippets",
+        "terminal UI",
+        "technical notes"
+      ]
+    }
+  },
+  "spacing": {
+    "unit": 8,
+    "scale": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "24px",
+      "xl": "32px",
+      "2xl": "48px",
+      "3xl": "64px",
+      "4xl": "96px"
+    }
+  },
+  "layout": {
+    "maxWidth": "1120px",
+    "sectionPaddingDesktop": "96px 24px",
+    "sectionPaddingMobile": "64px 16px",
+    "grid": {
+      "desktop": 12,
+      "tablet": 8,
+      "mobile": 4
+    }
+  },
+  "components": {
+    "logo": {
+      "versions": [
+        "primary-blue-purple",
+        "alternate-pink-cyan",
+        "monochrome",
+        "tiny-favicon"
+      ],
+      "formats": [
+        "PNG transparent",
+        "SVG if manually traced later"
+      ]
+    },
+    "button": {
+      "height": "48px to 64px",
+      "border": "2px pixel outline",
+      "states": {
+        "idle": {
+          "background": "#1B103D",
+          "border": "#5D3FD3",
+          "text": "#F7F2FF"
+        },
+        "hover": {
+          "background": "#5D3FD3",
+          "border": "#59F3FF",
+          "glow": "cyan"
+        },
+        "pressed": {
+          "background": "#0B0820",
+          "border": "#FF5DBB",
+          "offset": "2px"
+        },
+        "disabled": {
+          "background": "#1A1635",
+          "border": "#5A3A4D",
+          "text": "#8A6072"
+        }
+      }
+    },
+    "window": {
+      "style": "retro OS window",
+      "parts": [
+        "top bar",
+        "corner pixels",
+        "title",
+        "window controls",
+        "content panel"
+      ],
+      "recommendedUse": [
+        "project preview",
+        "about card",
+        "contact form",
+        "terminal block"
+      ]
+    },
+    "projectPreview": {
+      "desktopFrame": {
+        "size": "960x600",
+        "asset": "browser-window-desktop.png"
+      },
+      "mobileFrame": {
+        "size": "390x844",
+        "asset": "phone-window-mobile.png"
+      },
+      "contentTypes": [
+        "screenshot",
+        "video loop",
+        "optional iframe"
+      ],
+      "iframeRule": "Load iframe only after user interaction"
+    },
+    "card": {
+      "background": "#1B103D",
+      "border": "#5D3FD3",
+      "hoverBorder": "#59F3FF",
+      "hoverGlow": "subtle"
+    },
+    "badge": {
+      "background": "#0B0820",
+      "border": "#5D3FD3",
+      "text": "#DCCFFF",
+      "active": {
+        "background": "#5D3FD3",
+        "text": "#F7F2FF"
+      }
+    }
+  },
+  "assets": {
+    "required": {
+      "ui": [
+        "ui-window",
+        "ui-button",
+        "ui-card-border",
+        "ui-tabs",
+        "ui-divider",
+        "ui-browser-frame",
+        "ui-phone-frame"
+      ],
+      "icons": [
+        "github",
+        "linkedin",
+        "mail",
+        "external-link",
+        "folder",
+        "terminal",
+        "monitor",
+        "code",
+        "arrow"
+      ],
+      "character": [
+        "avatar-idle",
+        "avatar-wink",
+        "avatar-typing",
+        "avatar-wave"
+      ],
+      "decorative": [
+        "sparkle-small",
+        "sparkle-medium",
+        "sakura-petal",
+        "star",
+        "moon",
+        "pixel-dot",
+        "scanline"
+      ],
+      "tech": [
+        "crt-monitor",
+        "keyboard",
+        "mouse",
+        "floppy-disk",
+        "camera",
+        "terminal-window"
+      ]
+    },
+    "namingConvention": "{category}-{name}-{state}-{size}.png",
+    "examples": [
+      "logo-primary-blue-purple-256.png",
+      "ui-window-idle-256.png",
+      "button-primary-hover-64.png",
+      "avatar-wink-256.png",
+      "decor-sparkle-small-16.png",
+      "preview-dark28-desktop.png",
+      "preview-dark28-mobile.png"
+    ]
+  },
+  "animation": {
+    "principles": [
+      "subtle",
+      "low frequency",
+      "not distracting",
+      "respect reduced motion"
+    ],
+    "allowed": {
+      "logo": [
+        "soft flicker",
+        "chromatic 1px offset",
+        "glow pulse"
+      ],
+      "cursor": [
+        "blink"
+      ],
+      "decorative": [
+        "slow floating",
+        "rare sparkle"
+      ],
+      "projectCards": [
+        "hover lift",
+        "screen glow"
+      ]
+    },
+    "avoid": [
+      "constant shaking",
+      "fast flashing",
+      "large animated backgrounds",
+      "too many simultaneous animations"
+    ]
+  },
+  "accessibility": {
+    "contrast": "AA minimum for text",
+    "motion": "prefers-reduced-motion supported",
+    "focusStates": "visible pixel outline",
+    "altText": "required for all meaningful illustrations",
+    "decorativeImages": "aria-hidden true"
+  },
+  "performance": {
+    "imageFormats": {
+      "pixelAssets": "PNG",
+      "screenshots": "WebP",
+      "largeBackgrounds": "WebP",
+      "icons": "PNG or inline SVG"
+    },
+    "rules": [
+      "compress screenshots",
+      "lazy-load project previews",
+      "do not autoplay heavy iframes",
+      "use iframe only after click",
+      "keep decorative assets small"
+    ]
+  }
+}

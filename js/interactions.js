@@ -1,7 +1,12 @@
-/* ============================================================
-   BYLX — interactions.js
-   Mouse-flee sprite, keyboard RGB glow, tech-icon popovers.
-   ============================================================ */
+/* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
+  _               _        
+ | |__    _   _  | | __  __
+ | '_ \  | | | | | | \ \/ /
+ | |_) | | |_| | | |  >  < 
+ |_.__/   \__, | |_| /_/\_\
+          |___/
+*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
+/* ᑲყᥣx interactions */
 
 export function initMouseFlee() {
   const mouseSprite = document.querySelector(".mouse");

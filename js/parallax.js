@@ -1,14 +1,12 @@
-/* ============================================================
-   BYLX — parallax.js
-   Mouse-driven parallax for the hero scene.
-
-   How it works:
-     - Each layer has a `depth` value.
-     - On mousemove, cursor position is normalised to [-0.5, 0.5].
-     - Each frame, current position lerps toward target (0.08 factor).
-     - The offset applied = normalised position × depth (in px).
-     - CSS custom properties --move-x / --move-y carry the value.
-   ============================================================ */
+/* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
+  _               _        
+ | |__    _   _  | | __  __
+ | '_ \  | | | | | | \ \/ /
+ | |_) | | |_| | | |  >  < 
+ |_.__/   \__, | |_| /_/\_\
+          |___/
+*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
+/* ᑲყᥣx parallax */
 
 import { prefersReducedMotion, isWiderThan, lerp } from "./utils.js";
 

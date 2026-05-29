@@ -1,7 +1,12 @@
-/* ============================================================
-   BYLX — Design Tokens
-   Single source of truth for all visual decisions.
-   ============================================================ */
+/* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
+  _               _        
+ | |__    _   _  | | __  __
+ | '_ \  | | | | | | \ \/ /
+ | |_) | | |_| | | |  >  < 
+ |_.__/   \__, | |_| /_/\_\
+          |___/
+*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
+/* ᑲყᥣx tokens */
 
 *,
 *::before,
@@ -10,7 +15,34 @@
 }
 
 :root {
-  /* ---------- Core palette (canonical bylx tokens) ---------- */
+
+  --midnight: #0B0820;
+  --deepPurple: #1B103D;
+  --pixelViolet: #5D3FD3;
+  --neonCyan: #59F3FF;
+  --neonPink: #FF5DBB;
+  --sakuraPink: #FFC2E2;
+  --softLilac: #DCCFFF;
+  --crtWhite: #F7F2FF;
+  --skinLight: #F6D2B3;
+  --skinMid: #DFA77E;
+  --skinShadow: #9A6A52;
+  --hairDark: #3A2433;
+  --hairMid: #5A3A4D;
+  --hairHighlight: #8A6072;
+  --sakura: #FFB3D9;
+  --petalShadow: #D97BB2;
+  --leafCyan: #72F2E8;
+  --nightBlue: #13264A;
+  --crtBlue: #6ED8FF;
+  --terminalGreen: #8BFFB7;
+  --retroPurple: #7B5CFF;
+  --monitorShadow: #1A1635;
+  --success: #8BFFB7;
+  --warning: #FFE066;
+  --danger: #FF5D8F;
+  --info: #59F3FF;
+
   --bylx-bg: #09051b;
   --bylx-bg-ink: #1d1640;
   --bylx-pink: #ff5dbb;
@@ -20,7 +52,6 @@
   --bylx-muted: #d8d0ff;
   --bylx-paper: #fff8ff;
 
-  /* ---------- Extended palette (derived) ---------- */
   --bylx-pink-ink: #c33a8e;
   --bylx-pink-glow: rgba(255, 93, 187, 0.42);
   --bylx-cyan-ink: #2bb8c8;
@@ -29,7 +60,6 @@
   --bylx-overlay: rgba(9, 5, 27, 0.78);
   --bylx-overlay-strong: rgba(9, 5, 27, 0.88);
 
-  /* ---------- Short aliases (kept for existing rules) ---------- */
   --bg: var(--bylx-bg);
   --pink: var(--bylx-pink);
   --cyan: var(--bylx-cyan);
@@ -38,11 +68,9 @@
   --muted: var(--bylx-muted);
   --paper: var(--bylx-paper);
 
-  /* ---------- Type ---------- */
   --font-pixel: "Pixelify Sans", system-ui, sans-serif;
   --font-ui: "Press Start 2P", monospace;
 
-  /* ---------- Spacing (4px base) ---------- */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -52,7 +80,6 @@
   --space-7: 3rem;
   --space-8: 4rem;
 
-  /* ---------- Borders / hard-offset shadows (never blurred) ---------- */
   --stroke-1: 2px;
   --stroke-2: 4px;
   --stroke-3: 7px;
@@ -62,28 +89,10 @@
   --shadow-chunk-cyan: 6px 6px 0 var(--bylx-cyan);
   --glow-cyan: 0 0 0 3px rgba(89, 243, 255, 0.9);
 
-  /* ---------- Motion (stepped easing — never linear/smooth) ---------- */
   --ease-step-2: steps(2, end);
   --ease-step-3: steps(3, end);
   --ease-step-4: steps(4, end);
   --dur-flicker: 2.8s;
   --dur-float: 8s;
   --dur-pulse: 4.8s;
-}
-
-/* Registered so the mouse-flee offsets can ease back to rest. */
-@property --flee-x {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-@property --flee-y {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-@property --flee-rot {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
 }

@@ -1,11 +1,12 @@
-/* ============================================================
-   BYLX — Sections
-   Projects, case-study modal, About, Footer.
-   ============================================================ */
-
-/* ========================================================
-   Projects Section
-   ======================================================== */
+/* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
+  _               _        
+ | |__    _   _  | | __  __
+ | '_ \  | | | | | | \ \/ /
+ | |_) | | |_| | | |  >  < 
+ |_.__/   \__, | |_| /_/\_\
+          |___/
+*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
+/* ᑲყᥣx sections */
 
 .projects {
   border-top: 4px solid var(--pink);
@@ -24,7 +25,7 @@
 
 .projects-header .eyebrow {
   margin-bottom: 0.4rem;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 }
 
 .projects-header h2 {
@@ -38,8 +39,6 @@
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   gap: 2rem;
 }
-
-/* Card */
 
 .project-card {
   display: flex;
@@ -65,8 +64,6 @@
   box-shadow: 9px 9px 0 var(--muted);
 }
 
-/* Card preview */
-
 .card-preview {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -75,20 +72,6 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-}
-
-.card-preview--dark28 {
-  background: #06040f;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 23px,
-    rgba(89, 243, 255, 0.07) 23px,
-    rgba(89, 243, 255, 0.07) 24px
-  );
-}
-
-.card-preview--bylx {
   background: var(--bg);
   background-image: repeating-linear-gradient(
     45deg,
@@ -110,15 +93,6 @@
   );
 }
 
-.card-preview-big-text {
-  font-family: var(--font-ui);
-  font-size: clamp(3rem, 8vw, 5rem);
-  color: var(--cyan);
-  letter-spacing: -0.02em;
-  user-select: none;
-  opacity: 0.85;
-}
-
 .card-preview-wip-text {
   color: var(--muted);
   opacity: 0.4;
@@ -127,11 +101,8 @@
 .card-preview-logo {
   width: 60%;
   max-width: 200px;
-  image-rendering: pixelated;
   opacity: 0.9;
 }
-
-/* Card body */
 
 .card-body {
   padding: 1.1rem 1.25rem 1.4rem;
@@ -149,7 +120,7 @@
   flex-wrap: wrap;
 }
 
-.card-tag {
+.card-status {
   font-family: var(--font-ui);
   font-size: 0.55rem;
   color: var(--muted);
@@ -157,7 +128,7 @@
   flex: 1;
 }
 
-.card-status {
+.card-tag {
   font-family: var(--font-ui);
   font-size: 0.46rem;
   padding: 0.25rem 0.5rem;
@@ -165,15 +136,14 @@
   white-space: nowrap;
   letter-spacing: 0.05em;
   flex-shrink: 0;
+  color: var(--cyan);
 }
-
-.card-status--live { color: var(--cyan); }
-.card-status--wip  { color: var(--pink); }
 
 .card-body h3 {
   margin: 0;
   font-size: clamp(1.4rem, 3vw, 1.9rem);
   line-height: 1.1;
+  color: var(--pink);
 }
 
 .card-body p {
@@ -182,68 +152,6 @@
   color: var(--muted);
   line-height: 1.65;
 }
-
-/* Card links */
-
-.card-links {
-  display: flex;
-  gap: 0.65rem;
-  margin-top: auto;
-  padding-top: 0.5rem;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.card-link {
-  font-family: var(--font-ui);
-  font-size: 0.55rem;
-  padding: 0.5rem 0.85rem;
-  text-decoration: none;
-  letter-spacing: 0.05em;
-  border: 2px solid transparent;
-  cursor: pointer;
-  display: inline-block;
-  background: none;
-  transition: transform 0.08s steps(2, end), box-shadow 0.08s steps(2, end);
-  line-height: 1;
-}
-
-.card-link:hover      { transform: translate(-2px, -2px); }
-.card-link:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(89, 243, 255, 0.9);
-}
-
-.card-link--primary {
-  background: var(--pink);
-  color: var(--bg);
-  border-color: var(--text);
-  box-shadow: 4px 4px 0 var(--text);
-}
-
-.card-link--primary:hover { box-shadow: 6px 6px 0 var(--text); }
-
-.card-link--case {
-  background: transparent;
-  color: var(--cyan);
-  border-color: var(--cyan);
-  box-shadow: 4px 4px 0 var(--cyan);
-}
-
-.card-link--case:hover { box-shadow: 6px 6px 0 var(--cyan); }
-
-.card-link--ghost {
-  background: transparent;
-  color: var(--muted);
-  border-color: var(--muted);
-  box-shadow: 4px 4px 0 var(--muted);
-}
-
-.card-link--ghost:hover { box-shadow: 6px 6px 0 var(--muted); }
-
-/* ========================================================
-   Case Study Modal
-   ======================================================== */
 
 .modal-window--wide {
   width: min(660px, calc(100vw - 2rem));
@@ -256,7 +164,7 @@
 }
 
 .cs-stack {
-  font-family: var(--font-ui);
+  font-family: var(--font-pixel);
   font-size: 0.52rem;
   color: var(--purple);
   letter-spacing: 0.04em;
@@ -330,14 +238,10 @@
   box-shadow: 6px 6px 0 var(--purple);
 }
 
-/* ========================================================
-   Modals + Contact Form
-   ======================================================== */
-
 .modal {
   position: fixed;
   inset: 0;
-  z-index: 90000;
+  z-index: 77;
   display: none;
 }
 
@@ -406,8 +310,7 @@
   font: inherit;
 }
 
-.contact-form button,
-.mp3-buttons button {
+.contact-form button {
   padding: 0.45rem 0.65rem;
   border: 3px solid var(--bg);
   background: var(--pink);
@@ -416,15 +319,11 @@
   text-transform: uppercase;
 }
 
-/* ========================================================
-   MP3 Player
-   ======================================================== */
-
 .mp3-controls {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
-  z-index: 80000;
+  z-index: 770;
   display: none;
   width: min(360px, calc(100vw - 2rem));
   padding: 0.75rem;
@@ -562,7 +461,6 @@
 
 .about-gif {
   width: 100%;
-  image-rendering: pixelated;
   border: 3px solid var(--purple);
   box-shadow: 5px 5px 0 var(--pink);
 }
@@ -582,19 +480,16 @@
   width: 100%;
   aspect-ratio: 1;
   object-fit: contain;
-  image-rendering: pixelated;
   opacity: 0.88;
   transition: opacity 0.08s steps(2, end), transform 0.08s steps(2, end);
+  background-color: var(--text);
+  padding: 7px;
 }
 
 .about-icons img:hover {
   opacity: 1;
   transform: translateY(-2px);
 }
-
-/* ========================================================
-   Footer
-   ======================================================== */
 
 .site-footer {
   border-top: 2px solid rgba(93, 63, 211, 0.4);
