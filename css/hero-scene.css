@@ -805,6 +805,10 @@
 }
 
 .bylx-logo {
+  left: 55%;
+  top: 65%;
+  width: 4.5%;
+  z-index: 10;
   --float-x: 4px;
   --float-y: 5px;
   --float-rotate: 0.8deg;
