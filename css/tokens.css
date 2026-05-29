@@ -1,0 +1,89 @@
+/* ============================================================
+   BYLX — Design Tokens
+   Single source of truth for all visual decisions.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  /* ---------- Core palette (canonical bylx tokens) ---------- */
+  --bylx-bg: #09051b;
+  --bylx-bg-ink: #1d1640;
+  --bylx-pink: #ff5dbb;
+  --bylx-cyan: #59f3ff;
+  --bylx-purple: #5d3fd3;
+  --bylx-text: #f7f2ff;
+  --bylx-muted: #d8d0ff;
+  --bylx-paper: #fff8ff;
+
+  /* ---------- Extended palette (derived) ---------- */
+  --bylx-pink-ink: #c33a8e;
+  --bylx-pink-glow: rgba(255, 93, 187, 0.42);
+  --bylx-cyan-ink: #2bb8c8;
+  --bylx-cyan-glow: rgba(89, 243, 255, 0.42);
+  --bylx-purple-ink: #2a1c84;
+  --bylx-overlay: rgba(9, 5, 27, 0.78);
+  --bylx-overlay-strong: rgba(9, 5, 27, 0.88);
+
+  /* ---------- Short aliases (kept for existing rules) ---------- */
+  --bg: var(--bylx-bg);
+  --pink: var(--bylx-pink);
+  --cyan: var(--bylx-cyan);
+  --purple: var(--bylx-purple);
+  --text: var(--bylx-text);
+  --muted: var(--bylx-muted);
+  --paper: var(--bylx-paper);
+
+  /* ---------- Type ---------- */
+  --font-pixel: "Pixelify Sans", system-ui, sans-serif;
+  --font-ui: "Press Start 2P", monospace;
+
+  /* ---------- Spacing (4px base) ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* ---------- Borders / hard-offset shadows (never blurred) ---------- */
+  --stroke-1: 2px;
+  --stroke-2: 4px;
+  --stroke-3: 7px;
+  --shadow-chunk-sm: 4px 4px 0 var(--bylx-pink);
+  --shadow-chunk-md: 7px 7px 0 var(--bylx-pink);
+  --shadow-chunk-lg: 9px 9px 0 var(--bylx-pink);
+  --shadow-chunk-cyan: 6px 6px 0 var(--bylx-cyan);
+  --glow-cyan: 0 0 0 3px rgba(89, 243, 255, 0.9);
+
+  /* ---------- Motion (stepped easing — never linear/smooth) ---------- */
+  --ease-step-2: steps(2, end);
+  --ease-step-3: steps(3, end);
+  --ease-step-4: steps(4, end);
+  --dur-flicker: 2.8s;
+  --dur-float: 8s;
+  --dur-pulse: 4.8s;
+}
+
+/* Registered so the mouse-flee offsets can ease back to rest. */
+@property --flee-x {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --flee-y {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --flee-rot {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}

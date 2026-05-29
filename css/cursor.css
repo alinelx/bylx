@@ -1,0 +1,79 @@
+/* ============================================================
+   BYLX — Cursor
+   Custom pixel cursor + sakura petal trail.
+   ============================================================ */
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  background-image: url("../assets/cursor/arrow.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+  transform: translate(-4px, -4px);
+  will-change: transform;
+  transition:
+    opacity 0.15s ease,
+    background-image 0.08s linear;
+}
+
+.cursor.hover {
+  background-image: url("../assets/cursor/pointer.png");
+}
+
+.cursor.click {
+  background-image: url("../assets/cursor/click.png");
+  transform: translate(-4px, -4px) scale(0.95);
+}
+
+/* Sakura cursor trail — petals drop while moving, burst on click. */
+.sakura-cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 99997;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sakura-bit {
+  position: absolute;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+  transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  opacity: 0;
+  filter: drop-shadow(0 0 4px rgba(255, 93, 187, 0.45));
+  animation-name: sakura-bit;
+  animation-timing-function: cubic-bezier(0.2, 0.55, 0.4, 1);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  will-change: transform, opacity;
+}
+
+@keyframes sakura-bit {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  }
+  18% {
+    opacity: 1;
+    transform:
+      translate(calc(-50% + var(--dx, 0px) * 0.18), calc(-50% + var(--dy, 0px) * 0.18))
+      scale(1)
+      rotate(calc(var(--spin, 120deg) * 0.18));
+    filter: drop-shadow(0 0 6px rgba(89, 243, 255, 0.55));
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px)))
+      scale(0.55)
+      rotate(var(--spin, 120deg));
+    filter: drop-shadow(0 0 2px rgba(255, 93, 187, 0.15));
+  }
+}

@@ -1,0 +1,147 @@
+/* ============================================================
+   BYLX — Responsive
+   Breakpoint overrides. Must be last so they always win.
+   ============================================================ */
+
+@media (max-width: 1400px) {
+  .hero-scene {
+    min-height: 780px;
+  }
+
+  .hero-artboard {
+    min-width: 0;
+  }
+
+  .hero-copy {
+    top: clamp(0.8rem, 2.5vw, 1.2rem);
+    left: clamp(0.8rem, 2.5vw, 1.2rem);
+    width: min(16rem, calc(100% - 1.6rem));
+  }
+
+  .eyebrow {
+    max-width: 29ch;
+    font-size: clamp(0.32rem, 0.95vw, 0.42rem);
+  }
+
+  h1 {
+    max-width: 12ch;
+    font-size: clamp(1.35rem, 4.6vw, 2.05rem);
+  }
+
+  .hero-copy p:not(.eyebrow) {
+    max-width: 16rem;
+    font-size: clamp(0.72rem, 1.9vw, 0.9rem);
+  }
+
+  .hero-copy a {
+    padding: 0.52rem 0.74rem;
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 1180px) {
+  .hero-copy {
+    width: min(14rem, 23vw);
+  }
+}
+
+@media (max-width: 720px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .about-side {
+    position: static;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  .about-gif {
+    width: min(160px, 40%);
+    flex-shrink: 0;
+  }
+
+  .about-stack {
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .footer-links {
+    flex: none;
+  }
+}
+
+@media (max-width: 520px) {
+  html,
+  body,
+  * {
+    cursor: auto !important;
+  }
+
+  .cursor {
+    display: none;
+  }
+
+  .hero-scene {
+    min-height: 740px;
+  }
+
+  .hero-copy {
+    width: calc(100% - 1.6rem);
+  }
+
+  .eyebrow {
+    font-size: 0.34rem;
+  }
+
+  h1 {
+    max-width: 12ch;
+    font-size: clamp(1.24rem, 6.7vw, 1.92rem);
+  }
+
+  .hero-copy p:not(.eyebrow) {
+    max-width: 15.5rem;
+    font-size: 0.74rem;
+  }
+
+  .about-side {
+    flex-direction: column;
+  }
+
+  .about-gif {
+    width: min(200px, 60%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .layer,
+  .bg,
+  .screen-item,
+  .hotspot-phone:hover .hotspot-visual,
+  .hotspot-phone:focus-visible .hotspot-visual,
+  .hotspot-instax:hover .instax-sprite,
+  .hotspot-instax:focus-visible .instax-sprite {
+    animation: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .sakura-bit {
+    animation-duration: 600ms !important;
+  }
+
+  .hero-copy a:hover,
+  .hero-copy a:focus-visible {
+    transform: none;
+  }
+
+  .mp3-marquee-window.is-scrolling .mp3-marquee-text {
+    animation: none;
+  }
+}
