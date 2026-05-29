@@ -1,0 +1,103 @@
+/* ============================================================
+   BYLX — Hero Copy
+   Overlay panel with headline, description, and CTA.
+   ============================================================ */
+
+@keyframes copy-panel-breathe {
+  0%, 100% { box-shadow: 7px 7px 0 var(--pink); }
+  50%       { box-shadow: 9px 9px 0 var(--pink); }
+}
+
+@keyframes text-spark {
+  0%, 100% { filter: none; }
+  50%       { filter: brightness(1.15); }
+}
+
+@keyframes headline-shift {
+  0%, 100% { text-shadow: 1px 1px 0 rgba(9, 5, 27, 0.88); }
+  50% {
+    text-shadow:
+      1px 1px 0 rgba(9, 5, 27, 0.88),
+      2px 0 0 rgba(89, 243, 255, 0.42);
+  }
+}
+
+@keyframes cta-blink {
+  0%, 100% { color: var(--cyan); }
+  50%       { color: var(--text); }
+}
+
+.hero-copy {
+  position: absolute;
+  top: clamp(0.85rem, 2.3vh, 1.55rem);
+  left: clamp(0.85rem, 2.2vw, 2.5rem);
+  z-index: 30;
+  width: min(30rem, 30vw);
+  padding: 0.64rem 0.7rem 0.72rem;
+  color: var(--text);
+  background: rgba(9, 5, 27, 0.78);
+  border: 7px solid var(--cyan);
+  box-shadow: 7px 7px 0 var(--pink);
+  text-shadow:
+    1px 1px 0 rgba(9, 5, 27, 0.88),
+    0 0 10px rgba(9, 5, 27, 0.7);
+  animation: copy-panel-breathe 4.8s steps(2, end) infinite;
+}
+
+.eyebrow {
+  margin: 0 0 0.44rem;
+  color: var(--cyan);
+  font-family: var(--font-ui);
+  font-size: clamp(0.7rem, 0.7vw, 0.7rem);
+  line-height: 1.55;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  animation: text-spark 2.8s steps(2, end) infinite;
+}
+
+h1 {
+  max-width: 20ch;
+  margin: 0;
+  font-family: var(--font-pixel);
+  font-size: clamp(4rem, 1vw, 1rem);
+  font-weight: 200;
+  line-height: 0.96;
+  letter-spacing: 0;
+  overflow-wrap: break-word;
+  animation: headline-shift 5.4s steps(2, end) infinite;
+}
+
+.hero-copy p:not(.eyebrow) {
+  max-width: 27rem;
+  margin: 0.48rem 0 0;
+  color: var(--text);
+  font-family: var(--font-pixel);
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.16;
+  animation: text-spark 3.2s steps(2, end) infinite reverse;
+}
+
+.hero-copy a {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 0.7rem;
+  color: var(--cyan);
+  background: var(--pink);
+  border: 2px solid rgba(9, 5, 27, 0.72);
+  box-shadow: none;
+  font-family: var(--font-pixel);
+  font-size: clamp(1.2rem, 1.2vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  text-shadow: none;
+  word-spacing: 0.12rem;
+  text-transform: uppercase;
+  animation: cta-blink 2.2s steps(2, end) infinite;
+}
+
+.hero-copy a:hover,
+.hero-copy a:focus-visible {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 rgba(89, 243, 255, 0.82);
+}

@@ -1,0 +1,29 @@
+/* ============================================================
+   BYLX — Base & Reset
+   Box model, body defaults, global element rules.
+   No component styles here.
+   ============================================================ */
+
+html,
+body,
+* {
+  cursor: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-pixel);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
