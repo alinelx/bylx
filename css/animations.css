@@ -1,0 +1,114 @@
+/* ============================================================
+   BYLX — Scroll-Driven Animations & Polish
+   Uses CSS animation-timeline: view() — supported in
+   Chrome 115+, Firefox 114+, Safari 18+.
+   Wrapped in @supports so older browsers see nothing wrong.
+   ============================================================ */
+
+/* --------------------------------------------------------
+   Project cards — pixel-step entrance on scroll
+   -------------------------------------------------------- */
+@supports (animation-timeline: scroll()) {
+  @keyframes card-enter {
+    0%   { opacity: 0; translate: 0 16px; }
+    33%  { opacity: 0; translate: 0 10px; }
+    66%  { opacity: 1; translate: 0 4px; }
+    100% { opacity: 1; translate: 0 0; }
+  }
+
+  .project-card {
+    animation: card-enter steps(4, end) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+
+  .project-card:nth-child(2) { animation-delay: -20ms; }
+  .project-card:nth-child(3) { animation-delay: -40ms; }
+}
+
+/* --------------------------------------------------------
+   About icons — stagger entrance on scroll
+   -------------------------------------------------------- */
+@supports (animation-timeline: scroll()) {
+  @keyframes icon-enter {
+    from { opacity: 0; scale: 0.7; }
+    to   { opacity: 0.88; scale: 1; }
+  }
+
+  .about-icons img {
+    animation: icon-enter steps(3, end) both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 55%;
+  }
+
+  .about-icons img:nth-child(2) { animation-delay: -30ms; }
+  .about-icons img:nth-child(3) { animation-delay: -60ms; }
+  .about-icons img:nth-child(4) { animation-delay: -90ms; }
+  .about-icons img:nth-child(5) { animation-delay: -20ms; }
+  .about-icons img:nth-child(6) { animation-delay: -50ms; }
+  .about-icons img:nth-child(7) { animation-delay: -80ms; }
+  .about-icons img:nth-child(8) { animation-delay: -110ms; }
+}
+
+/* --------------------------------------------------------
+   Section headings — slide in from left on scroll
+   -------------------------------------------------------- */
+@supports (animation-timeline: scroll()) {
+  @keyframes heading-enter {
+    from { opacity: 0; translate: -8px 0; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  .projects-header,
+  .about-heading {
+    animation: heading-enter steps(3, end) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+}
+
+/* --------------------------------------------------------
+   About layout — text block fade in
+   -------------------------------------------------------- */
+@supports (animation-timeline: scroll()) {
+  @keyframes text-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .about-text {
+    animation: text-fade-in steps(2, end) both;
+    animation-timeline: view();
+    animation-range: entry 5% entry 40%;
+  }
+}
+
+/* --------------------------------------------------------
+   CTA hover — pixel shift on the "Get in touch" button
+   -------------------------------------------------------- */
+@keyframes cta-hover-pulse {
+  0%, 100% { box-shadow: 5px 5px 0 var(--cyan); }
+  50%       { box-shadow: 7px 7px 0 var(--cyan); }
+}
+
+/* Keyboard glow also pulses on hover (handled in sections.css) */
+
+/* --------------------------------------------------------
+   Scrollbar — styled to match the pixel palette
+   -------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bylx-bg-ink);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bylx-purple);
+  border: 2px solid var(--bylx-bg-ink);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bylx-pink);
+}

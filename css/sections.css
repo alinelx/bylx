@@ -19,7 +19,7 @@
 }
 
 .projects-header {
-  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
 .projects-header .eyebrow {
@@ -523,8 +523,8 @@
 
 .about-cta {
   align-self: flex-start;
-  margin-top: 0.5rem;
-  padding: 0.6rem 1.1rem;
+  margin-top: 0.75rem;
+  padding: 0.65rem 1.2rem;
   background: var(--pink);
   color: var(--bg);
   border: 3px solid var(--text);
@@ -536,6 +536,7 @@
   cursor: pointer;
   transition: transform 0.08s steps(2, end), box-shadow 0.08s steps(2, end);
   line-height: 1;
+  animation: cta-hover-pulse 3.6s steps(2, end) infinite;
 }
 
 .about-cta:hover,
@@ -543,6 +544,7 @@
   transform: translate(-2px, -2px);
   box-shadow: 7px 7px 0 var(--cyan);
   outline: none;
+  animation: none;
 }
 
 .about-cta:focus-visible {

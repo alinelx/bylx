@@ -24,8 +24,8 @@
   }
 
   h1 {
-    max-width: 12ch;
-    font-size: clamp(1.35rem, 4.6vw, 2.05rem);
+    max-width: 13ch;
+    font-size: clamp(1.6rem, 4.2vw, 2.8rem);
   }
 
   .hero-copy p:not(.eyebrow) {
