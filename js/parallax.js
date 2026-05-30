@@ -1,11 +1,11 @@
 /* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
-  _               _        
+  _               _
  | |__    _   _  | | __  __
  | '_ \  | | | | | | \ \/ /
- | |_) | | |_| | | |  >  < 
+ | |_) | | |_| | | |  >  <
  |_.__/   \__, | |_| /_/\_\
           |___/
-*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
+*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx parallax */
 
 import { prefersReducedMotion, isWiderThan, lerp } from "./utils.js";
@@ -47,17 +47,34 @@ function buildLayerMap() {
   }));
 }
 
+const EPSILON = 0.0005;
+const SCALE   = 6; // px per depth unit per half-offset (was 4)
+
 function applyOffsets(layerMap) {
+  if (document.hidden) {
+    requestAnimationFrame(() => applyOffsets(layerMap));
+    return;
+  }
+
+  const prevX = currentX;
+  const prevY = currentY;
   currentX = lerp(currentX, targetX, 0.08);
   currentY = lerp(currentY, targetY, 0.08);
 
-  for (const { depth, elements } of layerMap) {
-    const moveX = currentX * depth * 4;
-    const moveY = currentY * depth * 4;
+  const converged =
+    Math.abs(currentX - prevX) < EPSILON &&
+    Math.abs(currentY - prevY) < EPSILON &&
+    Math.abs(currentX)          < EPSILON &&
+    Math.abs(currentY)          < EPSILON;
 
-    for (const el of elements) {
-      el.style.setProperty("--move-x", `${moveX}px`);
-      el.style.setProperty("--move-y", `${moveY}px`);
+  if (!converged) {
+    for (const { depth, elements } of layerMap) {
+      const moveX = currentX * depth * SCALE;
+      const moveY = currentY * depth * SCALE;
+      for (const el of elements) {
+        el.style.setProperty("--move-x", `${moveX}px`);
+        el.style.setProperty("--move-y", `${moveY}px`);
+      }
     }
   }
 
@@ -66,32 +83,28 @@ function applyOffsets(layerMap) {
 
 function onPointerMove(event, hero) {
   const rect = hero.getBoundingClientRect();
-
   const isOutside =
-    event.clientX < rect.left ||
+    event.clientX < rect.left  ||
     event.clientX > rect.right ||
-    event.clientY < rect.top  ||
+    event.clientY < rect.top   ||
     event.clientY > rect.bottom;
 
-  if (isOutside) {
-    targetX = 0;
-    targetY = 0;
-    return;
-  }
+  if (isOutside) { targetX = 0; targetY = 0; return; }
 
   targetX = (event.clientX - rect.left) / rect.width  - 0.5;
   targetY = (event.clientY - rect.top)  / rect.height - 0.5;
 }
 
 export function initParallax() {
-  const hero = document.querySelector("#hero");
+  if (prefersReducedMotion()) return;
 
-  if (!hero)               return;
-  if (!isWiderThan(901))   return;
+  const hero = document.querySelector("#hero");
+  if (!hero)             return;
+  if (!isWiderThan(901)) return;
 
   const layerMap = buildLayerMap();
 
-  window.addEventListener("pointermove", (e) => onPointerMove(e, hero));
+  window.addEventListener("pointermove", (e) => onPointerMove(e, hero), { passive: true });
   hero.addEventListener("pointerleave",  () => { targetX = 0; targetY = 0; });
   window.addEventListener("blur",        () => { targetX = 0; targetY = 0; });
 

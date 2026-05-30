@@ -32,3 +32,28 @@ img {
   image-rendering: pixelated;
   max-width: 100%;
 }
+
+/* CSS background-images (instax sprite, win chrome, etc.) also render pixelated */
+*::before,
+*::after {
+  image-rendering: pixelated;
+}
+
+/* Prevent anti-aliasing from blurring bitmap font pixels at small sizes */
+.eyebrow,
+.card-tag, .card-status,
+.cs-heading,
+.footer-brand, .footer-links a, .footer-copy,
+.window-title,
+.mp3-player-label, .mp3-now-playing, .mp3-buttons button,
+.tech-pop-titletext, .tech-pop-close,
+.modal-header h2, .modal-close,
+.about-cta,
+.wip-eta-label, .wip-eta-date {
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+}
+
+/* Ensure Press Start 2P never renders below legible pixel threshold */
+.footer-copy { font-size: max(0.5rem, 0.4rem); }
+.card-tag    { font-size: max(0.5rem, 0.46rem); }
