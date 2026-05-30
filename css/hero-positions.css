@@ -210,6 +210,20 @@
   height: auto;
 }
 
+/* Restored from old styles.css — was lost during refactor */
+.instax {
+  z-index: 7;
+  left: 60%;
+  top: 60%;
+  width: 14%;
+  height: auto;
+  --float-x: 3px;
+  --float-y: 5px;
+  --float-rotate: -0.8deg;
+  --float-duration: 5.8s;
+  --float-delay: -1.5s;
+}
+
 .win-bg {
   z-index: 8;
   left: 37%;
@@ -217,7 +231,8 @@
   width: 25%;
   height: 30%;
   object-fit: cover;
-  filter: hue-rotate(45deg);
+  /* Slightly muted so the CRT isn't blinding in dark mode */
+  filter: hue-rotate(45deg) brightness(0.82);
 }
 
 .desktop-icons {
@@ -247,46 +262,64 @@
   pointer-events: auto;
 }
 
+/* tech-pop: Win9x mini window inside the CRT (z-index 9 = above desktop at 8, framed by monitor at 10) */
 .tech-pop {
   position: absolute;
-  z-index: 77;
-  min-width: 140px;
-  max-width: 220px;
-  padding: var(--space-3) var(--space-4);
-  color: var(--text);
-  background: var(--bylx-overlay-strong);
-  border: var(--stroke-2) solid var(--cyan);
-  box-shadow: var(--shadow-chunk-sm);
-  transform: translateY(-100%);
+  z-index: 9;
+  min-width: 130px;
+  max-width: 200px;
+  border: 2px solid var(--bylx-bg);
+  box-shadow: 3px 3px 0 var(--bylx-bg);
+  overflow: hidden;
+}
+
+.tech-pop-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 2px 3px;
+  background: var(--cyan);
+  border-bottom: 2px solid var(--bylx-bg);
+  pointer-events: auto;
+}
+
+.tech-pop-titletext {
+  font-family: var(--font-ui);
+  font-size: clamp(0.3rem, 0.32vw, 0.48rem);
+  color: var(--bylx-bg);
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  flex: 1;
+  -webkit-font-smoothing: none;
 }
 
 .tech-pop-close {
-  position: absolute;
-  top: 2px;
-  right: 4px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--cyan);
+  flex: 0 0 auto;
+  padding: 0 2px;
+  border: 1px solid var(--bylx-bg);
+  background: var(--bylx-muted);
+  color: var(--bylx-bg);
   font-family: var(--font-ui);
-  font-size: 0.7rem;
-  line-height: 1;
+  font-size: clamp(0.28rem, 0.3vw, 0.44rem);
+  line-height: 1.4;
   cursor: none;
+  pointer-events: auto;
 }
 
-.tech-pop-name {
-  margin: 0 0 var(--space-1);
-  font-family: var(--font-ui);
-  font-size: 0.7rem;
-  color: var(--pink);
+.tech-pop-body {
+  padding: var(--space-2) var(--space-3);
+  background: #c4c0e0; /* matches pixel-window CRT tone */
 }
 
 .tech-pop-sub {
   margin: 0;
   font-family: var(--font-pixel);
-  font-size: 0.95rem;
-  line-height: 1.2;
-  color: var(--muted);
+  font-size: clamp(0.6rem, 0.65vw, 0.85rem);
+  line-height: 1.25;
+  color: var(--bylx-bg);
 }
 
 .pixel-window {
@@ -300,8 +333,17 @@
   display: grid;
   grid-template-columns: var(--tile) 1fr var(--tile) var(--tile) var(--tile);
   grid-template-rows: var(--tile) 1fr var(--tile);
-  background-color: var(--text);
+  /* Tinted to match hue-shifted CRT — less stark than pure white */
+  background-color: #c4c0e0;
   pointer-events: none;
+}
+
+.win-content {
+  grid-column: 2 / 5;
+  grid-row: 2 / 3;
+  overflow: hidden;
+  background: #c4c0e0;
+  margin: 0% 0% 5% 0%;
 }
 
 .win {
@@ -360,13 +402,7 @@
   background-size: 100% auto;
 }
 
-.win-content {
-  grid-column: 2 / 5;
-  grid-row: 2 / 3;
-  overflow: hidden;
-  background: var(--text);
-  margin: 0% 0% 5% 0%;
-}
+/* .win-content defined above with pixel-window */
 
 .poster {
   width: 100%;

@@ -114,6 +114,118 @@
   .about-gif {
     width: min(200px, 60%);
   }
+
+  /* Secondary diorama props hidden on narrow screens */
+  .sushi,
+  .cocktail {
+    display: none;
+  }
+}
+
+/* ── MP3 player: top bar on mobile ──────────────────────── */
+@media (max-width: 720px) {
+  .mp3-controls.is-visible {
+    position: fixed;
+    inset: 0 0 auto 0;
+    right: 0;
+    bottom: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    border-width: 0 0 3px 0;
+    box-shadow: none;
+  }
+
+  .mp3-titlebar {
+    display: none;
+  }
+
+  .mp3-body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mp3-track-area {
+    flex: 1;
+    min-width: 0;
+    gap: 0.1rem;
+  }
+
+  .mp3-now-playing { display: none; }
+
+  .mp3-marquee-text { font-size: 0.75rem; }
+
+  /* Keep only play/pause/next on mobile */
+  .mp3-buttons {
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+  }
+
+  .mp3-buttons button { display: none; }
+
+  .mp3-buttons button[data-audio-action="play"],
+  .mp3-buttons button[data-audio-action="pause"],
+  .mp3-buttons button[data-audio-action="next"] {
+    display: block;
+    padding: 0.25rem 0.4rem;
+    font-size: 0.38rem;
+  }
+}
+
+/* ── Light mode: sections below the hero ────────────────── */
+@media (prefers-color-scheme: light) {
+  /* The hero is a night CRT scene — keep it dark */
+  .hero-scene { background: #1b103d; }
+
+  /* Hero text panel: legible on dark hero background */
+  .hero-text {
+    background: rgba(237, 232, 255, 0.9);
+    border-color: var(--bylx-cyan);
+    color: var(--bylx-text);
+    text-shadow: none;
+  }
+
+  .hero-text p,
+  .hero-text h1 { color: var(--bylx-text); }
+
+  /* Modal backdrops always stay dark for focus */
+  .modal-backdrop { background: rgba(9, 5, 27, 0.76); }
+
+  /* Modal window on light bg */
+  .modal-window {
+    color: var(--bylx-text);
+    background: var(--bylx-paper);
+    border-color: var(--bylx-cyan);
+  }
+
+  .modal-header {
+    color: var(--bylx-paper);
+    background: var(--bylx-cyan);
+  }
+
+  .case-study-body p,
+  .case-study-body li,
+  .cs-heading,
+  .cs-stack,
+  .wip-sub { color: var(--bylx-text); }
+
+  /* CRT internals stay dark/CRT-toned */
+  .pixel-window  { background-color: #c4c0e0; }
+  .win-content   { background: #c4c0e0; }
+  .tech-pop-body { background: #c4c0e0; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar-track { background: var(--bylx-bg-ink); }
+  ::-webkit-scrollbar-thumb { background: var(--bylx-cyan);   }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -131,6 +243,12 @@
     animation: none;
     transition: none;
     will-change: auto;
+    /* Reset JS-driven parallax offsets */
+    --move-x: 0px !important;
+    --move-y: 0px !important;
+    --flee-x: 0px !important;
+    --flee-y: 0px !important;
+    --flee-rot: 0deg !important;
   }
 
   .sakura-bit {
