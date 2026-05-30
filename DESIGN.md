@@ -1,22 +1,17 @@
 # bylx.dev — Design language
 
 > A pixel-art portfolio for **Aline** (`alinelx`) — a front-end developer and
-> designer built at the crossroads of Brazil and Portugal. Half Y2K cyber-café
-> desktop, half nostalgic vacation diorama.
-
-This document is the brand + design reference for **bylx.dev**. Keep it in sync
-with the site so future work (new sections, mockups, slides) looks like it
-belongs to the same world. The canonical design tokens live in `styles.css`
-(`:root`); the rules below explain how to use them.
+> designer built at the crossroads of Brazil and Portugal. Half
+> desktop, half nostalgic y2k diorama.
 
 ## What the site is
 
 A single-page portfolio that opens on a **diorama hero scene**: an isometric
 desk with a CRT monitor showing a Windows-9x-style desktop, framed by a
 hand-drawn iron-railing window. Outside it, skyline silhouettes of **Rio de
-Janeiro** (Cristo Redentor, Pão de Açúcar, two morros) and **Lisbon** (Ponte 25
+Janeiro** (Cristo Redentor, Pão de Açúcar, two hills) and **Lisbon** (Ponte 25
 de Abril, Torre de Belém) sit together. The monitor plays a tiny Japan-poster
-scene — the third pole of the music vocabulary (lo-fi / city-pop / synthwave).
+scene — the third pole of the aesthetic.
 
 Everything is pixel-perfect, the cursor is replaced with a pixel pointer, and
 small props are interactive:
@@ -36,7 +31,7 @@ page, not a corporate developer site.
 
 1. **Hand-crafted pixel-art world.** Every visible element is a pixel-art PNG.
    Image rendering is forced `pixelated`. Type is bitmappy.
-2. **Y2K cyber-café nostalgia.** CRT monitor, Win9x window chrome, MS-Paint
+2. **Y2K nostalgia.** CRT monitor, Win9x window chrome, MS-Paint
    frame, mechanical keyboard, an MP3 player you click to spin lo-fi.
 3. **Two cities, one diorama.** Rio + Lisbon skylines share the wall behind the
    desk — the artist's biography baked into the scene.
@@ -52,8 +47,6 @@ page, not a corporate developer site.
 - **Em dash is the favorite connector** — it matches the stitched-together vibe.
 - Lean into craft + tactile words: *playful, useful, building, pixel, retro,
   lo-fi, neon*. Avoid SaaS tropes (*empower, unlock, seamless, world-class*).
-- **No emoji**, no unicode pseudo-icons (✓, ★, →). Personality comes from
-  images, not glyphs.
 
 ## Color
 
@@ -134,10 +127,6 @@ in `assets/`.
   in `assets/hero/`, otherwise draw a labeled empty pixel box. **Never** import
   Lucide / Heroicons / Material — they read as immediately off-brand.
 
-## Z-index bands
-
-`1` skyline → `~30` hero copy → `80000` MP3 controls → `90000` modals →
-`90001` tech popover → `99997` sakura trail → `99999` custom cursor.
 
 ---
 
