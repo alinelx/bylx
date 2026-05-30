@@ -161,7 +161,7 @@
 
         <div class="projects-grid">
 
-          <article class="project-card" aria-labelledby="card-dark28-title">
+          <article class="project-card" aria-labelledby="card-dark28-title" data-card-modal="casestudy-dark28-modal">
             <div class="card-preview card-preview--dark28" aria-hidden="true">
               <span class="card-preview-big-text">28</span>
             </div>
@@ -180,7 +180,7 @@
             </div>
           </article>
 
-          <article class="project-card" aria-labelledby="card-bylx-title">
+          <article class="project-card" aria-labelledby="card-bylx-title" data-card-modal="casestudy-bylx-modal">
             <div class="card-preview card-preview--bylx" aria-hidden="true">
               <img src="assets/logo/bylx_logo_line_cyan.png" alt="" class="card-preview-logo" />
             </div>
@@ -193,12 +193,13 @@
               <p>This portfolio — a pixel-art Y2K cyber-café where Rio de Janeiro and Lisbon share a desk.</p>
               <div class="card-links">
                 <a href="https://bylx.dev" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit site</a>
+                <button type="button" class="card-link card-link--case" data-modal-target="casestudy-bylx-modal">Case study</button>
                 <a href="https://github.com/alinelx/bylx" class="card-link card-link--ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
               </div>
             </div>
           </article>
 
-          <article class="project-card project-card--wip" aria-labelledby="card-wip-title">
+          <article class="project-card project-card--wip" aria-labelledby="card-wip-title" data-card-modal="wip-modal">
             <div class="card-preview card-preview--wip" aria-hidden="true">
               <span class="card-preview-big-text card-preview-wip-text">?</span>
             </div>
@@ -209,6 +210,9 @@
               </div>
               <h3 id="card-wip-title">Designer Portfolio</h3>
               <p>Portfolio for a product designer specialised in urban furniture — where physical design meets the web.</p>
+              <div class="card-links">
+                <button type="button" class="card-link card-link--case" data-modal-target="wip-modal">See what's cooking</button>
+              </div>
             </div>
           </article>
 
@@ -335,22 +339,95 @@
       </section>
     </div>
 
-    <div class="mp3-controls" aria-label="Music controls">
-      <p class="mp3-title">
-        <span class="mp3-now">Now playing:</span>
-        <span class="mp3-marquee-window">
-          <span class="mp3-marquee-text" data-track-title>None</span>
-        </span>
-      </p>
+    <!-- bylx.dev case study -->
+    <div class="modal pixel-modal" id="casestudy-bylx-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
 
-      <div class="mp3-buttons">
-        <button type="button" data-audio-action="prev">Prev</button>
-        <button type="button" data-audio-action="play">Play</button>
-        <button type="button" data-audio-action="pause">Pause</button>
-        <button type="button" data-audio-action="next">Next</button>
-        <button type="button" data-audio-action="stop">Stop</button>
-        <button type="button" data-audio-action="volume-down">Vol -</button>
-        <button type="button" data-audio-action="volume-up">Vol +</button>
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-bylx-title">
+        <header class="modal-header">
+          <h2 id="casestudy-bylx-title">bylx.dev — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p class="cs-stack">HTML · CSS · Vanilla JS · <a href="https://bylx.dev" target="_blank" rel="noopener noreferrer">bylx.dev ↗</a></p>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>Most developer portfolios look like SaaS landing pages — clean, generic, effortful only about the wrong things. I wanted a portfolio that was itself the work: proof of hand-crafted design and technical curiosity, before a single line of copy is read.</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>A single-page portfolio built as a pixel-art diorama: an isometric Y2K cyber-café desk with a CRT monitor, where the skylines of Rio de Janeiro and Lisbon share the wall behind it. The scene is fully interactive — every object on the desk is a prop that does something.</p>
+          <ul class="cs-list">
+            <li>Cursor-parallax hero scene with 22 depth layers and lerp smoothing</li>
+            <li>Sprite-animated Instax camera (8-frame spritesheet on hover)</li>
+            <li>Phone that rings when hovered; opens contact form</li>
+            <li>MP3 player with 17 tracks, marquee title, and draggable controls panel</li>
+            <li>Desk mouse that flees the real cursor with inertia</li>
+            <li>Keyboard RGB backlight on every real keypress</li>
+            <li>Sakura petal cursor trail with burst-on-click physics</li>
+            <li>Win9x desktop icons with tech popovers inside the CRT screen</li>
+            <li>Light/dark mode with full design token swap</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>Zero dependencies.</strong> No frameworks, no build step. The constraint forced every abstraction to be earned — parallax is 60 lines of lerp math, not a library.</p>
+          <p><strong>CSS custom properties as the animation bus.</strong> JS writes <code>--move-x</code> and <code>--flee-x</code>; the hero-float keyframe reads them. This keeps animation logic in CSS where it belongs, with JS only providing the values.</p>
+          <p><strong>Modular without a bundler.</strong> Native ES modules split the code into focused files (parallax, audio, cursor, interactions, modals) that the browser imports directly.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>Constraints unlock creativity. No framework means full ownership — every pixel is a decision. CSS custom properties inside <code>@keyframes</code> are remarkably powerful once you lean into them. And a portfolio that people play with long enough to find the mouse sprite trying to escape them is a better conversation starter than any hero headline.</p>
+
+          <div class="cs-footer-links">
+            <a href="https://bylx.dev" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit bylx.dev</a>
+            <a href="https://github.com/alinelx/bylx" class="card-link card-link--ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- WIP popup -->
+    <div class="modal pixel-modal" id="wip-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="wip-title">
+        <header class="modal-header">
+          <h2 id="wip-title">Work in Progress</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close">×</button>
+        </header>
+
+        <div class="modal-body wip-body">
+          <div class="wip-icon">?</div>
+          <p class="wip-headline">Still building this one.</p>
+          <p class="wip-sub">The Designer Portfolio is cooking. A portfolio for a product designer specialised in urban furniture — where physical objects meet the web. Expect the same attention to detail as this desk, but for chairs.</p>
+          <div class="wip-eta">
+            <span class="wip-eta-label">ESTIMATED LAUNCH</span>
+            <span class="wip-eta-date">Q3 2026</span>
+          </div>
+          <button type="button" class="about-cta" data-close-modal>Back to the desk</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="mp3-controls" aria-label="Music player">
+      <div class="mp3-titlebar" data-mp3-drag role="toolbar" aria-label="Drag to reposition">
+        <span class="mp3-player-label">MP3 PLAYER</span>
+        <button class="mp3-close-btn" type="button" data-audio-action="stop" aria-label="Close player">×</button>
+      </div>
+      <div class="mp3-body">
+        <div class="mp3-track-area">
+          <p class="mp3-now-playing">NOW PLAYING</p>
+          <div class="mp3-marquee-window">
+            <span class="mp3-marquee-text" data-track-title>None</span>
+          </div>
+        </div>
+        <div class="mp3-buttons">
+          <button type="button" data-audio-action="prev">PREV</button>
+          <button type="button" data-audio-action="play">PLAY</button>
+          <button type="button" data-audio-action="pause">PAUS</button>
+          <button type="button" data-audio-action="next">NEXT</button>
+          <button type="button" data-audio-action="volume-down">VOL-</button>
+          <button type="button" data-audio-action="volume-up">VOL+</button>
+        </div>
       </div>
     </div>
   </main>
