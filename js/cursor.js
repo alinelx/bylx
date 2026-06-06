@@ -1,34 +1,24 @@
 /* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
-  _               _
+  _               _        
  | |__    _   _  | | __  __
  | '_ \  | | | | | | \ \/ /
- | |_) | | |_| | | |  >  <
+ | |_) | | |_| | | |  >  < 
  |_.__/   \__, | |_| /_/\_\
           |___/
-*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
+*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx cursor */
 
 import { prefersReducedMotion } from "./utils.js";
 
 export function initCursor() {
   const cursor = document.querySelector(".cursor");
+
   if (!cursor) return;
 
-  let latestX    = 0;
-  let latestY    = 0;
-  let rafPending = false;
-
   window.addEventListener("mousemove", (event) => {
-    latestX = event.clientX;
-    latestY = event.clientY;
-    if (rafPending) return;
-    rafPending = true;
-    requestAnimationFrame(() => {
-      rafPending = false;
-      cursor.style.left = `${latestX}px`;
-      cursor.style.top  = `${latestY}px`;
-    });
-  }, { passive: true });
+    cursor.style.left = `${event.clientX}px`;
+    cursor.style.top  = `${event.clientY}px`;
+  });
 
   document.addEventListener("mouseover", (event) => {
     if (event.target.closest("a, button, .clickable")) cursor.classList.add("hover");
@@ -44,6 +34,7 @@ export function initCursor() {
 
 export function initSakuraTrail() {
   const sakuraLayer = document.querySelector(".sakura-cursor");
+
   if (!sakuraLayer) return;
 
   const reduced = prefersReducedMotion();
@@ -58,6 +49,7 @@ export function initSakuraTrail() {
     if (liveCount >= MAX_PETALS) return;
 
     const variant = Math.floor(Math.random() * 4) + 1;
+
     let angle, power, gravity, duration, size;
 
     if (kind === "burst") {
@@ -107,14 +99,17 @@ export function initSakuraTrail() {
 
   window.addEventListener("mousemove", (event) => {
     if (reduced) return;
+
     const now = performance.now();
     if (now - lastTrail < TRAIL_INTERVAL) return;
     lastTrail = now;
+
     spawnPetal(event.clientX, event.clientY, "trail");
   }, { passive: true });
 
   window.addEventListener("mousedown", (event) => {
     if (event.button !== 0) return;
+
     const count = reduced ? 4 : BURST_COUNT;
     for (let i = 0; i < count; i += 1) {
       spawnPetal(event.clientX, event.clientY, "burst");

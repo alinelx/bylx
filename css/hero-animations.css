@@ -125,17 +125,6 @@
     brightness(1.12);
 }
 
-/* Visual indicator that music is playing */
-.hotspot-mp3.is-playing .hotspot-visual img {
-  filter: brightness(1.18) drop-shadow(0 0 5px var(--bylx-cyan)) drop-shadow(0 0 10px var(--bylx-pink));
-  animation: mp3-pulse 1.4s steps(2, end) infinite alternate;
-}
-
-@keyframes mp3-pulse {
-  from { filter: brightness(1.1)  drop-shadow(0 0 4px var(--bylx-cyan)); }
-  to   { filter: brightness(1.22) drop-shadow(0 0 8px var(--bylx-pink)); }
-}
-
 @keyframes instax-sheet {
   from { transform: translateX(0); }
   to   { transform: translateX(-100%); }
@@ -206,12 +195,12 @@
 
 @keyframes title-tick {
   from { color: var(--bg); }
-  to   { color: var(--bylx-bg-ink); }
+  to   { color: #1d1640; }
 }
 
 @keyframes window-content-pulse {
-  0%, 100% { background: #c4c0e0; }
-  50%       { background: var(--bylx-paper); }
+  0%, 100% { background: var(--text); }
+  50%       { background: #fff8ff; }
 }
 
 @keyframes toolbar-pulse {
