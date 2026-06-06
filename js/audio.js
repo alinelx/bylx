@@ -129,8 +129,17 @@ export function initAudio() {
     });
   }
 
-  audio.addEventListener("play",  () => { if (mp3Hotspot) mp3Hotspot.classList.add("is-playing"); });
-  audio.addEventListener("pause", () => { if (mp3Hotspot) mp3Hotspot.classList.remove("is-playing"); });
+  const playBtn  = document.querySelector('[data-audio-action="play"]');
+  const pauseBtn = document.querySelector('[data-audio-action="pause"]');
+
+  function setButtonState(playing) {
+    if (mp3Hotspot) mp3Hotspot.classList.toggle("is-playing", playing);
+    if (playBtn)  playBtn.classList.toggle("is-active",  !playing);
+    if (pauseBtn) pauseBtn.classList.toggle("is-active",  playing);
+  }
+
+  audio.addEventListener("play",  () => setButtonState(true));
+  audio.addEventListener("pause", () => setButtonState(false));
   audio.addEventListener("ended", playRandomTrack);
 
   document.querySelectorAll("[data-audio-action]").forEach((button) => {

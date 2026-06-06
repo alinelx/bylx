@@ -135,21 +135,33 @@ export function initTechPopovers() {
     body.appendChild(sub);
     pop.append(titlebar, body);
 
-    // Append to scene so monitor bezel naturally clips it
+    // Append to scene so monitor bezel (z-index 10) naturally frames it
     pop.style.left = "0px";
     pop.style.top  = "0px";
     scene.appendChild(pop);
 
-    const sceneRect = scene.getBoundingClientRect();
-    const btnRect   = button.getBoundingClientRect();
-    const popW      = pop.offsetWidth  || 140;
-    const popH      = pop.offsetHeight || 56;
+    const sceneRect   = scene.getBoundingClientRect();
+    const btnRect     = button.getBoundingClientRect();
+    const popW        = pop.offsetWidth  || 160;
+    const popH        = pop.offsetHeight || 60;
+
+    // Clamp within the CRT screen area (roughly the inner 35%–65% × 40%–70% of artboard)
+    // Use the monitor element bounds if available, otherwise fall back to scene
+    const monitor = document.querySelector(".monitor");
+    const clampEl = monitor || scene;
+    const clampRect = clampEl.getBoundingClientRect();
+    // Add a small inset so the pop stays visually inside the screen
+    const inset = 8;
+    const clampLeft   = clampRect.left   - sceneRect.left + inset;
+    const clampTop    = clampRect.top    - sceneRect.top  + inset;
+    const clampRight  = clampRect.right  - sceneRect.left - inset;
+    const clampBottom = clampRect.bottom - sceneRect.top  - inset;
 
     let left = btnRect.right - sceneRect.left + 4;
     let top  = btnRect.top   - sceneRect.top  - popH / 2;
 
-    left = Math.max(4, Math.min(sceneRect.width  - popW - 4, left));
-    top  = Math.max(4, Math.min(sceneRect.height - popH - 4, top));
+    left = Math.max(clampLeft, Math.min(clampRight  - popW, left));
+    top  = Math.max(clampTop,  Math.min(clampBottom - popH, top));
 
     pop.style.left = `${left}px`;
     pop.style.top  = `${top}px`;

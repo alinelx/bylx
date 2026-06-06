@@ -208,6 +208,11 @@
   top: 80%;
   width: 10%;
   height: auto;
+  --float-x: 4px;
+  --float-y: 3px;
+  --float-rotate: 0.6deg;
+  --float-duration: 4.4s;
+  --float-delay: -1.6s;
 }
 
 /* Restored from old styles.css — was lost during refactor */
@@ -286,7 +291,7 @@
 
 .tech-pop-titletext {
   font-family: var(--font-ui);
-  font-size: clamp(0.3rem, 0.32vw, 0.48rem);
+  font-size: clamp(0.5rem, 0.65vw, 0.72rem);
   color: var(--bylx-bg);
   line-height: 1;
   white-space: nowrap;
@@ -298,13 +303,13 @@
 
 .tech-pop-close {
   flex: 0 0 auto;
-  padding: 0 2px;
+  padding: 0 4px;
   border: 1px solid var(--bylx-bg);
   background: var(--bylx-muted);
   color: var(--bylx-bg);
   font-family: var(--font-ui);
-  font-size: clamp(0.28rem, 0.3vw, 0.44rem);
-  line-height: 1.4;
+  font-size: clamp(0.46rem, 0.55vw, 0.62rem);
+  line-height: 1.6;
   cursor: none;
   pointer-events: auto;
 }
@@ -317,8 +322,8 @@
 .tech-pop-sub {
   margin: 0;
   font-family: var(--font-pixel);
-  font-size: clamp(0.6rem, 0.65vw, 0.85rem);
-  line-height: 1.25;
+  font-size: clamp(0.7rem, 0.8vw, 0.92rem);
+  line-height: 1.35;
   color: var(--bylx-bg);
 }
 

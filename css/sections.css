@@ -93,9 +93,20 @@
   );
 }
 
+.card-preview-big-text {
+  font-family: var(--font-pixel);
+  font-size: clamp(4rem, 10vw, 7rem);
+  font-weight: 700;
+  color: var(--pink);
+  opacity: 0.55;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
 .card-preview-wip-text {
   color: var(--muted);
-  opacity: 0.4;
+  font-size: clamp(5rem, 12vw, 8rem);
+  opacity: 0.3;
 }
 
 .card-preview-logo {
@@ -175,8 +186,8 @@
 
 .card-link--primary {
   background: var(--pink);
-  color: var(--bylx-bg);
-  border-color: var(--bylx-bg);
+  color: #09051b;
+  border-color: #09051b;
   box-shadow: 3px 3px 0 var(--cyan);
 }
 
@@ -254,7 +265,7 @@
 .case-study-body p {
   margin: 0;
   font-size: clamp(0.8rem, 1.4vw, 0.88rem);
-  color: var(--bg);
+  color: inherit;
   line-height: 1.7;
 }
 
@@ -278,7 +289,7 @@
 
 .cs-list li {
   font-size: clamp(0.78rem, 1.4vw, 0.86rem);
-  color: var(--bg);
+  color: inherit;
   line-height: 1.6;
 }
 
@@ -415,6 +426,16 @@
 
 .mp3-titlebar:active { cursor: grabbing; }
 
+/* Win9x-style grip dots inside the titlebar */
+.mp3-titlebar::before {
+  content: "··· ··· ···";
+  font-size: 0.5rem;
+  color: rgba(9, 5, 27, 0.4);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
 .mp3-player-label {
   font-family: var(--font-ui);
   font-size: 0.5rem;
@@ -508,6 +529,12 @@
   outline: none;
 }
 
+.mp3-buttons button.is-active {
+  background: var(--pink);
+  color: var(--bylx-bg);
+  border-color: var(--pink);
+}
+
 /* ── WIP popup styles ────────────────────────────────────── */
 
 .wip-body {
@@ -521,10 +548,9 @@
 
 .wip-icon {
   font-family: var(--font-pixel);
-  font-size: 3rem;
-  color: var(--muted);
+  font-size: 4rem;
+  color: var(--cyan);
   line-height: 1;
-  opacity: 0.6;
   animation: cta-hover-pulse 3.6s steps(2, end) infinite;
 }
 
@@ -540,7 +566,7 @@
   margin: 0;
   font-family: var(--font-pixel);
   font-size: clamp(0.75rem, 1.4vw, 0.9rem);
-  color: var(--bg);
+  color: inherit;
   line-height: 1.7;
   max-width: 36ch;
 }
@@ -680,7 +706,7 @@
   object-fit: contain;
   opacity: 0.88;
   transition: opacity 0.08s steps(2, end), transform 0.08s steps(2, end);
-  background-color: var(--text);
+  background-color: var(--bylx-bg-ink);
   padding: 7px;
 }
 
