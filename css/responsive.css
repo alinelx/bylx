@@ -223,6 +223,15 @@
   .win-content   { background: #c4c0e0; }
   .tech-pop-body { background: #c4c0e0; }
 
+  /* Hero CTA button: ensure legible contrast on the teal background */
+  .hero-text a {
+    color: #09051b;
+    background: var(--bylx-pink);
+  }
+
+  /* About tech-stack icons: keep dark pill background in light mode too */
+  .about-icons img { background-color: #1d1640; }
+
   /* Scrollbar */
   ::-webkit-scrollbar-track { background: var(--bylx-bg-ink); }
   ::-webkit-scrollbar-thumb { background: var(--bylx-cyan);   }

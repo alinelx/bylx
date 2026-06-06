@@ -93,9 +93,20 @@
   );
 }
 
+.card-preview-big-text {
+  font-family: var(--font-pixel);
+  font-size: clamp(4rem, 10vw, 7rem);
+  font-weight: 700;
+  color: var(--pink);
+  opacity: 0.55;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
 .card-preview-wip-text {
   color: var(--muted);
-  opacity: 0.4;
+  font-size: clamp(5rem, 12vw, 8rem);
+  opacity: 0.3;
 }
 
 .card-preview-logo {
@@ -537,10 +548,9 @@
 
 .wip-icon {
   font-family: var(--font-pixel);
-  font-size: 3rem;
-  color: var(--muted);
+  font-size: 4rem;
+  color: var(--cyan);
   line-height: 1;
-  opacity: 0.6;
   animation: cta-hover-pulse 3.6s steps(2, end) infinite;
 }
 
@@ -700,7 +710,7 @@
   object-fit: contain;
   opacity: 0.88;
   transition: opacity 0.08s steps(2, end), transform 0.08s steps(2, end);
-  background-color: var(--text);
+  background-color: var(--bylx-bg-ink);
   padding: 7px;
 }
 
