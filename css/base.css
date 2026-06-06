@@ -54,6 +54,6 @@ img {
   -moz-osx-font-smoothing: none;
 }
 
-/* Ensure Press Start 2P never renders below legible pixel threshold */
-.footer-copy { font-size: max(0.5rem, 0.4rem); }
-.card-tag    { font-size: max(0.5rem, 0.46rem); }
+/* Ensure Press Start 2P never renders below legible pixel threshold (~8px) */
+.footer-copy { font-size: max(0.4rem, 7px); }
+.card-tag    { font-size: max(0.46rem, 7px); }
