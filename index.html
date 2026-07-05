@@ -12,7 +12,7 @@
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#09051b" />
 
-  <link rel="icon" href="assets/logo/bylx_logo_semdev.png" type="image/png">
+  <link rel="icon" href="assets/logo/bylx_logo_line.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -146,8 +146,8 @@
 
       <div class="hero-text">
         <p class="eyebrow">bylx · Front-end developer</p>
-        <h1 id="hero-title">Where Rio and Lisbon share a desk.</h1>
-        <p>I build web things that feel like places. Pixel art, vanilla code, no shortcuts.</p>
+        <h1 id="hero-title">Where the best cities share a desk.</h1>
+        <p>I build web things that make you feel something. Pixel art, vanilla code, optional shortcuts through AI and tech debug.</p>
         <a href="#projects">See the work</a>
       </div>
     </section>
@@ -155,60 +155,58 @@
     <section class="projects" id="projects" aria-labelledby="projects-title">
       <div class="projects-inner">
         <div class="projects-header">
-          <p class="eyebrow">Selected work</p>
+          <p class="eyebrow">xp</p>
           <h2 id="projects-title">Projects</h2>
         </div>
 
         <div class="projects-grid">
-
+          <a data-modal-target="casestudy-dark28-modal">
           <article class="project-card" aria-labelledby="card-dark28-title">
-            <div class="card-preview card-preview--dark28" aria-hidden="true">
-              <span class="card-preview-big-text">28</span>
+            <div class="card-preview card-preview" aria-hidden="true">
+              <img src="assets/hero/dark28-linepixel.png" alt="" class="card-preview-logo" />
             </div>
             <div class="card-body">
-              <div class="card-meta">
-                <span class="card-tag">Next.js · TypeScript · React · Tailwind</span>
-                <span class="card-status card-status--live">LIVE</span>
-              </div>
-              <h3 id="card-dark28-title">Dark28</h3>
+              <h3 id="card-dark28-title">dark28.pt</h3>
+              <span class="card-status card-status--live">LIVE</span>
               <p>Lisbon's Tram 28 reimagined as a dark tourism route — dictatorship, colonialism, and collective memory.</p>
-              <div class="card-links">
-                <a href="https://dark28.pt" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit site</a>
-                <button type="button" class="card-link card-link--case" data-modal-target="casestudy-dark28-modal">Case study</button>
-                <a href="https://github.com/alinelx/dark-28" class="card-link card-link--ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <div class="card-meta">
+                <span class="card-tag">Next.js</span>
+                <span class="card-tag">Typescript</span>
+                <span class="card-tag">React</span>
+                <span class="card-tag">Tailwind</span>
               </div>
             </div>
           </article>
-
+        </a>
+        <a data-modal-target="casestudy-bylx-modal">
           <article class="project-card" aria-labelledby="card-bylx-title">
             <div class="card-preview card-preview--bylx" aria-hidden="true">
               <img src="assets/logo/bylx_logo_line_cyan.png" alt="" class="card-preview-logo" />
             </div>
             <div class="card-body">
-              <div class="card-meta">
-                <span class="card-tag">HTML · CSS · Vanilla JS</span>
-                <span class="card-status card-status--live">LIVE</span>
-              </div>
               <h3 id="card-bylx-title">bylx.dev</h3>
-              <p>This portfolio — a pixel-art Y2K cyber-café where Rio de Janeiro and Lisbon share a desk.</p>
-              <div class="card-links">
-                <a href="https://bylx.dev" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit site</a>
-                <a href="https://github.com/alinelx/bylx" class="card-link card-link--ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <span class="card-status card-status--live">LIVE</span>
+              <p>This portfolio — a pixel-art Y2K where Rio de Janeiro and Lisbon share a desk.</p>
+              <div class="card-meta">
+                <span class="card-tag">HTML</span>
+                <span class="card-tag">CSS</span>
+                <span class="card-tag">Vanilla JS</span>
               </div>
             </div>
           </article>
-
+        </a>
           <article class="project-card project-card--wip" aria-labelledby="card-wip-title">
             <div class="card-preview card-preview--wip" aria-hidden="true">
-              <span class="card-preview-big-text card-preview-wip-text">?</span>
             </div>
             <div class="card-body">
-              <div class="card-meta">
-                <span class="card-tag">Next.js · Figma · Product Design</span>
-                <span class="card-status card-status--wip">IN PROGRESS</span>
-              </div>
               <h3 id="card-wip-title">Designer Portfolio</h3>
               <p>Portfolio for a product designer specialised in urban furniture — where physical design meets the web.</p>
+              <span class="card-status card-status--wip">IN PROGRESS</span>
+              <div class="card-meta">
+                <span class="card-tag">Next.js</span>
+                <span class="card-tag">Figma</span>
+                <span class="card-tag">Product Design</span>
+              </div>
             </div>
           </article>
 
@@ -218,7 +216,7 @@
 
     <section class="about" id="about" aria-labelledby="about-title">
       <div class="about-inner">
-        <p class="eyebrow">About</p>
+        <p class="eyebrow">profile</p>
         <h2 id="about-title" class="about-heading">The desk has a story.</h2>
         <div class="about-layout">
           <div class="about-text">
@@ -315,7 +313,6 @@
         </header>
 
         <form class="modal-body contact-form" id="contact-form" action="contact.php" method="post" novalidate>
-        <form class="modal-body contact-form">
           <label>
             Name
             <input type="text" name="name" autocomplete="name" required maxlength="120" />
