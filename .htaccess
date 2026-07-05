@@ -1,0 +1,8 @@
+# ᑲყᥣx — cache policy
+# HTML must always revalidate so new asset versions (?v=N) roll out
+# immediately; the versioned css/js keep Hostinger's long cache.
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

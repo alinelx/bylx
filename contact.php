@@ -18,11 +18,24 @@ const FROM_NAME     = 'bylx.dev';
 const TEMPLATE_PATH = __DIR__ . '/emails/confirmation-email.html';
 // ---------------------------------------------------------------------------
 
-header('Content-Type: application/json; charset=utf-8');
+// Fetch requests (js/contact.js) ask for JSON; a plain browser form POST
+// (no JS, or a stale cached script.js) gets redirected back to the site
+// instead of seeing raw JSON.
+function wantsJson(): bool {
+  return strpos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false;
+}
 
 function respond(int $status, array $payload): void {
-  http_response_code($status);
-  echo json_encode($payload);
+  if (wantsJson()) {
+    header('Content-Type: application/json; charset=utf-8');
+    http_response_code($status);
+    echo json_encode($payload);
+  } else {
+    $query = $payload['ok']
+      ? 'sent=1'
+      : 'sent=0&err=' . rawurlencode($payload['error'] ?? 'unknown');
+    header('Location: /?' . $query, true, 303);
+  }
   exit;
 }
 
