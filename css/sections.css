@@ -402,6 +402,10 @@
   gap: 0.4rem;
 }
 
+/* ========================================================
+   About Section
+   ======================================================== */
+
 .about {
   border-top: 4px solid var(--cyan);
   padding: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 5vw, 4rem);
@@ -446,8 +450,8 @@
   margin-top: 0.75rem;
   padding: 0.65rem 1.2rem;
   background: var(--pink);
-  color: var(--text);
-  border: 3px solid var(--cyan);
+  color: var(--bg);
+  border: 3px solid var(--text);
   box-shadow: 5px 5px 0 var(--cyan);
   font-family: var(--font-ui);
   font-size: 0.6rem;
