@@ -21,6 +21,19 @@ export function initContactForm() {
     status.dataset.state = state;
   }
 
+  // Landing back from a non-fetch submission (contact.php redirects to /?sent=…):
+  // reopen the modal with the outcome, then clean the URL.
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("sent")) {
+    document.querySelector('[data-modal-target="contact-modal"]')?.click();
+    if (params.get("sent") === "1") {
+      setStatus("> message sent ✓ check your inbox for confirmation.", "success");
+    } else {
+      setStatus("> transmission failed ✗ try again or email geral@bylx.dev", "error");
+    }
+    history.replaceState({}, "", window.location.pathname);
+  }
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -33,6 +46,7 @@ export function initContactForm() {
     try {
       const response = await fetch(form.action, {
         method: "POST",
+        headers: { Accept: "application/json" },
         body: new FormData(form),
       });
 
