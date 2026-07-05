@@ -140,7 +140,7 @@
           <img class="asset layer keyboard keyboard-board desk-object" src="assets/hero/keyboard_board.png" alt="" />
           <img class="asset layer keyboard keyboard-keys desk-object" src="assets/hero/keyboard_keys.png" alt="" />
 
-          <img class="asset layer bylx-logo" src="assets/logo/bylx_logo.png" alt="" />
+          <img class="asset layer bylx-logo" src="assets/logo/bylx_logo_line_purple.png" alt="" />
         </div>
       </div>
 
@@ -314,23 +314,31 @@
           <button class="modal-close" type="button" data-close-modal aria-label="Close contact form">×</button>
         </header>
 
+        <form class="modal-body contact-form" id="contact-form" action="contact.php" method="post" novalidate>
         <form class="modal-body contact-form">
           <label>
             Name
-            <input type="text" name="name" autocomplete="name" />
+            <input type="text" name="name" autocomplete="name" required maxlength="120" />
           </label>
 
           <label>
             Email
-            <input type="email" name="email" autocomplete="email" />
+            <input type="email" name="email" autocomplete="email" required />
           </label>
 
           <label>
             Message
-            <textarea name="message" rows="5"></textarea>
+            <textarea name="message" rows="5" required maxlength="5000"></textarea>
+          </label>
+
+          <label class="hp-field" aria-hidden="true">
+            Website
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
           </label>
 
           <button type="submit">Send</button>
+
+          <p class="form-status" data-form-status role="status" aria-live="polite"></p>
         </form>
       </section>
     </div>
