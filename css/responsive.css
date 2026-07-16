@@ -141,15 +141,4 @@
   }
 
   .sakura-bit {
-    animation-duration: 600ms !important;
-  }
-
-  .hero-text a:hover,
-  .hero-text a:focus-visible {
-    transform: none;
-  }
-
-  .mp3-marquee-window.is-scrolling .mp3-marquee-text {
-    animation: none;
-  }
-}
+    an

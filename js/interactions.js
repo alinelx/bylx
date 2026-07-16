@@ -158,7 +158,4 @@ export function initTechPopovers() {
     closeTechPop();
   });
 
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeTechPop();
-  });
-}
+  window.addEven

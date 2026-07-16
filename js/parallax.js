@@ -100,15 +100,4 @@ function onPointerMove(event, hero) {
 export function initParallax() {
   const hero = document.querySelector("#hero");
 
-  if (!hero)                    return;
-  if (!isWiderThan(901))        return;
-  if (prefersReducedMotion())   return;
-
-  const layerMap = buildLayerMap();
-
-  window.addEventListener("pointermove", (e) => onPointerMove(e, hero));
-  hero.addEventListener("pointerleave",  () => { targetX = 0; targetY = 0; });
-  window.addEventListener("blur",        () => { targetX = 0; targetY = 0; });
-
-  applyOffsets(layerMap);
-}
+  if (!hero)       
