@@ -74,7 +74,7 @@
           <button
             class="asset layer desk-object hotspot hotspot-mp3 mp3player"
             type="button"
-            aria-label="Play random music"
+            aria-label="Open music player"
           >
             <span class="hotspot-visual">
               <img src="assets/hero/mp3_player.png" alt="" />
@@ -195,6 +195,57 @@
             </div>
           </article>
         </a>
+        <a data-modal-target="casestudy-konochan-modal">
+          <article class="project-card" aria-labelledby="card-konochan-title">
+            <div class="card-preview card-preview--wip" aria-hidden="true">
+              <span class="card-preview-wip-text">konochan.pt</span>
+            </div>
+            <div class="card-body">
+              <h3 id="card-konochan-title">konochan.pt</h3>
+              <span class="card-status card-status--shipped">SHIPPED</span>
+              <p>Kawaii e-commerce brand built and run solo — store, payments, inventory, and identity.</p>
+              <div class="card-meta">
+                <span class="card-tag">E-commerce</span>
+                <span class="card-tag">Stripe</span>
+                <span class="card-tag">MB Way</span>
+              </div>
+            </div>
+          </article>
+        </a>
+        <a data-modal-target="casestudy-lupa-modal">
+          <article class="project-card" aria-labelledby="card-lupa-title">
+            <div class="card-preview card-preview--wip" aria-hidden="true">
+              <span class="card-preview-wip-text">lupa.road</span>
+            </div>
+            <div class="card-body">
+              <h3 id="card-lupa-title">lupa.road</h3>
+              <span class="card-status card-status--client">CLIENT WORK</span>
+              <p>WordPress rebrand for a Lisbon optical clinic — from dated site to a storefront the owner can run.</p>
+              <div class="card-meta">
+                <span class="card-tag">WordPress</span>
+                <span class="card-tag">UX</span>
+                <span class="card-tag">Branding</span>
+              </div>
+            </div>
+          </article>
+        </a>
+        <a data-modal-target="casestudy-gas-modal">
+          <article class="project-card" aria-labelledby="card-gas-title">
+            <div class="card-preview card-preview--wip" aria-hidden="true">
+              <span class="card-preview-wip-text">workspace_automations.gs</span>
+            </div>
+            <div class="card-body">
+              <h3 id="card-gas-title">Workspace Automations</h3>
+              <span class="card-status card-status--internal">IN PRODUCTION · INTERNAL</span>
+              <p>Google Apps Script tools a 40+ person team at Accenture uses every day.</p>
+              <div class="card-meta">
+                <span class="card-tag">Apps Script</span>
+                <span class="card-tag">Automation</span>
+                <span class="card-tag">Google Workspace</span>
+              </div>
+            </div>
+          </article>
+        </a>
         </div>
       </div>
     </section>
@@ -269,6 +320,160 @@
             <a href="https://dark28.pt" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit dark28.pt</a>
             <a href="https://github.com/alinelx/dark-28" class="card-link card-link--ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-bylx-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-bylx-title">
+        <header class="modal-header">
+          <h2 id="casestudy-bylx-title">bylx.dev — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p class="cs-stack">HTML · CSS · Vanilla JS · PHP · <a href="https://bylx.dev" target="_blank" rel="noopener noreferrer">bylx.dev ↗</a></p>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>Developer portfolios all look the same: hero, grid, footer. Mine had to prove something instead of claiming it. Could a pixel-art desk — where Rio de Janeiro and Lisbon share a window — carry an entire portfolio, built with nothing but the fundamentals?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>An interactive scene where every object does what it looks like it should: the camera opens the gallery, the phone opens the contact form, the MP3 player opens a working player, the mouse runs from your cursor, and the keyboard lights up as you type.</p>
+          <ul class="cs-list">
+            <li>Pixel-art parallax hero on a 64×64 grid with layered PNGs</li>
+            <li>Object hotspots with sprite-sheet and steps() hover animations</li>
+            <li>Custom pixel cursor with sakura-petal trail</li>
+            <li>Working MP3 player with a 17-track lo-fi playlist</li>
+            <li>PHP contact form with honeypot and graceful non-JS fallback</li>
+            <li>Keyboard-accessible case-study modals</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>Vanilla ES modules</strong> — parallax, cursor, audio, modals and forms are isolated modules with a single init each. There is nothing to hydrate, so a framework would only add weight.</p>
+          <p><strong>Coordinate-driven scene</strong> — layers map pixel-grid references to CSS custom properties; the whole parallax is one rAF listener writing <code>--move-x</code> and <code>--move-y</code>.</p>
+          <p><strong>CSS partials with explicit import order</strong> — tokens → base → cursor → hero → sections → responsive. The design system lives in <code>:root</code>.</p>
+          <p><strong>steps() everywhere</strong> — easing is quantised so motion stays pixel-crisp instead of smoothly un-retro.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>Constraints are a design system. Refusing frameworks forced clean module boundaries; refusing smooth easing forced intentional animation. And accessibility inside a fully custom scene — focus states, aria labels, a form that works without JS — is where the real engineering happened.</p>
+
+          <div class="cs-footer-links">
+            <a href="https://github.com/alinelx/bylx" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-konochan-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-konochan-title">
+        <header class="modal-header">
+          <h2 id="casestudy-konochan-title">konochan.pt — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p class="cs-stack">E-commerce · Stripe · MB Way · Hostinger · <a href="https://konochan.pt" target="_blank" rel="noopener noreferrer">konochan.pt ↗</a></p>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>Could I take a brand from zero to real orders — not a portfolio mockup, but a shop with actual customers, payments, and parcels that have to arrive?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>A kawaii and handmade-resin e-commerce brand, built and operated solo: visual identity, product catalogue, checkout, and everything that happens after someone pays.</p>
+          <ul class="cs-list">
+            <li>Full store setup on Hostinger, from DNS to checkout</li>
+            <li>Stripe and MB Way payment integration for the Portuguese market</li>
+            <li>WhatsApp integration for order support and customer contact</li>
+            <li>Brand identity, product photography, and packaging design</li>
+            <li>Inventory, pricing, and customer support operations</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>Platform over custom code</strong> — the goal was a working shop, not a stack demo. Hostinger shipped the store in weeks instead of months.</p>
+          <p><strong>Local payment rails</strong> — MB Way is how Portugal actually pays online. Supporting it mattered more than any feature.</p>
+          <p><strong>WhatsApp as CRM</strong> — customers already live there; meeting them in their channel beat building one.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>E-commerce is UX plus logistics — the interface is the easy half. Running the store taught me what "done" means when customers are real. The shop is currently on pause while I focus on development work; the brand, the systems, and the lessons stay.</p>
+
+          <div class="cs-footer-links">
+            <a href="https://konochan.pt" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit konochan.pt</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-lupa-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-lupa-title">
+        <header class="modal-header">
+          <h2 id="casestudy-lupa-title">lupa.road — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p class="cs-stack">WordPress · UX · Branding · <a href="https://lupa.road" target="_blank" rel="noopener noreferrer">lupa.road ↗</a></p>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>A Lisbon optical clinic had a website that undersold the business — dated, hard to navigate, and impossible for the owner to update. How do you rebuild trust online for a business whose whole trade is precision?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>A full WordPress rebrand: new visual identity applied to a restructured site, designed so the owner can maintain it without calling a developer.</p>
+          <ul class="cs-list">
+            <li>Theme customisation aligned with the new brand</li>
+            <li>Restructured content and navigation around what customers ask first</li>
+            <li>Plugin selection and configuration kept deliberately minimal</li>
+            <li>Responsive layout and performance cleanup</li>
+            <li>Handover so the client edits content independently</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>WordPress, on purpose</strong> — the client needs to edit content themselves. The right stack is the one the business can maintain after you leave.</p>
+          <p><strong>Fewer plugins, fewer problems</strong> — every plugin is a future update, a security surface, and a support call. The build stayed lean.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>Client work is a different discipline: listening before building, designing within the client's capacity, and writing handover docs as carefully as code. The best compliment was silence — the site just works.</p>
+
+          <div class="cs-footer-links">
+            <a href="https://lupa.road" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit lupa.road</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-gas-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-gas-title">
+        <header class="modal-header">
+          <h2 id="casestudy-gas-title">Workspace Automations — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p class="cs-stack">Google Apps Script · Google Workspace · Automation</p>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>A 40+ person team at Accenture was losing hours every week to repetitive Google Workspace workflows — manual reporting, copy-paste pipelines, spreadsheet drudgery. No budget line, no IT ticket. What could one person automate from inside?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>A set of Google Apps Script automations and lightweight internal tools, deployed to the whole team and used in production daily.</p>
+          <ul class="cs-list">
+            <li>Automated reporting flows that replaced manual spreadsheet work</li>
+            <li>Dashboards for team visibility without leaving Workspace</li>
+            <li>Lightweight internal tools shaped around how the team already worked</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>Apps Script, deliberately</strong> — it lives where the work already happens. Zero install, zero procurement, corporate-compliant by default.</p>
+          <p><strong>Scripts as products</strong> — permissions, error handling, and documentation, because a tool 40 people depend on can't behave like a weekend script.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>Automation adoption is a UX problem: the hard part isn't the code, it's making a tool people trust enough to change their routine for. Corporate code stays private — the process is what transfers.</p>
         </div>
       </section>
     </div>
@@ -361,4 +566,4 @@
 
   <script type="module" src="script.js?v=2"></script>
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+</html>
