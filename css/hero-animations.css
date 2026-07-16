@@ -100,6 +100,39 @@
   animation: phone-ring 260ms steps(2, end) infinite;
 }
 
+.hotspot-mp3:hover img,
+.hotspot-mp3:focus-visible img,
+.hotspot-mp3.is-playing img {
+  animation: mp3-groove 480ms steps(4, end) infinite;
+}
+
+/* Desk objects react on hover — each in its own colour */
+.cocktail,
+.sushi,
+.keyboard-keys {
+  pointer-events: auto;
+}
+
+.cocktail,
+.sushi {
+  transition: filter 160ms steps(2, end);
+}
+
+.cocktail:hover {
+  filter: brightness(1.14) drop-shadow(0 0 6px var(--pink));
+}
+
+.sushi:hover {
+  filter: brightness(1.14) drop-shadow(0 0 6px var(--cyan));
+}
+
+.keyboard-keys:hover {
+  filter:
+    drop-shadow(0 0 5px var(--rgb-tint))
+    drop-shadow(0 0 11px var(--rgb-tint))
+    brightness(1.12);
+}
+
 .desktop-icons .icon {
   --icon-lift: 2px;
   animation: icon-bob 2.6s ease-in-out infinite alternate;
@@ -136,6 +169,14 @@
   50%  { transform: translateX(2px) rotate(2deg); }
   75%  { transform: translateX(-1px) rotate(-1deg); }
   100% { transform: translateX(0) rotate(0deg); }
+}
+
+@keyframes mp3-groove {
+  0%   { transform: rotate(0deg) translateY(0); }
+  25%  { transform: rotate(-3deg) translateY(-1px); }
+  50%  { transform: rotate(0deg) translateY(0); }
+  75%  { transform: rotate(3deg) translateY(-1px); }
+  100% { transform: rotate(0deg) translateY(0); }
 }
 
 @keyframes hero-float {

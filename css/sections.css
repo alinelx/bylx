@@ -456,7 +456,6 @@
   cursor: pointer;
   transition: transform 0.08s steps(2, end), box-shadow 0.08s steps(2, end);
   line-height: 1;
-  animation: cta-hover-pulse 3.6s steps(2, end) infinite;
 }
 
 .about-cta:hover,
@@ -464,7 +463,6 @@
   transform: translate(-2px, -2px);
   box-shadow: 7px 7px 0 var(--cyan);
   outline: none;
-  animation: none;
 }
 
 .about-cta:focus-visible {
@@ -568,3 +566,4 @@
   color: rgba(216, 208, 255, 0.35);
   letter-spacing: 0.04em;
 }
+                                                                               

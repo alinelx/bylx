@@ -91,9 +91,16 @@ export function initAudio() {
 
   if (mp3Hotspot) {
     mp3Hotspot.addEventListener("click", () => {
-      if (!audio.paused)  audio.pause();
-      else if (audio.src) audio.play();
-      else                playRandomTrack();
+      if (!mp3Controls) { playRandomTrack(); return; }
+
+      const isOpen = mp3Controls.classList.contains("is-visible");
+
+      if (isOpen) {
+        mp3Controls.classList.remove("is-visible");
+      } else {
+        mp3Controls.classList.add("is-visible");
+        if (!audio.src) playRandomTrack();
+      }
     });
   }
 
@@ -110,10 +117,4 @@ export function initAudio() {
       else if (action === "stop")        { stopAudio(); }
       else if (action === "next")        { playTrack(currentIndex + 1); }
       else if (action === "prev")        { playTrack(currentIndex - 1); }
-      else if (action === "volume-down") { audio.volume = Math.max(0, audio.volume - 0.1); }
-      else if (action === "volume-up")   { audio.volume = Math.min(1, audio.volume + 0.1); }
-    });
-  });
-
-  window.addEventListener("resize", updateMarquee);
-}
+      else if (action === "volume-down") { audio.volume = Math.max(0
