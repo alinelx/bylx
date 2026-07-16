@@ -208,6 +208,16 @@
   .screen-item,
   .desktop-icons .icon,
   .toolbar,
+  /* Ambient scene motion (hero-animations.css) — the scene must be genuinely
+     still here, not merely calmer */
+  .hero-artboard,
+  /* Selector must match the animation's own specificity (0,2,0) — a bare .win
+     here loses to .win:not(.pixel-window-close) and the flicker survives */
+  .win:not(.pixel-window-close),
+  .win.bottom-right,
+  .window-title,
+  .poster,
+  .keyboard-glow,
   .hotspot-phone:hover img,
   .hotspot-phone:focus-visible img,
   .hotspot-mp3:hover img,

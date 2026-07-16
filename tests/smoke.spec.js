@@ -13,7 +13,17 @@ import { test, expect } from "@playwright/test";
 
 const shortViewport = { width: 1568, height: 718 };
 
+/* Freeze the scene. It drifts forever by design, so Playwright's "stable"
+   actionability check never settles and every click here times out. Costs
+   these tests nothing: the regression they guard — hotspots swallowed by a
+   pointer-events cascade — is about stacking, not movement, and
+   tests/motion.spec.js covers the scene in motion.
+   emulateMedia rather than `use: { reducedMotion }` in the config or
+   test.use(): both of those read back correctly but never reach the browser
+   (matchMedia stays false), which silently ran the whole suite against a
+   moving scene. This actually applies. */
 test.beforeEach(async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 });
 

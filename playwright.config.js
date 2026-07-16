@@ -11,8 +11,15 @@ export default defineConfig({
     baseURL: "http://localhost:4173",
     trace: "on-first-retry",
   },
+  /* Motion mode is declared per spec file with test.use(), not here: setting
+     reducedMotion in this config is read back correctly but never reaches the
+     browser (matchMedia stays false), which silently ran the suite against a
+     moving scene. */
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1568, height: 718 } } },
+    {
+      name: "desktop",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1568, height: 718 } },
+    },
     // Pixel 5 is Chromium: keeps the toolchain to one browser download. Real
     // iOS Safari (svh, audio autoplay) still needs a device — see CLAUDE.md.
     { name: "mobile", use: { ...devices["Pixel 5"] } },

@@ -44,6 +44,15 @@
   box-shadow: 0 0 0 3px rgba(89, 243, 255, 0.9);
 }
 
+/* The float makes every hotspot a moving click target. Steady it the moment
+   the pointer arrives: the object settles under your hand instead of drifting
+   out from under it, and reaching for a thing is exactly when the ambient
+   drift stops being charming. */
+.hotspot:hover,
+.hotspot:focus-visible {
+  animation-play-state: paused;
+}
+
 .instax-sprite {
   display: block;
   width: 100%;
@@ -123,9 +132,9 @@
 
 .toolbar-fill { animation: toolbar-scan 3s steps(4, end) infinite; }
 
+/* No float override here: the keys must ride the board exactly, and a
+   separate --float-y/--float-delay slid them off it */
 .keyboard-keys {
-  --float-y: 3px;
-  --float-delay: -0.5s;
   --rgb-tint: var(--bylx-cyan);
   transition: filter 220ms steps(3, end);
 }
@@ -185,6 +194,96 @@
 @keyframes instax-sheet {
   from { transform: translateX(0); }
   to   { transform: translateX(-100%); }
+}
+
+/* ── Ambient scene motion ────────────────────────────────────────────────
+   Restored from the design system. These are set dressing, not attention
+   bait: a CRT ticks, a Win98 title bar flickers, a gaming keyboard cycles.
+   They are diegetic — they belong to the objects, not to the funnel — which
+   is the line the "no idle pulses" rule is really drawing.
+
+   Two of the kit's ambient effects are deliberately NOT here:
+   - scene-glow animated `filter: saturate()` on the whole .scene. A filter on
+     the scene root repaints all 28 layers every frame, forever, to shift
+     saturation by 4%. Nobody can see it; everybody pays for it.
+   - cta-blink swung the CTA between cyan and white on pink — straight through
+     the 2.53:1 contrast we just fixed. Accessibility is a project rule.
+   Everything below animates transform/opacity, or a filter on one small
+   element, so the compositor can carry it.                                   */
+
+.hero-artboard {
+  animation: artboard-breathe 12s ease-in-out infinite alternate;
+}
+
+@keyframes artboard-breathe {
+  from { transform: translateX(-50%) translateY(0); }
+  to   { transform: translateX(-50%) translateY(-3px); }
+}
+
+/* Win98 chrome: a title bar that ticks and a corner that blinks.
+   filter here, opacity on corner-blink — the two compose on .bottom-right,
+   which is both. A filter on ~7 tiles the size of a fingernail is cheap; the
+   one we refused (scene-glow) filtered the scene root. */
+/* :not(.pixel-window-close) — that tile is the close button, and an animated
+   filter would outrank its :hover brightness, silently killing the affordance
+   on the only interactive tile in the window */
+.win:not(.pixel-window-close) {
+  animation: window-piece-flicker 5.2s steps(2, end) infinite;
+}
+
+@keyframes window-piece-flicker {
+  0%, 84%, 100% { filter: none; }
+  88%           { filter: brightness(1.12); }
+}
+
+/* .bottom-right is also a .win, so it must restate the flicker or the shorthand
+   here would replace it outright rather than add to it */
+.win.bottom-right {
+  animation:
+    window-piece-flicker 5.2s steps(2, end) infinite,
+    corner-blink 4.4s steps(2, end) infinite;
+}
+
+@keyframes corner-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.96; }
+}
+
+.window-title {
+  animation: title-tick 2.4s steps(2, end) infinite;
+}
+
+@keyframes title-tick {
+  from { color: var(--bylx-bg); }
+  to   { color: var(--bylx-bg-ink); }
+}
+
+.poster {
+  animation: poster-shimmer 7s steps(2, end) infinite;
+}
+
+@keyframes poster-shimmer {
+  0%, 90%, 100% { filter: none; }
+  92%           { filter: brightness(1.18) hue-rotate(8deg); }
+}
+
+/* The underglow cycles like a real board. hue-rotate over a static gradient,
+   not the kit's animated `background` — re-rasterising a radial-gradient every
+   frame is a paint; rotating its hue is not.
+   On keypress the cycle stops dead so the tint js/interactions.js picked is
+   the colour you actually see: your typing seizes the board from the idle
+   loop, which is the whole point of the feature. */
+.keyboard-glow {
+  animation: rgb-cycle 9s steps(6, end) infinite;
+}
+
+@keyframes rgb-cycle {
+  from { filter: blur(10px) hue-rotate(0deg); }
+  to   { filter: blur(10px) hue-rotate(360deg); }
+}
+
+.keyboard-glow.is-pressed {
+  animation: none;
 }
 
 @keyframes phone-ring {

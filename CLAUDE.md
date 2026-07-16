@@ -12,8 +12,11 @@ Pixel-art portfolio for Aline Lopes Xavier (bylx.dev). Vanilla HTML/CSS/JS by de
 
 ## Hard rules
 
-- Motion uses `steps()` easing — pixel-crisp, never smooth tweens
-- No idle "pulse" animations; motion is hover- or interaction-triggered
+- Motion uses `steps()` easing — pixel-crisp, never smooth tweens. The one exception is a marquee, where `steps()` judders and `linear` is correct
+- **Ambient motion is allowed; attention-seeking motion is not.** (Revised 2026-07-16 — this rule used to read "no idle pulse animations" and was being read too broadly.) The line is *who the motion belongs to*: a CRT ticking, a Win98 corner blinking, an RGB board cycling, props drifting on the desk are **diegetic** — they belong to the objects and make the diorama a place. A CTA that blinks, a headline that sparks, a copy panel that breathes are **the funnel asking to be clicked** — still banned. When in doubt: would a real object do this while nobody watched?
+- Scene props drift via `--float-x/-y/-rotate/-duration` on co-prime durations so the loop never resolves. `.hotspot:hover` pauses the drift — a moving click target dodges the hand reaching for it
+- **`--base-transform` must never be `none`.** Layers compose `var(--base-transform) translate3d(…)`, and `none translate3d(…)` is a parse error that silently drops the whole declaration — which once left most of the scene with no transform, killing both float and parallax. Use `translateZ(0)` for "no base transform". `tests/motion.spec.js` guards this
+- No blanket `will-change` on scene layers: it pinned 28 compositor layers permanently for animations the browser promotes by itself. Only motion starting from a standing start (parallax, mouse-flee) sets it
 - Hero scene layers are positioned by a 64×64 grid system translated to CSS percentages — follow existing coordinate patterns exactly, no creative deviation
 - Parallax is **pointer-driven** (`js/parallax.js` writes `--move-x/--move-y`), not scroll-driven
 - `.layer` static transform consumes `--move-x/--move-y` even with `animation: none` — so JS motion features must check `prefersReducedMotion()` from `js/utils.js` (parallax and mouse-flee already do; keep it that way for new features)

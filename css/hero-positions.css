@@ -59,13 +59,24 @@
   pointer-events: auto;
 }
 
+/* No will-change here on purpose. It was on all 28 layers, which pins 28
+   compositor layers for the whole life of the page whether or not anything is
+   moving. A transform animation gets promoted by the browser for its duration
+   anyway — will-change only helps when motion starts from a standing start
+   and you need the layer ready before the first frame. That is the mouse and
+   the parallax, which set it themselves. */
 .layer,
 .bg,
 .screen-item {
   position: absolute;
   --move-x: 0px;
   --move-y: 0px;
-  --base-transform: none;
+  /* MUST be a real transform function, never `none`: the composed value below
+     is `var(--base-transform) translate3d(...)`, and `none translate3d(...)`
+     is a parse error, which threw away the whole declaration. Every layer
+     without a flip or rotate silently had no transform at all — so neither
+     the float NOR the pointer parallax ever moved them. */
+  --base-transform: translateZ(0);
   --float-x: 0px;
   --float-y: 0px;
   --float-rotate: 0deg;
@@ -74,7 +85,6 @@
   --float-delay: 0s;
   animation: hero-float var(--float-duration) ease-in-out var(--float-delay) infinite alternate;
   transform: var(--base-transform) translate3d(var(--move-x), var(--move-y), 0);
-  will-change: transform;
 }
 
 .flippedX { --base-transform: scaleX(-1); }
@@ -82,11 +92,22 @@
 .rotateright { --base-transform: rotate(90deg);}
 .rotateleft { --base-transform: rotate(-90deg); }
 
+/* Landmark scale comes from the design system; the haze does not.
+   The kit draws these at 0.98–1.0, which gives a distant skyline the same
+   visual weight as the desk and flattens the diorama. Aerial perspective is
+   the point: they are a city seen through a window at night. Kit sizes, our
+   opacity. */
+/* Sky and hills keep the site's own placement. Taking the kit's here too
+   (skyline 10%→18%, morro 20%→33%) drags the gradient down and leaves a bare
+   dome across the top — the backdrop is not what needed rescaling. */
 .bg-skyline-left,
 .bg-skyline-right {
   z-index: 2;
   top: 10%;
   width: 25%;
+  --float-x: 4px;
+  --float-y: 3px;
+  --float-duration: 14s;
 }
 
 .bg-skyline-left  { left: 25%; }
@@ -99,6 +120,9 @@
   height: auto;
   object-fit: contain;
   opacity: 0.7;
+  --float-x: 3px;
+  --float-y: 2px;
+  --float-duration: 16s;
 }
 
 .morro-left  { left: 25%; }
@@ -106,38 +130,54 @@
 
 .cristo {
   z-index: 4;
-  left: 40%;
+  left: 38%;
   top: 25%;
-  width: 10%;
+  width: 14%;
   height: auto;
   opacity: 0.8;
+  --float-x: 3px;
+  --float-y: 5px;
+  --float-rotate: 0.25deg;
+  --float-duration: 9s;
 }
 
 .pao-de-acucar {
   z-index: 4;
-  left: 20%;
-  top: 40%;
-  width: 20%;
+  left: 17%;
+  top: 45%;
+  width: 23.5%;
   height: auto;
   opacity: 0.8;
+  --float-x: 4px;
+  --float-y: 3px;
+  --float-duration: 11s;
+  --float-delay: -2s;
 }
 
 .ponte {
   z-index: 4;
   left: 60%;
   top: 30%;
-  width: 10%;
+  width: 20%;
   height: auto;
   opacity: 0.8;
+  --float-x: 5px;
+  --float-y: 2px;
+  --float-duration: 12s;
+  --float-delay: -4s;
 }
 
 .torre-belem {
   z-index: 4;
   left: 60%;
-  top: 40%;
-  width: 12%;
+  top: 44%;
+  width: 16%;
   height: auto;
   opacity: 0.8;
+  --float-x: 3px;
+  --float-y: 4px;
+  --float-rotate: -0.2deg;
+  --float-duration: 10s;
 }
 
 .bg-wall-left,
@@ -145,6 +185,9 @@
   z-index: 4;
   top: 0%;
   width: 100%;
+  --float-x: 2px;
+  --float-y: 3px;
+  --float-duration: 18s;
 }
 
 .bg-wall-left {
@@ -155,12 +198,16 @@
   left: 70%;
 }
 
+/* Frame stays inset at 80%: the kit's 93.5% pushes the mullions to the edges
+   and crowds the landmarks it is supposed to be framing. */
 .window-frame {
   z-index: 5;
   left: 10%;
   width: 80%;
   height: auto;
   opacity: 0.7;
+  --float-y: 1px;
+  --float-duration: 13s;
 }
 
 .table {
@@ -169,8 +216,13 @@
   top: 18%;
   width: 100%;
   height: auto;
+  --float-x: 2px;
+  --float-y: 1px;
+  --float-duration: 10s;
 }
 
+/* Desk props drift on co-prime durations so the scene never resolves into a
+   visible loop — this is the design system's timing, restored. */
 .cocktail {
   z-index: 7;
   left: 28%;
@@ -178,6 +230,10 @@
   width: 8%;
   height: auto;
   opacity: 0.8;
+  --float-x: 3px;
+  --float-y: 7px;
+  --float-rotate: 1deg;
+  --float-duration: 4.8s;
 }
 
 .sushi {
@@ -187,6 +243,10 @@
   width: 21%;
   height: auto;
   opacity: 0.8;
+  --float-x: 4px;
+  --float-y: 3px;
+  --float-rotate: -0.4deg;
+  --float-duration: 6.2s;
 }
 
 .phone {
@@ -196,6 +256,10 @@
   width: 10%;
   height: auto;
   opacity: 0.8;
+  --float-x: 2px;
+  --float-y: 5px;
+  --float-rotate: 0.7deg;
+  --float-duration: 4.4s;
 }
 
 .instax {
@@ -203,6 +267,11 @@
   left: 60%;
   top: 55%;
   width: 15%;
+  --float-x: 3px;
+  --float-y: 5px;
+  --float-rotate: -0.8deg;
+  --float-duration: 5.8s;
+  --float-delay: -1.5s;
 }
 
 .mp3player {
@@ -212,6 +281,11 @@
   width: 10%;
   height: auto;
   opacity: 0.8;
+  --float-x: 2px;
+  --float-y: 6px;
+  --float-rotate: -0.8deg;
+  --float-duration: 4.6s;
+  --float-delay: -1s;
 }
 
 .mouse {
@@ -230,6 +304,9 @@
   height: 30%;
   object-fit: cover;
   filter: hue-rotate(45deg);
+  --float-x: 1px;
+  --float-y: 2px;
+  --float-duration: 7s;
 }
 
 .desktop-icons {
@@ -243,6 +320,9 @@
   column-gap: 6%;
   row-gap: 3%;
   pointer-events: none;
+  --float-x: 1px;
+  --float-y: 2px;
+  --float-duration: 5.5s;
 }
 
 .icon { width: 100%; }
@@ -257,31 +337,44 @@
   -webkit-appearance: none;
   cursor: none;
   pointer-events: auto;
+  transition: transform 80ms steps(2, end);
 }
 
+.icon-btn:hover,
+.icon-btn:focus-visible {
+  transform: translateY(-2px);
+}
+
+/* Fixed, not absolute: js/interactions.js positions this from a viewport rect
+   (getBoundingClientRect), so absolute positioning tore it off its icon as
+   soon as the page scrolled. Paper surface to match the Start menu — a dark
+   popover here meant the site spoke two popover languages. */
 .tech-pop {
-  position: absolute;
+  position: fixed;
   z-index: 77;
   min-width: 140px;
   max-width: 220px;
   padding: var(--space-3) var(--space-4);
-  color: var(--text);
-  background: var(--bylx-overlay-strong);
-  border: var(--stroke-2) solid var(--cyan);
+  color: var(--fg-ink);
+  background: var(--bg-paper);
+  border: var(--stroke-2) solid var(--border-ink);
   box-shadow: var(--shadow-chunk-sm);
   transform: translateY(-100%);
 }
 
 .tech-pop-close {
   position: absolute;
-  top: 2px;
-  right: 4px;
+  top: -10px;
+  right: -10px;
+  width: 22px;
+  height: 22px;
   padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--cyan);
-  font-family: var(--font-ui);
-  font-size: 0.7rem;
+  border: 2px solid var(--border-ink);
+  background: var(--accent);
+  color: var(--fg-ink);
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  font-weight: 600;
   line-height: 1;
   cursor: none;
 }
@@ -289,20 +382,24 @@
 .tech-pop-name {
   margin: 0 0 var(--space-1);
   font-family: var(--font-ui);
-  font-size: 0.7rem;
-  color: var(--pink);
+  font-size: var(--fs-eyebrow);
+  color: var(--bylx-pink-ink);
 }
 
 .tech-pop-sub {
   margin: 0;
   font-family: var(--font-pixel);
-  font-size: 0.95rem;
-  line-height: 1.2;
-  color: var(--muted);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-body);
+  color: #444;
 }
 
 .pixel-window {
   --tile: clamp(8px, 0.72vw, 16px);
+  --float-x: 2px;
+  --float-y: 3px;
+  --float-rotate: 0.35deg;
+  --float-duration: 5.2s;
   position: absolute;
   z-index: 8;
   left: 47%;
@@ -426,6 +523,8 @@
   transform: scaleX(-1);
 }
 
+/* Paint rides the window, so it must drift on the same timing or it slides
+   off the frame it is painted onto */
 .paint {
   z-index: 8;
   left: 47%;
@@ -434,6 +533,10 @@
   height: 20%;
   clip-path: inset(5% 0% 0% 0%);
   mix-blend-mode: multiply;
+  --float-x: 2px;
+  --float-y: 3px;
+  --float-rotate: 0.35deg;
+  --float-duration: 5.2s;
 }
 
 .toolbar-strip {
@@ -447,6 +550,8 @@
   align-items: stretch;
   overflow: hidden;
   pointer-events: none;
+  --float-y: 1px;
+  --float-duration: 4.8s;
 }
 
 .toolbar {
@@ -483,11 +588,18 @@
   transform: scaleX(-1);
 }
 
+/* A sticker, not a decal: the kit's tilt and hard offset shadow are what sell
+   it as something physically stuck to the bezel */
 .bylx-logo {
   left: 61%;
   top: 35%;
   width: 4%;
   z-index: 10;
+  --base-transform: rotate(-6deg);
+  filter: drop-shadow(2px 2px 0 rgba(9, 5, 27, 0.4));
+  --float-x: 1px;
+  --float-y: 2px;
+  --float-duration: 8s;
 }
 
 .monitor {
@@ -496,6 +608,9 @@
   top: 35%;
   width: 30%;
   height: auto;
+  --float-x: 1px;
+  --float-y: 2px;
+  --float-duration: 8s;
 }
 
 .monitor-img {
@@ -520,11 +635,16 @@
   pointer-events: auto;
 }
 
+/* Glow, board and keys share these coordinates and must drift as one object —
+   the kit staggers their delays, which slides the keys off the board */
 .keyboard {
   left: 35%;
   top: 82%;
   width: 30%;
   height: auto;
+  --float-x: 2px;
+  --float-y: 2px;
+  --float-duration: 6.5s;
 }
 
 /* Static RGB underglow behind the board — recolours on key press, never cycles idle */
