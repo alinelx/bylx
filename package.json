@@ -1,0 +1,27 @@
+{
+  "name": "bylx",
+  "version": "1.0.0",
+  "description": "Personal portfolio of Aline Xavier — a pixel-art diorama of a Y2K cyber-café where Rio de Janeiro and Lisbon share a desk.",
+  "main": "script.js",
+  "scripts": {
+    "test": "playwright test",
+    "serve": "serve . -l 4173",
+    "og": "node scripts/make-og-image.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alinelx/bylx.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/alinelx/bylx/issues"
+  },
+  "homepage": "https://github.com/alinelx/bylx#readme",
+  "private": "true",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}
