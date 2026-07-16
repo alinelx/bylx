@@ -1,0 +1,16 @@
+# Dev tooling only — nothing here is deployed
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+# A second, separate clone of this repo that lives inside the working copy and
+# carries its own .git plus uncommitted work. Ignored so it is never uploaded
+# or committed by accident. Do NOT delete it — see CLAUDE.md backlog.
+/bylx/
+
+# OS noise
+Thumbs.db
+desktop.ini
+.DS_Store

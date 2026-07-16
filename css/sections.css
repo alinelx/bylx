@@ -301,6 +301,195 @@
 
 .modal-body { padding: 1rem; }
 
+/* Gallery modal — pixel-art image grid */
+.gallery-intro {
+  margin: 0 0 0.8rem;
+  font-size: 0.95rem;
+}
+
+.gallery-grid {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  grid-auto-rows: 110px;
+}
+
+.gallery-cell {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+  border: 3px solid var(--bg);
+  box-shadow: 3px 3px 0 var(--pink);
+}
+
+.gallery-cell.is-tall { grid-row: span 2; }
+
+.gallery-cell img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+.gallery-cell figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 4px 6px;
+  color: var(--text);
+  background: rgba(9, 5, 27, 0.78);
+  font-family: var(--font-ui);
+  font-size: 0.45rem;
+  text-transform: uppercase;
+  -webkit-font-smoothing: none;
+}
+
+/* Start menu — fixed to viewport, anchored near the toolbar */
+.start-menu {
+  position: fixed;
+  bottom: clamp(22vh, 28vh, 32vh);
+  left: clamp(2rem, 38%, 50%);
+  z-index: 76;
+  width: min(280px, 30vw);
+  color: var(--bg);
+  background: var(--paper);
+  border: var(--stroke-2) solid var(--cyan);
+  box-shadow: var(--shadow-chunk-md);
+  font-family: var(--font-pixel);
+  animation: start-pop-in 140ms steps(2, end);
+}
+
+.start-menu[hidden] { display: none; }
+
+.start-menu-title {
+  margin: 0;
+  padding: 8px 12px;
+  background: var(--cyan);
+  border-bottom: 3px solid var(--bg);
+  color: var(--bg);
+  font: 500 1rem/1 var(--font-pixel);
+}
+
+.start-menu ul {
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+}
+
+.start-menu li button {
+  width: 100%;
+  padding: 8px 14px;
+  border: 0;
+  background: transparent;
+  color: var(--bg);
+  font: 500 1rem/1.1 var(--font-pixel);
+  text-align: left;
+  cursor: none;
+}
+
+.start-menu li button:hover,
+.start-menu li button:focus-visible {
+  outline: none;
+  background: var(--cyan);
+}
+
+.start-menu li button .meta {
+  display: block;
+  margin-top: 4px;
+  color: #666;
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  -webkit-font-smoothing: none;
+}
+
+/* opacity-only: transform stays free for the mobile translateX centering */
+@keyframes start-pop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Fullscreen monitor — cinema mode */
+.fullscreen-mode {
+  position: fixed;
+  inset: 0;
+  z-index: 771;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vmin;
+  background: #000;
+}
+
+.fullscreen-mode[hidden] { display: none; }
+
+.fullscreen-screen {
+  position: relative;
+  width: min(96vw, calc(96vh * 4 / 3));
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: url("../assets/hero/win_background.png") center / cover no-repeat;
+  image-rendering: pixelated;
+  border: 6px solid var(--bg);
+  box-shadow: 0 0 0 14px var(--bylx-bg-ink), 0 0 80px rgba(89, 243, 255, 0.18);
+}
+
+.fullscreen-hint {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  margin: 0;
+  padding: 10px 14px;
+  color: var(--bg);
+  background: var(--paper);
+  border: 3px solid var(--bg);
+  box-shadow: var(--shadow-chunk-sm);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: none;
+}
+
+.fullscreen-hint[hidden] { display: none; }
+
+.fullscreen-hint kbd {
+  display: inline-block;
+  margin: 0 2px;
+  padding: 4px 8px;
+  background: var(--cyan);
+  color: var(--bg);
+  border: 2px solid var(--bg);
+  font-family: inherit;
+  font-size: 0.7rem;
+}
+
+/* One-off discovery nudge — the hover policy is deliberately neutral, so
+   nothing else tells a first-time visitor the desk is clickable. Same Win98
+   tooltip treatment as .fullscreen-hint; js/interactions.js shows it once per
+   session and auto-dismisses it. */
+.desk-hint {
+  position: absolute;
+  right: clamp(0.8rem, 2vw, 1.4rem);
+  bottom: clamp(0.8rem, 2vw, 1.4rem);
+  z-index: 40;
+  margin: 0;
+  padding: 10px 14px;
+  color: var(--bg);
+  background: var(--paper);
+  border: 3px solid var(--bg);
+  box-shadow: var(--shadow-chunk-sm);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: none;
+  pointer-events: none;
+}
+
+.desk-hint[hidden] { display: none; }
+
 .contact-form { display: grid; gap: 0.8rem; }
 
 .contact-form label { display: grid; gap: 0.25rem; }
@@ -349,62 +538,216 @@
 .form-status[data-state="success"] { color: var(--bylx-cyan-ink); }
 .form-status[data-state="error"]   { color: var(--danger); }
 
-.mp3-controls {
+/* MP3 player — bottom-right image-mapped player over mp3_player.png */
+.mp3-player {
   position: fixed;
-  right: 1rem;
-  bottom: 1rem;
+  right: clamp(0.8rem, 2vw, 1.4rem);
+  bottom: clamp(0.8rem, 2vw, 1.4rem);
   z-index: 770;
-  display: none;
-  width: min(360px, calc(100vw - 2rem));
-  padding: 0.75rem;
-  color: var(--text);
-  background: rgba(9, 5, 27, 0.9);
-  border: 4px solid var(--cyan);
-  box-shadow: 6px 6px 0 var(--pink);
-  font-family: var(--font-pixel);
+  width: min(560px, 70vw);
+  visibility: hidden;
+  opacity: 0;
+  transform: translate(40px, 40px) scale(0.6);
+  transform-origin: bottom right;
+  pointer-events: none;
+  transition:
+    opacity 240ms steps(3, end),
+    transform 320ms steps(4, end),
+    visibility 0s 320ms;
 }
 
-.mp3-controls.is-visible { display: block; }
-
-.mp3-title {
-  display: flex;
-  gap: 0.4rem;
-  align-items: baseline;
-  margin: 0 0 0.6rem;
-  font-size: 1rem;
-  line-height: 1.1;
+.mp3-player.is-on {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+  pointer-events: auto;
+  transition:
+    opacity 240ms steps(3, end),
+    transform 320ms steps(4, end),
+    visibility 0s;
 }
 
-.mp3-now { flex: 0 0 auto; }
-
-.mp3-marquee-window {
-  position: relative;
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
+.mp3-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  z-index: 2;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background: var(--pink);
+  color: var(--bg);
+  border: 3px solid var(--bg);
+  box-shadow: 3px 3px 0 var(--cyan);
+  font: 600 18px var(--font-pixel);
+  line-height: 1;
+  cursor: none;
 }
 
-.mp3-marquee-text {
-  display: inline-block;
-  white-space: nowrap;
+.mp3-status {
+  margin: 0 0 6px;
+  padding: 6px 8px;
+  background: var(--bylx-overlay-strong);
   color: var(--cyan);
-  will-change: transform;
+  border-left: 4px solid var(--pink);
+  font-family: var(--font-ui);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  -webkit-font-smoothing: none;
 }
 
-.mp3-marquee-window.is-scrolling .mp3-marquee-text {
-  animation: mp3-marquee 7s ease-in-out infinite alternate;
+.mp3-status[hidden] { display: none; }
+
+.mp3-frame {
+  position: relative;
+  aspect-ratio: 320 / 128;
+  filter: drop-shadow(6px 6px 0 var(--bg));
+}
+
+.mp3-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* LCD overlay — sits on the purple LCD rectangle of the sprite */
+/* Fitted to the purple screen drawn in mp3_player.png (35.9–70% × 46.1–62.5%)
+   so the overlay stops covering the select icon and the printed
+   "DIGITAL MP3 PLAYER" / "MP3 / FM" lettering on the bezel */
+.mp3-lcd {
+  position: absolute;
+  left: 36%;
+  right: 30%;
+  top: 46%;
+  bottom: 37.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2px;
+  /* Vertical padding must not be a % — percentages resolve against the
+     player's *width*, which put 5px of padding inside a 23px-tall screen */
+  padding: 1px 3%;
+  overflow: hidden;
+  background: #1c1d6a;
+  color: var(--cyan);
+  border: 1px solid rgba(9, 5, 27, 0.6);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: none;
+  pointer-events: none;
+}
+
+.mp3-lcd-marquee {
+  display: flex;
+  gap: 4em;
+  white-space: nowrap;
+  font-size: clamp(0.5rem, 1.3vw, 0.78rem);
+  line-height: 1;
+  text-transform: uppercase;
+  filter: drop-shadow(0 0 4px rgba(89, 243, 255, 0.6));
+}
+
+/* Marquee only scrolls while music plays */
+.mp3-player.is-playing .mp3-lcd-marquee {
+  animation: mp3-marquee 14s linear infinite;
 }
 
 @keyframes mp3-marquee {
-  0%, 14%   { transform: translateX(0); }
-  86%, 100% { transform: translateX(calc(var(--mq-shift, 0px) * -1)); }
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-.mp3-buttons {
+.mp3-lcd-meta {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+  justify-content: space-between;
+  gap: 6px;
+  color: var(--muted);
+  /* 0.5rem floor: the old 0.32rem bottomed out at ~5px on the mobile player */
+  font-size: clamp(0.5rem, 0.85vw, 0.52rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Image-map hotspots over the player art */
+.mp3-hit {
+  position: absolute;
+  padding: 0;
+  background: transparent;
+  border: 2px solid transparent;
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: none;
+  cursor: none;
+}
+
+.mp3-hit:hover,
+.mp3-hit:focus-visible {
+  outline: none;
+  border-color: rgba(89, 243, 255, 0.9);
+  background: rgba(89, 243, 255, 0.12);
+}
+
+.mp3-hit:active { background: rgba(255, 93, 187, 0.22); }
+
+.mp3-hit-label {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -4px);
+  padding: 4px 6px;
+  background: var(--bg);
+  color: var(--cyan);
+  border: 2px solid var(--cyan);
+  font-size: 0.55rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 120ms steps(2, end);
+  pointer-events: none;
+}
+
+.mp3-hit:hover .mp3-hit-label,
+.mp3-hit:focus-visible .mp3-hit-label { opacity: 1; }
+
+/* Play/pause — circle over the white dial */
+.mp3-play {
+  left: 9%;
+  top: 55%;
+  width: 17%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: 50%;
+}
+
+.mp3-play:hover,
+.mp3-play:focus-visible {
+  border: 0;
+  background: rgba(89, 243, 255, 0.16);
+}
+
+/* Selector strip — click next, double-click previous */
+.mp3-select {
+  left: 4%;
+  top: 0%;
+  width: 14%;
+  height: 13%;
+}
+
+/* Volume buttons on the right strip */
+.mp3-volup {
+  left: 86%;
+  top: 26%;
+  width: 10%;
+  height: 22%;
+}
+
+.mp3-voldown {
+  left: 86%;
+  top: 52%;
+  width: 10%;
+  height: 22%;
 }
 
 .about {
@@ -451,7 +794,7 @@
   margin-top: 0.75rem;
   padding: 0.65rem 1.2rem;
   background: var(--pink);
-  color: var(--text);
+  color: var(--bg);
   border: 3px solid var(--cyan);
   box-shadow: 5px 5px 0 var(--cyan);
   font-family: var(--font-ui);

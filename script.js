@@ -8,7 +8,8 @@ import { initCursor, initSakuraTrail }              from "./js/cursor.js";
 import { initModals }                               from "./js/modals.js";
 import { initContactForm }                          from "./js/contact.js";
 import { initAudio }                                from "./js/audio.js";
-import { initMouseFlee, initKeyboardRgb, initTechPopovers } from "./js/interactions.js";
+import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js";
+import { initDesktop }                              from "./js/desktop.js";
 
 initParallax();
 initCursor();
@@ -19,3 +20,5 @@ initAudio();
 initMouseFlee();
 initKeyboardRgb();
 initTechPopovers();
+initDeskHint();
+initDesktop();

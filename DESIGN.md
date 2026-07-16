@@ -35,6 +35,16 @@ page, not a corporate developer site.
    frame, mechanical keyboard, an MP3 player you click to spin lo-fi.
 3. **Two cities, one diorama.** Rio + Lisbon skylines share the wall behind the
    desk — the artist's biography baked into the scene.
+   - The landmarks are the thesis, so they must be **readable**: Cristo 14%,
+     Pão de Açúcar 23.5%, Ponte 25 de Abril 20%, Torre de Belém 16%. They were
+     once half that, and a Ponte you cannot recognise argues nothing.
+   - But they stay **hazy** (0.7–0.8), and the sky and hills keep their own
+     placement. This is aerial perspective: a city seen through a window at
+     night is fainter than the desk in front of you. The design-system kit
+     draws them at 0.98–1.0, which gives a distant skyline the same visual
+     weight as a coffee cup and flattens the diorama into stickers on glass.
+     **Scale from the kit, atmosphere from the site** — decided 2026-07-16 by
+     rendering all three and looking.
 4. **Built in public, owning the craft.** First-person, honest voice — a maker's
    portfolio, not faked seniority.
 
