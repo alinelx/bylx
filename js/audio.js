@@ -117,4 +117,10 @@ export function initAudio() {
       else if (action === "stop")        { stopAudio(); }
       else if (action === "next")        { playTrack(currentIndex + 1); }
       else if (action === "prev")        { playTrack(currentIndex - 1); }
-      else if (action === "volume-down") { audio.volume = Math.max(0
+      else if (action === "volume-down") { audio.volume = Math.max(0, audio.volume - 0.1); }
+      else if (action === "volume-up")   { audio.volume = Math.min(1, audio.volume + 0.1); }
+    });
+  });
+
+  window.addEventListener("resize", updateMarquee);
+}
