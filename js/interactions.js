@@ -8,11 +8,14 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx interactions */
 
+import { prefersReducedMotion } from "./utils.js";
+
 export function initMouseFlee() {
   const mouseSprite = document.querySelector(".mouse");
   const hero        = document.querySelector("#hero");
 
-  if (!mouseSprite || !hero) return;
+  if (!mouseSprite || !hero)  return;
+  if (prefersReducedMotion()) return;
 
   let scheduled = false;
 

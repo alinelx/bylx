@@ -47,9 +47,23 @@ function buildLayerMap() {
   }));
 }
 
+const SETTLE_EPSILON = 0.0005;
+let isSettled = false;
+
 function applyOffsets(layerMap) {
-  currentX = lerp(currentX, targetX, 0.08);
-  currentY = lerp(currentY, targetY, 0.08);
+  const settled =
+    Math.abs(currentX - targetX) < SETTLE_EPSILON &&
+    Math.abs(currentY - targetY) < SETTLE_EPSILON;
+
+  if (settled && isSettled) {
+    requestAnimationFrame(() => applyOffsets(layerMap));
+    return;
+  }
+
+  isSettled = settled;
+
+  currentX = settled ? targetX : lerp(currentX, targetX, 0.08);
+  currentY = settled ? targetY : lerp(currentY, targetY, 0.08);
 
   for (const { depth, elements } of layerMap) {
     const moveX = currentX * depth * 4;
@@ -86,8 +100,9 @@ function onPointerMove(event, hero) {
 export function initParallax() {
   const hero = document.querySelector("#hero");
 
-  if (!hero)               return;
-  if (!isWiderThan(901))   return;
+  if (!hero)                    return;
+  if (!isWiderThan(901))        return;
+  if (prefersReducedMotion())   return;
 
   const layerMap = buildLayerMap();
 

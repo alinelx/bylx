@@ -124,10 +124,17 @@
   .layer,
   .bg,
   .screen-item,
-  .hotspot-phone:hover .hotspot-visual,
-  .hotspot-phone:focus-visible .hotspot-visual,
+  .desktop-icons .icon,
+  .toolbar,
+  .hotspot-phone:hover img,
+  .hotspot-phone:focus-visible img,
+  .hotspot-mp3:hover img,
+  .hotspot-mp3:focus-visible img,
+  .hotspot-mp3.is-playing img,
   .hotspot-instax:hover .instax-sprite,
-  .hotspot-instax:focus-visible .instax-sprite {
+  .hotspot-instax:focus-visible .instax-sprite,
+  .hotspot-instax:hover .instax-sprite::before,
+  .hotspot-instax:focus-visible .instax-sprite::before {
     animation: none;
     transition: none;
     will-change: auto;
