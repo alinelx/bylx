@@ -37,32 +37,11 @@
   transform-origin: center;
 }
 
-.hotspot::after {
-  content: "";
-  position: absolute;
-  inset: -12%;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 120ms steps(2, end);
-}
-
-.hotspot:hover::after,
-.hotspot:focus-visible::after {
-  opacity: 1;
-}
-
-.hotspot:hover .hotspot-visual,
-.hotspot:focus-visible .hotspot-visual {
-  filter: brightness(1.16);
-}
-
+/* Neutral hover policy: no fill wash, no brightness/hue shift on the sprite —
+   only the per-prop animation runs (phone ring, instax sheet, mp3 groove) */
 .hotspot:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px rgba(89, 243, 255, 0.9);
-}
-
-.hotspot:active .hotspot-visual {
-  filter: brightness(0.96);
 }
 
 .instax-sprite {
@@ -156,6 +135,51 @@
     drop-shadow(0 0 5px var(--rgb-tint))
     drop-shadow(0 0 11px var(--rgb-tint))
     brightness(1.12);
+}
+
+.keyboard-glow {
+  --rgb-tint: var(--cyan);
+  background: radial-gradient(ellipse at center, var(--rgb-tint) 0%, transparent 70%);
+  opacity: 0.4;
+  filter: blur(10px);
+  transition: opacity 220ms steps(3, end);
+}
+
+.keyboard-glow.is-pressed {
+  opacity: 0.9;
+  filter: blur(14px);
+}
+
+/* Pixel-window close tile */
+.pixel-window-close:hover { filter: brightness(1.18); }
+.pixel-window-close:active { filter: brightness(0.9); }
+
+.pixel-window-close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(89, 243, 255, 0.9);
+}
+
+/* Monitor power button */
+.monitor-power:hover { background: rgba(89, 243, 255, 0.18); }
+
+.monitor-power:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(89, 243, 255, 0.9);
+}
+
+/* Monitor "off" — screen content dims to near-black */
+.scene.screen-off .screen-item,
+.scene.screen-off .paint {
+  filter: brightness(0.04);
+}
+
+.scene.screen-off .win-bg {
+  filter: brightness(0.05) saturate(0);
+}
+
+.screen-item,
+.paint {
+  transition: filter 280ms steps(3, end);
 }
 
 @keyframes instax-sheet {

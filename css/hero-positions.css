@@ -18,11 +18,12 @@
   background: var(--purple);
 }
 
+/* Anchored to the bottom only: when the viewport is shorter than the 16:9
+   artboard, the sky is what gets cropped, never the desk and its hotspots */
 .hero-artboard {
   position: absolute;
   left: 50%;
   bottom: 0;
-  top: 0;
   z-index: 1;
   width: max(100vw, calc(100svh * 16 / 9));
   min-width: 1024px;
@@ -46,6 +47,16 @@
 .toolbar {
   user-select: none;
   pointer-events: none;
+}
+
+/* Interactive layers opt back in — must outrank the .layer reset above,
+   which otherwise beats .hotspot's pointer-events (same specificity,
+   hero-positions.css loads after hero-animations.css) */
+.layer.hotspot,
+.layer.cocktail,
+.layer.sushi,
+.layer.keyboard-keys {
+  pointer-events: auto;
 }
 
 .layer,
@@ -345,6 +356,22 @@
   background-size: 100% 100%;
 }
 
+/* The X drawn in win_top_right.png is the close control */
+.pixel-window-close {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: none;
+  pointer-events: auto;
+}
+
+.pixel-window.is-closed,
+.paint.is-closed {
+  display: none;
+}
+
 .side-left {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
@@ -431,6 +458,23 @@
 
 .toolbar-start { flex: 0 0 auto; }
 
+.start-btn {
+  flex: 0 0 auto;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: none;
+  pointer-events: auto;
+}
+
+.start-btn .toolbar {
+  display: block;
+  height: 100%;
+}
+
 .toolbar-fill {
   flex: 1 1 auto;
   object-fit: cover;
@@ -454,11 +498,39 @@
   height: auto;
 }
 
+.monitor-img {
+  display: block;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* Power button — over the CRT's control pips, bottom-right of the sprite */
+.monitor-power {
+  position: absolute;
+  right: 14%;
+  bottom: 13%;
+  width: 11%;
+  height: 8%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: none;
+  pointer-events: auto;
+}
+
 .keyboard {
   left: 35%;
   top: 82%;
   width: 30%;
   height: auto;
+}
+
+/* Static RGB underglow behind the board — recolours on key press, never cycles idle */
+.keyboard-glow {
+  z-index: 10;
+  aspect-ratio: 4 / 1;
 }
 
 .keyboard-board {

@@ -54,20 +54,56 @@ export function initMouseFlee() {
 
 export function initKeyboardRgb() {
   const keyboardKeys = document.querySelector(".keyboard-keys");
+  const keyboardGlow = document.querySelector(".keyboard-glow");
 
   if (!keyboardKeys) return;
 
+  const targets = keyboardGlow ? [keyboardKeys, keyboardGlow] : [keyboardKeys];
   const palette = ["#ff5dbb", "#59f3ff", "#5d3fd3", "#f7f2ff", "#ffd45d", "#5dff9b"];
   let glowTimeout;
 
   window.addEventListener("keydown", (event) => {
     const code = event.keyCode || event.which || 0;
-    keyboardKeys.style.setProperty("--rgb-tint", palette[code % palette.length]);
-    keyboardKeys.classList.add("is-pressed");
+    const tint = palette[code % palette.length];
+
+    for (const el of targets) {
+      el.style.setProperty("--rgb-tint", tint);
+      el.classList.add("is-pressed");
+    }
 
     clearTimeout(glowTimeout);
-    glowTimeout = setTimeout(() => keyboardKeys.classList.remove("is-pressed"), 220);
+    glowTimeout = setTimeout(() => {
+      for (const el of targets) el.classList.remove("is-pressed");
+    }, 220);
   });
+}
+
+/* Shown once per session: the neutral hover policy means nothing signals that
+   the desk objects are interactive until the pointer is already on one. Any
+   click on the scene means the visitor found it — retire the hint early. */
+export function initDeskHint() {
+  const hint = document.querySelector(".desk-hint");
+  const hero = document.querySelector("#hero");
+  const KEY  = "bylx:desk-hint-seen";
+
+  if (!hint || !hero) return;
+
+  let seen = false;
+  try { seen = sessionStorage.getItem(KEY) === "1"; } catch { /* private mode */ }
+  if (seen) return;
+
+  let timer;
+
+  function dismiss() {
+    hint.hidden = true;
+    clearTimeout(timer);
+    hero.removeEventListener("pointerdown", dismiss);
+    try { sessionStorage.setItem(KEY, "1"); } catch { /* private mode */ }
+  }
+
+  hint.hidden = false;
+  timer = setTimeout(dismiss, 5000);
+  hero.addEventListener("pointerdown", dismiss, { once: true });
 }
 
 const TECH_INFO = {
@@ -158,4 +194,7 @@ export function initTechPopovers() {
     closeTechPop();
   });
 
-  window.addEven
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeTechPop();
+  });
+}

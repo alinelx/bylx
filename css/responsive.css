@@ -9,10 +9,6 @@
 /* ᑲყᥣx responsiveness */
 
 @media (max-width: 1400px) {
-  .hero-scene {
-    height: 150%a;
-  }
-
   .hero-artboard {
     min-width: 0;
   }
@@ -116,6 +112,92 @@
   }
 }
 
+/* Touch devices — pixel type stays tiny by design; grow the touch
+   targets, not the type (footer links were an 8px-tall tap target) */
+@media (pointer: coarse) {
+  .footer-links a {
+    display: inline-block;
+    padding: 0.75rem 0.25rem;
+  }
+
+  .modal-close {
+    padding: 0.55rem 0.75rem;
+  }
+
+  /* Hits are image-mapped in % over their sprite, so on a small player or a
+     small scene they fall under the 24×24 minimum (WCAG 2.2). A transparent
+     ::before grows the touch zone while the visible hover border stays on the
+     art. Both hosts are already positioned (.pixel-window-close via .win), but
+     .win also clips, which would eat the grown zone — so let it escape.
+     Measured at 375px: select 49×18 and the window close 24×8 fail. The volume
+     hits (35×31) and the dial (59×59) already pass, so they are left alone. */
+  .pixel-window-close {
+    overflow: visible;
+  }
+
+  .mp3-select::before,
+  .pixel-window-close::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+  }
+}
+
+/* Mobile hero — desk-focused crop.
+   On narrow/portrait viewports the centered 16:9 artboard shows only its
+   middle band (~37%–63% at 375px wide), which pushed the three interactive
+   hotspots out of frame. These overrides recompose the desk objects inside
+   the visible band; z-index lifts them in front of monitor (10) and
+   keyboard (12), like objects sitting at the front of the desk.
+   The portrait clause catches tablets like iPad Pro portrait (1024px),
+   where the band still cuts the phone off. */
+@media (max-width: 900px), ((orientation: portrait) and (max-width: 1200px)) {
+  .instax {
+    z-index: 13;
+    left: 37.5%;
+    top: 70%;
+    width: 12%;
+  }
+
+  .phone {
+    z-index: 13;
+    left: 52.5%;
+    top: 73%;
+  }
+
+  .mp3player {
+    z-index: 13;
+    left: 44%;
+    top: 91%;
+  }
+
+  .hero-text {
+    width: min(22rem, calc(100% - 1.6rem));
+  }
+
+  .start-menu {
+    left: 50%;
+    bottom: 24vh;
+    width: min(280px, calc(100vw - 2rem));
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 720px) {
+  .mp3-player {
+    width: calc(100vw - 1.6rem);
+  }
+
+  /* The screen drawn on the sprite is only ~119×23px at this size — it can
+     hold a legible track name and one meta field, not three. Volume stays
+     because it is the only feedback the vol buttons have; the index and the
+     transport glyph go, since the dial already shows play state. */
+  .mp3-lcd-meta [data-mp3-index],
+  .mp3-lcd-meta [data-mp3-state] {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -141,4 +223,35 @@
   }
 
   .sakura-bit {
-    an
+    animation-duration: 600ms !important;
+  }
+
+  .hero-text a:hover,
+  .hero-text a:focus-visible {
+    transform: none;
+  }
+
+  .mp3-player,
+  .mp3-hit-label,
+  .keyboard-glow,
+  .screen-item,
+  .paint {
+    transition: none;
+  }
+
+  .mp3-player.is-playing .mp3-lcd-marquee,
+  .start-menu {
+    animation: none;
+  }
+
+  /* Scroll-driven entrances (animations.css) — dropping the animation also
+     drops its `both` fill, so opacity/translate/scale fall back to the base
+     rules and the content is simply there */
+  .project-card,
+  .about-icons img,
+  .projects-header,
+  .about-heading,
+  .about-text {
+    animation: none;
+  }
+}
