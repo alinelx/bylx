@@ -6,15 +6,17 @@
      3. Cursor    — pixel cursor + sakura trail
      4. Hero      — parallax scene and copy overlay
      5. Sections  — projects, modals, mp3, about, footer
-     6. Responsive — breakpoint overrides (always last)
+     6. Work      — the standalone /work/<slug>/ case-study pages
+     7. Responsive — breakpoint overrides (always last)
    ============================================================ */
 
-@import "./css/tokens.css?v=b109244f";
-@import "./css/base.css?v=b109244f";
-@import "./css/cursor.css?v=b109244f";
-@import "./css/hero-animations.css?v=b109244f";
-@import "./css/hero-positions.css?v=b109244f";
-@import "./css/hero-text.css?v=b109244f";
-@import "./css/sections.css?v=b109244f";
-@import "./css/animations.css?v=b109244f";
-@import "./css/responsive.css?v=b109244f";
+@import "./css/tokens.css?v=f8ff742b";
+@import "./css/base.css?v=f8ff742b";
+@import "./css/cursor.css?v=f8ff742b";
+@import "./css/hero-animations.css?v=f8ff742b";
+@import "./css/hero-positions.css?v=f8ff742b";
+@import "./css/hero-text.css?v=f8ff742b";
+@import "./css/sections.css?v=f8ff742b";
+@import "./css/work.css?v=f8ff742b";
+@import "./css/animations.css?v=f8ff742b";
+@import "./css/responsive.css?v=f8ff742b";

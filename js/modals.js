@@ -38,6 +38,10 @@ export function initModals() {
     document.documentElement.classList.add("modal-open");
 
     focusables(modal)[0]?.focus();
+
+    /* Announced, not acted on: js/deeplink.js turns an open case study into
+       /work/<slug>/ without this module knowing routes exist. */
+    modal.dispatchEvent(new CustomEvent("bylx:modal-open", { bubbles: true, detail: { id } }));
   }
 
   function closeModal(modal) {
@@ -57,7 +61,19 @@ export function initModals() {
     if (trigger && document.contains(trigger) && typeof trigger.focus === "function") {
       trigger.focus();
     }
+
+    modal.dispatchEvent(new CustomEvent("bylx:modal-close", { bubbles: true, detail: { id: modal.id } }));
   }
+
+  /* The only way in from outside this module. Back/forward navigation has no
+     trigger element to restore focus to, so it passes none. */
+  document.addEventListener("bylx:open-modal", (event) => {
+    openModal(event.detail?.id, event.detail?.trigger ?? null);
+  });
+
+  document.addEventListener("bylx:close-modal", (event) => {
+    closeModal(document.getElementById(event.detail?.id));
+  });
 
   document.querySelectorAll("[data-modal-target]").forEach((trigger) => {
     trigger.addEventListener("click", () => openModal(trigger.dataset.modalTarget, trigger));

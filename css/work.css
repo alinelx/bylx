@@ -1,0 +1,135 @@
+/* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
+  _               _
+ | |__    _   _  | | __  __
+ | '_ \  | | | | | | \ \/ /
+ | |_) | | |_| | | |  >  <
+ |_.__/   \__, | |_| /_/\_\
+          |___/
+*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
+/* ᑲყᥣx work pages — the standalone /work/<slug>/ documents.
+
+   WHY: the case studies used to exist only as modals of "/". Google indexed
+   one URL (measured 2026-09-22: `site:bylx.dev` returned a single result),
+   nothing could be linked in an application or a post, and a shared link
+   unfurled the same desk image for all five. These pages are the same copy,
+   extracted at build time by scripts/build-work-pages.mjs — one source, two
+   surfaces.
+
+   The sheet deliberately reuses .modal-header / .modal-body /
+   .case-study-body from sections.css: same paper, same chips, same headings.
+   Only the frame is new, because a page is not positioned like a dialog. */
+
+/* base.css hides the native cursor for the whole document and the pixel one
+   is drawn by JS. Work pages load js/work.js, so the pixel cursor is there —
+   but if it ever fails to start, a page with no cursor at all is unusable.
+   Coarse pointers never had one to hide. */
+@media (pointer: coarse) {
+  .is-work-page,
+  .is-work-page * { cursor: auto !important; }
+}
+
+.work-page {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: clamp(1rem, 4vw, 3rem) 1rem clamp(2rem, 6vw, 4rem);
+}
+
+.work-sheet {
+  width: min(720px, 100%);
+  color: var(--bg);
+  background: var(--text);
+  border: var(--stroke-4, 4px) solid var(--cyan);
+  box-shadow: 8px 8px 0 var(--pink);
+  font-family: var(--font-pixel);
+}
+
+/* The header is .modal-header, minus the close button: a page closes by
+   going somewhere, so the control is a link home. */
+.work-back {
+  padding: 0.15rem 0.5rem;
+  color: var(--bg);
+  background: var(--pink);
+  border: 2px solid var(--bg);
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  line-height: 1.6;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.work-back:hover,
+.work-back:focus-visible { background: var(--cyan); }
+
+.work-back:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.work-header h1 {
+  margin: 0;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  line-height: 1.1;
+}
+
+/* Breadcrumb and "other work" are the internal links this site had none of:
+   five pages that only link back to one hub is a dead end for a crawler. */
+.work-crumbs {
+  width: min(720px, 100%);
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  line-height: 1.8;
+}
+
+.work-crumbs a { color: var(--cyan); }
+
+.work-more {
+  width: min(720px, 100%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.work-more-label {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  text-transform: uppercase;
+}
+
+.work-more a {
+  padding: 4px 7px;
+  color: var(--cyan);
+  background: rgba(98, 230, 255, 0.08);
+  border: 2px solid var(--cyan);
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.work-more a:hover,
+.work-more a:focus-visible { color: var(--bg); background: var(--cyan); }
+
+.work-more a:focus-visible {
+  outline: 3px solid var(--pink);
+  outline-offset: 2px;
+}
+
+/* On "/" the same copy is a dialog; the permalink is how a reader gets from
+   the dialog to the page worth sharing. */
+.cs-permalink {
+  margin: 1rem 0 0;
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  line-height: 1.8;
+  color: var(--purple);
+}
+
+.cs-permalink a { color: var(--purple); }

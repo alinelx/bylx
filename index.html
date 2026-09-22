@@ -4,10 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>bylx · Front-end developer & designer</title>
-  <meta name="description" content="bylx — front-end developer and designer building at the crossroads of Brazil and Portugal. Pixel art, vanilla code, built to be noticed." />
-  <meta property="og:title" content="bylx · Front-end developer & designer" />
-  <meta property="og:description" content="A pixel-art portfolio where Rio de Janeiro and Lisbon share a desk." />
+  <!-- Load-bearing since the case studies got URLs (js/deeplink.js): opening
+       one rewrites the path to /work/<slug>/, and every relative URL on this
+       page would then resolve under that folder — the favicon 404ed, and the
+       contact form would have posted to /work/<slug>/contact.php. With a base
+       of "/", relative paths keep meaning what they say wherever the address
+       bar happens to be. -->
+  <base href="/" />
+
+  <!-- Her name is in the title on purpose: "bylx" is the brand, but a recruiter
+       who has her CV searches the person. -->
+  <title>bylx · Aline Lopes Xavier — Front-end Developer &amp; Designer</title>
+  <meta name="description" content="Aline Lopes Xavier (bylx) — front-end developer and designer in Lisbon, open to remote work. Pixel art, vanilla JavaScript, React and Next.js." />
+  <meta property="og:title" content="bylx · Aline Lopes Xavier — Front-end Developer &amp; Designer" />
+  <meta property="og:description" content="A pixel-art portfolio where Rio de Janeiro and Lisbon share a desk — six case studies, the code behind them, and a way to get in touch." />
   <meta property="og:url" content="https://bylx.dev/" />
   <meta property="og:type" content="website" />
   <!-- Absolute URL: relative paths are not resolved by most link unfurlers -->
@@ -20,6 +30,8 @@
   <meta name="theme-color" content="#09051b" />
   <link rel="canonical" href="https://bylx.dev/" />
 
+  <!-- One graph, three jobs: say who she is (entity), say the site is hers,
+       and hand a crawler the six /work/ routes before it finds the sitemap. -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -30,10 +42,38 @@
           "name": "Aline Lopes Xavier",
           "alternateName": "bylx",
           "jobTitle": "Front-end developer and designer",
+          "description": "Front-end developer and designer in Lisbon, working between design and code. Open to remote work.",
           "url": "https://bylx.dev/",
           "email": "geral@bylx.dev",
+          "image": "https://bylx.dev/og-image.png",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Lisbon",
+            "addressCountry": "PT"
+          },
+          "nationality": [
+            { "@type": "Country", "name": "Portugal" },
+            { "@type": "Country", "name": "Brazil" }
+          ],
+          "knowsLanguage": ["pt-PT", "pt-BR", "en"],
+          "knowsAbout": [
+            "Front-end development",
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "TypeScript",
+            "React",
+            "Next.js",
+            "Web accessibility",
+            "UI design",
+            "Pixel art",
+            "WordPress",
+            "Google Apps Script"
+          ],
           "sameAs": [
             "https://github.com/alinelx",
+            "https://www.linkedin.com/in/alinelx",
+            "https://www.credly.com/users/alinelx",
             "https://instagram.com/bylx.dev"
           ]
         },
@@ -45,6 +85,26 @@
           "inLanguage": "en",
           "author": { "@id": "https://bylx.dev/#aline" },
           "publisher": { "@id": "https://bylx.dev/#aline" }
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://bylx.dev/#profile",
+          "url": "https://bylx.dev/",
+          "isPartOf": { "@id": "https://bylx.dev/#site" },
+          "mainEntity": { "@id": "https://bylx.dev/#aline" }
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://bylx.dev/#work",
+          "name": "Case studies",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "url": "https://bylx.dev/work/dark28/", "name": "dark28.pt" },
+            { "@type": "ListItem", "position": 2, "url": "https://bylx.dev/work/bylx-dev/", "name": "bylx.dev" },
+            { "@type": "ListItem", "position": 3, "url": "https://bylx.dev/work/irs-pt/", "name": "irs-pt" },
+            { "@type": "ListItem", "position": 4, "url": "https://bylx.dev/work/konochan/", "name": "konochan.pt" },
+            { "@type": "ListItem", "position": 5, "url": "https://bylx.dev/work/luparoad/", "name": "luparoad.com" },
+            { "@type": "ListItem", "position": 6, "url": "https://bylx.dev/work/workspace-automations/", "name": "Workspace Automations" }
+          ]
         }
       ]
     }
@@ -58,7 +118,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=b109244f" />
+  <link rel="stylesheet" href="styles.css?v=f8ff742b" />
 </head>
 
 <body>
@@ -280,6 +340,19 @@
             </div>
           </article>
 
+          <article class="project-card" aria-labelledby="card-irspt-title">
+            <div class="card-body">
+              <span class="card-status card-status--live">OPEN SOURCE</span>
+              <h3 id="card-irspt-title"><button type="button" class="card-trigger" data-modal-target="casestudy-irspt-modal">irs-pt</button></h3>
+              <p>An open-source agent skill that answers one tax question Portuguese freelancers keep getting wrong.</p>
+              <div class="card-meta">
+                <span class="card-tag">Agent Skill</span>
+                <span class="card-tag">Python</span>
+                <span class="card-tag">MIT</span>
+              </div>
+            </div>
+          </article>
+
           <article class="project-card" aria-labelledby="card-konochan-title">
             <div class="card-body">
               <span class="card-status card-status--shipped">SHIPPED</span>
@@ -331,6 +404,14 @@
             <p>I'm Aline — a front-end developer and designer built at the intersection of two cities. Brazil shaped how I see colour, texture, and warmth. Portugal taught me restraint, history, and how much can be said with very little. The desk you're looking at holds both.</p>
             <p>I work in the space between design and code — where a layout decision is also a technical decision, and a pixel is never just a pixel. My stack is HTML, CSS, and vanilla JavaScript by default — not because I don't know frameworks (I do), but because starting from fundamentals means every abstraction I add is earned, not assumed.</p>
             <p>This site is the work. The attention to detail you find here — the instax animation, the interactive objects, the skyline outside the window — is the same attention I bring to everything I build.</p>
+            <!-- The one line a recruiter needs and the site did not say: what she
+                 is looking for, from where, and how to reach her without a form. -->
+            <p class="about-availability">
+              <strong>Open to remote front-end work</strong> — based in Lisbon (WET/CET), Portuguese and EU citizen,
+              working in Portuguese and English. Freelance or employed.
+              <a href="mailto:geral@bylx.dev">geral@bylx.dev</a>
+            </p>
+
             <div class="about-actions">
               <button type="button" class="about-cta" data-modal-target="contact-modal">Get in touch</button>
 
@@ -340,13 +421,13 @@
               <a class="about-link" href="assets/cv/aline-lopes-xavier-cv-design.pdf?v=87aafae0" download>
                 CV · design <span aria-hidden="true">↓</span>
               </a>
-              <a class="about-link" href="https://www.linkedin.com/in/alinelx" target="_blank" rel="noopener noreferrer">
+              <a class="about-link" href="https://www.linkedin.com/in/alinelx" target="_blank" rel="me noopener noreferrer">
                 LinkedIn <span aria-hidden="true">↗</span>
               </a>
-              <a class="about-link" href="https://github.com/alinelx" target="_blank" rel="noopener noreferrer">
+              <a class="about-link" href="https://github.com/alinelx" target="_blank" rel="me noopener noreferrer">
                 GitHub <span aria-hidden="true">↗</span>
               </a>
-              <a class="about-link" href="https://www.credly.com/users/alinelx" target="_blank" rel="noopener noreferrer">
+              <a class="about-link" href="https://www.credly.com/users/alinelx" target="_blank" rel="me noopener noreferrer">
                 Badges · Credly <span aria-hidden="true">↗</span>
               </a>
             </div>
@@ -392,7 +473,10 @@
       </div>
     </section>
 
-    <div class="modal pixel-modal" id="casestudy-dark28-modal" aria-hidden="true">
+    <div class="modal pixel-modal" id="casestudy-dark28-modal" aria-hidden="true"
+         data-work-slug="dark28"
+         data-work-title="dark28.pt — a dark tourism route through Lisbon's Tram 28"
+         data-work-description="Case study: turning Lisbon's Tram 28 into a self-guided dark tourism route with Next.js, TypeScript and React — themed landmark discovery, narrative context per stop, saved places.">
       <div class="modal-backdrop" data-close-modal></div>
 
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-dark28-title">
@@ -432,6 +516,8 @@
           <h3 class="cs-heading">What I learned</h3>
           <p>Designing content-first changes the UI. The narrative weight of each stop shaped the information hierarchy — generic card components didn't work because the content resisted being genericised. TypeScript caught real bugs, not theoretical ones. App Router's server/client boundary required rethinking where state lives.</p>
 
+          <p class="cs-permalink">Permalink: <a href="/work/dark28/">bylx.dev/work/dark28/</a></p>
+
           <div class="cs-footer-links">
             <a href="https://dark28.pt" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open dark28.pt ↗</a>
             <a href="https://github.com/alinelx/dark-28" class="cs-button cs-button--ghost" target="_blank" rel="noopener noreferrer">Code on GitHub ↗</a>
@@ -440,7 +526,10 @@
       </section>
     </div>
 
-    <div class="modal pixel-modal" id="casestudy-bylx-modal" aria-hidden="true">
+    <div class="modal pixel-modal" id="casestudy-bylx-modal" aria-hidden="true"
+         data-work-slug="bylx-dev"
+         data-work-title="bylx.dev — a pixel-art portfolio in vanilla JavaScript"
+         data-work-description="Case study: an interactive Y2K desk scene built with vanilla ES modules — a 64×64 pixel grid, steps() motion, a working MP3 player and keyboard-accessible modals.">
       <div class="modal-backdrop" data-close-modal></div>
 
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-bylx-title">
@@ -480,6 +569,8 @@
           <h3 class="cs-heading">What I learned</h3>
           <p>Constraints are a design system. Refusing frameworks forced clean module boundaries; refusing smooth easing forced intentional animation. And accessibility inside a fully custom scene — focus states, aria labels, a form that works without JS — is where the real engineering happened.</p>
 
+          <p class="cs-permalink">Permalink: <a href="/work/bylx-dev/">bylx.dev/work/bylx-dev/</a></p>
+
           <div class="cs-footer-links">
             <a href="https://github.com/alinelx/bylx" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Code on GitHub ↗</a>
           </div>
@@ -487,7 +578,61 @@
       </section>
     </div>
 
-    <div class="modal pixel-modal" id="casestudy-konochan-modal" aria-hidden="true">
+    <div class="modal pixel-modal" id="casestudy-irspt-modal" aria-hidden="true"
+         data-work-slug="irs-pt"
+         data-work-title="irs-pt — an open-source IRS assistant for Portuguese freelancers"
+         data-work-description="Case study: an open-source agent skill that works out whether assigning invoices to your activity changes your Portuguese tax at all — and parses the e-Fatura export locally, without sending anything anywhere.">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-irspt-title">
+        <header class="modal-header">
+          <h2 id="casestudy-irspt-title">irs-pt — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <ul class="cs-chips">
+            <li>Agent Skill</li>
+            <li>Python (stdlib only)</li>
+            <li>Markdown</li>
+            <li>MIT</li>
+          </ul>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>Every freelancer in Portugal asks the same thing in March: is it worth assigning this invoice to my activity? I could not find an answer that started with the arithmetic instead of the portal. Under the <em>regime simplificado</em> the answer is close to binary — expenses only matter once 15% of gross service income passes the automatic deduction — and almost nobody is told that before they start classifying receipts one by one.</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>An open-source assistant packaged as an agent skill: it runs inside Claude and any agent that reads the agentskills format, asks two or three questions, and does the threshold maths before it mentions invoices at all. It explains, calculates and recommends — it never submits anything to the Portal das Finanças.</p>
+          <ul class="cs-list">
+            <li>Works out the year's threshold first and says, in one sentence, whether invoices change anything</li>
+            <li>Handles mixed activity (sales, services, other services) and income on top of a salaried job</li>
+            <li>Reads the e-Fatura CSV export locally and proposes a classification invoice by invoice</li>
+            <li>Shows a preview and asks for confirmation before listing what to click in the portal</li>
+            <li>Ends with one next action and the year's deadlines</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>The maths before the portal</strong> — the whole point is the question nobody answers first. Getting the order right is the product; the parser is the easy half.</p>
+          <p><strong>Python with no dependencies</strong> — <code>parse_efatura.py</code> is stdlib only and reads the CSV on your own machine. Tax data does not leave the computer, and there is nothing to install or trust.</p>
+          <p><strong>Volatile values in one file</strong> — IAS, thresholds and deadlines live in <code>references/valores-anuais.md</code>, apart from the structural rules that do not change every year. Updating for a new tax year is one file, not a hunt.</p>
+          <p><strong>The human clicks</strong> — it is not tax advice, and it does not act. The line between "explains" and "submits" is the safety property; it is written into the skill's inviolable rules, not just the README.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>Writing software for a rule someone else wrote means reading the primary source: the CIRS articles, not the blog posts about them. And shipping something in public with "tested by one person — her own return" on the label is a different kind of honesty than a portfolio demo, because strangers rely on it.</p>
+
+          <p class="cs-permalink">Permalink: <a href="/work/irs-pt/">bylx.dev/work/irs-pt/</a></p>
+
+          <div class="cs-footer-links">
+            <a href="https://github.com/alinelx/irs-pt" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Code on GitHub ↗</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-konochan-modal" aria-hidden="true"
+         data-work-slug="konochan"
+         data-work-title="konochan.pt — a kawaii e-commerce brand, built and run solo"
+         data-work-description="Case study: taking a kawaii and handmade-resin brand from zero to real orders — store, Stripe and MB Way payments, inventory, and customer support.">
       <div class="modal-backdrop" data-close-modal></div>
 
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-konochan-title">
@@ -525,6 +670,8 @@
           <h3 class="cs-heading">What I learned</h3>
           <p>E-commerce is UX plus logistics — the interface is the easy half. Running the store taught me what "done" means when customers are real. The shop is currently on pause while I focus on development work; the brand, the systems, and the lessons stay.</p>
 
+          <p class="cs-permalink">Permalink: <a href="/work/konochan/">bylx.dev/work/konochan/</a></p>
+
           <div class="cs-footer-links">
             <a href="https://konochan.pt" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open konochan.pt ↗</a>
           </div>
@@ -532,7 +679,10 @@
       </section>
     </div>
 
-    <div class="modal pixel-modal" id="casestudy-lupa-modal" aria-hidden="true">
+    <div class="modal pixel-modal" id="casestudy-lupa-modal" aria-hidden="true"
+         data-work-slug="luparoad"
+         data-work-title="luparoad.com — a WordPress rebrand for a Lisbon optical clinic"
+         data-work-description="Case study: rebuilding a dated clinic website in WordPress so the owner can run it — restructured content, deliberately few plugins, clean handover.">
       <div class="modal-backdrop" data-close-modal></div>
 
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-lupa-title">
@@ -568,6 +718,8 @@
           <h3 class="cs-heading">What I learned</h3>
           <p>Client work is a different discipline: listening before building, designing within the client's capacity, and writing handover docs as carefully as code. The best compliment was silence — the site just works.</p>
 
+          <p class="cs-permalink">Permalink: <a href="/work/luparoad/">bylx.dev/work/luparoad/</a></p>
+
           <div class="cs-footer-links">
             <a href="https://luparoad.com" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open luparoad.com ↗</a>
           </div>
@@ -575,7 +727,10 @@
       </section>
     </div>
 
-    <div class="modal pixel-modal" id="casestudy-gas-modal" aria-hidden="true">
+    <div class="modal pixel-modal" id="casestudy-gas-modal" aria-hidden="true"
+         data-work-slug="workspace-automations"
+         data-work-title="Workspace Automations — Google Apps Script for a 40-person team"
+         data-work-description="Case study: Apps Script automations in daily production since 2022 — scheduled triggers, Sheets API, error handling, and the adoption problem behind the code.">
       <div class="modal-backdrop" data-close-modal></div>
 
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-gas-title">
@@ -608,6 +763,8 @@
 
           <h3 class="cs-heading">What I learned</h3>
           <p>Automation adoption is a UX problem: the hard part isn't the code, it's making a tool people trust enough to change their routine for. Corporate code stays private — the process is what transfers.</p>
+          <p class="cs-permalink">Permalink: <a href="/work/workspace-automations/">bylx.dev/work/workspace-automations/</a></p>
+
         </div>
       </section>
     </div>
@@ -815,7 +972,7 @@
       <p class="footer-brand">bylx.dev</p>
       <ul class="footer-links" aria-label="Social links">
         <li><a href="https://instagram.com/bylx.dev" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-        <li><a href="https://github.com/alinelx" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="https://github.com/alinelx" target="_blank" rel="me noopener noreferrer">GitHub</a></li>
       </ul>
       <p class="footer-copy">© 2026 Aline Lopes Xavier · Built with vanilla HTML, CSS & JS.</p>
     </div>
@@ -824,6 +981,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=b109244f"></script>
+  <script type="module" src="script.js?v=f8ff742b"></script>
 </body>
 </html>

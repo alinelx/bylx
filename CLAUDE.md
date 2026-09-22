@@ -4,10 +4,12 @@ Pixel-art portfolio for Aline Lopes Xavier (bylx.dev). Vanilla HTML/CSS/JS by de
 
 ## Architecture
 
-- `index.html` — single page: hero scene, projects grid, case-study modals, about, contact
-- `styles.css` — entry point only; imports `css/` partials in strict order: tokens → base → cursor → hero-animations → hero-positions → hero-text → sections → animations → responsive
+- `index.html` — the page: hero scene, projects grid, case-study modals, about, contact. **Single source for the case-study copy** — the `/work/` pages are generated from it
+- `work/<slug>/index.html` — **generated, never edited by hand**: one standalone page per case study, written by `scripts/build-work-pages.mjs` from the modals in `index.html`. `sitemap.xml` comes out of the same script
+- `styles.css` — entry point only; imports `css/` partials in strict order: tokens → base → cursor → hero-animations → hero-positions → hero-text → sections → work → animations → responsive
 - `script.js` — entry point only; imports `js/` ES modules, each with a single `init*()` export
 - `contact.php` — form handler (Hostinger), honeypot + non-JS fallback
+- `js/work.js` — the entry point the generated pages load: the pixel cursor and nothing else (no scene, no modals, no audio)
 - `assets/mp3/` — the 17 lo-fi/citypop tracks the player streams; `js/audio.js` lists them in `TRACKS` and every file there is used. **Don't delete them** — they are the mp3 player
 - `bylx.dev - Standalone.html` — the design-system UI kit exported as one self-contained React/Babel bundle. **Spec, never shipped code**: the site stays vanilla. It is the reference for scene coordinates and motion; open it side by side when porting visuals
 - Design tokens live in `css/tokens.css` (`:root`); brand rules in `DESIGN.md`
@@ -33,6 +35,10 @@ Pixel-art portfolio for Aline Lopes Xavier (bylx.dev). Vanilla HTML/CSS/JS by de
 - **Never `aria-hidden` a wrapper that contains controls.** `.hero-artboard` carried it over 14 real buttons, which stayed tabbable while announcing nothing — hide the decorative *leaves* (`alt=""`, or `aria-hidden` on the one text node) instead
 - Modals owe a keyboard three things, all in `js/modals.js`: trap Tab, restore focus to the opener, lock scroll on `<html>`. Escape is consumed with `preventDefault()` there — `js/audio.js` and `js/desktop.js` bail on `event.defaultPrevented`, or one press closes three layers
 - Colour goes on the surface it is actually read against: the brand cyan and pink are 2.17:1 and 2.65:1 on the paper modals, so text there uses `--bylx-cyan-deep` / `--danger`
+- **`<base href="/">` in `index.html` is load-bearing.** Opening a case study rewrites the path to `/work/<slug>/` (`js/deeplink.js`), and every relative URL on the page resolves against the address bar: without the base the favicon 404ed and the contact form would have posted to `/work/<slug>/contact.php`. Measured 2026-09-22, both. Keep in-page jumps written as `#id` — they resolve to `/#id`, which is right
+- **The case-study copy lives in `index.html` and nowhere else.** Editing `work/<slug>/index.html` is editing build output: the next `npm run build` overwrites it. Change the modal, run the build, both surfaces agree — `tests/work-routes.spec.js` fails if a modal has no page or a page has no modal
+- **A modal that deserves a URL carries `data-work-slug` / `data-work-title` / `data-work-description`.** Those three attributes are the whole routing contract: they drive the address bar, the `<title>`, the OG card and the generated page's meta. The gallery and contact modals have none on purpose — they are UI, not content
+- `js/modals.js` knows nothing about routes. It announces `bylx:modal-open` / `bylx:modal-close` on the modal and listens for `bylx:open-modal` / `bylx:close-modal` on `document`; `js/deeplink.js` is the only thing that speaks both. Keep it that way, or the next feature that opens a dialog will start writing history entries
 
 ## Palette (dark)
 
@@ -51,7 +57,9 @@ Case studies follow the structure: The question → What I built → Technical d
 5. **`bylx/` foi apagada** (2026-09-22, com autorização) — era um segundo *clone* de `alinelx/bylx` dentro da própria pasta do projeto, 134MB (67MB de `.git` + 64MB de mp3 duplicados), ignorado por `.gitignore` e nunca servido. Antes de apagar: sem commits fora do remoto (`git log --branches --not --remotes` vazio), sem stashes, sem ficheiros untracked ou ignorados, e o único commit solto era um stash "WIP on main" que apagava os 17 mp3 — precisamente o que não se quer. Foi essa cópia que produziu o commit "Sync", que reverteu ~1.700 linhas: **uma máquina, uma cópia**, e commit/push só daqui
 6. Volume buttons on the mp3 sprite — done (2026-09): the sprite draws no keys, so they are drawn in CSS as `::after` on `.mp3-volup`/`.mp3-voldown`, on the dark bezel directly under the printed "MP3 / FM" (sprite rows 91–96 of 128, centred on the lettering at x ≈ 57.8%). The hit box runs lower than the drawn key, and `(pointer: coarse)` grows it further. If real pixel art for them lands in `mp3_player.png`, delete those `::after` rules
 
-7. Hero copy vs positioning — settled (2026-09-22): "no shortcuts" is deleted from the meta description and from this file's positioning line. The hero's own line ("vanilla code, optional shortcuts through AI and tech debug") stands, and it is now the only claim the site makes about shortcuts. Don't reintroduce "no shortcuts"
+7. **Case studies have URLs** — done (2026-09-22): they were dialogs of "/", so `site:bylx.dev` returned exactly one indexed result while five case studies sat in the markup, and none of them could be linked in an application or a post. Now: opening one writes `/work/<slug>/`, and that path is a real page generated from the same modal (`npm run build`). Six pages, breadcrumbs, per-page OG cards, `ItemList` + `CreativeWork` JSON-LD, and a sitemap that lists them. What is NOT done: a PT version of the copy, and submitting the sitemap in Search Console — the second one is the only reason Google will notice quickly
+
+8. Hero copy vs positioning — settled (2026-09-22): "no shortcuts" is deleted from the meta description and from this file's positioning line. The hero's own line ("vanilla code, optional shortcuts through AI and tech debug") stands, and it is now the only claim the site makes about shortcuts. Don't reintroduce "no shortcuts"
 
 ## Cache
 
@@ -63,7 +71,7 @@ So every first-party css/js URL carries `?v=<hash>`, and `scripts/stamp-assets.m
 
 The same script also stamps the two CV PDFs, one hash each — they are not in the import chain, but they are edge-cached by URL, and overwriting a PDF in place would leave the edge serving the old one.
 
-**Run `npm run stamp` (or `node scripts/stamp-assets.mjs`) before every deploy**; `--check` exits 1 if it is stale, and it is a no-op when nothing changed.
+**Run `npm run build` before every deploy** — it stamps, then regenerates the `/work/` pages with that same stamp (order matters: the pages copy the stamp out of `index.html`, so stamping second would leave them pointing at the previous stylesheet). `npm run predeploy` runs both in `--check` mode and exits 1 if either is stale.
 
 ## Git
 

@@ -1156,6 +1156,26 @@
    não dependem de permissões de partilha nem expõem a conta. */
 /* Grelha, não fila livre: com auto-fit as caixas ficam todas da mesma
    largura e alinhadas em coluna, em vez de quebrarem aos bocados. */
+/* Availability — the answer to "is she even looking?", which the about copy
+   never gave. Static by design: a hire-me line that pulses is the funnel
+   asking to be clicked (see CLAUDE.md), and this one has to be believed. */
+.about-availability {
+  margin: 1.4rem 0 0;
+  padding: 0.7rem 0.85rem;
+  color: var(--text);
+  background: rgba(98, 230, 255, 0.06);
+  border-left: var(--stroke-4, 4px) solid var(--cyan);
+  font-size: clamp(0.85rem, 1.4vw, 0.95rem);
+  line-height: 1.6;
+}
+
+.about-availability strong { color: var(--cyan); }
+
+.about-availability a {
+  color: var(--pink);
+  text-underline-offset: 3px;
+}
+
 .about-actions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));

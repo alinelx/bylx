@@ -2,7 +2,7 @@
 
 Personal portfolio of Aline Xavier — a pixel-art diorama of a Y2K cyber-café where Rio de Janeiro and Lisbon share a desk.
 
-Built from scratch in vanilla HTML, CSS and JavaScript. No frameworks, no build step.
+Built from scratch in vanilla HTML, CSS and JavaScript. No frameworks; the only build step generates the case-study pages (`npm run build`).
 
 **Live:** [bylx.dev](https://bylx.dev)
 
@@ -21,8 +21,9 @@ Built from scratch in vanilla HTML, CSS and JavaScript. No frameworks, no build 
 ## Running locally
 
 ```bash
-python3 -m http.server 8080
-# open http://localhost:8080
+npm run build          # stamp assets + generate /work pages (before every deploy)
+npx serve . -l 4173    # or: python3 -m http.server 8080
+npm test               # Playwright: smoke, motion, work routes
 ```
 
 ---
@@ -31,9 +32,11 @@ python3 -m http.server 8080
 
 ```
 bylx/
-├── index.html              # single HTML page
+├── index.html              # the page — and the source of the case-study copy
+├── work/<slug>/index.html  # generated: one page per case study (npm run build)
 ├── styles.css              # full design system + layout
 ├── script.js               # parallax, modals, MP3 player, sakura trail, desk interactions
+├── scripts/                # stamp-assets.mjs (cache) + build-work-pages.mjs (routes)
 ├── DESIGN.md               # brand + design language reference
 └── assets/
     ├── hero/               # pixel-art props for the diorama
@@ -47,10 +50,13 @@ bylx/
 
 ## Projects
 
-| Project | Stack | |
-|---|---|---|
-| [Dark28](https://dark28.pt) | Next.js · TypeScript · React · Tailwind | [repo](https://github.com/alinelx/dark-28) |
-| bylx.dev | HTML · CSS · Vanilla JS | this repo |
+| Project | Stack | | |
+|---|---|---|---|
+| [Dark28](https://dark28.pt) | Next.js · TypeScript · React · Tailwind | [repo](https://github.com/alinelx/dark-28) | [case study](https://bylx.dev/work/dark28/) |
+| bylx.dev | HTML · CSS · Vanilla JS | this repo | [case study](https://bylx.dev/work/bylx-dev/) |
+| [irs-pt](https://github.com/alinelx/irs-pt) | Agent Skill · Python | [repo](https://github.com/alinelx/irs-pt) | [case study](https://bylx.dev/work/irs-pt/) |
+| [konochan.pt](https://konochan.pt) | E-commerce · Stripe · MB Way | — | [case study](https://bylx.dev/work/konochan/) |
+| [luparoad.com](https://luparoad.com) | WordPress · Branding | — | [case study](https://bylx.dev/work/luparoad/) |
 
 ---
 

@@ -9,7 +9,9 @@
     "og": "node scripts/make-og-image.mjs",
     "cv": "node scripts/build-cv.mjs",
     "stamp": "node scripts/stamp-assets.mjs",
-    "predeploy": "node scripts/stamp-assets.mjs --check"
+    "predeploy": "node scripts/stamp-assets.mjs --check && node scripts/build-work-pages.mjs --check",
+    "work": "node scripts/build-work-pages.mjs",
+    "build": "node scripts/stamp-assets.mjs && node scripts/build-work-pages.mjs"
   },
   "repository": {
     "type": "git",
