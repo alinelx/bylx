@@ -130,11 +130,12 @@
   /* Hits are image-mapped in % over their sprite, so on a small player or a
      small scene they fall under the 24×24 minimum (WCAG 2.2). A transparent
      ::before grows the touch zone while the visible hover border stays on the
-     art. Both hosts are already positioned (.pixel-window-close via .win), but
-     .win also clips, which would eat the grown zone — so let it escape.
+     art. Both hosts are positioned, but the bar holding the window buttons
+     clips, which would eat the grown zone — so let it escape.
      Measured at 375px: select 49×18, the window close 24×8 and the volume keys
      30×13 fail. The dial (59×59) already passes, so it is left alone. */
-  .pixel-window-close {
+  .pixel-window-close,
+  .win-bar {
     overflow: visible;
   }
 

@@ -224,22 +224,16 @@
 }
 
 /* Win98 chrome: a title bar that ticks and a corner that blinks.
-   filter here, opacity on corner-blink — the two compose on .bottom-right,
-   which is both. A filter on ~7 tiles the size of a fingernail is cheap; the
-   one we refused (scene-glow) filtered the scene root. */
-/* :not(.pixel-window-close) — that tile is the close button, and an animated
-   filter would outrank its :hover brightness, silently killing the affordance
-   on the only interactive tile in the window */
-/* Sem flicker (2026-09-22, a pedido): nada na cena pisca. As keyframes ficam
-   para quem as quiser de volta. */
+   Sem flicker (2026-09-22, a pedido): nada na cena pisca. As keyframes ficam
+   para quem as quiser de volta — mas as peças que elas animavam já não
+   existem: a moldura da janela passou a ser uma border (2026-09-23) e só
+   sobrou o azulejo dos três botões. */
 
 @keyframes window-piece-flicker {
   0%, 84%, 100% { filter: none; }
   88%           { filter: brightness(1.12); }
 }
 
-/* .bottom-right is also a .win, so it must restate the flicker or the shorthand
-   here would replace it outright rather than add to it */
 
 
 @keyframes corner-blink {

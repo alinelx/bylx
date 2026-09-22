@@ -224,3 +224,52 @@ test("the published CVs carry no personal contact details", async ({ page }) => 
     expect(res.status(), href).toBe(200);
   }
 });
+
+test("the pixel window is draggable, and cannot be dragged off the screen", async ({ page }) => {
+  // A title bar that does not move is a picture of a window. It moves by
+  // pointer and by keyboard, and it stops at the edges of the CRT — a window
+  // dropped outside the screen it lives on could never be picked up again.
+  await page.goto("/");
+
+  const artboard = page.locator(".hero-artboard");
+  const win = page.locator(".pixel-window");
+
+  const position = async () => {
+    const [art, box] = await Promise.all([artboard.boundingBox(), win.boundingBox()]);
+    return { left: ((box.x - art.x) / art.width) * 100, top: ((box.y - art.y) / art.height) * 100 };
+  };
+
+  const bar = await page.locator(".win-bar").boundingBox();
+  const start = await position();
+
+  // Grab the left of the bar, away from the three buttons on the right.
+  await page.mouse.move(bar.x + 4, bar.y + bar.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(bar.x - 60, bar.y + bar.height / 2 + 30, { steps: 8 });
+  await page.mouse.up();
+
+  const moved = await position();
+  expect(moved.left).toBeLessThan(start.left);
+  expect(moved.top).toBeGreaterThan(start.top);
+
+  // Now shove it well past the top-left corner of the screen and check it stops
+  // there: .win-bg sits at 38% / 42% of the artboard.
+  await page.mouse.move(bar.x - 56, bar.y + bar.height / 2 + 30);
+  await page.mouse.down();
+  await page.mouse.move(0, 0, { steps: 10 });
+  await page.mouse.up();
+
+  const pinned = await position();
+  expect(pinned.left).toBeCloseTo(38, 0);
+  expect(pinned.top).toBeCloseTo(42, 0);
+
+  // WCAG 2.5.7: the same move without a drag.
+  await page.locator(".win-bar").focus();
+  await page.keyboard.press("ArrowRight");
+  expect((await position()).left).toBeGreaterThan(pinned.left);
+
+  await page.keyboard.press("Home");
+  const back = await position();
+  expect(back.left).toBeCloseTo(start.left, 1);
+  expect(back.top).toBeCloseTo(start.top, 1);
+});

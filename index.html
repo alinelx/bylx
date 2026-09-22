@@ -129,7 +129,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=f741f055" />
+  <link rel="stylesheet" href="styles.css?v=9880b7aa" />
 </head>
 
 <body>
@@ -228,23 +228,24 @@
           </div>
 
           <div class="pixel-window screen-item">
-            <div class="win top-left"></div>
-            <div class="win top-middle">
+            <!-- The bar is focusable because the window can be moved, and a drag
+                 cannot be the only way to do it (WCAG 2.5.7): the arrows move it
+                 too, and Home puts it back. -->
+            <div class="win-bar" tabindex="0" aria-label="Move the nihon.bmp window — drag it, or use the arrow keys">
               <p class="window-title" aria-hidden="true">nihon.bmp</p>
+              <!-- win_top_right.png draws the three buttons; the tile itself is
+                   the close control, as it always was -->
+              <button class="win-buttons pixel-window-close" type="button" aria-label="Close window"></button>
             </div>
-            <!-- win_top_right.png already draws the X — the tile itself is the close button -->
-            <button class="win top-right pixel-window-close" type="button" aria-label="Close window"></button>
-            <div class="win side-left"></div>
+
             <div class="win-content">
               <img src="assets/hero/japan_poster.png" class="poster" alt="" />
+              <!-- The Paint chrome is a child of the window it decorates, and its
+                   canvas area is transparent, so the poster shows through it -->
+              <img class="paint" src="assets/hero/paint_frame.png" alt="" />
             </div>
-            <div class="win side-right"></div>
-            <div class="win bottom-left"></div>
-            <div class="win bottom-middle"></div>
-            <div class="win bottom-right"></div>
           </div>
 
-          <img class="asset layer paint screen-item" src="assets/hero/paint_frame.png" alt="" />
 
           <div class="toolbar-strip screen-item">
             <button class="start-btn" type="button" aria-label="Open Start menu" aria-haspopup="menu" aria-expanded="false">
@@ -426,10 +427,10 @@
             <div class="about-actions">
               <button type="button" class="about-cta" data-modal-target="contact-modal">Get in touch</button>
 
-              <a class="about-link about-link--primary" href="assets/cv/aline-lopes-xavier-cv-frontend.pdf?v=bfa99bb5" download>
+              <a class="about-link about-link--primary" href="assets/cv/aline-lopes-xavier-cv-frontend.pdf?v=bf145d2c" download>
                 CV · front-end <span aria-hidden="true">↓</span>
               </a>
-              <a class="about-link" href="assets/cv/aline-lopes-xavier-cv-design.pdf?v=7382f902" download>
+              <a class="about-link" href="assets/cv/aline-lopes-xavier-cv-design.pdf?v=21c92d42" download>
                 CV · design <span aria-hidden="true">↓</span>
               </a>
               <a class="about-link" href="https://www.linkedin.com/in/alinelx" target="_blank" rel="me noopener noreferrer">
@@ -526,11 +527,11 @@
           <h3 class="cs-heading">What I learned</h3>
           <p>Designing content-first changes the UI. The narrative weight of each stop shaped the information hierarchy — generic card components didn't work because the content resisted being genericised. TypeScript caught real bugs, not theoretical ones. App Router's server/client boundary required rethinking where state lives.</p>
 
-          <p class="cs-permalink">Permalink: <a href="/work/dark28/">bylx.dev/work/dark28/</a></p>
 
           <div class="cs-footer-links">
             <a href="https://dark28.pt" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open dark28.pt ↗</a>
             <a href="https://github.com/alinelx/dark-28" class="cs-button cs-button--ghost" target="_blank" rel="noopener noreferrer">Code on GitHub ↗</a>
+            <p class="cs-permalink"><a href="/work/dark28/">bylx.dev/work/dark28/</a></p>
           </div>
         </div>
       </section>
@@ -579,10 +580,10 @@
           <h3 class="cs-heading">What I learned</h3>
           <p>Constraints are a design system. Refusing frameworks forced clean module boundaries; refusing smooth easing forced intentional animation. And accessibility inside a fully custom scene — focus states, aria labels, a form that works without JS — is where the real engineering happened.</p>
 
-          <p class="cs-permalink">Permalink: <a href="/work/bylx-dev/">bylx.dev/work/bylx-dev/</a></p>
 
           <div class="cs-footer-links">
             <a href="https://github.com/alinelx/bylx" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Code on GitHub ↗</a>
+            <p class="cs-permalink"><a href="/work/bylx-dev/">bylx.dev/work/bylx-dev/</a></p>
           </div>
         </div>
       </section>
@@ -630,10 +631,10 @@
           <h3 class="cs-heading">What I learned</h3>
           <p>Writing software for a rule someone else wrote means reading the primary source: the CIRS articles, not the blog posts about them. And shipping something in public with "tested by one person — her own return" on the label is a different kind of honesty than a portfolio demo, because strangers rely on it.</p>
 
-          <p class="cs-permalink">Permalink: <a href="/work/irs-pt/">bylx.dev/work/irs-pt/</a></p>
 
           <div class="cs-footer-links">
             <a href="https://github.com/alinelx/irs-pt" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Code on GitHub ↗</a>
+            <p class="cs-permalink"><a href="/work/irs-pt/">bylx.dev/work/irs-pt/</a></p>
           </div>
         </div>
       </section>
@@ -680,10 +681,10 @@
           <h3 class="cs-heading">What I learned</h3>
           <p>E-commerce is UX plus logistics — the interface is the easy half. Running the store taught me what "done" means when customers are real. The shop is currently on pause while I focus on development work; the brand, the systems, and the lessons stay.</p>
 
-          <p class="cs-permalink">Permalink: <a href="/work/konochan/">bylx.dev/work/konochan/</a></p>
 
           <div class="cs-footer-links">
             <a href="https://konochan.pt" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open konochan.pt ↗</a>
+            <p class="cs-permalink"><a href="/work/konochan/">bylx.dev/work/konochan/</a></p>
           </div>
         </div>
       </section>
@@ -728,10 +729,10 @@
           <h3 class="cs-heading">What I learned</h3>
           <p>Client work is a different discipline: listening before building, designing within the client's capacity, and writing handover docs as carefully as code. The best compliment was silence — the site just works.</p>
 
-          <p class="cs-permalink">Permalink: <a href="/work/luparoad/">bylx.dev/work/luparoad/</a></p>
 
           <div class="cs-footer-links">
             <a href="https://luparoad.com" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open luparoad.com ↗</a>
+            <p class="cs-permalink"><a href="/work/luparoad/">bylx.dev/work/luparoad/</a></p>
           </div>
         </div>
       </section>
@@ -773,8 +774,10 @@
 
           <h3 class="cs-heading">What I learned</h3>
           <p>Automation adoption is a UX problem: the hard part isn't the code, it's making a tool people trust enough to change their routine for. Corporate code stays private — the process is what transfers.</p>
-          <p class="cs-permalink">Permalink: <a href="/work/workspace-automations/">bylx.dev/work/workspace-automations/</a></p>
 
+          <div class="cs-footer-links">
+            <p class="cs-permalink"><a href="/work/workspace-automations/">bylx.dev/work/workspace-automations/</a></p>
+          </div>
         </div>
       </section>
     </div>
@@ -991,6 +994,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=f741f055"></script>
+  <script type="module" src="script.js?v=9880b7aa"></script>
 </body>
 </html>
