@@ -58,7 +58,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=fc0ec569" />
+  <link rel="stylesheet" href="styles.css?v=de1cf95c" />
 </head>
 
 <body>
@@ -331,7 +331,30 @@
             <p>I'm Aline — a front-end developer and designer built at the intersection of two cities. Brazil shaped how I see colour, texture, and warmth. Portugal taught me restraint, history, and how much can be said with very little. The desk you're looking at holds both.</p>
             <p>I work in the space between design and code — where a layout decision is also a technical decision, and a pixel is never just a pixel. My stack is HTML, CSS, and vanilla JavaScript by default — not because I don't know frameworks (I do), but because starting from fundamentals means every abstraction I add is earned, not assumed.</p>
             <p>This site is the work. The attention to detail you find here — the instax animation, the interactive objects, the skyline outside the window — is the same attention I bring to everything I build.</p>
-            <button type="button" class="about-cta" data-modal-target="contact-modal">Get in touch</button>
+            <div class="about-actions">
+              <button type="button" class="about-cta" data-modal-target="contact-modal">Get in touch</button>
+
+              <a class="about-link about-link--primary" href="assets/cv/aline-lopes-xavier-cv-frontend.pdf" download>
+                CV · front-end <span aria-hidden="true">↓</span>
+              </a>
+              <a class="about-link" href="assets/cv/aline-lopes-xavier-cv-design.pdf" download>
+                CV · design <span aria-hidden="true">↓</span>
+              </a>
+              <a class="about-link" href="https://www.linkedin.com/in/alinelx" target="_blank" rel="noopener noreferrer">
+                LinkedIn <span aria-hidden="true">↗</span>
+              </a>
+              <a class="about-link" href="https://github.com/alinelx" target="_blank" rel="noopener noreferrer">
+                GitHub <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+
+            <p class="eyebrow about-badges-label" id="about-badges-label">Credentials</p>
+            <ul class="about-badges" aria-labelledby="about-badges-label">
+              <li>BSc Software Engineering · GPA 9.80/10 · in progress</li>
+              <li>Google Data Analytics Certificate · Google / Coursera · 2024</li>
+              <li>CET Cultural Tourism &amp; Heritage · EHTL Lisboa</li>
+              <li>BSc Design &amp; Visual Communication · UFRJ</li>
+            </ul>
           </div>
           <div class="about-side">
             <!-- The gif is a 35-frame loop that never stops, and CSS cannot pause a
@@ -368,7 +391,12 @@
         </header>
 
         <div class="modal-body case-study-body">
-          <p class="cs-stack">Next.js · TypeScript · React · Tailwind CSS · <a href="https://dark28.pt" target="_blank" rel="noopener noreferrer">dark28.pt ↗</a></p>
+          <ul class="cs-chips">
+            <li>Next.js</li>
+            <li>TypeScript</li>
+            <li>React</li>
+            <li>Tailwind CSS</li>
+          </ul>
 
           <h3 class="cs-heading">The question</h3>
           <p>Lisbon's Tram 28 passes through layers of history that most tourist guides ignore. I kept finding apps that told the same polished story and skipped the uncomfortable parts — the dictatorship, the colonial memory, the religious weight embedded in the architecture. What if a route helped you understand a city instead of just photograph it?</p>
@@ -394,8 +422,8 @@
           <p>Designing content-first changes the UI. The narrative weight of each stop shaped the information hierarchy — generic card components didn't work because the content resisted being genericised. TypeScript caught real bugs, not theoretical ones. App Router's server/client boundary required rethinking where state lives.</p>
 
           <div class="cs-footer-links">
-            <a href="https://dark28.pt" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit dark28.pt</a>
-            <a href="https://github.com/alinelx/dark-28" class="card-link card-link--ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://dark28.pt" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open dark28.pt ↗</a>
+            <a href="https://github.com/alinelx/dark-28" class="cs-button cs-button--ghost" target="_blank" rel="noopener noreferrer">Code on GitHub ↗</a>
           </div>
         </div>
       </section>
@@ -411,7 +439,12 @@
         </header>
 
         <div class="modal-body case-study-body">
-          <p class="cs-stack">HTML · CSS · Vanilla JS · PHP · <a href="https://bylx.dev" target="_blank" rel="noopener noreferrer">bylx.dev ↗</a></p>
+          <ul class="cs-chips">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>Vanilla JS</li>
+            <li>PHP</li>
+          </ul>
 
           <h3 class="cs-heading">The question</h3>
           <p>Developer portfolios all look the same: hero, grid, footer. Mine had to prove something instead of claiming it. Could a pixel-art desk — where Rio de Janeiro and Lisbon share a window — carry an entire portfolio, built with nothing but the fundamentals?</p>
@@ -437,7 +470,7 @@
           <p>Constraints are a design system. Refusing frameworks forced clean module boundaries; refusing smooth easing forced intentional animation. And accessibility inside a fully custom scene — focus states, aria labels, a form that works without JS — is where the real engineering happened.</p>
 
           <div class="cs-footer-links">
-            <a href="https://github.com/alinelx/bylx" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://github.com/alinelx/bylx" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Code on GitHub ↗</a>
           </div>
         </div>
       </section>
@@ -453,7 +486,12 @@
         </header>
 
         <div class="modal-body case-study-body">
-          <p class="cs-stack">E-commerce · Stripe · MB Way · Hostinger · <a href="https://konochan.pt" target="_blank" rel="noopener noreferrer">konochan.pt ↗</a></p>
+          <ul class="cs-chips">
+            <li>E-commerce</li>
+            <li>Stripe</li>
+            <li>MB Way</li>
+            <li>Hostinger</li>
+          </ul>
 
           <h3 class="cs-heading">The question</h3>
           <p>Could I take a brand from zero to real orders — not a portfolio mockup, but a shop with actual customers, payments, and parcels that have to arrive?</p>
@@ -477,7 +515,7 @@
           <p>E-commerce is UX plus logistics — the interface is the easy half. Running the store taught me what "done" means when customers are real. The shop is currently on pause while I focus on development work; the brand, the systems, and the lessons stay.</p>
 
           <div class="cs-footer-links">
-            <a href="https://konochan.pt" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit konochan.pt</a>
+            <a href="https://konochan.pt" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open konochan.pt ↗</a>
           </div>
         </div>
       </section>
@@ -493,7 +531,11 @@
         </header>
 
         <div class="modal-body case-study-body">
-          <p class="cs-stack">WordPress · UX · Branding · <a href="https://luparoad.com" target="_blank" rel="noopener noreferrer">luparoad.com ↗</a></p>
+          <ul class="cs-chips">
+            <li>WordPress</li>
+            <li>UX</li>
+            <li>Branding</li>
+          </ul>
 
           <h3 class="cs-heading">The question</h3>
           <p>A Lisbon optical clinic had a website that undersold the business — dated, hard to navigate, and impossible for the owner to update. How do you rebuild trust online for a business whose whole trade is precision?</p>
@@ -516,7 +558,7 @@
           <p>Client work is a different discipline: listening before building, designing within the client's capacity, and writing handover docs as carefully as code. The best compliment was silence — the site just works.</p>
 
           <div class="cs-footer-links">
-            <a href="https://luparoad.com" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit luparoad.com</a>
+            <a href="https://luparoad.com" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open luparoad.com ↗</a>
           </div>
         </div>
       </section>
@@ -532,7 +574,11 @@
         </header>
 
         <div class="modal-body case-study-body">
-          <p class="cs-stack">Google Apps Script · Google Workspace · Automation</p>
+          <ul class="cs-chips">
+            <li>Google Apps Script</li>
+            <li>Google Workspace</li>
+            <li>Automation</li>
+          </ul>
 
           <h3 class="cs-heading">The question</h3>
           <p>A 40+ person team at Accenture was losing hours every week to repetitive Google Workspace workflows — manual reporting, copy-paste pipelines, spreadsheet drudgery. No budget line, no IT ticket. What could one person automate from inside?</p>
@@ -767,6 +813,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=fc0ec569"></script>
+  <script type="module" src="script.js?v=de1cf95c"></script>
 </body>
 </html>

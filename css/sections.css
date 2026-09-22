@@ -160,20 +160,27 @@
   gap: 0.4rem;
 }
 
-.cs-stack {
-  font-family: var(--font-pixel);
-  font-size: 0.52rem;
-  color: var(--purple);
-  letter-spacing: 0.04em;
-  line-height: 1.9;
-  margin: 0 0 0.75rem;
-  padding-bottom: 0.75rem;
+/* A stack como chips, não como uma linha de nomes separados por pontos: são
+   etiquetas, lêem-se de relance e combinam com as dos cartões. */
+.cs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 1rem;
+  padding: 0 0 1rem;
+  list-style: none;
   border-bottom: 2px solid rgba(9, 5, 27, 0.15);
 }
 
-.cs-stack a {
+.cs-chips li {
+  padding: 4px 7px;
   color: var(--purple);
-  text-underline-offset: 3px;
+  background: rgba(93, 63, 211, 0.1);
+  border: 2px solid var(--purple);
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 
 .cs-heading {
@@ -225,14 +232,49 @@
   flex-wrap: wrap;
 }
 
-.cs-footer-links .card-link--ghost {
-  color: var(--purple);
-  border-color: var(--purple);
-  box-shadow: 4px 4px 0 var(--purple);
+/* Botões a sério. Estes links não tinham classe base nenhuma no CSS: eram
+   texto azul sublinhado no fim de uma janela pixel-art. */
+.cs-button {
+  display: inline-block;
+  padding: 0.55rem 0.85rem;
+  border: 3px solid var(--bg);
+  font-family: var(--font-ui);
+  font-size: 0.55rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform 80ms steps(2, end), box-shadow 80ms steps(2, end);
 }
 
-.cs-footer-links .card-link--ghost:hover {
-  box-shadow: 6px 6px 0 var(--purple);
+.cs-button--primary {
+  color: var(--bg);
+  background: var(--pink);
+  box-shadow: 5px 5px 0 var(--purple);
+}
+
+.cs-button--ghost {
+  color: var(--purple);
+  background: transparent;
+  border-color: var(--purple);
+  box-shadow: 5px 5px 0 rgba(93, 63, 211, 0.35);
+}
+
+.cs-button:hover,
+.cs-button:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--purple);
+  outline: none;
+}
+
+.cs-button:focus-visible {
+  outline: 3px solid var(--purple);
+  outline-offset: 3px;
+}
+
+.cs-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0 var(--purple);
 }
 
 .modal {
@@ -1121,4 +1163,81 @@
 @media (max-width: 720px) {
   .lightbox-figure { max-width: 84vw; }
   .lightbox-nav { font-size: 1.1rem; padding: 0.3rem 0.5rem; }
+}
+
+/* ── Acções e credenciais no "about" ──────────────────────────────────────
+   Os CVs são ficheiros do próprio site (assets/cv/), não links para o Drive:
+   não dependem de permissões de partilha nem expõem a conta. */
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  margin-top: 1.4rem;
+}
+
+.about-link {
+  display: inline-block;
+  padding: 0.62rem 0.85rem;
+  color: var(--cyan);
+  background: transparent;
+  border: 3px solid var(--cyan);
+  box-shadow: 5px 5px 0 rgba(89, 243, 255, 0.28);
+  font-family: var(--font-ui);
+  font-size: 0.55rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform 80ms steps(2, end), box-shadow 80ms steps(2, end);
+}
+
+.about-link--primary {
+  color: var(--bg);
+  background: var(--cyan);
+  box-shadow: 5px 5px 0 var(--pink);
+}
+
+.about-link:hover,
+.about-link:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--pink);
+}
+
+.about-link:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 3px;
+}
+
+.about-link:active {
+  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0 var(--pink);
+}
+
+.about-badges-label {
+  margin: 1.6rem 0 0.5rem;
+}
+
+.about-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-badges li {
+  padding: 5px 8px;
+  color: var(--muted);
+  background: var(--bylx-bg-ink);
+  border: 2px solid var(--purple);
+  font-family: var(--font-ui);
+  font-size: 0.48rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 520px) {
+  .about-actions { gap: 0.5rem; }
+  .about-link { width: 100%; text-align: center; }
 }
