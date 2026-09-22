@@ -8,7 +8,7 @@
   <meta name="description" content="bylx — front-end developer and designer building at the crossroads of Brazil and Portugal. Pixel art, vanilla code, no shortcuts." />
   <meta property="og:title" content="bylx · Front-end developer & designer" />
   <meta property="og:description" content="A pixel-art portfolio where Rio de Janeiro and Lisbon share a desk." />
-  <meta property="og:url" content="https://bylx.dev" />
+  <meta property="og:url" content="https://bylx.dev/" />
   <meta property="og:type" content="website" />
   <!-- Absolute URL: relative paths are not resolved by most link unfurlers -->
   <meta property="og:image" content="https://bylx.dev/og-image.png" />
@@ -20,6 +20,35 @@
   <meta name="theme-color" content="#09051b" />
   <link rel="canonical" href="https://bylx.dev/" />
 
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://bylx.dev/#aline",
+          "name": "Aline Lopes Xavier",
+          "alternateName": "bylx",
+          "jobTitle": "Front-end developer and designer",
+          "url": "https://bylx.dev/",
+          "email": "geral@bylx.dev",
+          "sameAs": [
+            "https://github.com/alinelx",
+            "https://instagram.com/bylx.dev"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://bylx.dev/#site",
+          "url": "https://bylx.dev/",
+          "name": "bylx.dev",
+          "inLanguage": "en",
+          "author": { "@id": "https://bylx.dev/#aline" },
+          "publisher": { "@id": "https://bylx.dev/#aline" }
+        }
+      ]
+    }
+  </script>
   <link rel="icon" href="assets/logo/bylx_logo_line.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,7 +58,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
@@ -175,26 +204,28 @@
 
       <div class="start-menu" role="menu" aria-label="Start menu" hidden>
         <p class="start-menu-title">Start</p>
-        <ul>
-          <li>
+        <!-- role="none": a list between role="menu" and its menuitems orphans
+             them in the accessibility tree -->
+        <ul role="none">
+          <li role="none">
             <button type="button" role="menuitem" data-start-action="fullscreen">
               Fullscreen monitor
               <span class="meta">enter cinema mode</span>
             </button>
           </li>
-          <li>
+          <li role="none">
             <button type="button" role="menuitem" data-start-action="music">
               Play music
               <span class="meta">opens MP3 player</span>
             </button>
           </li>
-          <li>
+          <li role="none">
             <button type="button" role="menuitem" data-start-action="monitor">
               <span class="label">Turn monitor off</span>
               <span class="meta">toggles power</span>
             </button>
           </li>
-          <li>
+          <li role="none">
             <button type="button" role="menuitem" data-start-action="contact" data-modal-target="contact-modal">
               Send a message
               <span class="meta">contact aline</span>
@@ -580,7 +611,7 @@
           <button class="modal-close" type="button" data-close-modal aria-label="Close contact form">×</button>
         </header>
 
-        <form class="modal-body contact-form" id="contact-form" action="contact.php" method="post" novalidate>
+        <form class="modal-body contact-form" id="contact-form" action="contact.php" method="post">
           <label>
             Name
             <input type="text" name="name" autocomplete="name" required maxlength="120" />
@@ -657,6 +688,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=2"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

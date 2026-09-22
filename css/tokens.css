@@ -20,7 +20,11 @@
      skin/hair ramps, --success/--warning/--info) and the bylx-* set below.
      18 of the 19 legacy tokens were dead and the file could not say which
      palette was real. Only --danger survived, in .form-status. */
-  --danger: #ff5d8f;
+  /* Both of these are read on the paper surfaces (.form-status sits on the
+     modal's #f7f2ff). The brand cyan and pink themselves land at 2.17:1 and
+     2.65:1 there — these are their legible counterparts, 5.34:1 and 6.74:1. */
+  --danger: #a81049;
+  --bylx-cyan-deep: #106f7a;
 
   --bylx-bg: #09051b;
   --bylx-bg-ink: #1d1640;

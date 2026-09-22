@@ -398,7 +398,9 @@
 .start-menu li button .meta {
   display: block;
   margin-top: 4px;
-  color: #666;
+  /* #666 dropped to 4.29:1 once the row's background swaps to cyan on
+     hover/focus */
+  color: #4a4a4a;
   font-family: var(--font-ui);
   font-size: 0.5rem;
   text-transform: uppercase;
@@ -534,7 +536,7 @@
 }
 
 .form-status[data-state="sending"] { color: var(--purple); }
-.form-status[data-state="success"] { color: var(--bylx-cyan-ink); }
+.form-status[data-state="success"] { color: var(--bylx-cyan-deep); }
 .form-status[data-state="error"]   { color: var(--danger); }
 
 /* MP3 player — bottom-right image-mapped player over mp3_player.png */
@@ -941,10 +943,17 @@
   transition: color 0.1s steps(2, end);
 }
 
-.footer-links a:hover,
+.footer-links a:hover {
+  color: var(--cyan);
+}
+
+/* The colour swap alone was a 1.09:1 difference between focused and not —
+   invisible as a focus indicator. */
 .footer-links a:focus-visible {
   color: var(--cyan);
-  outline: none;
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  text-decoration: underline;
 }
 
 .footer-copy {
@@ -952,6 +961,7 @@
   width: 100%;
   font-family: var(--font-ui);
   font-size: 0.4rem;
-  color: rgba(216, 208, 255, 0.35);
+  /* 0.35 composited to 2.48:1 on the footer's near-black */
+  color: rgba(216, 208, 255, 0.7);
   letter-spacing: 0.04em;
 }

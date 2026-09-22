@@ -16,3 +16,24 @@
     Header set Cache-Control "no-cache"
   </FilesMatch>
 </IfModule>
+
+# 404.html existed but nothing pointed Apache at it, so Apache served its own
+# default error page instead.
+ErrorDocument 404 /404.html
+
+# The repo deploys whole, so everything in it is reachable over HTTP unless it
+# is denied here. Verified served with 200 before this block: /CLAUDE.md,
+# /DESIGN.md, /package.json, /playwright.config.js, /bylx.design-system.json,
+# /tests/*.spec.js. CLAUDE.md in particular documents internal decisions.
+<FilesMatch "\.(md|json|mjs|spec\.js|lock)$">
+  Require all denied
+</FilesMatch>
+
+# The design-system kit: 2.3MB of spec that is not part of the site.
+<Files "bylx.dev - Standalone.html">
+  Require all denied
+</Files>
+
+<IfModule mod_alias.c>
+  RedirectMatch 404 "^/(tests|scripts|node_modules|emails)/"
+</IfModule>

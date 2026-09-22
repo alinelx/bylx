@@ -138,6 +138,22 @@
     overflow: visible;
   }
 
+  /* The START button is 174×14.5 at 393px — wide enough, far too short.
+     The strip clips, so let this one escape it like .pixel-window-close. */
+  .toolbar-strip {
+    overflow: visible;
+  }
+
+  .start-btn::before {
+    content: "";
+    position: absolute;
+    inset: -6px 0;
+  }
+
+  .start-btn {
+    position: relative;
+  }
+
   .mp3-select::before,
   .pixel-window-close::before {
     content: "";
