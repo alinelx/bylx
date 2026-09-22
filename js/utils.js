@@ -19,7 +19,3 @@ export function isWiderThan(minWidth = 901) {
 export function lerp(a, b, t) {
   return a + (b - a) * t;
 }
-
-export function isTouchDevice() {
-  return window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-}
