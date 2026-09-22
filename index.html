@@ -296,7 +296,12 @@
             <button type="button" class="about-cta" data-modal-target="contact-modal">Get in touch</button>
           </div>
           <div class="about-side">
-            <img class="about-gif" src="assets/hero/schizomputer.gif" alt="" aria-hidden="true" />
+            <!-- The gif is a 35-frame loop that never stops, and CSS cannot pause a
+                 gif. Reduced motion gets a still first frame instead. -->
+            <picture>
+              <source srcset="assets/hero/schizomputer_frame1.png" media="(prefers-reduced-motion: reduce)" />
+              <img class="about-gif" src="assets/hero/schizomputer.gif" alt="" aria-hidden="true" />
+            </picture>
             <div class="about-stack">
               <p class="eyebrow">Currently fluent in</p>
               <div class="about-icons">
