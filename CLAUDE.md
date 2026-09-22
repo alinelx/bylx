@@ -61,6 +61,8 @@ Case studies follow the structure: The question → What I built → Technical d
 
 So every first-party css/js URL carries `?v=<hash>`, and `scripts/stamp-assets.mjs` writes it: a hash of the files' own contents (same bytes → same URL → still cached), stamped onto the entry points in `index.html`, the `@import`s inside `styles.css`, and the module specifiers in `script.js` and `js/*.js` — the whole chain, because a stale `styles.css` would otherwise hand out stale specifiers. `index.html` itself is not edge-cached, which is what makes the chain work.
 
+The same script also stamps the two CV PDFs, one hash each — they are not in the import chain, but they are edge-cached by URL, and overwriting a PDF in place would leave the edge serving the old one.
+
 **Run `npm run stamp` (or `node scripts/stamp-assets.mjs`) before every deploy**; `--check` exits 1 if it is stale, and it is a no-op when nothing changed.
 
 ## Git

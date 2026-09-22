@@ -45,7 +45,22 @@ for (const f of [...cssFiles.map((f) => join("css", f)), ...jsFiles.map((f) => j
 }
 const stamp = hash.digest("hex").slice(0, 8);
 
+/* The CVs get their own stamp, one per file. They are not part of the import
+   chain — nothing @imports a PDF — but they ARE edge-cached by URL, and the
+   pair that shipped first carried a phone number. Overwriting the file at the
+   same URL leaves the edge handing out the old bytes for as long as it likes;
+   a new URL is what actually retires them. */
+const pdfFiles = readdirSync(join(ROOT, "assets", "cv")).filter((f) => f.endsWith(".pdf")).sort();
+const pdfStamp = Object.fromEntries(
+  pdfFiles.map((f) => [f, createHash("sha256").update(readFileSync(join(ROOT, "assets", "cv", f))).digest("hex").slice(0, 8)])
+);
+
 const targets = [
+  {
+    file: "index.html",
+    pattern: /(href="assets\/cv\/([a-z0-9-]+\.pdf))(\?v=[a-z0-9]+)?/g,
+    replace: (_, head, name) => `${head}?v=${pdfStamp[name] ?? "missing"}`,
+  },
   { file: "index.html", pattern: /(href="styles\.css|src="script\.js)(\?v=[a-z0-9]+)?/g },
   { file: "styles.css", pattern: /(@import "(?:\.\/)?css\/[a-z-]+\.css)(\?v=[a-z0-9]+)?/g },
   { file: "script.js", pattern: /(from "\.\/js\/[a-z-]+\.js)(\?v=[a-z0-9]+)?/g },
@@ -54,10 +69,10 @@ const targets = [
 
 let stale = false;
 
-for (const { file, pattern } of targets) {
+for (const { file, pattern, replace } of targets) {
   const path = join(ROOT, file);
   const before = readFileSync(path, "utf8");
-  const after = before.replace(pattern, (_, head) => `${head}?v=${stamp}`);
+  const after = before.replace(pattern, replace ?? ((_, head) => `${head}?v=${stamp}`));
   if (after === before) continue;
 
   stale = true;
