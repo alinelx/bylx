@@ -712,11 +712,13 @@
 .mp3-hit:hover .mp3-hit-label,
 .mp3-hit:focus-visible .mp3-hit-label { opacity: 1; }
 
-/* Play/pause — circle over the white dial */
+/* Play/pause — em cima do disco branco. Medido no sprite (320x128): o disco
+   desenhado ocupa x 26-74, y 48-92, ou seja 8.1%-23.1% x 37.5%-71.9%. O hit
+   antigo (9% / 17%) começava dentro do disco e acabava 9px depois dele. */
 .mp3-play {
-  left: 9%;
-  top: 55%;
-  width: 17%;
+  left: 8.1%;
+  top: 54.7%;
+  width: 15%;
   height: auto;
   aspect-ratio: 1 / 1;
   transform: translateY(-50%);
@@ -730,11 +732,12 @@
   background: rgba(89, 243, 255, 0.16);
 }
 
-/* Selector strip — click next, double-click previous */
+/* Mudar de música — o botão que sai do topo do corpo, x 46-54 y 12-24 no
+   sprite. O hit antigo (4%-18%) era quase todo corpo liso à esquerda dele. */
 .mp3-select {
-  left: 4%;
-  top: 0%;
-  width: 14%;
+  left: 13%;
+  top: 7%;
+  width: 6%;
   height: 13%;
 }
 

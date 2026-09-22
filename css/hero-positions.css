@@ -336,7 +336,6 @@
   width: 24%;
   height: 31%;
   object-fit: cover;
-  filter: hue-rotate(45deg);
   --float-x: 1px;
   --float-y: 2px;
   --float-duration: 7s;
@@ -671,13 +670,15 @@
   pointer-events: none;
 }
 
-/* Power button — over the CRT's control pips, bottom-right of the sprite */
+/* Botão de energia — a caixa desenhada em monitor_frame.png (512x512) ocupa
+   x 394-420, y 397-423: 77%-82% x 77.5%-82.6%. O hit antigo era o dobro da
+   largura e ficava 20px abaixo do desenho, a apanhar bisel vazio. */
 .monitor-power {
   position: absolute;
-  right: 14%;
-  bottom: 13%;
-  width: 11%;
-  height: 8%;
+  right: 17.6%;
+  bottom: 17.4%;
+  width: 5.6%;
+  height: 5.6%;
   padding: 0;
   border: 0;
   background: transparent;
