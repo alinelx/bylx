@@ -7,6 +7,10 @@
 # Hostinger's long cache indefinitely. That is what shipped stale styling.
 # Rather than version ~17 specifiers by hand on every deploy, the partials
 # revalidate: ETags make the unchanged ones cheap 304s.
+# That strategy is load-bearing, so state the ETag policy rather than relying
+# on Apache's default.
+FileETag MTime Size
+
 <IfModule mod_headers.c>
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"

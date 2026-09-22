@@ -26,6 +26,9 @@ Pixel-art portfolio for Aline Lopes Xavier (bylx.dev). Vanilla HTML/CSS/JS by de
 - The `prefers-reduced-motion` CSS block lives at the end of `css/responsive.css` — animations often live on child elements (`img`, `::before`, `.icon`), target those, not the wrappers
 - Every scene object should do what it looks like it does: camera → gallery, phone → contact form, mp3 player → music player panel
 - Accessibility non-negotiable: aria-labels, `:focus-visible` states, keyboard-accessible modals, forms that work without JS
+- **Never `aria-hidden` a wrapper that contains controls.** `.hero-artboard` carried it over 14 real buttons, which stayed tabbable while announcing nothing — hide the decorative *leaves* (`alt=""`, or `aria-hidden` on the one text node) instead
+- Modals owe a keyboard three things, all in `js/modals.js`: trap Tab, restore focus to the opener, lock scroll on `<html>`. Escape is consumed with `preventDefault()` there — `js/audio.js` and `js/desktop.js` bail on `event.defaultPrevented`, or one press closes three layers
+- Colour goes on the surface it is actually read against: the brand cyan and pink are 2.17:1 and 2.65:1 on the paper modals, so text there uses `--bylx-cyan-deep` / `--danger`
 
 ## Palette (dark)
 
@@ -40,9 +43,11 @@ Case studies follow the structure: The question → What I built → Technical d
 1. **Mobile/responsive pass** — done (2026-07): desk-focused crop; on `max-width: 900px` / portrait ≤ 1200px the hero keeps the center crop and recomposes the three hotspots onto the visible desk (`css/responsive.css`), touch targets grown under `(pointer: coarse)`. Pending: QA on real devices
 2. Gallery modal — done (2026-07): pixel-art image grid with captions, opened by the instax
 3. **Project cards** — done (2026-07): text-first, as the design system draws them. This entry used to read "konochan.pt, lupa.road, Workspace Automations use striped placeholder previews — need pixel art". The previews are gone entirely, so no pixel art is owed: the kit's card is a label, a name, a description and stack chips, and the name is what you scan for. `dark28-linepixel.png` and `bylx_logo_line_cyan.png` are now unused by the cards
-4. Review case-study copy for konochan.pt / lupa.road / Workspace Automations (drafted from project memory — verify facts)
+4. Review case-study copy for konochan.pt / lupa.road / Workspace Automations (drafted from project memory — verify facts). **`lupa.road` does not resolve** (NXDOMAIN on 8.8.8.8, 2026-09-22, while dark28.pt and konochan.pt answer 200) and the site links to it twice — the card's case study and its "Visit lupa.road" button
 5. **Do not delete `bylx/`** — a second *clone* of `alinelx/bylx` with its own `.git`. Its uncommitted edits were pushed from that machine on 2026-09-22 as commit "Sync", whose merge reverted ~1,700 lines of the July work; `e5c7910` put the site back and dropped the Sync content entirely (the commits stay in history). So that work is no longer only in `bylx/` — but check before deleting, and push from this machine only
 6. Volume buttons on the mp3 sprite — done (2026-09): the sprite draws no keys, so they are drawn in CSS as `::after` on `.mp3-volup`/`.mp3-voldown`, on the dark bezel directly under the printed "MP3 / FM" (sprite rows 91–96 of 128, centred on the lettering at x ≈ 57.8%). The hit box runs lower than the drawn key, and `(pointer: coarse)` grows it further. If real pixel art for them lands in `mp3_player.png`, delete those `::after` rules
+
+7. Hero copy contradicts the positioning: the panel reads "vanilla code, optional shortcuts through AI and tech debug" while CLAUDE.md, the meta description and DESIGN.md's own voice example all say "no shortcuts". Aline's call — flagged 2026-09-22, not changed
 
 ## Cache
 
