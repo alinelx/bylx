@@ -711,6 +711,35 @@
   height: 22%;
 }
 
+/* The sprite draws the end cap but no buttons on it, so the hits read as
+   blank pink until hovered. Draw the two keys here: an inset pixel bevel
+   and a +/− glyph, so the cap looks like it has something to press. */
+.mp3-volup::after,
+.mp3-voldown::after {
+  position: absolute;
+  inset: 12% 14%;
+  display: grid;
+  place-items: center;
+  background: var(--bylx-pink);
+  box-shadow:
+    inset 2px 2px 0 var(--bylx-pink-glow),
+    inset -2px -2px 0 var(--bylx-pink-ink);
+  color: var(--bylx-bg-ink);
+  font-size: clamp(0.55rem, 1.2vw, 0.75rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.mp3-volup::after   { content: "+"; }
+.mp3-voldown::after { content: "−"; }
+
+.mp3-hit.mp3-volup:active::after,
+.mp3-hit.mp3-voldown:active::after {
+  box-shadow:
+    inset 2px 2px 0 var(--bylx-pink-ink),
+    inset -2px -2px 0 var(--bylx-pink-glow);
+}
+
 .about {
   border-top: 4px solid var(--cyan);
   padding: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 5vw, 4rem);
