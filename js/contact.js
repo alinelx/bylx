@@ -31,7 +31,16 @@ export function initContactForm() {
     } else {
       setStatus("> transmission failed ✗ try again or email geral@bylx.dev", "error");
     }
-    history.replaceState({}, "", window.location.pathname);
+    /* Keep the hash and anything else in the query — this used to throw away
+       #about and every utm_* param along with sent= */
+    params.delete("sent");
+    params.delete("err");
+    const rest = params.toString();
+    history.replaceState(
+      {},
+      "",
+      window.location.pathname + (rest ? `?${rest}` : "") + window.location.hash
+    );
   }
 
   form.addEventListener("submit", async (event) => {

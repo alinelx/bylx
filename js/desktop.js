@@ -118,9 +118,13 @@ export function initDesktop() {
       if (!item) return;
 
       const action = item.dataset.startAction;
+      /* Before closeMenu(): hiding the menu blurs the item, so grabbing
+         lastFocus inside openFullscreen() only ever caught <body> and the
+         restore on close was a no-op */
+      const opener = document.activeElement;
       closeMenu();
 
-      if      (action === "fullscreen") { openFullscreen(); }
+      if      (action === "fullscreen") { openFullscreen(opener); }
       else if (action === "music")      { document.dispatchEvent(new CustomEvent("bylx:mp3-open")); }
       else if (action === "monitor")    { setScreen(!screenOff); }
       /* "contact" opens via its data-modal-target — handled by modals.js */
@@ -133,9 +137,10 @@ export function initDesktop() {
   let hintTimer;
   let lastFocus = null;
 
-  function openFullscreen() {
+  function openFullscreen(opener) {
     if (!fsMode) return;
-    lastFocus = document.activeElement;
+    const from = opener ?? document.activeElement;
+    lastFocus = from && from !== document.body ? from : startBtn;
     fsMode.hidden = false;
     if (fsHint) fsHint.hidden = false;
     fsMode.focus();
@@ -154,6 +159,9 @@ export function initDesktop() {
   if (fsMode) fsMode.addEventListener("click", closeFullscreen);
 
   window.addEventListener("keydown", (event) => {
+    /* An Escape a modal already consumed is not ours (modals.js) */
+    if (event.defaultPrevented) return;
+
     if (event.key === "Escape" && menu && !menu.hidden) {
       closeMenu({ refocus: true });
       return;

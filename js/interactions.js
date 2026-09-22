@@ -63,6 +63,14 @@ export function initKeyboardRgb() {
   let glowTimeout;
 
   window.addEventListener("keydown", (event) => {
+    /* A light show the visitor did not ask for: the board must stay dark
+       under prefers-reduced-motion, like every other motion feature here */
+    if (prefersReducedMotion()) return;
+
+    /* Typing into the contact form should not set the desk blinking */
+    const target = event.target;
+    if (target instanceof HTMLElement && ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)) return;
+
     const code = event.keyCode || event.which || 0;
     const tint = palette[code % palette.length];
 
@@ -197,4 +205,11 @@ export function initTechPopovers() {
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeTechPop();
   });
+
+  /* The popover is position:fixed and placed once from the icon's viewport
+     rect, so any scroll or resize leaves it stranded — measured 300px adrift
+     after one wheel gesture, and off-screen entirely after a narrow resize.
+     Closing is the honest answer: it is a tooltip, not a dialog. */
+  window.addEventListener("scroll", closeTechPop, { passive: true });
+  window.addEventListener("resize", closeTechPop);
 }

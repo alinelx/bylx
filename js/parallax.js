@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx parallax */
 
-import { prefersReducedMotion, isWiderThan, lerp } from "./utils.js";
+import { prefersReducedMotion, lerp } from "./utils.js";
 
 const LAYERS = [
   { selector: ".bg-skyline-left",  depth: 1  },
@@ -56,8 +56,16 @@ export function initParallax() {
   const hero = document.querySelector("#hero");
 
   if (!hero)                    return;
-  if (!isWiderThan(901))        return;
   if (prefersReducedMotion())   return;
+
+  /* Same query js/desktop.js calls deskCrop: below it the hero is the desk
+     crop and the parallax has nothing to offset. It is watched, not read
+     once — the gate used to be evaluated at load, so a window resized up
+     from phone width never started the parallax, and one resized down never
+     stopped it. */
+  const deskCrop = window.matchMedia(
+    "(max-width: 900px), (orientation: portrait) and (max-width: 1200px)"
+  );
 
   const layerMap = buildLayerMap();
 
@@ -124,15 +132,38 @@ export function initParallax() {
   hero.addEventListener("pointerleave", () => { targetX = 0; targetY = 0; });
   window.addEventListener("blur",       () => { targetX = 0; targetY = 0; });
 
-  /* Pause the rAF loop entirely while the hero is scrolled off-screen */
-  const observer = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      if (rafId === null) rafId = requestAnimationFrame(step);
-    } else if (rafId !== null) {
+  function stop() {
+    if (rafId !== null) {
       cancelAnimationFrame(rafId);
       rafId = null;
+    }
+    /* Leave the scene where it stands rather than mid-offset */
+    targetX = 0;
+    targetY = 0;
+    currentX = 0;
+    currentY = 0;
+    for (const { elements } of layerMap) {
+      for (const el of elements) {
+        el.style.removeProperty("--move-x");
+        el.style.removeProperty("--move-y");
+      }
+    }
+  }
+
+  /* Pause the rAF loop entirely while the hero is scrolled off-screen, or
+     while the viewport is in the desk crop */
+  const observer = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting && !deskCrop.matches) {
+      if (rafId === null) rafId = requestAnimationFrame(step);
+    } else {
+      stop();
     }
   });
 
   observer.observe(hero);
+
+  deskCrop.addEventListener("change", () => {
+    if (deskCrop.matches) stop();
+    else if (rafId === null) rafId = requestAnimationFrame(step);
+  });
 }

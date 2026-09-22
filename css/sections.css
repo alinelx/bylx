@@ -244,6 +244,13 @@
 
 .modal.is-open { display: block; }
 
+/* The page behind an open dialog must not scroll under it (js/modals.js
+   toggles this on <html>) */
+.modal-open,
+.modal-open body {
+  overflow: hidden;
+}
+
 .modal-backdrop {
   position: absolute;
   inset: 0;

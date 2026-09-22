@@ -15,17 +15,29 @@ export function initCursor() {
 
   if (!cursor) return;
 
+  /* rAF-throttled like parallax and mouse-flee: this used to write two style
+     properties on every single pointer event */
+  let pending = null;
+  let scheduled = false;
+
   window.addEventListener("mousemove", (event) => {
-    cursor.style.left = `${event.clientX}px`;
-    cursor.style.top  = `${event.clientY}px`;
-  });
+    pending = event;
+    if (scheduled) return;
+    scheduled = true;
+
+    requestAnimationFrame(() => {
+      scheduled = false;
+      cursor.style.left = `${pending.clientX}px`;
+      cursor.style.top  = `${pending.clientY}px`;
+    });
+  }, { passive: true });
 
   document.addEventListener("mouseover", (event) => {
-    if (event.target.closest("a, button, .clickable")) cursor.classList.add("hover");
+    if (event.target.closest("a, button")) cursor.classList.add("hover");
   });
 
   document.addEventListener("mouseout", (event) => {
-    if (event.target.closest("a, button, .clickable")) cursor.classList.remove("hover");
+    if (event.target.closest("a, button")) cursor.classList.remove("hover");
   });
 
   window.addEventListener("mousedown", () => cursor.classList.add("click"));

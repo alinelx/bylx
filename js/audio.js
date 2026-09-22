@@ -126,6 +126,9 @@ export function initAudio() {
      is stacked on top, so defer to an open modal or the fullscreen monitor */
   window.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
+    /* modals.js calls preventDefault when it closes one, so a single press
+       no longer closes the modal AND the player behind it */
+    if (event.defaultPrevented) return;
     if (!player.classList.contains("is-on")) return;
     if (document.querySelector(".modal.is-open")) return;
 

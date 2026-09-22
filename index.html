@@ -37,7 +37,12 @@
 
   <main>
     <section class="hero hero-scene" id="hero" aria-labelledby="hero-title">
-      <div class="hero-artboard" aria-hidden="true">
+      <!-- NOT aria-hidden: this subtree holds 14 real buttons (the hotspots, the
+           eight tech icons, the window close, START and the monitor power).
+           Hiding the wrapper kept them in the tab order while erasing them from
+           the accessibility tree. The decorative parts carry alt="" or
+           aria-hidden of their own. -->
+      <div class="hero-artboard">
         <div class="scene" id="hero-scene">
 
           <img class="asset layer bg-skyline-left flippedY" src="assets/hero/gradient.png" alt="" />
@@ -125,7 +130,7 @@
           <div class="pixel-window screen-item">
             <div class="win top-left"></div>
             <div class="win top-middle">
-              <p class="window-title">nihon.bmp</p>
+              <p class="window-title" aria-hidden="true">nihon.bmp</p>
             </div>
             <!-- win_top_right.png already draws the X — the tile itself is the close button -->
             <button class="win top-right pixel-window-close" type="button" aria-label="Close window"></button>
