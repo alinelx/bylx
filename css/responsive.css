@@ -313,6 +313,9 @@
      here loses to .win:not(.pixel-window-close) and the flicker survives */
   .win:not(.pixel-window-close),
   .win.bottom-right,
+  .win-content,
+  .mp3-lcd-meta,
+  .toolbar,
   .window-title,
   .poster,
   .keyboard-glow,

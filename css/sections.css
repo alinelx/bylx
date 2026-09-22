@@ -669,6 +669,13 @@
   font-size: clamp(0.5rem, 0.85vw, 0.52rem);
   line-height: 1;
   text-transform: uppercase;
+  /* From the kit: a segment display never sits perfectly still */
+  animation: mp3-meta-flicker 2.4s steps(2, end) infinite;
+}
+
+@keyframes mp3-meta-flicker {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.85; }
 }
 
 /* Image-map hotspots over the player art */

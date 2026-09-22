@@ -496,6 +496,10 @@
   grid-row: 2 / 3;
   overflow: hidden;
   background: var(--text);
+  /* From the kit: the window's white flickers a shade, like a CRT redrawing
+     it. One small element's background — the scene root's filter, which the
+     kit also animates, is the one we still refuse. */
+  animation: window-content-pulse 6s steps(2, end) infinite;
   padding: clamp(3px, 0.34vw, 7px);
 }
 
