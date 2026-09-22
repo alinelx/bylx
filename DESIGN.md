@@ -45,6 +45,12 @@ page, not a corporate developer site.
      weight as a coffee cup and flattens the diorama into stickers on glass.
      **Scale from the kit, atmosphere from the site** — decided 2026-07-16 by
      rendering all three and looking.
+   - The *room and the desk* are a different question, settled 2026-09: frame,
+     table and every prop now sit exactly where the kit draws them. The site's
+     own coordinates had the table full-bleed with its front edge off-screen
+     and props floating past it. Only two props deviate, and only because the
+     kit's own placement breaks them: the mp3 player (the keyboard's box
+     covered its right third and ate the clicks) and the sushi beside it.
 4. **Built in public, owning the craft.** First-person, honest voice — a maker's
    portfolio, not faked seniority.
 
