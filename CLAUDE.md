@@ -68,3 +68,7 @@ The same script also stamps the two CV PDFs, one hash each — they are not in t
 ## Git
 
 Commit and push from this machine only. History may show whole-file EOL diffs (CRLF→LF normalization) — content-safe.
+
+**A história foi reescrita a 2026-09-22**, do commit `cinema: zoom the screen instead of resizing it` até à ponta — oito commits, SHA todos novos, conteúdo idêntico (a árvore do HEAD não mudou). O motivo: os primeiros PDFs do CV traziam o telemóvel e o email pessoal, e substituir os ficheiros não desfaz o que já estava publicado. Consequência prática: **qualquer clone feito antes dessa data tem a história antiga**, e um `git pull` a partir dele traria os blobs de volta — é a mesma armadilha que produziu o commit "Sync". Uma máquina, uma cópia.
+
+Reescrever não chega, e é a parte que se esquece: o GitHub continua a servir os objectos antigos pelo SHA depois de um force-push (verificado — o blob de 75752 bytes ainda respondia). Só o suporte do GitHub os recolhe, a pedido.
