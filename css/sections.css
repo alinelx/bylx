@@ -456,8 +456,12 @@
 
 .fullscreen-screen {
   position: relative;
-  width: min(96vw, calc(96vh * 4 / 3));
-  aspect-ratio: 4 / 3;
+  /* O rácio é o do ECRÃ, não um 4:3 de conveniência: o rectângulo do CRT são
+     24% x 31% de uma prancheta 16:9, ou seja 384:279. Com 4:3 sobrava uma
+     faixa por baixo do wallpaper e faltava um dedo à direita — e a janela do
+     Paint, que no monitor fica escondida pelo bisel, aparecia nessa faixa. */
+  width: min(96vw, calc(96vh * 384 / 279));
+  aspect-ratio: 384 / 279;
   overflow: hidden;
   background: var(--bg);
   image-rendering: pixelated;

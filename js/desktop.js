@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx desktop — monitor power, pixel-window close, start menu, fullscreen */
 
-import { screenRect, clampToRect } from "./utils.js?v=8d10320d";
+import { screenRect, clampToRect } from "./utils.js?v=e89031f4";
 
 export function initDesktop() {
   const scene = document.getElementById("hero-scene");
@@ -71,6 +71,7 @@ export function initDesktop() {
     if (deskCrop.matches || !screen) {
       menu.style.left = "";
       menu.style.top = "";
+      menu.style.bottom = "";
       menu.style.width = "";
       menu.style.maxHeight = "";
       return;
@@ -85,7 +86,12 @@ export function initDesktop() {
 
     const bar = document.querySelector(".toolbar-strip")?.getBoundingClientRect();
     const bottom = bar ? bar.top : screen.bottom;
-    const box = menu.getBoundingClientRect();
+
+    /* offsetWidth/offsetHeight, não getBoundingClientRect: o menu abre com a
+       animação start-pop-in, e durante esses 140ms o rectângulo devolvido é o
+       da caixa a meio da animação — media-se pequeno e o menu assentava fora
+       do sítio. As medidas de layout ignoram transformações. */
+    const box = { width: menu.offsetWidth, height: menu.offsetHeight };
     const wanted = {
       left: startBtn.getBoundingClientRect().left,
       top: bottom - box.height - pad,
@@ -96,6 +102,11 @@ export function initDesktop() {
     const { left, top } = clampToRect(wanted, screen, pad);
     menu.style.left = `${left}px`;
     menu.style.top = `${top}px`;
+    /* O CSS ancora o menu por `bottom`. Com top E bottom definidos num
+       elemento fixed a altura deixa de ser a do conteúdo e passa a ser o que
+       sobra entre os dois — no cinema dava 111px para 194px de itens, e a
+       lista saía pela caixa fora. */
+    menu.style.bottom = "auto";
   }
 
   function openMenu() {
