@@ -198,12 +198,14 @@
   left: 70%;
 }
 
-/* Frame stays inset at 80%: the kit's 93.5% pushes the mullions to the edges
-   and crowds the landmarks it is supposed to be framing. */
+/* Frame, table and every desk prop use the kit's coordinates. The site once
+   kept its own (frame 80%, table full-bleed), which left props hanging off the
+   desk and the room narrower than the design. Sky, hills and landmark haze
+   stay the site's — see DESIGN.md. */
 .window-frame {
   z-index: 5;
-  left: 10%;
-  width: 80%;
+  left: 4%;
+  width: 93.5%;
   height: auto;
   opacity: 0.7;
   --float-y: 1px;
@@ -212,9 +214,9 @@
 
 .table {
   z-index: 6;
-  left: 0;
-  top: 18%;
-  width: 100%;
+  left: 10%;
+  top: 30%;
+  width: 80%;
   height: auto;
   --float-x: 2px;
   --float-y: 1px;
@@ -225,11 +227,10 @@
    visible loop — this is the design system's timing, restored. */
 .cocktail {
   z-index: 7;
-  left: 28%;
-  top: 56%;
-  width: 8%;
+  left: 30%;
+  top: 60%;
+  width: 7%;
   height: auto;
-  opacity: 0.8;
   --float-x: 3px;
   --float-y: 7px;
   --float-rotate: 1deg;
@@ -238,11 +239,10 @@
 
 .sushi {
   z-index: 7;
-  left: 7%;
-  top: 84%;
-  width: 21%;
+  left: 12%;
+  top: 83%;
+  width: 20%;
   height: auto;
-  opacity: 0.8;
   --float-x: 4px;
   --float-y: 3px;
   --float-rotate: -0.4deg;
@@ -251,11 +251,10 @@
 
 .phone {
   z-index: 7;
-  left: 77%;
+  left: 72%;
   top: 80%;
-  width: 10%;
+  width: 7%;
   height: auto;
-  opacity: 0.8;
   --float-x: 2px;
   --float-y: 5px;
   --float-rotate: 0.7deg;
@@ -265,8 +264,8 @@
 .instax {
   z-index: 7;
   left: 60%;
-  top: 55%;
-  width: 15%;
+  top: 60%;
+  width: 14%;
   --float-x: 3px;
   --float-y: 5px;
   --float-rotate: -0.8deg;
@@ -274,13 +273,15 @@
   --float-delay: -1.5s;
 }
 
+/* Off the kit's 31% / 13%: there the keyboard's box covered the player's right
+   third — the end cap vanished under the keys and a third of the hotspot
+   clicked the keyboard instead. Here it ends before the board's drawn edge. */
 .mp3player {
   z-index: 7;
-  left: 28%;
-  top: 80%;
+  left: 26%;
+  top: 76.5%;
   width: 10%;
   height: auto;
-  opacity: 0.8;
   --float-x: 2px;
   --float-y: 6px;
   --float-rotate: -0.8deg;
@@ -291,17 +292,17 @@
 .mouse {
   z-index: 7;
   left: 65%;
-  top: 80%;
-  width: 10%;
+  top: 82%;
+  width: 7%;
   height: auto;
 }
 
 .win-bg {
   z-index: 8;
-  left: 37%;
+  left: 38%;
   top: 42%;
-  width: 25%;
-  height: 30%;
+  width: 24%;
+  height: 31%;
   object-fit: cover;
   filter: hue-rotate(45deg);
   --float-x: 1px;
@@ -402,10 +403,10 @@
   --float-duration: 5.2s;
   position: absolute;
   z-index: 8;
-  left: 47%;
-  top: 45%;
-  width: 14%;
-  height: 20%;
+  left: 46.5%;
+  top: 44%;
+  width: 10%;
+  height: 30%;
   display: grid;
   grid-template-columns: var(--tile) 1fr var(--tile) var(--tile) var(--tile);
   grid-template-rows: var(--tile) 1fr var(--tile);
@@ -490,12 +491,12 @@
   grid-row: 2 / 3;
   overflow: hidden;
   background: var(--text);
-  margin: 0% 0% 5% 0%;
+  padding: clamp(3px, 0.34vw, 7px);
 }
 
 .poster {
-  width: 100%;
-  padding: 1% 0% 0% 18%;
+  width: 90%;
+  padding: 6% 0% 0% 18%;
   object-fit: cover;
   object-position: top left;
 }
@@ -527,11 +528,11 @@
    off the frame it is painted onto */
 .paint {
   z-index: 8;
-  left: 47%;
-  top: 45%;
-  width: 14%;
-  height: 20%;
-  clip-path: inset(5% 0% 0% 0%);
+  left: 46.6%;
+  top: 45.3%;
+  width: 11.8%;
+  height: 26.5%;
+  clip-path: inset(0% 17% 0% 0%);
   mix-blend-mode: multiply;
   --float-x: 2px;
   --float-y: 3px;
@@ -543,9 +544,9 @@
   position: absolute;
   z-index: 8;
   left: 38.5%;
-  top: 68.5%;
-  width: 25%;
-  height: 4%;
+  top: 70.5%;
+  width: 23.2%;
+  height: 2%;
   display: flex;
   align-items: stretch;
   overflow: hidden;
@@ -591,9 +592,9 @@
 /* A sticker, not a decal: the kit's tilt and hard offset shadow are what sell
    it as something physically stuck to the bezel */
 .bylx-logo {
-  left: 61%;
-  top: 35%;
-  width: 4%;
+  left: 59%;
+  top: 37%;
+  width: 4.8%;
   z-index: 10;
   --base-transform: rotate(-6deg);
   filter: drop-shadow(2px 2px 0 rgba(9, 5, 27, 0.4));
@@ -638,9 +639,9 @@
 /* Glow, board and keys share these coordinates and must drift as one object —
    the kit staggers their delays, which slides the keys off the board */
 .keyboard {
-  left: 35%;
-  top: 82%;
-  width: 30%;
+  left: 36%;
+  top: 81%;
+  width: 29%;
   height: auto;
   --float-x: 2px;
   --float-y: 2px;

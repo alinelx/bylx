@@ -8,6 +8,8 @@ Pixel-art portfolio for Aline Lopes Xavier (bylx.dev). Vanilla HTML/CSS/JS by de
 - `styles.css` — entry point only; imports `css/` partials in strict order: tokens → base → cursor → hero-animations → hero-positions → hero-text → sections → animations → responsive
 - `script.js` — entry point only; imports `js/` ES modules, each with a single `init*()` export
 - `contact.php` — form handler (Hostinger), honeypot + non-JS fallback
+- `assets/mp3/` — the 17 lo-fi/citypop tracks the player streams; `js/audio.js` lists them in `TRACKS` and every file there is used. **Don't delete them** — they are the mp3 player
+- `bylx.dev - Standalone.html` — the design-system UI kit exported as one self-contained React/Babel bundle. **Spec, never shipped code**: the site stays vanilla. It is the reference for scene coordinates and motion; open it side by side when porting visuals
 - Design tokens live in `css/tokens.css` (`:root`); brand rules in `DESIGN.md`
 
 ## Hard rules
@@ -18,6 +20,7 @@ Pixel-art portfolio for Aline Lopes Xavier (bylx.dev). Vanilla HTML/CSS/JS by de
 - **`--base-transform` must never be `none`.** Layers compose `var(--base-transform) translate3d(…)`, and `none translate3d(…)` is a parse error that silently drops the whole declaration — which once left most of the scene with no transform, killing both float and parallax. Use `translateZ(0)` for "no base transform". `tests/motion.spec.js` guards this
 - No blanket `will-change` on scene layers: it pinned 28 compositor layers permanently for animations the browser promotes by itself. Only motion starting from a standing start (parallax, mouse-flee) sets it
 - Hero scene layers are positioned by a 64×64 grid system translated to CSS percentages — follow existing coordinate patterns exactly, no creative deviation
+- **Scene coordinates come from the kit** (`bylx.dev - Standalone.html`), ported 2026-09. Sky, hills and landmark haze stay the site's own — see DESIGN.md. Two places deliberately beat the kit: the mp3 player sits at 26%/76.5%/10% (the kit's 31%/13% buries its right third under the keyboard's box, which ate a third of the hotspot) and the sushi at 12% (the kit's 15% crowds it). Before moving any prop, check what its *box* — not its art — now covers: transparent corners steal clicks
 - Parallax is **pointer-driven** (`js/parallax.js` writes `--move-x/--move-y`), not scroll-driven
 - `.layer` static transform consumes `--move-x/--move-y` even with `animation: none` — so JS motion features must check `prefersReducedMotion()` from `js/utils.js` (parallax and mouse-flee already do; keep it that way for new features)
 - The `prefers-reduced-motion` CSS block lives at the end of `css/responsive.css` — animations often live on child elements (`img`, `::before`, `.icon`), target those, not the wrappers
@@ -38,8 +41,8 @@ Case studies follow the structure: The question → What I built → Technical d
 2. Gallery modal — done (2026-07): pixel-art image grid with captions, opened by the instax
 3. **Project cards** — done (2026-07): text-first, as the design system draws them. This entry used to read "konochan.pt, lupa.road, Workspace Automations use striped placeholder previews — need pixel art". The previews are gone entirely, so no pixel art is owed: the kit's card is a label, a name, a description and stack chips, and the name is what you scan for. `dark28-linepixel.png` and `bylx_logo_line_cyan.png` are now unused by the cards
 4. Review case-study copy for konochan.pt / lupa.road / Workspace Automations (drafted from project memory — verify facts)
-5. **Do not delete `bylx/`** — this entry used to read "duplicate untracked folder `bylx/bylx/` can be deleted". No `bylx/bylx/` exists. What exists is `bylx/`: a second *clone* of `alinelx/bylx` with its own `.git`, commits up to "Merge pull request #12", and staged-but-uncommitted edits across ~10 files. Deleting it destroys work that is in no other repo. Decide deliberately what to salvage first
-6. Volume buttons on the mp3 sprite — done (2026-09): `mp3_player.png` draws the right end cap but no buttons on it, so the two keys (bevel + `+`/`−` glyph) are drawn in CSS as `::after` on `.mp3-volup`/`.mp3-voldown` (`css/sections.css`). If real pixel art for them ever lands in the sprite, delete those `::after` rules
+5. **Do not delete `bylx/`** — a second *clone* of `alinelx/bylx` with its own `.git`. Its uncommitted edits were pushed from that machine on 2026-09-22 as commit "Sync", whose merge reverted ~1,700 lines of the July work; `e5c7910` put the site back and dropped the Sync content entirely (the commits stay in history). So that work is no longer only in `bylx/` — but check before deleting, and push from this machine only
+6. Volume buttons on the mp3 sprite — done (2026-09): the sprite draws no keys, so they are drawn in CSS as `::after` on `.mp3-volup`/`.mp3-voldown`, on the dark bezel directly under the printed "MP3 / FM" (sprite rows 91–96 of 128, centred on the lettering at x ≈ 57.8%). The hit box runs lower than the drawn key, and `(pointer: coarse)` grows it further. If real pixel art for them lands in `mp3_player.png`, delete those `::after` rules
 
 ## Cache
 

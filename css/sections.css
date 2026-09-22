@@ -696,48 +696,61 @@
   height: 13%;
 }
 
-/* Volume buttons on the right strip */
+/* Volume keys — on the dark bezel, directly under the printed "MP3 / FM".
+   In mp3_player.png (320×128) that lettering spans x 163–207, rows 86–90, and
+   the bezel runs on to row 97, so the keys are drawn in rows 91–96, centred
+   on the lettering (x ≈ 57.8%). The hit box runs a few rows lower than the
+   drawn key so the target is not only 5 sprite-pixels tall. */
+.mp3-voldown,
 .mp3-volup {
-  left: 86%;
-  top: 26%;
-  width: 10%;
-  height: 22%;
+  top: 70.5%;
+  width: 8.5%;
+  height: 9.5%;
+  border: 0;
 }
 
-.mp3-voldown {
-  left: 86%;
-  top: 52%;
-  width: 10%;
-  height: 22%;
+.mp3-voldown { left: 48.3%; }
+.mp3-volup   { left: 58.8%; }
+
+.mp3-voldown:hover,
+.mp3-voldown:focus-visible,
+.mp3-volup:hover,
+.mp3-volup:focus-visible {
+  border: 0;
+  background: transparent;
 }
 
-/* The sprite draws the end cap but no buttons on it, so the hits read as
-   blank pink until hovered. Draw the two keys here: an inset pixel bevel
-   and a +/− glyph, so the cap looks like it has something to press. */
-.mp3-volup::after,
-.mp3-voldown::after {
+/* The sprite has no keys here, so draw them: a dark key with a cyan rim and
+   glyph, the same ink as the LCD above it */
+.mp3-voldown::after,
+.mp3-volup::after {
   position: absolute;
-  inset: 12% 14%;
+  inset: 11% 8% 48% 8%;
   display: grid;
   place-items: center;
-  background: var(--bylx-pink);
-  box-shadow:
-    inset 2px 2px 0 var(--bylx-pink-glow),
-    inset -2px -2px 0 var(--bylx-pink-ink);
-  color: var(--bylx-bg-ink);
-  font-size: clamp(0.55rem, 1.2vw, 0.75rem);
+  background: var(--bylx-bg-ink);
+  box-shadow: inset 0 0 0 1px var(--bylx-cyan-ink);
+  color: var(--cyan);
+  font-size: clamp(0.35rem, 0.9vw, 0.5rem);
   line-height: 1;
   pointer-events: none;
 }
 
+.mp3-voldown::after { content: "\2212"; }
 .mp3-volup::after   { content: "+"; }
-.mp3-voldown::after { content: "−"; }
 
-.mp3-hit.mp3-volup:active::after,
-.mp3-hit.mp3-voldown:active::after {
-  box-shadow:
-    inset 2px 2px 0 var(--bylx-pink-ink),
-    inset -2px -2px 0 var(--bylx-pink-glow);
+.mp3-voldown:hover::after,
+.mp3-voldown:focus-visible::after,
+.mp3-volup:hover::after,
+.mp3-volup:focus-visible::after {
+  box-shadow: inset 0 0 0 1px var(--cyan);
+  background: var(--bylx-purple-ink);
+}
+
+.mp3-voldown:active::after,
+.mp3-volup:active::after {
+  background: var(--bylx-cyan-ink);
+  color: var(--bylx-bg);
 }
 
 .about {

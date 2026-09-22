@@ -21,12 +21,15 @@
 
   .eyebrow {
     max-width: 29ch;
-    font-size: clamp(0.32rem, 0.95vw, 0.42rem);
+    /* Floor at 0.5rem: the old 0.32rem rendered Press Start 2P at ~5px */
+    font-size: clamp(0.5rem, 0.95vw, 0.6rem);
   }
 
   h1 {
     max-width: 13ch;
-    font-size: clamp(1.6rem, 4.2vw, 2.8rem);
+    /* Never larger than the desktop headline (2.4rem) — this once peaked at
+       2.8rem on a smaller screen */
+    font-size: clamp(1.4rem, 2.6vw, 2.2rem);
   }
 
   .hero-text p:not(.eyebrow) {
@@ -90,7 +93,7 @@
   }
 
   .eyebrow {
-    font-size: 0.34rem;
+    font-size: 0.5rem;
   }
 
   h1 {
@@ -129,8 +132,8 @@
      ::before grows the touch zone while the visible hover border stays on the
      art. Both hosts are already positioned (.pixel-window-close via .win), but
      .win also clips, which would eat the grown zone — so let it escape.
-     Measured at 375px: select 49×18 and the window close 24×8 fail. The volume
-     hits (35×31) and the dial (59×59) already pass, so they are left alone. */
+     Measured at 375px: select 49×18, the window close 24×8 and the volume keys
+     30×13 fail. The dial (59×59) already passes, so it is left alone. */
   .pixel-window-close {
     overflow: visible;
   }
@@ -140,6 +143,15 @@
     content: "";
     position: absolute;
     inset: -8px;
+  }
+
+  /* The volume keys sit 7px apart on a 343px player, so they grow mostly
+     up and down — 8px sideways would make them overlap each other */
+  .mp3-voldown::before,
+  .mp3-volup::before {
+    content: "";
+    position: absolute;
+    inset: -6px -3px;
   }
 }
 
@@ -171,8 +183,28 @@
     top: 91%;
   }
 
+  /* The crop drops the instax's (transparent) upper half onto the taskbar,
+     and z-index 13 let it swallow the START button. Nothing of the camera is
+     drawn that high, so the strip can take the clicks back. */
+  .toolbar-strip {
+    z-index: 14;
+  }
+
   .hero-text {
     width: min(22rem, calc(100% - 1.6rem));
+  }
+
+  /* Bottom-right is where this layout parks the mp3 player, so the hint hid
+     it for its whole 5 seconds. Over the lower screen it covers nothing you
+     would reach for first. */
+  .desk-hint {
+    top: 56%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    width: max-content;
+    max-width: calc(100% - 1.6rem);
+    transform: translateX(-50%);
   }
 
   .start-menu {
