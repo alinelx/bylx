@@ -1,8 +1,18 @@
 # ᑲყᥣx — cache policy
-# HTML must always revalidate so new asset versions (?v=N) roll out
-# immediately; the versioned css/js keep Hostinger's long cache.
+# HTML must always revalidate so new markup rolls out immediately.
+#
+# styles.css and script.js are only entry points: their @import / import
+# specifiers are separate requests carrying no ?v=, so bumping the entry
+# point's version never reached css/*.css or js/*.js — they sat in
+# Hostinger's long cache indefinitely. That is what shipped stale styling.
+# Rather than version ~17 specifiers by hand on every deploy, the partials
+# revalidate: ETags make the unchanged ones cheap 304s.
 <IfModule mod_headers.c>
   <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  <FilesMatch "\.(css|js)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
 </IfModule>

@@ -10,7 +10,15 @@
   <meta property="og:description" content="A pixel-art portfolio where Rio de Janeiro and Lisbon share a desk." />
   <meta property="og:url" content="https://bylx.dev" />
   <meta property="og:type" content="website" />
+  <!-- Absolute URL: relative paths are not resolved by most link unfurlers -->
+  <meta property="og:image" content="https://bylx.dev/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="A pixel-art desk scene: a CRT monitor, keyboard, instant camera and mp3 player, with Rio and Lisbon skylines through the window." />
+  <meta property="og:site_name" content="bylx.dev" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#09051b" />
+  <link rel="canonical" href="https://bylx.dev/" />
 
   <link rel="icon" href="assets/logo/bylx_logo_line.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,6 +33,8 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#projects">Skip to projects</a>
+
   <main>
     <section class="hero hero-scene" id="hero" aria-labelledby="hero-title">
       <div class="hero-artboard" aria-hidden="true">
@@ -117,7 +127,8 @@
             <div class="win top-middle">
               <p class="window-title">nihon.bmp</p>
             </div>
-            <div class="win top-right"></div>
+            <!-- win_top_right.png already draws the X — the tile itself is the close button -->
+            <button class="win top-right pixel-window-close" type="button" aria-label="Close window"></button>
             <div class="win side-left"></div>
             <div class="win-content">
               <img src="assets/hero/japan_poster.png" class="poster" alt="" />
@@ -131,12 +142,18 @@
           <img class="asset layer paint screen-item" src="assets/hero/paint_frame.png" alt="" />
 
           <div class="toolbar-strip screen-item">
-            <img class="toolbar toolbar-start" src="assets/hero/toolbar.png" alt="" />
+            <button class="start-btn" type="button" aria-label="Open Start menu" aria-haspopup="menu" aria-expanded="false">
+              <img class="toolbar toolbar-start" src="assets/hero/toolbar.png" alt="" />
+            </button>
             <img class="toolbar toolbar-fill" src="assets/hero/toolbar.png" alt="" />
           </div>
 
-          <img class="asset layer monitor" src="assets/hero/monitor_frame.png" alt="" />
+          <div class="asset layer monitor">
+            <img class="monitor-img" src="assets/hero/monitor_frame.png" alt="" />
+            <button class="monitor-power" type="button" aria-label="Turn monitor off" aria-pressed="false"></button>
+          </div>
 
+          <div class="asset layer keyboard keyboard-glow" aria-hidden="true"></div>
           <img class="asset layer keyboard keyboard-board desk-object" src="assets/hero/keyboard_board.png" alt="" />
           <img class="asset layer keyboard keyboard-keys desk-object" src="assets/hero/keyboard_keys.png" alt="" />
 
@@ -150,6 +167,44 @@
         <p>I build web things that feel like places — tactile, thoughtful, and made to be noticed. Pixel art, vanilla code, no shortcuts.</p>
         <a href="#projects">See the work</a>
       </div>
+
+      <div class="start-menu" role="menu" aria-label="Start menu" hidden>
+        <p class="start-menu-title">Start</p>
+        <ul>
+          <li>
+            <button type="button" role="menuitem" data-start-action="fullscreen">
+              Fullscreen monitor
+              <span class="meta">enter cinema mode</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" role="menuitem" data-start-action="music">
+              Play music
+              <span class="meta">opens MP3 player</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" role="menuitem" data-start-action="monitor">
+              <span class="label">Turn monitor off</span>
+              <span class="meta">toggles power</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" role="menuitem" data-start-action="contact" data-modal-target="contact-modal">
+              Send a message
+              <span class="meta">contact aline</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <p class="desk-hint" role="status" hidden>Try clicking the desk — the objects work.</p>
+
+      <div class="fullscreen-mode" role="dialog" aria-modal="true" aria-label="Fullscreen monitor" tabindex="-1" hidden>
+        <div class="fullscreen-screen">
+          <p class="fullscreen-hint" hidden>Press <kbd>F11</kbd> or <kbd>Esc</kbd> to return</p>
+        </div>
+      </div>
     </section>
 
     <section class="projects" id="projects" aria-labelledby="projects-title">
@@ -162,12 +217,9 @@
         <div class="projects-grid">
           <a data-modal-target="casestudy-dark28-modal">
           <article class="project-card" aria-labelledby="card-dark28-title">
-            <div class="card-preview card-preview" aria-hidden="true">
-              <img src="assets/hero/dark28-linepixel.png" alt="" class="card-preview-logo" />
-            </div>
             <div class="card-body">
-              <h3 id="card-dark28-title">dark28.pt</h3>
               <span class="card-status card-status--live">LIVE</span>
+              <h3 id="card-dark28-title">dark28.pt</h3>
               <p>Lisbon's Tram 28 reimagined as a dark tourism route — dictatorship, colonialism, and collective memory.</p>
               <div class="card-meta">
                 <span class="card-tag">Next.js</span>
@@ -180,12 +232,9 @@
         </a>
         <a data-modal-target="casestudy-bylx-modal">
           <article class="project-card" aria-labelledby="card-bylx-title">
-            <div class="card-preview card-preview--bylx" aria-hidden="true">
-              <img src="assets/logo/bylx_logo_line_cyan.png" alt="" class="card-preview-logo" />
-            </div>
             <div class="card-body">
-              <h3 id="card-bylx-title">bylx.dev</h3>
               <span class="card-status card-status--live">LIVE</span>
+              <h3 id="card-bylx-title">bylx.dev</h3>
               <p>This portfolio — a pixel-art Y2K where Rio and Lisbon share a desk.</p>
               <div class="card-meta">
                 <span class="card-tag">HTML</span>
@@ -195,21 +244,48 @@
             </div>
           </article>
         </a>
-          <article class="project-card project-card--wip" aria-labelledby="card-wip-title">
-            <div class="card-preview card-preview--wip" aria-hidden="true">
-            </div>
+        <a data-modal-target="casestudy-konochan-modal">
+          <article class="project-card" aria-labelledby="card-konochan-title">
             <div class="card-body">
-              <h3 id="card-wip-title">Designer Portfolio</h3>
-              <p>Portfolio for a product designer specialised in urban furniture — where physical design meets the web.</p>
-              <span class="card-status card-status--wip">IN PROGRESS</span>
+              <span class="card-status card-status--shipped">SHIPPED</span>
+              <h3 id="card-konochan-title">konochan.pt</h3>
+              <p>Kawaii e-commerce brand built and run solo — store, payments, inventory, and identity.</p>
               <div class="card-meta">
-                <span class="card-tag">Next.js</span>
-                <span class="card-tag">Figma</span>
-                <span class="card-tag">Product Design</span>
+                <span class="card-tag">E-commerce</span>
+                <span class="card-tag">Stripe</span>
+                <span class="card-tag">MB Way</span>
               </div>
             </div>
           </article>
-
+        </a>
+        <a data-modal-target="casestudy-lupa-modal">
+          <article class="project-card" aria-labelledby="card-lupa-title">
+            <div class="card-body">
+              <span class="card-status card-status--client">CLIENT WORK</span>
+              <h3 id="card-lupa-title">lupa.road</h3>
+              <p>WordPress rebrand for a Lisbon optical clinic — from dated site to a storefront the owner can run.</p>
+              <div class="card-meta">
+                <span class="card-tag">WordPress</span>
+                <span class="card-tag">UX</span>
+                <span class="card-tag">Branding</span>
+              </div>
+            </div>
+          </article>
+        </a>
+        <a data-modal-target="casestudy-gas-modal">
+          <article class="project-card" aria-labelledby="card-gas-title">
+            <div class="card-body">
+              <span class="card-status card-status--internal">IN PRODUCTION · INTERNAL</span>
+              <h3 id="card-gas-title">Workspace Automations</h3>
+              <p>Google Apps Script tools a 40+ person team at Accenture uses every day.</p>
+              <div class="card-meta">
+                <span class="card-tag">Apps Script</span>
+                <span class="card-tag">Automation</span>
+                <span class="card-tag">Google Workspace</span>
+              </div>
+            </div>
+          </article>
+        </a>
         </div>
       </div>
     </section>
@@ -288,6 +364,160 @@
       </section>
     </div>
 
+    <div class="modal pixel-modal" id="casestudy-bylx-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-bylx-title">
+        <header class="modal-header">
+          <h2 id="casestudy-bylx-title">bylx.dev — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p class="cs-stack">HTML · CSS · Vanilla JS · PHP · <a href="https://bylx.dev" target="_blank" rel="noopener noreferrer">bylx.dev ↗</a></p>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>Developer portfolios all look the same: hero, grid, footer. Mine had to prove something instead of claiming it. Could a pixel-art desk — where Rio de Janeiro and Lisbon share a window — carry an entire portfolio, built with nothing but the fundamentals?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>An interactive scene where every object does what it looks like it should: the camera opens the gallery, the phone opens the contact form, the MP3 player opens a working player, the mouse runs from your cursor, and the keyboard lights up as you type.</p>
+          <ul class="cs-list">
+            <li>Pixel-art parallax hero on a 64×64 grid with layered PNGs</li>
+            <li>Object hotspots with sprite-sheet and steps() hover animations</li>
+            <li>Custom pixel cursor with sakura-petal trail</li>
+            <li>Working MP3 player with a 17-track lo-fi playlist</li>
+            <li>PHP contact form with honeypot and graceful non-JS fallback</li>
+            <li>Keyboard-accessible case-study modals</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>Vanilla ES modules</strong> — parallax, cursor, audio, modals and forms are isolated modules with a single init each. There is nothing to hydrate, so a framework would only add weight.</p>
+          <p><strong>Coordinate-driven scene</strong> — layers map pixel-grid references to CSS custom properties; the whole parallax is one rAF listener writing <code>--move-x</code> and <code>--move-y</code>.</p>
+          <p><strong>CSS partials with explicit import order</strong> — tokens → base → cursor → hero → sections → responsive. The design system lives in <code>:root</code>.</p>
+          <p><strong>steps() everywhere</strong> — easing is quantised so motion stays pixel-crisp instead of smoothly un-retro.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>Constraints are a design system. Refusing frameworks forced clean module boundaries; refusing smooth easing forced intentional animation. And accessibility inside a fully custom scene — focus states, aria labels, a form that works without JS — is where the real engineering happened.</p>
+
+          <div class="cs-footer-links">
+            <a href="https://github.com/alinelx/bylx" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-konochan-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-konochan-title">
+        <header class="modal-header">
+          <h2 id="casestudy-konochan-title">konochan.pt — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p class="cs-stack">E-commerce · Stripe · MB Way · Hostinger · <a href="https://konochan.pt" target="_blank" rel="noopener noreferrer">konochan.pt ↗</a></p>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>Could I take a brand from zero to real orders — not a portfolio mockup, but a shop with actual customers, payments, and parcels that have to arrive?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>A kawaii and handmade-resin e-commerce brand, built and operated solo: visual identity, product catalogue, checkout, and everything that happens after someone pays.</p>
+          <ul class="cs-list">
+            <li>Full store setup on Hostinger, from DNS to checkout</li>
+            <li>Stripe and MB Way payment integration for the Portuguese market</li>
+            <li>WhatsApp integration for order support and customer contact</li>
+            <li>Brand identity, product photography, and packaging design</li>
+            <li>Inventory, pricing, and customer support operations</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>Platform over custom code</strong> — the goal was a working shop, not a stack demo. Hostinger shipped the store in weeks instead of months.</p>
+          <p><strong>Local payment rails</strong> — MB Way is how Portugal actually pays online. Supporting it mattered more than any feature.</p>
+          <p><strong>WhatsApp as CRM</strong> — customers already live there; meeting them in their channel beat building one.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>E-commerce is UX plus logistics — the interface is the easy half. Running the store taught me what "done" means when customers are real. The shop is currently on pause while I focus on development work; the brand, the systems, and the lessons stay.</p>
+
+          <div class="cs-footer-links">
+            <a href="https://konochan.pt" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit konochan.pt</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-lupa-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-lupa-title">
+        <header class="modal-header">
+          <h2 id="casestudy-lupa-title">lupa.road — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p class="cs-stack">WordPress · UX · Branding · <a href="https://lupa.road" target="_blank" rel="noopener noreferrer">lupa.road ↗</a></p>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>A Lisbon optical clinic had a website that undersold the business — dated, hard to navigate, and impossible for the owner to update. How do you rebuild trust online for a business whose whole trade is precision?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>A full WordPress rebrand: new visual identity applied to a restructured site, designed so the owner can maintain it without calling a developer.</p>
+          <ul class="cs-list">
+            <li>Theme customisation aligned with the new brand</li>
+            <li>Restructured content and navigation around what customers ask first</li>
+            <li>Plugin selection and configuration kept deliberately minimal</li>
+            <li>Responsive layout and performance cleanup</li>
+            <li>Handover so the client edits content independently</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>WordPress, on purpose</strong> — the client needs to edit content themselves. The right stack is the one the business can maintain after you leave.</p>
+          <p><strong>Fewer plugins, fewer problems</strong> — every plugin is a future update, a security surface, and a support call. The build stayed lean.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>Client work is a different discipline: listening before building, designing within the client's capacity, and writing handover docs as carefully as code. The best compliment was silence — the site just works.</p>
+
+          <div class="cs-footer-links">
+            <a href="https://lupa.road" class="card-link card-link--primary" target="_blank" rel="noopener noreferrer">Visit lupa.road</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-gas-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-gas-title">
+        <header class="modal-header">
+          <h2 id="casestudy-gas-title">Workspace Automations — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p class="cs-stack">Google Apps Script · Google Workspace · Automation</p>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>A 40+ person team at Accenture was losing hours every week to repetitive Google Workspace workflows — manual reporting, copy-paste pipelines, spreadsheet drudgery. No budget line, no IT ticket. What could one person automate from inside?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>A set of Google Apps Script automations and lightweight internal tools, deployed to the whole team and used in production daily.</p>
+          <ul class="cs-list">
+            <li>Automated reporting flows that replaced manual spreadsheet work</li>
+            <li>Dashboards for team visibility without leaving Workspace</li>
+            <li>Lightweight internal tools shaped around how the team already worked</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>Apps Script, deliberately</strong> — it lives where the work already happens. Zero install, zero procurement, corporate-compliant by default.</p>
+          <p><strong>Scripts as products</strong> — permissions, error handling, and documentation, because a tool 40 people depend on can't behave like a weekend script.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>Automation adoption is a UX problem: the hard part isn't the code, it's making a tool people trust enough to change their routine for. Corporate code stays private — the process is what transfers.</p>
+        </div>
+      </section>
+    </div>
+
     <div class="modal pixel-modal" id="gallery-modal" aria-hidden="true">
       <div class="modal-backdrop" data-close-modal></div>
 
@@ -298,7 +528,41 @@
         </header>
 
         <div class="modal-body">
-          <p>Gallery content goes here.</p>
+          <p class="gallery-intro">A scratch pad of pixel-art studies — Rio, Lisboa, Tokyo, and the things in between.</p>
+          <div class="gallery-grid">
+            <figure class="gallery-cell is-tall">
+              <img src="assets/hero/japan_poster.png" alt="Pixel-art poster of Japan" loading="lazy" />
+              <figcaption>nihon.bmp</figcaption>
+            </figure>
+            <figure class="gallery-cell">
+              <img src="assets/hero/cristo_redentor.png" alt="Pixel-art Cristo Redentor" loading="lazy" />
+              <figcaption>Cristo Redentor — Rio</figcaption>
+            </figure>
+            <figure class="gallery-cell">
+              <img src="assets/hero/torre_belem.png" alt="Pixel-art Torre de Belém" loading="lazy" />
+              <figcaption>Torre de Belém — Lisboa</figcaption>
+            </figure>
+            <figure class="gallery-cell">
+              <img src="assets/hero/pao_de_acucar.png" alt="Pixel-art Pão de Açúcar" loading="lazy" />
+              <figcaption>Pão de Açúcar — Rio</figcaption>
+            </figure>
+            <figure class="gallery-cell">
+              <img src="assets/hero/ponte_25abril.png" alt="Pixel-art Ponte 25 de Abril" loading="lazy" />
+              <figcaption>Ponte 25 de Abril — Lisboa</figcaption>
+            </figure>
+            <figure class="gallery-cell">
+              <img src="assets/particles/sakura1.png" alt="Pixel-art sakura petal" loading="lazy" />
+              <figcaption>sakura</figcaption>
+            </figure>
+            <figure class="gallery-cell">
+              <img src="assets/particles/sakura2.png" alt="Pixel-art sakura petal" loading="lazy" />
+              <figcaption>sakura</figcaption>
+            </figure>
+            <figure class="gallery-cell">
+              <img src="assets/particles/sakura3.png" alt="Pixel-art sakura petal" loading="lazy" />
+              <figcaption>sakura</figcaption>
+            </figure>
+          </div>
         </div>
       </section>
     </div>
@@ -340,24 +604,39 @@
       </section>
     </div>
 
-    <div class="mp3-controls" aria-label="Music controls">
-      <p class="mp3-title">
-        <span class="mp3-now">Now playing:</span>
-        <span class="mp3-marquee-window">
-          <span class="mp3-marquee-text" data-track-title>None</span>
-        </span>
-      </p>
+    <aside class="mp3-player" aria-label="Music player">
+      <button class="mp3-close" type="button" aria-label="Close music player">×</button>
+      <p class="mp3-status" data-mp3-status hidden></p>
 
-      <div class="mp3-buttons">
-        <button type="button" data-audio-action="prev">Prev</button>
-        <button type="button" data-audio-action="play">Play</button>
-        <button type="button" data-audio-action="pause">Pause</button>
-        <button type="button" data-audio-action="next">Next</button>
-        <button type="button" data-audio-action="stop">Stop</button>
-        <button type="button" data-audio-action="volume-down">Vol -</button>
-        <button type="button" data-audio-action="volume-up">Vol +</button>
+      <div class="mp3-frame">
+        <img class="mp3-img" src="assets/hero/mp3_player.png" alt="" />
+
+        <div class="mp3-lcd">
+          <div class="mp3-lcd-marquee">
+            <span data-mp3-name>None</span>
+            <span data-mp3-name aria-hidden="true">None</span>
+          </div>
+          <div class="mp3-lcd-meta" aria-live="polite">
+            <span data-mp3-index>-- / --</span>
+            <span data-mp3-vol>VOL 035</span>
+            <span data-mp3-state>■</span>
+          </div>
+        </div>
+
+        <button class="mp3-hit mp3-play" type="button" aria-label="Play">
+          <span class="mp3-hit-label">PLAY</span>
+        </button>
+        <button class="mp3-hit mp3-select" type="button" aria-label="Next track (double-click for previous)">
+          <span class="mp3-hit-label">CLICK NEXT · DBLCLICK PREV</span>
+        </button>
+        <button class="mp3-hit mp3-voldown" type="button" aria-label="Volume down">
+          <span class="mp3-hit-label">VOL −</span>
+        </button>
+        <button class="mp3-hit mp3-volup" type="button" aria-label="Volume up">
+          <span class="mp3-hit-label">VOL +</span>
+        </button>
       </div>
-    </div>
+    </aside>
   </main>
 
   <footer class="site-footer">

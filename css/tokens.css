@@ -16,32 +16,11 @@
 
 :root {
 
-  --midnight: #0B0820;
-  --deepPurple: #1B103D;
-  --pixelViolet: #5D3FD3;
-  --neonCyan: #59F3FF;
-  --neonPink: #FF5DBB;
-  --sakuraPink: #FFC2E2;
-  --softLilac: #DCCFFF;
-  --crtWhite: #F7F2FF;
-  --skinLight: #F6D2B3;
-  --skinMid: #DFA77E;
-  --skinShadow: #9A6A52;
-  --hairDark: #3A2433;
-  --hairMid: #5A3A4D;
-  --hairHighlight: #8A6072;
-  --sakura: #FFB3D9;
-  --petalShadow: #D97BB2;
-  --leafCyan: #72F2E8;
-  --nightBlue: #13264A;
-  --crtBlue: #6ED8FF;
-  --terminalGreen: #8BFFB7;
-  --retroPurple: #7B5CFF;
-  --monitorShadow: #1A1635;
-  --success: #8BFFB7;
-  --warning: #FFE066;
-  --danger: #FF5D8F;
-  --info: #59F3FF;
+  /* Two palettes used to live here: a legacy set (--midnight, --neonCyan,
+     skin/hair ramps, --success/--warning/--info) and the bylx-* set below.
+     18 of the 19 legacy tokens were dead and the file could not say which
+     palette was real. Only --danger survived, in .form-status. */
+  --danger: #ff5d8f;
 
   --bylx-bg: #09051b;
   --bylx-bg-ink: #1d1640;
@@ -68,8 +47,49 @@
   --muted: var(--bylx-muted);
   --paper: var(--bylx-paper);
 
+  /* ---------- Semantic layer (from the design system) ----------
+     Roles, not colours. Say what a thing IS, and the palette can move
+     underneath without touching every component. */
+  --fg1: var(--bylx-text);      /* primary text on dark */
+  --fg2: var(--bylx-muted);     /* secondary text on dark */
+  --fg-ink: var(--bylx-bg);     /* text on light surfaces */
+  --bg1: var(--bylx-bg);
+  --bg2: var(--bylx-bg-ink);
+  --bg-paper: var(--bylx-paper);
+  --accent: var(--bylx-pink);
+  --accent-2: var(--bylx-cyan);
+  --border: var(--bylx-cyan);
+  --border-ink: var(--bylx-bg);
+  --link: var(--bylx-cyan);
+
   --font-pixel: "Pixelify Sans", system-ui, sans-serif;
   --font-ui: "Press Start 2P", monospace;
+  --font-mono: "Press Start 2P", ui-monospace, monospace;
+
+  /* ---------- Type scale ----------
+     The kit named the scale but froze it in rem; the site made it fluid but
+     re-invented a clamp() in every component. This is the crossing of the
+     two: named AND fluid. Min values are the kit's mobile-safe floors, max
+     values are the kit's original rem sizes. */
+  --fs-eyebrow: clamp(0.55rem, 0.9vw, 0.7rem);
+  --fs-caption: clamp(0.72rem, 1vw, 0.85rem);
+  --fs-body:    clamp(0.88rem, 1.1vw, 1.05rem);
+  --fs-body-lg: clamp(0.95rem, 1.25vw, 1.2rem);
+  --fs-h3:      clamp(1.15rem, 2vw, 1.6rem);
+  --fs-h2:      clamp(1.5rem, 3.4vw, 2.4rem);
+  --fs-h1:      clamp(2rem, 5.5vw, 3.4rem);
+  --fs-display: clamp(2.4rem, 7vw, 5rem);
+
+  --lh-tight: 0.96;
+  --lh-snug:  1.08;
+  /* The kit's 1.16 is right for a 2-line headline and punishing for a whole
+     case study, which is what --lh-prose is for. */
+  --lh-body:  1.16;
+  --lh-prose: 1.38;
+  --lh-loose: 1.55;
+
+  --radius-0: 0;         /* pixel boxes have NO radius */
+  --radius-pill: 999px;  /* only the dial */
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;

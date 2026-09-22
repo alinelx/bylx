@@ -75,11 +75,6 @@
 }
 
 
-@keyframes cta-hover-pulse {
-  0%, 100% { box-shadow: 5px 5px 0 var(--cyan); }
-  50%       { box-shadow: 7px 7px 0 var(--cyan); }
-}
-
 ::-webkit-scrollbar {
   width: 8px;
 }

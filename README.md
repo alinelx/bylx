@@ -51,7 +51,6 @@ bylx/
 |---|---|---|
 | [Dark28](https://dark28.pt) | Next.js · TypeScript · React · Tailwind | [repo](https://github.com/alinelx/dark-28) |
 | bylx.dev | HTML · CSS · Vanilla JS | this repo |
-| Designer Portfolio | Next.js · Figma | in progress |
 
 ---
 

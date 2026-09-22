@@ -48,6 +48,42 @@ if (!empty($_POST['website'])) {
   respond(200, ['ok' => true]); // pretend success so bots move on
 }
 
+/* Throttle by IP. The confirmation leg below mails whatever address the caller
+   supplies, so without a cap this endpoint can be driven as an open relay for
+   our own branded template — the damage being bylx.dev's SPF/DKIM reputation.
+   Deliberately generous (a real visitor sends once) and fails OPEN: if the
+   temp dir misbehaves we would rather send than silently drop a recruiter. */
+function throttled(string $ip): bool {
+  $limit  = 5;
+  $window = 3600;
+
+  try {
+    $file = sys_get_temp_dir() . '/bylx-rate-' . sha1($ip) . '.json';
+    $now  = time();
+
+    $hits = [];
+    if (is_readable($file)) {
+      $decoded = json_decode((string) @file_get_contents($file), true);
+      if (is_array($decoded)) $hits = $decoded;
+    }
+
+    // Drop anything older than the window, then judge what is left.
+    $hits = array_values(array_filter($hits, fn($t) => is_int($t) && $now - $t < $window));
+    if (count($hits) >= $limit) return true;
+
+    $hits[] = $now;
+    @file_put_contents($file, json_encode($hits), LOCK_EX);
+  } catch (Throwable $e) {
+    return false;
+  }
+
+  return false;
+}
+
+if (throttled($_SERVER['REMOTE_ADDR'] ?? 'unknown')) {
+  respond(429, ['ok' => false, 'error' => 'rate_limited']);
+}
+
 $name    = trim($_POST['name'] ?? '');
 $email   = trim($_POST['email'] ?? '');
 $message = trim($_POST['message'] ?? '');
@@ -70,7 +106,8 @@ $encode = fn(string $s): string => '=?UTF-8?B?' . base64_encode($s) . '?=';
 // ---- 1. notification to Aline ---------------------------------------------
 $ownerHeaders = implode("\r\n", [
   'From: ' . $encode(FROM_NAME) . ' <' . FROM_EMAIL . '>',
-  "Reply-To: {$name} <{$email}>",
+  // Encoded like every other display name — a raw "José" is not valid here
+  'Reply-To: ' . $encode($name) . " <{$email}>",
   'MIME-Version: 1.0',
   'Content-Type: text/plain; charset=UTF-8',
 ]);

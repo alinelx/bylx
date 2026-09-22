@@ -32,3 +32,27 @@ img {
   image-rendering: pixelated;
   max-width: 100%;
 }
+
+/* The hero is a large keyboard detour before any real content — offscreen
+   until focused, then it lands over the scene as the first tab stop */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  padding: 0.7rem 1rem;
+  color: var(--bg);
+  background: var(--cyan);
+  border: 3px solid var(--bg);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  text-decoration: none;
+  -webkit-font-smoothing: none;
+  transform: translateY(-150%);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 3px solid var(--pink);
+  outline-offset: 2px;
+}
