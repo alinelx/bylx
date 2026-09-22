@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx interactions */
 
-import { screenRect } from "./utils.js?v=f04a4c83";
+import { screenRect } from "./utils.js?v=8d10320d";
 
 export function initMouseFlee() {
   const mouseSprite = document.querySelector(".mouse");

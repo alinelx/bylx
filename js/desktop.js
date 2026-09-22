@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx desktop — monitor power, pixel-window close, start menu, fullscreen */
 
-import { screenRect, clampToRect } from "./utils.js?v=f04a4c83";
+import { screenRect, clampToRect } from "./utils.js?v=8d10320d";
 
 export function initDesktop() {
   const scene = document.getElementById("hero-scene");
@@ -179,14 +179,33 @@ export function initDesktop() {
      mesmos nós com os mesmos listeners. Guardamos onde cada um estava para os
      devolver exactamente à mesma posição na ordem de pintura. */
   let borrowed = [];
+  let cinemaResize = null;
+
+  /* A prancheta do cinema é a prancheta real ao tamanho real, AMPLIADA com um
+     transform. Redimensioná-la em percentagens não chegava: a moldura da
+     janela do Paint (--tile: clamp(8px, 0.72vw, 16px)) e o tipo do título
+     (clamp em vw) são medidos no viewport, não no contentor, por isso ficavam
+     do tamanho de sempre enquanto o wallpaper crescia três vezes — a janela
+     desalinhava e a barra de tarefas encolhia. Um scale() amplia tudo na
+     mesma proporção, que é o que "aproximar o monitor" quer dizer. */
+  function layoutCinemaBoard(board, stage) {
+    const art = document.querySelector(".hero-artboard")?.getBoundingClientRect();
+    const frame = stage.getBoundingClientRect();
+    if (!art || !art.width || !frame.width) return;
+
+    const scale = frame.width / (art.width * (SCREEN.width / 100));
+
+    board.style.width = `${art.width}px`;
+    board.style.height = `${art.height}px`;
+    board.style.transformOrigin = "top left";
+    board.style.transform = `scale(${scale})`;
+    board.style.left = `${-art.width * (SCREEN.left / 100) * scale}px`;
+    board.style.top = `${-art.height * (SCREEN.top / 100) * scale}px`;
+  }
 
   function buildCinemaBoard(stage) {
     const board = document.createElement("div");
     board.className = "fullscreen-artboard";
-    board.style.width = `${(100 / SCREEN.width) * 100}%`;
-    board.style.height = `${(100 / SCREEN.height) * 100}%`;
-    board.style.left = `${(-SCREEN.left / SCREEN.width) * 100}%`;
-    board.style.top = `${(-SCREEN.top / SCREEN.height) * 100}%`;
 
     /* Um clique no fundo fecha o cinema; um clique no ecrã é do ecrã. */
     board.addEventListener("click", (event) => event.stopPropagation());
@@ -200,6 +219,8 @@ export function initDesktop() {
     }
 
     stage.prepend(board);
+
+    return board;
   }
 
   function returnScreenItems() {
@@ -213,11 +234,20 @@ export function initDesktop() {
     lastFocus = from && from !== document.body ? from : startBtn;
 
     const stage = fsMode.querySelector(".fullscreen-screen");
-    if (stage) buildCinemaBoard(stage);
+    const board = stage ? buildCinemaBoard(stage) : null;
 
     /* A página não rola por trás do cinema, como em qualquer modal */
     document.documentElement.classList.add("cinema-open");
     fsMode.hidden = false;
+
+    /* A escala só se mede depois de visível: escondido, o rectângulo da
+       moldura é zero e a conta saía toda a zero. */
+    if (board && stage) {
+      layoutCinemaBoard(board, stage);
+      /* A moldura acompanha o viewport, portanto a ampliação também */
+      cinemaResize = () => layoutCinemaBoard(board, stage);
+      window.addEventListener("resize", cinemaResize, { passive: true });
+    }
     if (fsHint) fsHint.hidden = false;
     fsMode.focus();
 
@@ -228,6 +258,10 @@ export function initDesktop() {
   function closeFullscreen() {
     if (!fsMode || fsMode.hidden) return;
     fsMode.hidden = true;
+    if (cinemaResize) {
+      window.removeEventListener("resize", cinemaResize);
+      cinemaResize = null;
+    }
     returnScreenItems();
     fsMode.querySelector(".fullscreen-artboard")?.remove();
     document.documentElement.classList.remove("cinema-open");

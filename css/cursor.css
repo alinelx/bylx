@@ -12,7 +12,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 777;
+  /* Acima de tudo o que a página pode abrir — modais (77), cinema (771), as
+     janelas do ecrã (800). O ponteiro é o ponteiro: nada lhe passa à frente. */
+  z-index: 9999;
   /* Maior que o normal, a pedido: 40px em vez dos 32 do kit — a seta é parte
      do desenho, não um ponteiro discreto. */
   width: 40px;
