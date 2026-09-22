@@ -8,14 +8,15 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx interactions */
 
-import { prefersReducedMotion } from "./utils.js?v=84e3e7b9";
 
 export function initMouseFlee() {
   const mouseSprite = document.querySelector(".mouse");
   const hero        = document.querySelector("#hero");
 
-  if (!mouseSprite || !hero)  return;
-  if (prefersReducedMotion()) return;
+  /* Sem guarda de prefers-reduced-motion: fugir do cursor é a reação ao gesto
+     de quem está a apontar, não movimento ambiente (ver o bloco no fim de
+     css/responsive.css). */
+  if (!mouseSprite || !hero) return;
 
   let scheduled = false;
 
@@ -63,10 +64,6 @@ export function initKeyboardRgb() {
   let glowTimeout;
 
   window.addEventListener("keydown", (event) => {
-    /* A light show the visitor did not ask for: the board must stay dark
-       under prefers-reduced-motion, like every other motion feature here */
-    if (prefersReducedMotion()) return;
-
     /* Typing into the contact form should not set the desk blinking */
     const target = event.target;
     if (target instanceof HTMLElement && ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)) return;

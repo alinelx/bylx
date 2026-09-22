@@ -8,7 +8,6 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx cursor */
 
-import { prefersReducedMotion } from "./utils.js?v=84e3e7b9";
 
 export function initCursor() {
   const cursor = document.querySelector(".cursor");
@@ -49,10 +48,9 @@ export function initSakuraTrail() {
 
   if (!sakuraLayer) return;
 
-  const reduced = prefersReducedMotion();
-  /* A seta é 40px em vez dos 32 do kit, e as pétalas acompanham-na na mesma
-     proporção — senão o rasto encolhe ao lado do ponteiro. */
-  const PETAL_SCALE    = 40 / 32;
+    /* A seta é 40px em vez dos 32 do kit, e as pétalas acompanham-na na mesma
+     proporção. 1.9 é o valor que a Aline escolheu a olho, não uma regra. */
+  const PETAL_SCALE    = 1.9;
   const TRAIL_INTERVAL = 70;
   const BURST_COUNT    = 12;
   const MAX_PETALS     = 90;
@@ -113,8 +111,6 @@ export function initSakuraTrail() {
   }
 
   window.addEventListener("mousemove", (event) => {
-    if (reduced) return;
-
     const now = performance.now();
     if (now - lastTrail < TRAIL_INTERVAL) return;
     lastTrail = now;
@@ -125,7 +121,7 @@ export function initSakuraTrail() {
   window.addEventListener("mousedown", (event) => {
     if (event.button !== 0) return;
 
-    const count = reduced ? 4 : BURST_COUNT;
+    const count = BURST_COUNT;
     for (let i = 0; i < count; i += 1) {
       spawnPetal(event.clientX, event.clientY, "burst");
     }

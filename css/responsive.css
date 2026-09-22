@@ -301,40 +301,24 @@
     scroll-behavior: auto;
   }
 
+  /* O que cala aqui é o movimento que ninguém pediu: a deriva ambiente, a
+     respiração da prancheta, os ícones a saltitar.
+
+     O que NÃO cala (decisão da Aline, 2026-09-22) são as reações directas ao
+     cursor — a instax a abrir, o telemóvel a tocar, o rato a fugir, as
+     pétalas. Duram o tempo do gesto, param quando o ponteiro sai, e são a
+     resposta ao que o visitante acabou de fazer. O parallax continua a
+     respeitar a definição: mexe a cena inteira sem ninguém lhe tocar. */
   .layer,
   .bg,
   .screen-item,
   .desktop-icons .icon,
   .toolbar,
-  /* Ambient scene motion (hero-animations.css) — the scene must be genuinely
-     still here, not merely calmer */
   .hero-artboard,
-  /* Selector must match the animation's own specificity (0,2,0) — a bare .win
-     here loses to .win:not(.pixel-window-close) and the flicker survives */
-  .win:not(.pixel-window-close),
-  .win.bottom-right,
-  .win-content,
-  .mp3-lcd-meta,
-  .toolbar,
-  .window-title,
-  .poster,
-  .keyboard-glow,
-  .hotspot-phone:hover img,
-  .hotspot-phone:focus-visible img,
-  .hotspot-mp3:hover img,
-  .hotspot-mp3:focus-visible img,
-  .hotspot-mp3.is-playing img,
-  .hotspot-instax:hover .instax-sprite,
-  .hotspot-instax:focus-visible .instax-sprite,
-  .hotspot-instax:hover .instax-sprite::before,
-  .hotspot-instax:focus-visible .instax-sprite::before {
+  .keyboard-glow {
     animation: none;
     transition: none;
     will-change: auto;
-  }
-
-  .sakura-bit {
-    animation-duration: 600ms !important;
   }
 
   .hero-text a:hover,

@@ -130,10 +130,7 @@
 .desktop-icons .icon-btn:nth-child(2n) .icon { animation-delay: -0.8s; }
 .desktop-icons .icon-btn:nth-child(3n) .icon { animation-delay: -1.4s; }
 
-/* The kit's taskbar flicker, kept: a CRT's chrome dimming a frame is the
-   monitor's own behaviour, not the funnel asking for a click. The kit's scan
-   is not kept — see css/hero-positions.css. */
-.toolbar { animation: toolbar-pulse 3.6s steps(2, end) infinite; }
+
 
 /* No float override here: the keys must ride the board exactly, and a
    separate --float-y/--float-delay slid them off it */
@@ -233,9 +230,8 @@
 /* :not(.pixel-window-close) — that tile is the close button, and an animated
    filter would outrank its :hover brightness, silently killing the affordance
    on the only interactive tile in the window */
-.win:not(.pixel-window-close) {
-  animation: window-piece-flicker 5.2s steps(2, end) infinite;
-}
+/* Sem flicker (2026-09-22, a pedido): nada na cena pisca. As keyframes ficam
+   para quem as quiser de volta. */
 
 @keyframes window-piece-flicker {
   0%, 84%, 100% { filter: none; }
@@ -244,29 +240,21 @@
 
 /* .bottom-right is also a .win, so it must restate the flicker or the shorthand
    here would replace it outright rather than add to it */
-.win.bottom-right {
-  animation:
-    window-piece-flicker 5.2s steps(2, end) infinite,
-    corner-blink 4.4s steps(2, end) infinite;
-}
+
 
 @keyframes corner-blink {
   0%, 100% { opacity: 1; }
   50%      { opacity: 0.96; }
 }
 
-.window-title {
-  animation: title-tick 2.4s steps(2, end) infinite;
-}
+
 
 @keyframes title-tick {
   from { color: var(--bylx-bg); }
   to   { color: var(--bylx-bg-ink); }
 }
 
-.poster {
-  animation: poster-shimmer 7s steps(2, end) infinite;
-}
+
 
 @keyframes poster-shimmer {
   0%, 90%, 100% { filter: none; }
