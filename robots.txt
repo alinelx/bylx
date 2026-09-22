@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# The form handler has nothing to index and should not be crawled
+Disallow: /contact.php
+
+Sitemap: https://bylx.dev/sitemap.xml
