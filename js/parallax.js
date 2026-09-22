@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx parallax */
 
-import { prefersReducedMotion, lerp } from "./utils.js";
+import { prefersReducedMotion, lerp } from "./utils.js?v=3f1d3ef9";
 
 const LAYERS = [
   { selector: ".bg-skyline-left",  depth: 1  },

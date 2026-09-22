@@ -53,7 +53,13 @@ Case studies follow the structure: The question → What I built → Technical d
 
 ## Cache
 
-`styles.css` / `script.js` are entry points only, so a `?v=` on them never reaches the `@import`ed `css/*.css` or the imported `js/*.js` — those are separate requests. `.htaccess` therefore has the partials revalidate (cheap 304s) instead. **No `?v=` bump is needed on deploy**; don't reintroduce the ritual.
+`styles.css` / `script.js` are entry points only, so a `?v=` on them never reaches the `@import`ed `css/*.css` or the imported `js/*.js` — those are separate requests. `.htaccess` sends `no-cache` for every css/js so the origin revalidates.
+
+**That is not enough, and the note here used to stop at that line.** Hostinger's CDN sits in front of the origin and serves its own copies: measured 2026-09-22, hours after a deploy, the browser got `css/responsive.css` with `age: 27075` and a `last-modified` seven hours older than the deploy, while curl on the same URL got the current bytes — the site looked like the previous version to every visitor. Any query string came back uncached, so the edge keys on the URL and ignores `no-cache`.
+
+So every first-party css/js URL carries `?v=<hash>`, and `scripts/stamp-assets.mjs` writes it: a hash of the files' own contents (same bytes → same URL → still cached), stamped onto the entry points in `index.html`, the `@import`s inside `styles.css`, and the module specifiers in `script.js` and `js/*.js` — the whole chain, because a stale `styles.css` would otherwise hand out stale specifiers. `index.html` itself is not edge-cached, which is what makes the chain work.
+
+**Run `npm run stamp` (or `node scripts/stamp-assets.mjs`) before every deploy**; `--check` exits 1 if it is stale, and it is a no-op when nothing changed.
 
 ## Git
 

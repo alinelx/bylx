@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx cursor */
 
-import { prefersReducedMotion } from "./utils.js";
+import { prefersReducedMotion } from "./utils.js?v=3f1d3ef9";
 
 export function initCursor() {
   const cursor = document.querySelector(".cursor");
