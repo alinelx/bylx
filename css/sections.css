@@ -910,23 +910,6 @@
   line-height: 1.75;
 }
 
-.about-cta {
-  align-self: flex-start;
-  margin-top: 0.75rem;
-  padding: 0.65rem 1.2rem;
-  background: var(--pink);
-  color: var(--bg);
-  border: 3px solid var(--cyan);
-  box-shadow: 5px 5px 0 var(--cyan);
-  font-family: var(--font-ui);
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  transition: transform 0.08s steps(2, end), box-shadow 0.08s steps(2, end);
-  line-height: 1;
-}
-
 .about-cta:hover,
 .about-cta:focus-visible {
   transform: translate(-2px, -2px);
@@ -1168,28 +1151,49 @@
 /* ── Acções e credenciais no "about" ──────────────────────────────────────
    Os CVs são ficheiros do próprio site (assets/cv/), não links para o Drive:
    não dependem de permissões de partilha nem expõem a conta. */
+/* Grelha, não fila livre: com auto-fit as caixas ficam todas da mesma
+   largura e alinhadas em coluna, em vez de quebrarem aos bocados. */
 .about-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  align-items: center;
-  margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
+  gap: 0.7rem;
+  align-items: stretch;
+  max-width: 46rem;
+  margin-top: 1.6rem;
 }
 
+.about-cta,
 .about-link {
-  display: inline-block;
-  padding: 0.62rem 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 2.9rem;
+  margin: 0;
+  padding: 0.7rem 0.9rem;
   color: var(--cyan);
   background: transparent;
   border: 3px solid var(--cyan);
   box-shadow: 5px 5px 0 rgba(89, 243, 255, 0.28);
   font-family: var(--font-ui);
   font-size: 0.55rem;
-  line-height: 1.5;
+  line-height: 1.4;
   letter-spacing: 0.04em;
+  text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   transition: transform 80ms steps(2, end), box-shadow 80ms steps(2, end);
+}
+
+/* O CTA herda a métrica partilhada acima e só muda de cor — tem de vir
+   DEPOIS dela, senão a regra partilhada é que ganha e o botão fica sem o
+   rosa. */
+.about-cta {
+  color: var(--bg);
+  background: var(--pink);
+  border-color: var(--cyan);
+  box-shadow: 5px 5px 0 var(--cyan);
+  cursor: pointer;
 }
 
 .about-link--primary {
@@ -1240,4 +1244,31 @@
 @media (max-width: 520px) {
   .about-actions { gap: 0.5rem; }
   .about-link { width: 100%; text-align: center; }
+}
+
+/* Badges verificados: cada um leva ao Credly, que é o que os torna
+   verificáveis — uma etiqueta que ninguém pode confirmar não vale nada. */
+.about-badges--linked li {
+  padding: 0;
+  border-color: var(--cyan);
+}
+
+.about-badges--linked a {
+  display: block;
+  padding: 5px 8px;
+  color: var(--cyan);
+  text-decoration: none;
+  transition: background 80ms steps(2, end);
+}
+
+.about-badges--linked a:hover,
+.about-badges--linked a:focus-visible {
+  color: var(--bg);
+  background: var(--cyan);
+  outline: none;
+}
+
+.about-badges--linked a:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
 }
