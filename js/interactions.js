@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx interactions */
 
-import { screenRect } from "./utils.js?v=9583d300";
+import { screenRect } from "./utils.js?v=f04a4c83";
 
 export function initMouseFlee() {
   const mouseSprite = document.querySelector(".mouse");
@@ -163,8 +163,16 @@ export function initTechPopovers() {
     pop.append(close, name, sub);
     document.body.appendChild(pop);
 
-    const popRect = pop.getBoundingClientRect();
     const screen = screenRect();
+
+    /* A janela acompanha o ecrã: no CRT da cena tem ~170px, no cinema passa a
+       ter um terço de um ecrã enorme. Sem isto ficava do mesmo tamanho nos
+       dois e perdia-se no meio do cinema. */
+    if (screen) {
+      pop.style.width = `${Math.round(Math.min(Math.max(screen.width * 0.34, 170), 380))}px`;
+    }
+
+    const popRect = pop.getBoundingClientRect();
 
     /* Centrado no ecrã do CRT, como uma caixa de diálogo do sistema — e não
        colado ao ícone. Encostado ao ícone tinha de ser limitado dos quatro
@@ -178,8 +186,14 @@ export function initTechPopovers() {
       height: window.innerHeight,
     };
 
+    /* Centrado na área ÚTIL: a barra de tarefas é chão do ecrã, não sítio
+       para uma janela. */
+    const bar = document.querySelector(".toolbar-strip")?.getBoundingClientRect();
+    const usableBottom = bar && bar.top > bounds.top ? bar.top : bounds.top + bounds.height;
+    const usableHeight = usableBottom - bounds.top;
+
     const left = bounds.left + (bounds.width - popRect.width) / 2;
-    const top = bounds.top + (bounds.height - popRect.height) / 2;
+    const top = bounds.top + (usableHeight - popRect.height) / 2;
 
     pop.style.left = `${Math.max(4, left)}px`;
     pop.style.top = `${Math.max(4, top)}px`;

@@ -385,7 +385,7 @@
   position: fixed;
   z-index: 77;
   min-width: 140px;
-  max-width: 220px;
+  max-width: min(380px, 90vw);
   padding: var(--space-3) var(--space-4);
   color: var(--fg-ink);
   background: var(--bg-paper);
@@ -393,10 +393,12 @@
   box-shadow: var(--shadow-chunk-sm);
 }
 
+/* Dentro da janela, não pendurado fora dela: no cinema o X saltava para cima
+   do que estivesse por trás. */
 .tech-pop-close {
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: 6px;
+  right: 6px;
   width: 22px;
   height: 22px;
   padding: 0;
