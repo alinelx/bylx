@@ -650,8 +650,9 @@
   filter: drop-shadow(0 0 4px rgba(89, 243, 255, 0.6));
 }
 
-/* Marquee only scrolls while music plays */
-.mp3-player.is-playing .mp3-lcd-marquee {
+/* Corre sempre, como no kit: um LCD destes nunca para, toque ou não toque.
+   (linear de propósito — com steps() o texto treme; é a excepção à regra.) */
+.mp3-lcd-marquee {
   animation: mp3-marquee 14s linear infinite;
 }
 

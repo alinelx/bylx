@@ -13,8 +13,10 @@
   top: 0;
   left: 0;
   z-index: 777;
-  width: 32px;
-  height: 32px;
+  /* Maior que o normal, a pedido: 40px em vez dos 32 do kit — a seta é parte
+     do desenho, não um ponteiro discreto. */
+  width: 40px;
+  height: 40px;
   pointer-events: none;
   background-image: url("../assets/cursor/arrow.png");
   background-repeat: no-repeat;

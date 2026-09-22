@@ -350,7 +350,7 @@
     transition: none;
   }
 
-  .mp3-player.is-playing .mp3-lcd-marquee,
+  .mp3-lcd-marquee,
   .start-menu {
     animation: none;
   }

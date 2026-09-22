@@ -8,8 +8,15 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx parallax */
 
-import { prefersReducedMotion, lerp } from "./utils.js?v=3f1d3ef9";
+import { prefersReducedMotion, lerp } from "./utils.js?v=84e3e7b9";
 
+/* Só o fundo — o que se vê pela janela. A mesa e tudo o que está em cima dela
+   ficam parados (decidido 2026-09-22): a profundidade lê-se na paisagem, e os
+   objectos que o visitante quer clicar não se mexem debaixo do cursor. A mesa
+   levava 2px, o telefone 8px; agora levam zero.
+
+   O motor não mudou: quem quiser a mesa de volta acrescenta aqui a linha e o
+   `.layer` já consome --move-x/--move-y. */
 const LAYERS = [
   { selector: ".bg-skyline-left",  depth: 1  },
   { selector: ".bg-skyline-right", depth: 1  },
@@ -18,20 +25,6 @@ const LAYERS = [
   { selector: ".bg-wall-left",     depth: 1  },
   { selector: ".bg-wall-right",    depth: 1  },
   { selector: ".window-frame",     depth: 2  },
-  { selector: ".table",            depth: 3  },
-  { selector: ".win-bg",           depth: 5  },
-  { selector: ".desktop-icons",    depth: 6  },
-  { selector: ".pixel-window",     depth: 6  },
-  { selector: ".paint",            depth: 7  },
-  { selector: ".toolbar-strip",    depth: 7  },
-  { selector: ".monitor",          depth: 8  },
-  { selector: ".keyboard",         depth: 10 },
-  { selector: ".instax",           depth: 11 },
-  { selector: ".mp3player",        depth: 11 },
-  { selector: ".phone",            depth: 12 },
-  { selector: ".sushi",            depth: 9  },
-  { selector: ".cocktail",         depth: 10 },
-  { selector: ".bylx-logo",        depth: 8  },
 ];
 
 /* User-perceived speed ~half of the original (was depth × 4, ease 0.08) */

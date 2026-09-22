@@ -38,13 +38,12 @@ page, not a corporate developer site.
    - The landmarks are the thesis, so they must be **readable**: Cristo 14%,
      Pão de Açúcar 23.5%, Ponte 25 de Abril 20%, Torre de Belém 16%. They were
      once half that, and a Ponte you cannot recognise argues nothing.
-   - But they stay **hazy** (0.7–0.8), and the sky and hills keep their own
-     placement. This is aerial perspective: a city seen through a window at
-     night is fainter than the desk in front of you. The design-system kit
-     draws them at 0.98–1.0, which gives a distant skyline the same visual
-     weight as a coffee cup and flattens the diorama into stickers on glass.
-     **Scale from the kit, atmosphere from the site** — decided 2026-07-16 by
-     rendering all three and looking.
+   - A bruma **foi removida** (2026-09-22). Entre Julho e Setembro os marcos
+     estiveram a 0.8 e os morros a 0.7, com a moldura da janela a 0.7, pela
+     ideia de perspetiva aérea. Vista ao lado do kit, a cena lia-se apagada e
+     a Aline escolheu o kit: marcos e moldura cheios, morros a 0.98, e o céu
+     e os morros na posição do kit (skyline 18%, morros 33%). O que fica da
+     decisão de Julho é a **escala** dos marcos, que era o problema real.
    - The *room and the desk* are a different question, settled 2026-09: frame,
      table and every prop now sit exactly where the kit draws them. The site's
      own coordinates had the table full-bleed with its front edge off-screen

@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx interactions */
 
-import { prefersReducedMotion } from "./utils.js?v=3f1d3ef9";
+import { prefersReducedMotion } from "./utils.js?v=84e3e7b9";
 
 export function initMouseFlee() {
   const mouseSprite = document.querySelector(".mouse");

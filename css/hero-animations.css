@@ -45,11 +45,11 @@
 }
 
 /* The float makes every hotspot a moving click target. Steady it the moment
-   the pointer arrives: the object settles under your hand instead of drifting
-   out from under it, and reaching for a thing is exactly when the ambient
-   drift stops being charming. */
-.hotspot:hover,
-.hotspot:focus-visible {
+   the pointer arrives. Only bites while .is-drifting is on, and the selector
+   has to outweigh `.scene.is-drifting .layer` (0,3,0): the `animation`
+   shorthand there resets play-state to running, so a lighter selector loses. */
+.scene .layer.hotspot:hover,
+.scene .layer.hotspot:focus-visible {
   animation-play-state: paused;
 }
 
@@ -152,7 +152,10 @@
 .keyboard-glow {
   --rgb-tint: var(--cyan);
   background: radial-gradient(ellipse at center, var(--rgb-tint) 0%, transparent 70%);
-  opacity: 0.4;
+  /* 0.26, não 0.4: no kit o brilho vive num ::after metido por dentro das
+     teclas (inset 5% 6% -5% 6%), por isso lê-se fraco; aqui é uma camada
+     própria do tamanho da tábua e transbordava pelos cantos. */
+  opacity: 0.26;
   filter: blur(10px);
   transition: opacity 220ms steps(3, end);
 }
@@ -270,23 +273,13 @@
   92%           { filter: brightness(1.18) hue-rotate(8deg); }
 }
 
-/* The underglow cycles like a real board. hue-rotate over a static gradient,
-   not the kit's animated `background` — re-rasterising a radial-gradient every
-   frame is a paint; rotating its hue is not.
-   On keypress the cycle stops dead so the tint js/interactions.js picked is
-   the colour you actually see: your typing seizes the board from the idle
-   loop, which is the whole point of the feature. */
-.keyboard-glow {
-  animation: rgb-cycle 9s steps(6, end) infinite;
-}
-
+/* O ciclo de cor em repouso está desligado (2026-09-22): era a única coisa a
+   piscar na mesa. O brilho fica parado no seu tom até alguém escrever — aí
+   js/interactions.js escreve --rgb-tint e o teclado responde. As keyframes
+   ficam para quem quiser voltar a ligá-las numa linha. */
 @keyframes rgb-cycle {
   from { filter: blur(10px) hue-rotate(0deg); }
   to   { filter: blur(10px) hue-rotate(360deg); }
-}
-
-.keyboard-glow.is-pressed {
-  animation: none;
 }
 
 @keyframes phone-ring {

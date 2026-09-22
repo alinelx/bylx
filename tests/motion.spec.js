@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 
-/* Motion tests — the scene in its default, moving state.
+/* Motion tests — the scene in its default state: still until the pointer
+ * moves. Ambient drift is switched off (see css/hero-positions.css); the
+ * parallax, the fleeing mouse and the screen's own flickers are what move.
  *
  * These exist because of a bug that hid in plain sight for a long time:
  * every layer composed its transform as `var(--base-transform) translate3d(…)`
@@ -18,6 +20,16 @@ import { test, expect } from "@playwright/test";
 const settle = (page) => page.waitForTimeout(1200);
 const transformOf = (page, sel) =>
   page.locator(sel).first().evaluate((el) => getComputedStyle(el).transform);
+
+/* Position relative to the artboard, rounded to a tenth. The artboard itself
+   still breathes, so an absolute rect moves even when the prop on it does
+   not — measuring against the board is the only way to ask "did THIS move". */
+const relativeTo = (page, sel) =>
+  page.locator(sel).first().evaluate((el) => {
+    const art = document.querySelector(".hero-artboard").getBoundingClientRect();
+    const box = el.getBoundingClientRect();
+    return [+(box.left - art.left).toFixed(1), +(box.top - art.top).toFixed(1)];
+  });
 
 /* Explicit, and via emulateMedia rather than test.use(), which does not reach
    the browser — see the note in smoke.spec.js. These are the specs that must
@@ -39,32 +51,68 @@ test("no layer is left without a transform", async ({ page }) => {
   expect(dead, "these layers can never float or parallax").toEqual([]);
 });
 
-test("the scene drifts on its own", async ({ page }) => {
-  // Props on co-prime durations: sample a few rather than trusting one.
+test("the scene does not drift on its own", async ({ page }) => {
+  // Ambient drift is off by default (css/hero-positions.css explains why).
+  // Each prop must hold still until the pointer asks it to move — measured
+  // against the artboard, since the artboard itself still breathes.
   for (const sel of [".cocktail", ".instax", ".ponte", ".table"]) {
-    const before = await transformOf(page, sel);
+    const before = await relativeTo(page, sel);
     await settle(page);
-    const after = await transformOf(page, sel);
-    expect.soft(before, `${sel} should drift`).not.toBe(after);
+    const after = await relativeTo(page, sel);
+    expect.soft(after, `${sel} should hold still`).toEqual(before);
   }
 });
 
+test("the drift engine is still wired, just switched off", async ({ page }) => {
+  // The switch is one class: if this breaks, is-drifting no longer works and
+  // the per-object --float-* values have quietly become dead weight.
+  const moved = await page.evaluate(async () => {
+    const scene = document.querySelector("#hero-scene");
+    const el = document.querySelector(".cocktail");
+    const art = document.querySelector(".hero-artboard");
+    const rel = () => el.getBoundingClientRect().top - art.getBoundingClientRect().top;
+    const before = rel();
+    scene.classList.add("is-drifting");
+    await new Promise((r) => setTimeout(r, 1200));
+    const after = rel();
+    scene.classList.remove("is-drifting");
+    return Math.abs(after - before) > 0.5;
+  });
+  expect(moved, "adding .is-drifting should make the cocktail move again").toBe(true);
+});
+
 test("the parallax follows the pointer", async ({ page }) => {
+  // Desktop only. In portrait js/parallax.js bails (the desk crop has nothing
+  // to offset), so there is nothing to follow — this used to pass on mobile
+  // only because the ambient drift moved the table between the two samples.
+  test.skip(test.info().project.name !== "desktop", "parallax is off in the desk crop");
+
   await page.mouse.move(150, 150);
   await page.waitForTimeout(200);
-  const left = await transformOf(page, ".table");
+  const leftBg = await transformOf(page, ".window-frame");
+  const leftDesk = await transformOf(page, ".table");
 
   await page.mouse.move(1400, 600);
-  await page.waitForTimeout(400);
-  const right = await transformOf(page, ".table");
+  await page.waitForTimeout(600);
+  const rightBg = await transformOf(page, ".window-frame");
+  const rightDesk = await transformOf(page, ".table");
 
-  expect(left, "the table should track the pointer").not.toBe(right);
+  expect(leftBg, "the window should track the pointer").not.toBe(rightBg);
+
+  // ...and the desk must not. Parallax is background-only (js/parallax.js):
+  // the depth reads in the landscape, and nothing shifts under the cursor on
+  // the way to a click.
+  expect(leftDesk, "the table must hold still").toBe(rightDesk);
 });
 
 test("a hotspot steadies under the pointer", async ({ page }) => {
   test.skip(test.info().project.name !== "desktop", "no hover on touch");
 
+  // Ambient drift ships switched off, so this guarantee is dormant — but the
+  // rule must keep working for whoever turns it back on with .is-drifting.
   // A click target that drifts is a target that dodges. Reaching for it stops it.
+  await page.evaluate(() => document.querySelector("#hero-scene").classList.add("is-drifting"));
+
   const instax = page.locator(".hotspot-instax");
   const box = await instax.boundingBox();
 

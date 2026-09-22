@@ -51,6 +51,15 @@
   pointer-events: none;
 }
 
+/* As três hotspots não flutuam, como no kit: lá as variáveis --float-* estão
+   definidas mas a animação só é aplicada a .layer/.screen-item, e as hotspots
+   não são nenhuma das duas — ficam paradas. Aqui flutuavam, e eram os únicos
+   objectos que o visitante quer acertar. A transformação estática de .layer
+   continua a consumir --move-x/--move-y, por isso o parallax mantém-se. */
+.layer.hotspot {
+  animation: none;
+}
+
 /* Interactive layers opt back in — must outrank the .layer reset above,
    which otherwise beats .hotspot's pointer-events (same specificity,
    hero-positions.css loads after hero-animations.css) */
@@ -85,8 +94,25 @@
   --float-scale: 1;
   --float-duration: 7s;
   --float-delay: 0s;
-  animation: hero-float var(--float-duration) ease-in-out var(--float-delay) infinite alternate;
   transform: var(--base-transform) translate3d(var(--move-x), var(--move-y), 0);
+}
+
+/* A deriva ambiente está DESLIGADA por omissão (2026-09-22, decisão da Aline
+   comparando com o kit lado a lado).
+
+   O kit parece ter esta deriva, mas não tem: lá `--base-transform: none`, e
+   `none translate3d(…)` é um erro de parse que faz o browser deitar fora a
+   declaração inteira — as keyframes correm e não movem nada. Medido: no kit
+   cada objecto mexe 0.00px em relação à prancheta; aqui o cocktail fazia
+   13.6px, o Cristo 8.6px, o sushi 5.7px. Corrigido o bug em Julho, a deriva
+   passou a ver-se, e a cena ficou a "flutuar toda".
+
+   O motor fica de pé — keyframes, durações co-primas e os --float-* de cada
+   objecto. Para o voltar a ligar basta a classe `is-drifting` no .scene. */
+.scene.is-drifting .layer,
+.scene.is-drifting .bg,
+.scene.is-drifting .screen-item {
+  animation: hero-float var(--float-duration) ease-in-out var(--float-delay) infinite alternate;
 }
 
 .flippedX { --base-transform: scaleX(-1); }
@@ -94,40 +120,36 @@
 .rotateright { --base-transform: rotate(90deg);}
 .rotateleft { --base-transform: rotate(-90deg); }
 
-/* Landmark scale comes from the design system; the haze does not.
-   The kit draws these at 0.98–1.0, which gives a distant skyline the same
-   visual weight as the desk and flattens the diorama. Aerial perspective is
-   the point: they are a city seen through a window at night. Kit sizes, our
-   opacity. */
-/* Sky and hills keep the site's own placement. Taking the kit's here too
-   (skyline 10%→18%, morro 20%→33%) drags the gradient down and leaves a bare
-   dome across the top — the backdrop is not what needed rescaling. */
+/* Céu, morros, marcos e moldura: tudo como o kit desenha (decidido 2026-09-22
+   por comparação lado a lado). A bruma que o site aplicava — morros a 0.7,
+   marcos a 0.8, moldura a 0.7 — deixava a cena a ler apagada; o kit desenha
+   tudo cheio e é assim que fica. */
 .bg-skyline-left,
 .bg-skyline-right {
   z-index: 2;
-  top: 10%;
-  width: 25%;
+  top: 18%;
+  width: 23.5%;
   --float-x: 4px;
   --float-y: 3px;
   --float-duration: 14s;
 }
 
-.bg-skyline-left  { left: 25%; }
+.bg-skyline-left  { left: 27%; }
 .bg-skyline-right { left: 50%; }
 
 .morro {
   z-index: 3;
-  top: 20%;
-  width: 25%;
+  top: 33%;
+  width: 23.5%;
   height: auto;
   object-fit: contain;
-  opacity: 0.7;
+  opacity: 0.98;
   --float-x: 3px;
   --float-y: 2px;
   --float-duration: 16s;
 }
 
-.morro-left  { left: 25%; }
+.morro-left  { left: 27%; }
 .morro-right { left: 50%; }
 
 .cristo {
@@ -136,7 +158,6 @@
   top: 25%;
   width: 14%;
   height: auto;
-  opacity: 0.8;
   --float-x: 3px;
   --float-y: 5px;
   --float-rotate: 0.25deg;
@@ -149,7 +170,6 @@
   top: 45%;
   width: 23.5%;
   height: auto;
-  opacity: 0.8;
   --float-x: 4px;
   --float-y: 3px;
   --float-duration: 11s;
@@ -162,7 +182,6 @@
   top: 30%;
   width: 20%;
   height: auto;
-  opacity: 0.8;
   --float-x: 5px;
   --float-y: 2px;
   --float-duration: 12s;
@@ -175,7 +194,6 @@
   top: 44%;
   width: 16%;
   height: auto;
-  opacity: 0.8;
   --float-x: 3px;
   --float-y: 4px;
   --float-rotate: -0.2deg;
@@ -186,18 +204,18 @@
 .bg-wall-right {
   z-index: 4;
   top: 0%;
-  width: 100%;
+  width: 60%;
   --float-x: 2px;
   --float-y: 3px;
   --float-duration: 18s;
 }
 
 .bg-wall-left {
-  left: -70%;
+  left: -32%;
 }
 
 .bg-wall-right {
-  left: 70%;
+  left: 73.5%;
 }
 
 /* Frame, table and every desk prop use the kit's coordinates. The site once
@@ -209,7 +227,6 @@
   left: 4%;
   width: 93.5%;
   height: auto;
-  opacity: 0.7;
   --float-y: 1px;
   --float-duration: 13s;
 }
@@ -241,7 +258,7 @@
 
 .sushi {
   z-index: 7;
-  left: 12%;
+  left: 15%;
   top: 83%;
   width: 20%;
   height: auto;
@@ -294,12 +311,22 @@
   --float-delay: -1s;
 }
 
+/* Como no kit: o rato não entra na flutuação ambiente. Só foge do cursor e
+   inclina-se para o lado do movimento (a perspetiva da mesa comprime o eixo
+   vertical). No site tinha hero-float com amplitude 0 — não mexia, mas era
+   mais uma animação a correr para sempre. */
 .mouse {
   z-index: 7;
   left: 65%;
   top: 82%;
   width: 7%;
   height: auto;
+  animation: none;
+  transform:
+    translate3d(var(--flee-x, 0px), var(--flee-y, 0px), 0)
+    rotate(calc(-3deg + var(--flee-rot, 0deg)));
+  transform-origin: 60% 80%;
+  transition: transform 240ms steps(4, end);
 }
 
 .win-bg {
@@ -617,17 +644,18 @@
 }
 
 /* A sticker, not a decal: the kit's tilt and hard offset shadow are what sell
-   it as something physically stuck to the bezel */
-.bylx-logo {
-  left: 59%;
-  top: 37%;
-  width: 4.8%;
-  z-index: 10;
-  --base-transform: rotate(-6deg);
+   it as something physically stuck to the bezel — and in the kit it is a child
+   of the monitor, so it rides the frame instead of drifting on its own layer */
+.bylx-logo-sticker {
+  position: absolute;
+  top: 4%;
+  right: 4%;
+  z-index: 2;
+  width: 16%;
+  image-rendering: pixelated;
+  pointer-events: none;
+  transform: rotate(-6deg);
   filter: drop-shadow(2px 2px 0 rgba(9, 5, 27, 0.4));
-  --float-x: 1px;
-  --float-y: 2px;
-  --float-duration: 8s;
 }
 
 .monitor {
@@ -675,10 +703,17 @@
   --float-duration: 6.5s;
 }
 
-/* Static RGB underglow behind the board — recolours on key press, never cycles idle */
+/* Static RGB underglow behind the board — recolours on key press, never cycles
+   idle. Não flutua e não herda a caixa do teclado: encolhida para dentro da
+   tábua (o kit mete o brilho num ::after das teclas), senão os cantos do
+   rectângulo espreitam à volta do trapézio do teclado. */
 .keyboard-glow {
   z-index: 10;
+  left: 38.5%;
+  top: 82.5%;
+  width: 24%;
   aspect-ratio: 4 / 1;
+  animation: none;
 }
 
 .keyboard-board {

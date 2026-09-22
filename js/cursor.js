@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx cursor */
 
-import { prefersReducedMotion } from "./utils.js?v=3f1d3ef9";
+import { prefersReducedMotion } from "./utils.js?v=84e3e7b9";
 
 export function initCursor() {
   const cursor = document.querySelector(".cursor");
@@ -50,6 +50,9 @@ export function initSakuraTrail() {
   if (!sakuraLayer) return;
 
   const reduced = prefersReducedMotion();
+  /* A seta é 40px em vez dos 32 do kit, e as pétalas acompanham-na na mesma
+     proporção — senão o rasto encolhe ao lado do ponteiro. */
+  const PETAL_SCALE    = 40 / 32;
   const TRAIL_INTERVAL = 70;
   const BURST_COUNT    = 12;
   const MAX_PETALS     = 90;
@@ -69,13 +72,13 @@ export function initSakuraTrail() {
       power    = 70 + Math.random() * 70;
       gravity  = 50;
       duration = 1200 + Math.random() * 700;
-      size     = 14 + Math.random() * 16;
+      size     = (14 + Math.random() * 16) * PETAL_SCALE;
     } else {
       angle    = Math.PI / 2 + (Math.random() - 0.5) * 1.2;
       power    = 10 + Math.random() * 20;
       gravity  = 90;
       duration = 1500 + Math.random() * 800;
-      size     = 14 + Math.random() * 10;
+      size     = (14 + Math.random() * 10) * PETAL_SCALE;
     }
 
     const dx   = Math.cos(angle) * power;
