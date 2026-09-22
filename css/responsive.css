@@ -179,50 +179,71 @@
   }
 }
 
-/* Mobile hero — desk-focused crop.
-   On narrow/portrait viewports the centered 16:9 artboard shows only its
-   middle band (~37%–63% at 375px wide), and the band is exactly the monitor
-   with the keyboard under it: the desk props live at 12–34% and 60–79%, off
-   both edges. So they are recomposed here — but ON THE DESK, not on the
-   keys. The first version of this block parked all three on top of the
-   keyboard, which reads as nonsense: nobody rests a camera on the keys.
+/* Mobile hero — one desk, framed wider.
 
-   Instead the keyboard moves back (up the desk, where "further" is "higher"
-   in this projection) and the props take the strip it frees in front of it.
-   75% is as far back as the board can go: the taskbar it would otherwise
-   cover ends at 72.5%. Everything below stays inside the visible band, so
-   z-index 13 puts them in front of monitor (10) and keyboard (12), like
-   objects at the near edge of a desk.
-   Portrait only: in landscape the artboard is no wider than the viewport,
-   so nothing is cropped and every prop is already in frame — recomposing
-   there moved objects that had no need to move. It also catches tablets
-   like iPad Pro portrait (1024px), where the band still cuts the phone off. */
+   History, because this took three tries: the portrait crop used to keep the
+   artboard at full height, which framed exactly one thing — the monitor with
+   the keyboard under it — leaving every desk prop off both edges. The fix
+   then was to move the props into that band, and they ended up on top of the
+   keyboard. Nobody rests a camera on the keys, and it read as exactly that.
+
+   The band was the problem, not the props. Backing the artboard off shows
+   the desk, so the objects can stay where the desk puts them: this block now
+   moves one prop instead of three.
+
+   Portrait only: in landscape the artboard is no wider than the viewport, so
+   nothing is cropped and every prop is already in frame. Tablets in portrait
+   (iPad Pro, 1024px) are caught too. */
 @media (orientation: portrait) and (max-width: 1200px) {
-  .keyboard {
-    top: 75%;
+  /* Frame the whole desk instead of recomposing it.
+
+     1.7 is chosen, not rounded: the visible band is viewport / artboard, so
+     the multiplier IS the framing — 1.7 shows 58.8% of the artboard, i.e.
+     20.6%–79.4%, and the desk's outermost props are the sushi at 12–32% and
+     the phone at 72–79%. Everything interactive fits: player 27–34.5%,
+     camera 60–74%, mouse 65–72%, phone, cocktail. So nothing moves. The old
+     2.15 left the phone outside and needed a nudge, which landed it on top
+     of the mouse — the same mistake as the keyboard, one prop over.
+
+     Driven by viewport WIDTH, not height: tied to height the band narrowed
+     again on taller phones (46% on a Pixel 5 but 40% on a 375x812). This
+     way every portrait device frames the desk identically. */
+  /* Panel above, diorama below — the hero is exactly as tall as the two of
+     them. Left at 100svh it kept a band of flat purple between the copy and
+     the art, because the scene no longer fills the screen. */
+  .hero-scene {
+    height: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* 6.5%, not 7%: the strip in front of the keyboard is 13% of the artboard
-     and the camera is square, so 7% hung 3px past the bottom of a Pixel 5. */
-  .instax {
-    z-index: 13;
-    left: 37.5%;
-    top: 88%;
-    width: 6.5%;
+  .hero-text {
+    position: static;
+    order: -1;
+    margin: clamp(0.8rem, 2.5vw, 1.2rem);
   }
 
-  .phone {
-    z-index: 13;
-    left: 55%;
-    top: 89%;
-    width: 5.5%;
+  .hero-artboard {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: calc(100vw * 1.7);
+    /* Centred by hand: the artboard is wider than the viewport, so auto
+       margins cannot centre it. Both places the desktop centres it from have
+       to go — the static transform here, and the translateX(-50%) inside the
+       breathe keyframes below — or the board lands a full width to the left
+       (measured: -472px instead of -138px, and only under reduced motion,
+       where the static transform is what survives). */
+    margin-left: calc(100vw * -0.35);
+    transform: none;
   }
 
-  .mp3player {
-    z-index: 13;
-    left: 46%;
-    top: 92%;
-    width: 7%;
+  /* Same ambient breathe, without the -50% the desktop keyframes carry for
+     centring — here the margin does the centring. */
+  @keyframes artboard-breathe {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-3px); }
   }
 
   /* The crop drops the instax's (transparent) upper half onto the taskbar,
