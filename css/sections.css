@@ -45,6 +45,7 @@
    to sit on top were standing in for pixel art that never got drawn, and the
    name is the thing you actually scan for. */
 .project-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   border: 4px solid var(--cyan);
@@ -102,6 +103,36 @@
   letter-spacing: 0;
   flex-shrink: 0;
   color: var(--cyan);
+}
+
+/* The card used to be wrapped in a bare <a> with no href: not focusable, not
+   announced, so every case study was mouse-only. The trigger is a real button
+   on the project name, stretched over the whole card by its ::after — the
+   click target stays the card, the accessible name stays the name. */
+.card-trigger {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: none;
+}
+
+.card-trigger::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.card-trigger:focus-visible {
+  outline: none;
+}
+
+.project-card:has(.card-trigger:focus-visible) {
+  outline: 3px solid var(--cyan);
+  outline-offset: 3px;
 }
 
 .card-body h3 {
