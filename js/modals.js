@@ -71,6 +71,10 @@ export function initModals() {
     const open = [...document.querySelectorAll(".modal.is-open")].pop();
     if (!open) return;
 
+    /* O visor da galeria abre POR CIMA deste modal: enquanto estiver aberto,
+       a tecla é dele. Sem isto, um Escape fechava os dois de uma vez. */
+    if (document.querySelector("#gallery-lightbox:not([hidden])")) return;
+
     if (event.key === "Escape") {
       /* Consume the key: the mp3 player and the fullscreen monitor also
          listen for Escape, and without this one press closed all three. */

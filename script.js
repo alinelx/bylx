@@ -3,13 +3,14 @@
    Import and initialise every feature module.
    ============================================================ */
 
-import { initParallax }                             from "./js/parallax.js?v=e89031f4";
-import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=e89031f4";
-import { initModals }                               from "./js/modals.js?v=e89031f4";
-import { initContactForm }                          from "./js/contact.js?v=e89031f4";
-import { initAudio }                                from "./js/audio.js?v=e89031f4";
-import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=e89031f4";
-import { initDesktop }                              from "./js/desktop.js?v=e89031f4";
+import { initParallax }                             from "./js/parallax.js?v=fc0ec569";
+import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=fc0ec569";
+import { initModals }                               from "./js/modals.js?v=fc0ec569";
+import { initGalleryViewer }                        from "./js/gallery.js?v=fc0ec569";
+import { initContactForm }                          from "./js/contact.js?v=fc0ec569";
+import { initAudio }                                from "./js/audio.js?v=fc0ec569";
+import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=fc0ec569";
+import { initDesktop }                              from "./js/desktop.js?v=fc0ec569";
 
 /* Each module is independent, and a throw in one used to take every module
    after it down with it — silently, since nothing here catches. */
@@ -25,6 +26,7 @@ start("parallax", initParallax);
 start("cursor", initCursor);
 start("sakura", initSakuraTrail);
 start("modals", initModals);
+start("gallery", initGalleryViewer);
 start("contact", initContactForm);
 start("audio", initAudio);
 start("mouseFlee", initMouseFlee);

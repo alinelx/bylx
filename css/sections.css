@@ -1001,3 +1001,124 @@
   color: rgba(216, 208, 255, 0.7);
   letter-spacing: 0.04em;
 }
+
+/* ── Visor da galeria ─────────────────────────────────────────────────────
+   Ver a peça de perto é o ponto da galeria; a grelha é só o índice. Abre por
+   cima do modal, que fica aberto por trás. */
+.gallery-open {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: none;
+}
+
+.gallery-open img { transition: transform 120ms steps(2, end); }
+
+.gallery-open:hover img,
+.gallery-open:focus-visible img { transform: scale(1.04); }
+
+.gallery-open:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: -3px;
+}
+
+/* A marca de ampliar só aparece quando o ponteiro chega */
+.gallery-zoom {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 2px 5px;
+  color: var(--bg);
+  background: var(--cyan);
+  border: 2px solid var(--bg);
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 120ms steps(2, end);
+}
+
+.gallery-open:hover .gallery-zoom,
+.gallery-open:focus-visible .gallery-zoom { opacity: 1; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+  padding: clamp(1rem, 4vw, 3rem);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+}
+
+.lightbox[hidden] { display: none; }
+
+.lightbox-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 0;
+  width: min(72vw, 900px);
+}
+
+/* Caixa fixa + object-fit: contain, em vez de max-width. Deixado ao tamanho
+   natural, um sprite de 128px abria a 136px no visor — mais pequeno do que na
+   própria grelha. Assim a peça cresce até encher a caixa, mantém a proporção
+   e nunca transborda, seja o poster vertical ou a bancada de sushi. */
+.lightbox-img {
+  width: 100%;
+  height: min(70vh, 62vw);
+  object-fit: contain;
+  image-rendering: pixelated;
+  border: 4px solid var(--cyan);
+  box-shadow: 8px 8px 0 var(--pink);
+  background: var(--bylx-bg-ink);
+}
+
+.lightbox-caption {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lightbox-nav,
+.lightbox-close {
+  padding: 0.35rem 0.7rem;
+  color: var(--bg);
+  background: var(--cyan);
+  border: 3px solid var(--bg);
+  box-shadow: 4px 4px 0 var(--pink);
+  font-family: var(--font-pixel);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: none;
+}
+
+.lightbox-nav:hover,
+.lightbox-close:hover { background: var(--pink); }
+
+.lightbox-nav:focus-visible,
+.lightbox-close:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: clamp(0.75rem, 3vw, 1.5rem);
+  right: clamp(0.75rem, 3vw, 1.5rem);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 720px) {
+  .lightbox-figure { max-width: 84vw; }
+  .lightbox-nav { font-size: 1.1rem; padding: 0.3rem 0.5rem; }
+}
