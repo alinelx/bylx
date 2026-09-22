@@ -54,7 +54,19 @@
     href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="/styles.css?v=f8ff742b" />
+  <link rel="stylesheet" href="/styles.css?v=f741f055" />
+
+  <!-- Hovering a case-study link starts fetching it. "moderate" waits for the
+       hover rather than firing on load: six pages, no idea which one the
+       reader wants, and prefetch (not prerender) keeps it cheap. -->
+  <script type="speculationrules">
+    {
+      "prefetch": [
+        { "where": { "href_matches": "/work/*" }, "eagerness": "moderate" },
+        { "urls": ["/"], "eagerness": "moderate" }
+      ]
+    }
+  </script>
 </head>
 <body>
   <main class="work-page">
@@ -65,7 +77,7 @@
     <article class="work-sheet">
       <header class="modal-header work-header">
         <h1>luparoad.com — Case Study</h1>
-        <a class="work-back" href="/#projects">← back</a>
+        <a class="work-back" href="/#projects" aria-label="Back to all work"><span aria-hidden="true">←</span> back</a>
       </header>
 
       <div class="modal-body case-study-body">
@@ -76,10 +88,10 @@
             <li>Branding</li>
           </ul>
 
-          <h3 class="cs-heading">The question</h3>
+          <h2 class="cs-heading">The question</h2>
           <p>A Lisbon optical clinic had a website that undersold the business — dated, hard to navigate, and impossible for the owner to update. How do you rebuild trust online for a business whose whole trade is precision?</p>
 
-          <h3 class="cs-heading">What I built</h3>
+          <h2 class="cs-heading">What I built</h2>
           <p>A full WordPress rebrand: new visual identity applied to a restructured site, designed so the owner can maintain it without calling a developer.</p>
           <ul class="cs-list">
             <li>Theme customisation aligned with the new brand</li>
@@ -89,11 +101,11 @@
             <li>Handover so the client edits content independently</li>
           </ul>
 
-          <h3 class="cs-heading">Technical decisions</h3>
+          <h2 class="cs-heading">Technical decisions</h2>
           <p><strong>WordPress, on purpose</strong> — the client needs to edit content themselves. The right stack is the one the business can maintain after you leave.</p>
           <p><strong>Fewer plugins, fewer problems</strong> — every plugin is a future update, a security surface, and a support call. The build stayed lean.</p>
 
-          <h3 class="cs-heading">What I learned</h3>
+          <h2 class="cs-heading">What I learned</h2>
           <p>Client work is a different discipline: listening before building, designing within the client's capacity, and writing handover docs as carefully as code. The best compliment was silence — the site just works.</p>
 
           <div class="cs-footer-links">
@@ -112,9 +124,20 @@
     </nav>
   </main>
 
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand"><a href="/">bylx.dev</a></p>
+      <ul class="footer-links" aria-label="Social links">
+        <li><a href="https://instagram.com/bylx.dev" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li><a href="https://github.com/alinelx" target="_blank" rel="me noopener noreferrer">GitHub</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Aline Lopes Xavier · Built with vanilla HTML, CSS &amp; JS.</p>
+    </div>
+  </footer>
+
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="/js/work.js?v=f8ff742b"></script>
+  <script type="module" src="/js/work.js?v=f741f055"></script>
 </body>
 </html>

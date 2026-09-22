@@ -30,10 +30,9 @@ const ROOT = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "
 const CHECK = process.argv.includes("--check");
 const ORIGIN = "https://bylx.dev";
 
-/* Normalised on the way in, because the searches below are for literal "\n".
-   `.gitattributes` says `* text=auto` and this machine checks out CRLF, so on
-   the machine that actually deploys every one of those searches missed and the
-   build threw "has the modal markup changed?" over markup nobody had touched. */
+/* Normalised to LF before anything is matched: .gitattributes normalises on
+   commit, so a Windows working copy has CRLF on disk and every multi-line
+   marker below ("        </div>\n      </section>") would miss. */
 const html = readFileSync(join(ROOT, "index.html"), "utf8").replace(/\r\n/g, "\n");
 
 /* The same stamp index.html carries, so a work page never loads a stale
@@ -57,6 +56,12 @@ for (const [, key, slug, title, description] of html.matchAll(MODAL)) {
     .slice(bodyStart + '<div class="modal-body case-study-body">'.length, bodyEnd)
     /* The permalink points at the page you are already on. */
     .replace(/\s*<p class="cs-permalink">[\s\S]*?<\/p>\n/, "\n")
+    /* In the dialog the case-study title is an <h2>, so the section headings
+       are <h3> and the outline is right. On the page the title becomes the
+       <h1>, which would leave h1 → h3 — a skipped level, and a broken outline
+       for anyone navigating by headings. The class carries the styling, so
+       demoting the tag changes nothing visually. */
+    .replace(/<h3 class="cs-heading">([\s\S]*?)<\/h3>/g, '<h2 class="cs-heading">$1</h2>')
     .trimEnd();
 
   pages.push({ key, slug, title, description, heading: headingMatch[1].trim(), body });
@@ -127,6 +132,18 @@ function render(page, all) {
     rel="stylesheet"
   />
   <link rel="stylesheet" href="/styles.css?v=${stamp}" />
+
+  <!-- Hovering a case-study link starts fetching it. "moderate" waits for the
+       hover rather than firing on load: six pages, no idea which one the
+       reader wants, and prefetch (not prerender) keeps it cheap. -->
+  <script type="speculationrules">
+    {
+      "prefetch": [
+        { "where": { "href_matches": "/work/*" }, "eagerness": "moderate" },
+        { "urls": ["/"], "eagerness": "moderate" }
+      ]
+    }
+  </script>
 </head>
 <body>
   <main class="work-page">
@@ -137,7 +154,7 @@ function render(page, all) {
     <article class="work-sheet">
       <header class="modal-header work-header">
         <h1>${page.heading}</h1>
-        <a class="work-back" href="/#projects">← back</a>
+        <a class="work-back" href="/#projects" aria-label="Back to all work"><span aria-hidden="true">←</span> back</a>
       </header>
 
       <div class="modal-body case-study-body">
@@ -150,6 +167,17 @@ ${page.body}
 ${others.map((other) => `      <a href="/work/${other.slug}/">${esc(other.heading.split(" — ")[0])}</a>`).join("\n")}
     </nav>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand"><a href="/">bylx.dev</a></p>
+      <ul class="footer-links" aria-label="Social links">
+        <li><a href="https://instagram.com/bylx.dev" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li><a href="https://github.com/alinelx" target="_blank" rel="me noopener noreferrer">GitHub</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Aline Lopes Xavier · Built with vanilla HTML, CSS &amp; JS.</p>
+    </div>
+  </footer>
 
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
@@ -194,14 +222,10 @@ const outputs = [
   { path: "sitemap.xml", text: sitemap, compare: undated },
 ];
 
-/* Same reason: these files are written with LF and checked out with CRLF, so
-   a byte comparison calls every one of them stale on a fresh clone. */
-const eol = (text) => text.replace(/\r\n/g, "\n");
-
 for (const { path, text, compare = (t) => t } of outputs) {
   const full = join(ROOT, path);
-  const before = existsSync(full) ? readFileSync(full, "utf8") : "";
-  if (compare(eol(before)) === compare(eol(text))) continue;
+  const before = existsSync(full) ? readFileSync(full, "utf8").replace(/\r\n/g, "\n") : "";
+  if (compare(before) === compare(text)) continue;
 
   stale = true;
   if (!CHECK) {

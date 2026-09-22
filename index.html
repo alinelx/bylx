@@ -109,6 +109,17 @@
       ]
     }
   </script>
+  <!-- The case studies are static pages: hovering a permalink is enough of a
+       signal to start fetching one. Prefetch, not prerender — six equally
+       likely pages, and a prerender would run each one's JS for nothing. -->
+  <script type="speculationrules">
+    {
+      "prefetch": [
+        { "where": { "href_matches": "/work/*" }, "eagerness": "moderate" }
+      ]
+    }
+  </script>
+
   <link rel="icon" href="assets/logo/bylx_logo_semdev.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -118,7 +129,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=f8ff742b" />
+  <link rel="stylesheet" href="styles.css?v=f741f055" />
 </head>
 
 <body>
@@ -981,6 +992,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=f8ff742b"></script>
+  <script type="module" src="script.js?v=f741f055"></script>
 </body>
 </html>

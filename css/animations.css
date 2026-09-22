@@ -91,3 +91,38 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--bylx-pink);
 }
+
+/* ── Cross-document view transitions ─────────────────────────────────────────
+   Since the case studies became real pages (/work/<slug>/), moving between
+   "/" and a case study is a full navigation. Left to itself the browser
+   flashes white between two dark pages; two lines make it a fade instead.
+
+   The default fade is a smooth tween, which this project does not do — so the
+   easing is stepped, like every other motion here. It is navigation feedback,
+   not a control asking to be clicked, so it stays on the right side of the
+   ambient-vs-attention-seeking rule in CLAUDE.md.
+
+   Progressive enhancement: Firefox does not support cross-document
+   transitions and simply navigates instantly, which is also fine. Reduced
+   motion never opts in at all. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root) {
+    animation: 180ms steps(4, end) both vt-fade-out;
+  }
+
+  ::view-transition-new(root) {
+    animation: 180ms steps(4, end) both vt-fade-in;
+  }
+
+  @keyframes vt-fade-out {
+    to { opacity: 0; }
+  }
+
+  @keyframes vt-fade-in {
+    from { opacity: 0; }
+  }
+}

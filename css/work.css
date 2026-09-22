@@ -19,13 +19,21 @@
    .case-study-body from sections.css: same paper, same chips, same headings.
    Only the frame is new, because a page is not positioned like a dialog. */
 
-/* base.css hides the native cursor for the whole document and the pixel one
-   is drawn by JS. Work pages load js/work.js, so the pixel cursor is there —
-   but if it ever fails to start, a page with no cursor at all is unusable.
-   Coarse pointers never had one to hide. */
+/* base.css hides the native cursor for the whole document, because the pixel
+   one is drawn by JS. A work page that fails to run js/work.js would then have
+   no cursor at all — so here the native cursor is the default and the pixel
+   one is opt-in: js/work.js adds .has-pixel-cursor once it has actually
+   started. Two classes beat one, so the opt-in wins the !important tie. */
+.is-work-page,
+.is-work-page * { cursor: auto !important; }
+
+.is-work-page.has-pixel-cursor,
+.is-work-page.has-pixel-cursor * { cursor: none !important; }
+
+/* Touch has no cursor to draw. */
 @media (pointer: coarse) {
-  .is-work-page,
-  .is-work-page * { cursor: auto !important; }
+  .is-work-page.has-pixel-cursor,
+  .is-work-page.has-pixel-cursor * { cursor: auto !important; }
 }
 
 .work-page {
@@ -133,3 +141,14 @@
 }
 
 .cs-permalink a { color: var(--purple); }
+
+/* The generated pages reuse the site footer, where the wordmark is plain text
+   on "/" and a link home here. Inherit, or it renders as a default link and
+   the footer stops matching the one on the homepage. */
+.site-footer .footer-brand a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer .footer-brand a:hover,
+.site-footer .footer-brand a:focus-visible { color: var(--cyan); }

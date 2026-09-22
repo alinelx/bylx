@@ -61,7 +61,12 @@ export function initDeeplink() {
     const modal = event.target;
     if (syncing || !modal.dataset?.workSlug) return;
 
-    history.pushState({ bylxWork: modal.dataset.workSlug }, "", pathOf(modal.dataset.workSlug));
+    const path = pathOf(modal.dataset.workSlug);
+    /* Re-opening the modal that is already the current URL would stack a
+       second identical entry, and Back would then appear to do nothing. */
+    if (location.pathname !== path) {
+      history.pushState({ bylxWork: modal.dataset.workSlug }, "", path);
+    }
     document.title = titleOf(modal);
   });
 
@@ -96,7 +101,9 @@ export function initDeeplink() {
      onto "/" — and it costs one lookup to be right in that case too. */
   const initial = slugFromPath();
   if (initial && bySlug.has(initial)) {
-    history.replaceState({ bylxWork: initial }, "", pathOf(initial));
+    /* No bylxWork marker on purpose: this entry was the visitor's arrival, not
+       something opening a dialog pushed. Marking it would make the close
+       handler call history.back() and walk them off the site. */
     openBySlug(initial);
     document.title = titleOf(bySlug.get(initial));
   }

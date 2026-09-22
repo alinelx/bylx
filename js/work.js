@@ -12,7 +12,7 @@
    owes the visitor is the cursor, because base.css hides the native one for
    the whole document. Importing the real module keeps one implementation. */
 
-import { initCursor, initSakuraTrail } from "./cursor.js?v=f8ff742b";
+import { initCursor, initSakuraTrail } from "./cursor.js?v=f741f055";
 
 function start(name, init) {
   try {
@@ -24,3 +24,9 @@ function start(name, init) {
 
 start("cursor", initCursor);
 start("sakura", initSakuraTrail);
+
+/* Only now is there something drawn to replace the native cursor with. If
+   either import above had thrown, the page keeps the system cursor. */
+if (document.querySelector(".cursor")) {
+  document.documentElement.classList.add("has-pixel-cursor");
+}

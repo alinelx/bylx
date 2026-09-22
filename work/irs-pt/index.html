@@ -54,7 +54,19 @@
     href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="/styles.css?v=f8ff742b" />
+  <link rel="stylesheet" href="/styles.css?v=f741f055" />
+
+  <!-- Hovering a case-study link starts fetching it. "moderate" waits for the
+       hover rather than firing on load: six pages, no idea which one the
+       reader wants, and prefetch (not prerender) keeps it cheap. -->
+  <script type="speculationrules">
+    {
+      "prefetch": [
+        { "where": { "href_matches": "/work/*" }, "eagerness": "moderate" },
+        { "urls": ["/"], "eagerness": "moderate" }
+      ]
+    }
+  </script>
 </head>
 <body>
   <main class="work-page">
@@ -65,7 +77,7 @@
     <article class="work-sheet">
       <header class="modal-header work-header">
         <h1>irs-pt — Case Study</h1>
-        <a class="work-back" href="/#projects">← back</a>
+        <a class="work-back" href="/#projects" aria-label="Back to all work"><span aria-hidden="true">←</span> back</a>
       </header>
 
       <div class="modal-body case-study-body">
@@ -77,10 +89,10 @@
             <li>MIT</li>
           </ul>
 
-          <h3 class="cs-heading">The question</h3>
+          <h2 class="cs-heading">The question</h2>
           <p>Every freelancer in Portugal asks the same thing in March: is it worth assigning this invoice to my activity? I could not find an answer that started with the arithmetic instead of the portal. Under the <em>regime simplificado</em> the answer is close to binary — expenses only matter once 15% of gross service income passes the automatic deduction — and almost nobody is told that before they start classifying receipts one by one.</p>
 
-          <h3 class="cs-heading">What I built</h3>
+          <h2 class="cs-heading">What I built</h2>
           <p>An open-source assistant packaged as an agent skill: it runs inside Claude and any agent that reads the agentskills format, asks two or three questions, and does the threshold maths before it mentions invoices at all. It explains, calculates and recommends — it never submits anything to the Portal das Finanças.</p>
           <ul class="cs-list">
             <li>Works out the year's threshold first and says, in one sentence, whether invoices change anything</li>
@@ -90,13 +102,13 @@
             <li>Ends with one next action and the year's deadlines</li>
           </ul>
 
-          <h3 class="cs-heading">Technical decisions</h3>
+          <h2 class="cs-heading">Technical decisions</h2>
           <p><strong>The maths before the portal</strong> — the whole point is the question nobody answers first. Getting the order right is the product; the parser is the easy half.</p>
           <p><strong>Python with no dependencies</strong> — <code>parse_efatura.py</code> is stdlib only and reads the CSV on your own machine. Tax data does not leave the computer, and there is nothing to install or trust.</p>
           <p><strong>Volatile values in one file</strong> — IAS, thresholds and deadlines live in <code>references/valores-anuais.md</code>, apart from the structural rules that do not change every year. Updating for a new tax year is one file, not a hunt.</p>
           <p><strong>The human clicks</strong> — it is not tax advice, and it does not act. The line between "explains" and "submits" is the safety property; it is written into the skill's inviolable rules, not just the README.</p>
 
-          <h3 class="cs-heading">What I learned</h3>
+          <h2 class="cs-heading">What I learned</h2>
           <p>Writing software for a rule someone else wrote means reading the primary source: the CIRS articles, not the blog posts about them. And shipping something in public with "tested by one person — her own return" on the label is a different kind of honesty than a portfolio demo, because strangers rely on it.</p>
 
           <div class="cs-footer-links">
@@ -115,9 +127,20 @@
     </nav>
   </main>
 
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand"><a href="/">bylx.dev</a></p>
+      <ul class="footer-links" aria-label="Social links">
+        <li><a href="https://instagram.com/bylx.dev" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li><a href="https://github.com/alinelx" target="_blank" rel="me noopener noreferrer">GitHub</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Aline Lopes Xavier · Built with vanilla HTML, CSS &amp; JS.</p>
+    </div>
+  </footer>
+
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="/js/work.js?v=f8ff742b"></script>
+  <script type="module" src="/js/work.js?v=f741f055"></script>
 </body>
 </html>
