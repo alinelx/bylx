@@ -275,12 +275,15 @@
 
 /* Off the kit's 31% / 13%: there the keyboard's box covered the player's right
    third — the end cap vanished under the keys and a third of the hotspot
-   clicked the keyboard instead. Here it ends before the board's drawn edge. */
+   clicked the keyboard instead. Here it ends before the board's drawn edge.
+   Width is 7.5%, not 10%: measured against the keyboard as a 36cm ruler, 10%
+   drew a 12.5cm player — remote-control sized, 1.4× the real thing, and it
+   sits further back than the keyboard, where it should read smaller still. */
 .mp3player {
   z-index: 7;
-  left: 26%;
-  top: 76.5%;
-  width: 10%;
+  left: 27%;
+  top: 78%;
+  width: 7.5%;
   height: auto;
   --float-x: 2px;
   --float-y: 6px;

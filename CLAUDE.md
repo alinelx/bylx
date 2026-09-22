@@ -1,6 +1,6 @@
 # CLAUDE.md — bylx.dev
 
-Pixel-art portfolio for Aline Lopes Xavier (bylx.dev). Vanilla HTML/CSS/JS by design — this is the project's positioning ("vanilla code, no shortcuts"). **Never suggest migrating to React/Next**; React/TS proof lives in the dark28 repo instead.
+Pixel-art portfolio for Aline Lopes Xavier (bylx.dev). Vanilla HTML/CSS/JS by design — this is the project's positioning ("pixel art, vanilla code"). **Never suggest migrating to React/Next**; React/TS proof lives in the dark28 repo instead.
 
 ## Architecture
 
@@ -20,6 +20,7 @@ Pixel-art portfolio for Aline Lopes Xavier (bylx.dev). Vanilla HTML/CSS/JS by de
 - **`--base-transform` must never be `none`.** Layers compose `var(--base-transform) translate3d(…)`, and `none translate3d(…)` is a parse error that silently drops the whole declaration — which once left most of the scene with no transform, killing both float and parallax. Use `translateZ(0)` for "no base transform". `tests/motion.spec.js` guards this
 - No blanket `will-change` on scene layers: it pinned 28 compositor layers permanently for animations the browser promotes by itself. Only motion starting from a standing start (parallax, mouse-flee) sets it
 - Hero scene layers are positioned by a 64×64 grid system translated to CSS percentages — follow existing coordinate patterns exactly, no creative deviation
+- **Props are sized against the real objects.** The keyboard is the ruler (36cm TKL → 12.76 px/cm at any width, since everything is a % of the artboard) and desk depth is drawn at 0.70. Measured 2026-09-22: monitor 0.95×, CRT screen 1.00× (a 15-inch tube), instax 0.94×, cocktail 0.88×, sushi 0.93×, phone 0.91×, mouse 0.83×, mp3 1.04×. The desk reads ~100cm — a small desk, and the props fill it exactly. Measure the *drawn* pixels, not the box, and the long axis, not the width, for anything drawn at an angle
 - **Scene coordinates come from the kit** (`bylx.dev - Standalone.html`), ported 2026-09. Sky, hills and landmark haze stay the site's own — see DESIGN.md. Two places deliberately beat the kit: the mp3 player sits at 26%/76.5%/10% (the kit's 31%/13% buries its right third under the keyboard's box, which ate a third of the hotspot) and the sushi at 12% (the kit's 15% crowds it). Before moving any prop, check what its *box* — not its art — now covers: transparent corners steal clicks
 - Parallax is **pointer-driven** (`js/parallax.js` writes `--move-x/--move-y`), not scroll-driven
 - `.layer` static transform consumes `--move-x/--move-y` even with `animation: none` — so JS motion features must check `prefersReducedMotion()` from `js/utils.js` (parallax and mouse-flee already do; keep it that way for new features)
@@ -43,11 +44,11 @@ Case studies follow the structure: The question → What I built → Technical d
 1. **Mobile/responsive pass** — done (2026-07): desk-focused crop; on `max-width: 900px` / portrait ≤ 1200px the hero keeps the center crop and recomposes the three hotspots onto the visible desk (`css/responsive.css`), touch targets grown under `(pointer: coarse)`. Pending: QA on real devices
 2. Gallery modal — done (2026-07): pixel-art image grid with captions, opened by the instax
 3. **Project cards** — done (2026-07): text-first, as the design system draws them. This entry used to read "konochan.pt, lupa.road, Workspace Automations use striped placeholder previews — need pixel art". The previews are gone entirely, so no pixel art is owed: the kit's card is a label, a name, a description and stack chips, and the name is what you scan for. `dark28-linepixel.png` and `bylx_logo_line_cyan.png` are now unused by the cards
-4. Review case-study copy for konochan.pt / lupa.road / Workspace Automations (drafted from project memory — verify facts). **`lupa.road` does not resolve** (NXDOMAIN on 8.8.8.8, 2026-09-22, while dark28.pt and konochan.pt answer 200) and the site links to it twice — the card's case study and its "Visit lupa.road" button
+4. Review case-study copy for konochan.pt / luparoad.com / Workspace Automations (drafted from project memory — verify facts). The lupa project lives at **luparoad.com** (200, verified 2026-09-22); the old `lupa.road` domain is NXDOMAIN and all four references were repointed
 5. **Do not delete `bylx/`** — a second *clone* of `alinelx/bylx` with its own `.git`. Its uncommitted edits were pushed from that machine on 2026-09-22 as commit "Sync", whose merge reverted ~1,700 lines of the July work; `e5c7910` put the site back and dropped the Sync content entirely (the commits stay in history). So that work is no longer only in `bylx/` — but check before deleting, and push from this machine only
 6. Volume buttons on the mp3 sprite — done (2026-09): the sprite draws no keys, so they are drawn in CSS as `::after` on `.mp3-volup`/`.mp3-voldown`, on the dark bezel directly under the printed "MP3 / FM" (sprite rows 91–96 of 128, centred on the lettering at x ≈ 57.8%). The hit box runs lower than the drawn key, and `(pointer: coarse)` grows it further. If real pixel art for them lands in `mp3_player.png`, delete those `::after` rules
 
-7. Hero copy contradicts the positioning: the panel reads "vanilla code, optional shortcuts through AI and tech debug" while CLAUDE.md, the meta description and DESIGN.md's own voice example all say "no shortcuts". Aline's call — flagged 2026-09-22, not changed
+7. Hero copy vs positioning — settled (2026-09-22): "no shortcuts" is deleted from the meta description and from this file's positioning line. The hero's own line ("vanilla code, optional shortcuts through AI and tech debug") stands, and it is now the only claim the site makes about shortcuts. Don't reintroduce "no shortcuts"
 
 ## Cache
 
