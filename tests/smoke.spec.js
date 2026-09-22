@@ -57,6 +57,17 @@ test("the page never scrolls horizontally", async ({ page }) => {
     () => document.documentElement.scrollWidth > window.innerWidth + 1
   );
   expect(overflows).toBe(false);
+
+  // ...and the layout viewport is the screen. A phone browser answers overflow
+  // by widening the layout viewport and shrinking the whole page to fit, which
+  // leaves scrollWidth == innerWidth and this test green while the page is
+  // quietly zoomed out — and anything position:fixed lands off-screen. Caught
+  // exactly that: 688px of layout on a 393px screen.
+  const { layout, visual } = await page.evaluate(() => ({
+    layout: window.innerWidth,
+    visual: Math.round(window.visualViewport?.width ?? window.innerWidth),
+  }));
+  expect(layout, "layout viewport must match the screen").toBeLessThanOrEqual(visual + 1);
 });
 
 test("instax hotspot opens the gallery — by clicking it, not by dispatching", async ({ page }) => {

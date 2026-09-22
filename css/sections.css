@@ -898,6 +898,9 @@
 }
 
 .about-text {
+  /* Item de grelha: sem isto herda min-width:auto e nunca encolhe abaixo do
+     conteúdo mais teimoso que tiver dentro. */
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
@@ -1160,6 +1163,12 @@
   align-items: stretch;
   max-width: 46rem;
   margin-top: 1.6rem;
+  /* min-width: 0 não é decoração. Sem isto a grelha oferece ao pai a sua
+     largura intrínseca (três faixas de 13.5rem ≈ 664px), o pai é um item de
+     grelha com min-width:auto, e num telemóvel de 393px o documento passava a
+     medir 688 — o browser encolhia a página inteira para caber, e o painel do
+     mp3, que é fixed, ia parar fora do ecrã visível. */
+  min-width: 0;
 }
 
 .about-cta,
@@ -1241,9 +1250,10 @@
   line-height: 1.6;
 }
 
-@media (max-width: 520px) {
-  .about-actions { gap: 0.5rem; }
-  .about-link { width: 100%; text-align: center; }
+@media (max-width: 720px) {
+  /* Uma coluna: a esta largura duas caixas lado a lado já não cabem sem
+     partir as palavras. */
+  .about-actions { grid-template-columns: 1fr; gap: 0.5rem; }
 }
 
 /* Badges verificados: cada um leva ao Credly, que é o que os torna
@@ -1269,6 +1279,32 @@
 }
 
 .about-badges--linked a:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* Uma credencial com prova pública liga-se a ela, como os badges */
+.about-badges li.is-linked {
+  padding: 0;
+  border-color: var(--cyan);
+}
+
+.about-badges li.is-linked a {
+  display: block;
+  padding: 5px 8px;
+  color: var(--cyan);
+  text-decoration: none;
+  transition: background 80ms steps(2, end);
+}
+
+.about-badges li.is-linked a:hover,
+.about-badges li.is-linked a:focus-visible {
+  color: var(--bg);
+  background: var(--cyan);
+  outline: none;
+}
+
+.about-badges li.is-linked a:focus-visible {
   outline: 3px solid var(--text);
   outline-offset: 2px;
 }
