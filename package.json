@@ -1,12 +1,13 @@
 {
   "name": "bylx",
   "version": "1.0.0",
-  "description": "Personal portfolio of Aline Xavier \u2014 a pixel-art diorama of a Y2K cyber-caf\u00e9 where Rio de Janeiro and Lisbon share a desk.",
+  "description": "Personal portfolio of Aline Xavier — a pixel-art diorama of a Y2K cyber-café where Rio de Janeiro and Lisbon share a desk.",
   "main": "script.js",
   "scripts": {
     "test": "playwright test",
     "serve": "serve . -l 4173",
     "og": "node scripts/make-og-image.mjs",
+    "cv": "node scripts/build-cv.mjs",
     "stamp": "node scripts/stamp-assets.mjs",
     "predeploy": "node scripts/stamp-assets.mjs --check"
   },

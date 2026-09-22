@@ -1,0 +1,79 @@
+/* Folha do CV impresso. Sóbria de propósito: os leitores automáticos de
+   candidaturas lêem texto, não desenho — cor, colunas e caixas são o que
+   os faz enganar-se. O sítio é que faz o espectáculo. */
+@page {
+  size: A4;
+  margin: 14mm 15mm 13mm;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  /* Arial no Windows, Helvetica no Mac: uma grotesca que toda a gente tem,
+     para o PDF sair igual em qualquer máquina que o volte a gerar. */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 9.4pt;
+  line-height: 1.38;
+  color: #111;
+}
+
+body { margin: 0; }
+
+h1 {
+  margin: 0;
+  font-size: 19pt;
+  font-weight: 700;
+  letter-spacing: -0.2pt;
+}
+
+.tagline {
+  margin: 2.5pt 0 0;
+  font-size: 10.2pt;
+  color: #333;
+}
+
+.meta {
+  margin: 4pt 0 0;
+  font-size: 8.4pt;
+  color: #555;
+}
+
+h2 {
+  margin: 13pt 0 5pt;
+  padding-bottom: 2.5pt;
+  border-bottom: 0.6pt solid #222;
+  font-size: 9.6pt;
+  font-weight: 600;
+  letter-spacing: 0.9pt;
+  text-transform: uppercase;
+  /* Um título no fundo da página com o corpo na seguinte é o defeito
+     clássico de um CV de duas páginas. */
+  break-after: avoid;
+}
+
+p { margin: 0 0 4pt; }
+
+ul {
+  margin: 0 0 4pt;
+  padding-left: 12pt;
+}
+
+li {
+  margin-bottom: 2.5pt;
+  /* Uma linha órfã de um ponto é pior que o ponto inteiro a passar. */
+  break-inside: avoid;
+}
+
+/* As competências são pares rótulo/valor, não frases: a coluna fixa deixa
+   o olho descer pelos rótulos sem ler o resto. */
+.skills { display: grid; grid-template-columns: 27mm 1fr; gap: 2.5pt 5pt; }
+.skills dt { font-weight: 700; }
+.skills dd { margin: 0; }
+
+.entry { break-inside: avoid-page; }
+.entry + .entry { margin-top: 7pt; }
+
+.entry-title { font-weight: 700; }
+.entry-meta { color: #555; font-weight: 400; }
+
+.edu > li { margin-bottom: 4pt; }

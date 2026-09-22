@@ -11,6 +11,7 @@ Pixel-art portfolio for Aline Lopes Xavier (bylx.dev). Vanilla HTML/CSS/JS by de
 - `assets/mp3/` — the 17 lo-fi/citypop tracks the player streams; `js/audio.js` lists them in `TRACKS` and every file there is used. **Don't delete them** — they are the mp3 player
 - `bylx.dev - Standalone.html` — the design-system UI kit exported as one self-contained React/Babel bundle. **Spec, never shipped code**: the site stays vanilla. It is the reference for scene coordinates and motion; open it side by side when porting visuals
 - Design tokens live in `css/tokens.css` (`:root`); brand rules in `DESIGN.md`
+- `assets/cv/*.pdf` — the two CVs the About section links, **generated**, never hand-edited: the source is `scripts/cv/*.html` + `cv.css`, and `npm run cv` prints them through Chromium. They are public files on a public domain, so they carry `geral@bylx.dev` and nothing private — no phone number, no personal inbox. The first pair, exported from elsewhere, shipped with both, and `tests/smoke.spec.js` now guards it. Reading a PDF back is possible but painful (the fonts embed subsetted with their own encoding, so plain-text extractors return mojibake — use pdf.js in a browser); editing the HTML is the intended path
 
 ## Hard rules
 

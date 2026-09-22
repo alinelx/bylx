@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
 
 /* Smoke tests for bylx.dev.
  *
@@ -199,4 +200,27 @@ test("the contact form still posts without JavaScript", async ({ browser }) => {
   await expect(form).toHaveAttribute("action", /contact\.php/);
   await expect(form).toHaveAttribute("method", /post/i);
   await context.close();
+});
+
+test("the published CVs carry no personal contact details", async ({ page }) => {
+  // The About section links two PDFs, which makes them public files on a
+  // public domain. They must reach a reader the same way the site does —
+  // through geral@bylx.dev — and never through a phone number or a private
+  // inbox. The first pair shipped with both.
+  const sources = ["scripts/cv/frontend.html", "scripts/cv/design.html"];
+
+  for (const source of sources) {
+    const html = readFileSync(new URL(`../${source}`, import.meta.url), "utf8");
+    expect(html, `${source} must not print a phone number`).not.toMatch(/\+351|\d{3} \d{3} \d{3}/);
+    expect(html, `${source} must not print a private inbox`).not.toMatch(/yahoo|gmail|hotmail|outlook/i);
+    expect(html, `${source} must offer the public address`).toContain("geral@bylx.dev");
+  }
+
+  // And the links themselves still resolve — a CV button pointing at a 404 is
+  // the same failure as no CV at all.
+  await page.goto("/");
+  for (const href of await page.locator('a[href$=".pdf"]').evaluateAll((as) => as.map((a) => a.getAttribute("href")))) {
+    const res = await page.request.head(href);
+    expect(res.status(), href).toBe(200);
+  }
 });
