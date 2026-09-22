@@ -427,12 +427,39 @@
 
 .fullscreen-mode[hidden] { display: none; }
 
+/* A prancheta recriada dentro da moldura do cinema: js/desktop.js calcula as
+   quatro percentagens para que só o rectângulo do ecrã caiba na moldura, e
+   empresta-lhe os itens reais do ecrã. `pointer-events: none` aqui deixa o
+   clique no vazio fechar o cinema; os controlos (ícones, START, o X do Paint)
+   já repõem `auto` por conta própria. */
+.fullscreen-artboard {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Scroll bloqueado enquanto o cinema está aberto */
+.cinema-open,
+.cinema-open body {
+  overflow: hidden;
+}
+
+/* O menu e os balões pertencem ao ecrã, e o ecrã está agora por cima de tudo */
+.cinema-open .start-menu,
+.cinema-open .tech-pop {
+  z-index: 800;
+}
+
+.fullscreen-artboard .screen-item,
+.fullscreen-artboard .layer {
+  animation: none;
+}
+
 .fullscreen-screen {
   position: relative;
   width: min(96vw, calc(96vh * 4 / 3));
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: url("../assets/hero/win_background.png") center / cover no-repeat;
+  background: var(--bg);
   image-rendering: pixelated;
   border: 6px solid var(--bg);
   box-shadow: 0 0 0 14px var(--bylx-bg-ink), 0 0 80px rgba(89, 243, 255, 0.18);

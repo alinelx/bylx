@@ -8,6 +8,8 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx desktop — monitor power, pixel-window close, start menu, fullscreen */
 
+import { screenRect, clampToRect } from "./utils.js?v=9583d300";
+
 export function initDesktop() {
   const scene = document.getElementById("hero-scene");
 
@@ -62,14 +64,38 @@ export function initDesktop() {
   function positionMenu() {
     if (menu.hidden) return;
 
-    if (deskCrop.matches) {
+    const screen = screenRect();
+
+    /* Sem ecrã visível (recorte de telemóvel), o CSS centra-o e não há
+       perímetro a respeitar. */
+    if (deskCrop.matches || !screen) {
       menu.style.left = "";
+      menu.style.top = "";
+      menu.style.width = "";
+      menu.style.maxHeight = "";
       return;
     }
 
-    const left  = startBtn.getBoundingClientRect().left;
-    const limit = window.innerWidth - menu.offsetWidth - 8;
-    menu.style.left = `${Math.max(8, Math.min(left, limit))}px`;
+    /* Uma janela do sistema não sai do ecrã: largura, altura e as duas
+       coordenadas são limitadas ao rectângulo do CRT, e o menu abre para cima
+       a partir da barra de tarefas, como o Windows que imita. */
+    const pad = Math.max(2, screen.width * 0.02);
+    menu.style.width = `${Math.min(280, screen.width - pad * 2)}px`;
+    menu.style.maxHeight = `${screen.height - pad * 2}px`;
+
+    const bar = document.querySelector(".toolbar-strip")?.getBoundingClientRect();
+    const bottom = bar ? bar.top : screen.bottom;
+    const box = menu.getBoundingClientRect();
+    const wanted = {
+      left: startBtn.getBoundingClientRect().left,
+      top: bottom - box.height - pad,
+      width: box.width,
+      height: box.height,
+    };
+
+    const { left, top } = clampToRect(wanted, screen, pad);
+    menu.style.left = `${left}px`;
+    menu.style.top = `${top}px`;
   }
 
   function openMenu() {
@@ -137,10 +163,60 @@ export function initDesktop() {
   let hintTimer;
   let lastFocus = null;
 
+  /* O cinema mode mostra o ECRÃ do monitor — wallpaper, ícones, a janela e a
+     barra — e não uma fotografia do wallpaper.
+
+     Os itens do ecrã estão posicionados em % da prancheta, por isso basta
+     recriar a prancheta dentro da moldura do cinema, à escala em que o
+     rectângulo do ecrã (.win-bg: 38%/42%, 24%x31%) a preenche por completo.
+     A matemática é a mesma nas duas direcções: largura = 100%/0.24 e o
+     desvio = -38%/0.24. */
+  const SCREEN = { left: 38, top: 42, width: 24, height: 31 };
+  const CINEMA_ITEMS = [".win-bg", ".desktop-icons", ".pixel-window", ".paint", ".toolbar-strip"];
+
+  /* Os itens do ecrã são EMPRESTADOS ao cinema, não copiados: assim os ícones
+     abrem os balões, o X fecha o Paint e o START abre o menu, porque são os
+     mesmos nós com os mesmos listeners. Guardamos onde cada um estava para os
+     devolver exactamente à mesma posição na ordem de pintura. */
+  let borrowed = [];
+
+  function buildCinemaBoard(stage) {
+    const board = document.createElement("div");
+    board.className = "fullscreen-artboard";
+    board.style.width = `${(100 / SCREEN.width) * 100}%`;
+    board.style.height = `${(100 / SCREEN.height) * 100}%`;
+    board.style.left = `${(-SCREEN.left / SCREEN.width) * 100}%`;
+    board.style.top = `${(-SCREEN.top / SCREEN.height) * 100}%`;
+
+    /* Um clique no fundo fecha o cinema; um clique no ecrã é do ecrã. */
+    board.addEventListener("click", (event) => event.stopPropagation());
+
+    for (const sel of CINEMA_ITEMS) {
+      const node = document.querySelector(sel);
+      if (!node) continue;
+
+      borrowed.push({ node, parent: node.parentNode, next: node.nextSibling });
+      board.appendChild(node);
+    }
+
+    stage.prepend(board);
+  }
+
+  function returnScreenItems() {
+    for (const { node, parent, next } of borrowed) parent.insertBefore(node, next);
+    borrowed = [];
+  }
+
   function openFullscreen(opener) {
     if (!fsMode) return;
     const from = opener ?? document.activeElement;
     lastFocus = from && from !== document.body ? from : startBtn;
+
+    const stage = fsMode.querySelector(".fullscreen-screen");
+    if (stage) buildCinemaBoard(stage);
+
+    /* A página não rola por trás do cinema, como em qualquer modal */
+    document.documentElement.classList.add("cinema-open");
     fsMode.hidden = false;
     if (fsHint) fsHint.hidden = false;
     fsMode.focus();
@@ -152,6 +228,10 @@ export function initDesktop() {
   function closeFullscreen() {
     if (!fsMode || fsMode.hidden) return;
     fsMode.hidden = true;
+    returnScreenItems();
+    fsMode.querySelector(".fullscreen-artboard")?.remove();
+    document.documentElement.classList.remove("cinema-open");
+    closeMenu();
     clearTimeout(hintTimer);
     if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
   }

@@ -8,6 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx interactions */
 
+import { screenRect } from "./utils.js?v=9583d300";
 
 export function initMouseFlee() {
   const mouseSprite = document.querySelector(".mouse");
@@ -162,14 +163,26 @@ export function initTechPopovers() {
     pop.append(close, name, sub);
     document.body.appendChild(pop);
 
-    const rect    = button.getBoundingClientRect();
     const popRect = pop.getBoundingClientRect();
-    let left = rect.right + 6;
-    if (left + popRect.width > window.innerWidth - 8) {
-      left = Math.max(8, rect.left - popRect.width - 6);
-    }
-    pop.style.left = `${left}px`;
-    pop.style.top  = `${Math.max(popRect.height + 8, rect.top - 6)}px`;
+    const screen = screenRect();
+
+    /* Centrado no ecrã do CRT, como uma caixa de diálogo do sistema — e não
+       colado ao ícone. Encostado ao ícone tinha de ser limitado dos quatro
+       lados e acabava sempre num canto; ao centro cabe sempre e lê-se como
+       uma janela que o ecrã abriu. Sem ecrã visível (recorte de telemóvel)
+       centra no viewport, que é o ecrã que resta. */
+    const bounds = screen ?? {
+      left: 0,
+      top: 0,
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+
+    const left = bounds.left + (bounds.width - popRect.width) / 2;
+    const top = bounds.top + (bounds.height - popRect.height) / 2;
+
+    pop.style.left = `${Math.max(4, left)}px`;
+    pop.style.top = `${Math.max(4, top)}px`;
 
     close.addEventListener("click", (event) => {
       event.stopPropagation();

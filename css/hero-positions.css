@@ -391,7 +391,6 @@
   background: var(--bg-paper);
   border: var(--stroke-2) solid var(--border-ink);
   box-shadow: var(--shadow-chunk-sm);
-  transform: translateY(-100%);
 }
 
 .tech-pop-close {
