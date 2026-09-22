@@ -130,7 +130,10 @@
 .desktop-icons .icon-btn:nth-child(2n) .icon { animation-delay: -0.8s; }
 .desktop-icons .icon-btn:nth-child(3n) .icon { animation-delay: -1.4s; }
 
-.toolbar-fill { animation: toolbar-scan 3s steps(4, end) infinite; }
+/* The kit's taskbar flicker, kept: a CRT's chrome dimming a frame is the
+   monitor's own behaviour, not the funnel asking for a click. The kit's scan
+   is not kept — see css/hero-positions.css. */
+.toolbar { animation: toolbar-pulse 3.6s steps(2, end) infinite; }
 
 /* No float override here: the keys must ride the board exactly, and a
    separate --float-y/--float-delay slid them off it */
@@ -330,11 +333,6 @@
 @keyframes icon-bob {
   from { transform: translateY(0); }
   to   { transform: translateY(calc(var(--icon-lift) * -1)); }
-}
-
-@keyframes toolbar-scan {
-  from { object-position: left center; }
-  to   { object-position: right center; }
 }
 
 @keyframes artboard-breathe {

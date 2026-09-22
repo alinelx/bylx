@@ -12,7 +12,9 @@
   position: relative;
   width: 100%;
   height: 100svh;
-  min-height: 516px;
+  /* min(), not a flat 516px: on a 420px-tall landscape phone the flat floor
+     pushed the whole desk — keyboard, props, front edge — below the fold. */
+  min-height: min(516px, 100svh);
   overflow: hidden;
   isolation: isolate;
   background: var(--purple);
@@ -565,7 +567,17 @@
   height: 100%;
 }
 
-.toolbar-start { flex: 0 0 auto; }
+/* toolbar.png is the whole strip: a START key in its left ~19%, empty
+   lavender after it. Showing the entire sprite here made the button 174px of
+   mostly-empty strip and left the fill repeating the key's art. Crop to the
+   key, and the button's hit area becomes the thing it draws. */
+.toolbar-start {
+  flex: 0 0 auto;
+  width: auto;
+  aspect-ratio: 145 / 64;
+  object-fit: cover;
+  object-position: left center;
+}
 
 .start-btn {
   flex: 0 0 auto;
@@ -586,10 +598,18 @@
 
 .toolbar-fill {
   flex: 1 1 auto;
-  object-fit: cover;
-  object-position: right center;
-  animation: toolbar-scan 3s steps(4, end) infinite;
-  transform: scaleX(-1);
+  /* Drawn, not stretched. This was the sprite again with object-fit: cover
+     and transform: scaleX(-1), but the strip is wider than the sprite's
+     aspect, so cover showed the WHOLE image — the START key included, flipped
+     into a ghost "TЯATƧ" at the right end. The empty part of toolbar.png is
+     two flat bands (rows 32–35 #dccfff over rows 36–63 #9a86ce, the top half
+     transparent), so the fill paints them directly and cannot ghost. */
+  background: linear-gradient(
+    to bottom,
+    transparent 0 50%,
+    #dccfff 50% 56.25%,
+    #9a86ce 56.25% 100%
+  );
 }
 
 /* A sticker, not a decal: the kit's tilt and hard offset shadow are what sell
