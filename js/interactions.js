@@ -8,13 +8,19 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx interactions */
 
+import { prefersReducedMotion, isTouchDevice } from "./utils.js";
+
 export function initMouseFlee() {
   const mouseSprite = document.querySelector(".mouse");
-  const hero        = document.querySelector("#hero");
+  const hero = document.querySelector("#hero");
 
   if (!mouseSprite || !hero) return;
 
   let scheduled = false;
+  const reduced = prefersReducedMotion();
+  const touch = isTouchDevice();
+
+  if (reduced || touch) return;
 
   window.addEventListener("mousemove", (event) => {
     if (scheduled) return;
@@ -23,26 +29,26 @@ export function initMouseFlee() {
     requestAnimationFrame(() => {
       scheduled = false;
 
-      const rect   = mouseSprite.getBoundingClientRect();
-      const cx     = rect.left + rect.width  / 2;
-      const cy     = rect.top  + rect.height / 2;
-      const dx     = cx - event.clientX;
-      const dy     = cy - event.clientY;
-      const dist   = Math.hypot(dx, dy);
-      const radius    = 220;
+      const rect = mouseSprite.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = cx - event.clientX;
+      const dy = cy - event.clientY;
+      const dist = Math.hypot(dx, dy);
+      const radius = 220;
       const maxOffset = 45;
 
       if (dist < radius && dist > 0.5) {
-        const t  = (radius - dist) / radius;
+        const t = (radius - dist) / radius;
         const ux = dx / dist;
         const uy = dy / dist;
 
-        mouseSprite.style.setProperty("--flee-x",   `${(ux * maxOffset * t).toFixed(1)}px`);
-        mouseSprite.style.setProperty("--flee-y",   `${(uy * maxOffset * t * 0.5).toFixed(1)}px`);
+        mouseSprite.style.setProperty("--flee-x", `${(ux * maxOffset * t).toFixed(1)}px`);
+        mouseSprite.style.setProperty("--flee-y", `${(uy * maxOffset * t * 0.5).toFixed(1)}px`);
         mouseSprite.style.setProperty("--flee-rot", `${Math.max(-12, Math.min(12, ux * t * 14)).toFixed(1)}deg`);
       } else {
-        mouseSprite.style.setProperty("--flee-x",   "0px");
-        mouseSprite.style.setProperty("--flee-y",   "0px");
+        mouseSprite.style.setProperty("--flee-x", "0px");
+        mouseSprite.style.setProperty("--flee-y", "0px");
         mouseSprite.style.setProperty("--flee-rot", "0deg");
       }
     });
@@ -58,6 +64,11 @@ export function initKeyboardRgb() {
   let glowTimeout;
 
   window.addEventListener("keydown", (event) => {
+    const target = event.target;
+    const isTypingTarget = target instanceof HTMLElement && ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName);
+
+    if (isTypingTarget) return;
+
     const code = event.keyCode || event.which || 0;
     keyboardKeys.style.setProperty("--rgb-tint", palette[code % palette.length]);
     keyboardKeys.classList.add("is-pressed");
@@ -68,29 +79,29 @@ export function initKeyboardRgb() {
 }
 
 const TECH_INFO = {
-  html:  { name: "HTML",       sub: "Markup, semantics first." },
-  css:   { name: "CSS",        sub: "Pixel-perfect layout & motion." },
-  js:    { name: "JavaScript", sub: "Interactivity & DOM." },
-  ts:    { name: "TypeScript", sub: "Types when the stakes are real." },
-  react: { name: "React",      sub: "Component-driven UI." },
-  node:  { name: "Node.js",    sub: "Server-side & tooling." },
-  figma: { name: "Figma",      sub: "UX & design specs." },
-  wp:    { name: "WordPress",  sub: "CMS for content sites." },
+  html: { name: "HTML", sub: "Markup, semantics first." },
+  css: { name: "CSS", sub: "Pixel-perfect layout & motion." },
+  js: { name: "JavaScript", sub: "Interactivity & DOM." },
+  ts: { name: "TypeScript", sub: "Types when the stakes are real." },
+  react: { name: "React", sub: "Component-driven UI." },
+  node: { name: "Node.js", sub: "Server-side & tooling." },
+  figma: { name: "Figma", sub: "UX & design specs." },
+  wp: { name: "WordPress", sub: "CMS for content sites." },
 };
 
 export function initTechPopovers() {
-  let techPop    = null;
+  let techPop = null;
   let techPopKey = null;
 
   function closeTechPop() {
     if (!techPop) return;
     techPop.remove();
-    techPop    = null;
+    techPop = null;
     techPopKey = null;
   }
 
   function openTechPop(button) {
-    const key  = button.dataset.tech;
+    const key = button.dataset.tech;
     const info = TECH_INFO[key];
     if (!info) return;
 
@@ -118,21 +129,22 @@ export function initTechPopovers() {
     pop.append(close, name, sub);
     document.body.appendChild(pop);
 
-    const rect    = button.getBoundingClientRect();
+    const rect = button.getBoundingClientRect();
     const popRect = pop.getBoundingClientRect();
-    let left = rect.right + 6;
-    if (left + popRect.width > window.innerWidth - 8) {
-      left = Math.max(8, rect.left - popRect.width - 6);
-    }
+    const desiredLeft = rect.left + rect.width / 2 - popRect.width / 2;
+    const left = Math.min(Math.max(8, desiredLeft), window.innerWidth - popRect.width - 8);
+    const desiredTop = rect.top - popRect.height - 8;
+    const top = desiredTop >= 8 ? desiredTop : rect.bottom + 8;
+
     pop.style.left = `${left}px`;
-    pop.style.top  = `${Math.max(popRect.height + 8, rect.top - 6)}px`;
+    pop.style.top = `${top}px`;
 
     close.addEventListener("click", (event) => {
       event.stopPropagation();
       closeTechPop();
     });
 
-    techPop    = pop;
+    techPop = pop;
     techPopKey = key;
   }
 
@@ -158,4 +170,6 @@ export function initTechPopovers() {
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeTechPop();
   });
+
+  window.addEventListener("resize", closeTechPop);
 }

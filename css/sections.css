@@ -247,6 +247,11 @@
 
 .modal.is-open { display: block; }
 
+body.modal-open,
+html.modal-open {
+  overflow: hidden;
+}
+
 .modal-backdrop {
   position: absolute;
   inset: 0;

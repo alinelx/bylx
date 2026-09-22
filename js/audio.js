@@ -29,12 +29,15 @@ const TRACKS = [
 ];
 
 export function initAudio() {
-  const audio        = new Audio();
-  const mp3Hotspot   = document.querySelector(".hotspot-mp3");
-  const mp3Controls  = document.querySelector(".mp3-controls");
-  const trackTitle   = document.querySelector("[data-track-title]");
+  const audio = new Audio();
+  const mp3Hotspot = document.querySelector(".hotspot-mp3");
+  const mp3Controls = document.querySelector(".mp3-controls");
+  const trackTitle = document.querySelector("[data-track-title]");
   const marqueeWindow = document.querySelector(".mp3-marquee-window");
 
+  if (!mp3Hotspot && !mp3Controls && !trackTitle) return;
+
+  audio.preload = "auto";
   audio.volume = 0.35;
   let currentIndex = -1;
 
@@ -62,17 +65,41 @@ export function initAudio() {
     requestAnimationFrame(updateMarquee);
   }
 
+  function showControls() {
+    if (mp3Controls) {
+      mp3Controls.classList.add("is-visible");
+    }
+  }
+
+  async function playCurrentTrack() {
+    if (!TRACKS.length) return;
+
+    if (currentIndex < 0) {
+      playRandomTrack();
+      return;
+    }
+
+    const track = TRACKS[currentIndex];
+    if (audio.src !== track) {
+      audio.src = track;
+      audio.load();
+    }
+
+    setTrackTitle(track);
+    showControls();
+
+    try {
+      await audio.play();
+    } catch (error) {
+      console.warn("Audio playback was blocked or failed", error);
+    }
+  }
+
   function playTrack(index) {
     if (!TRACKS.length) return;
 
     currentIndex = ((index % TRACKS.length) + TRACKS.length) % TRACKS.length;
-    const track  = TRACKS[currentIndex];
-
-    audio.src = track;
-    audio.play();
-    setTrackTitle(track);
-
-    if (mp3Controls) mp3Controls.classList.add("is-visible");
+    playCurrentTrack();
   }
 
   function playRandomTrack() {
@@ -87,31 +114,51 @@ export function initAudio() {
   function stopAudio() {
     audio.pause();
     audio.currentTime = 0;
+    if (mp3Hotspot) mp3Hotspot.classList.remove("is-playing");
   }
 
   if (mp3Hotspot) {
     mp3Hotspot.addEventListener("click", () => {
-      if (!audio.paused)  audio.pause();
-      else if (audio.src) audio.play();
-      else                playRandomTrack();
+      showControls();
+      if (!audio.src) {
+        playRandomTrack();
+      } else if (audio.paused) {
+        playCurrentTrack();
+      }
     });
   }
 
-  audio.addEventListener("play",  () => { if (mp3Hotspot) mp3Hotspot.classList.add("is-playing"); });
-  audio.addEventListener("pause", () => { if (mp3Hotspot) mp3Hotspot.classList.remove("is-playing"); });
+  audio.addEventListener("play", () => {
+    if (mp3Hotspot) mp3Hotspot.classList.add("is-playing");
+    showControls();
+  });
+  audio.addEventListener("pause", () => {
+    if (mp3Hotspot) mp3Hotspot.classList.remove("is-playing");
+  });
   audio.addEventListener("ended", playRandomTrack);
+  audio.addEventListener("error", () => {
+    setTrackTitle("");
+  });
 
   document.querySelectorAll("[data-audio-action]").forEach((button) => {
     button.addEventListener("click", () => {
       const action = button.dataset.audioAction;
 
-      if      (action === "play")        { audio.src ? audio.play() : playRandomTrack(); }
-      else if (action === "pause")       { audio.pause(); }
-      else if (action === "stop")        { stopAudio(); }
-      else if (action === "next")        { playTrack(currentIndex + 1); }
-      else if (action === "prev")        { playTrack(currentIndex - 1); }
-      else if (action === "volume-down") { audio.volume = Math.max(0, audio.volume - 0.1); }
-      else if (action === "volume-up")   { audio.volume = Math.min(1, audio.volume + 0.1); }
+      if (action === "play") {
+        audio.src ? playCurrentTrack() : playRandomTrack();
+      } else if (action === "pause") {
+        audio.pause();
+      } else if (action === "stop") {
+        stopAudio();
+      } else if (action === "next") {
+        playTrack(currentIndex + 1);
+      } else if (action === "prev") {
+        playTrack(currentIndex - 1);
+      } else if (action === "volume-down") {
+        audio.volume = Math.max(0, audio.volume - 0.1);
+      } else if (action === "volume-up") {
+        audio.volume = Math.min(1, audio.volume + 0.1);
+      }
     });
   });
 
