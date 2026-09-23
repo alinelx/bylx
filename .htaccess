@@ -21,6 +21,21 @@ FileETag MTime Size
   </FilesMatch>
 </IfModule>
 
+# One hostname. www.bylx.dev was serving the whole site with a 200 — every page
+# and the sitemap — so the site existed at two addresses. The canonical tags on
+# each page already pointed at the apex, so Google would have consolidated them
+# eventually, but a redirect says it in one hop instead of asking a crawler to
+# work it out. Measured 2026-09-23, the day the domain property was verified:
+# both hostnames answered 200.
+#
+# Anchored to "^www\." on purpose: other subdomains (yogurt.bylx.dev) are their
+# own sites and must not be caught by this.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+</IfModule>
+
 # 404.html existed but nothing pointed Apache at it, so Apache served its own
 # default error page instead.
 ErrorDocument 404 /404.html
