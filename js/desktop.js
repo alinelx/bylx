@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx desktop — monitor power, pixel-window close, start menu, fullscreen */
 
-import { screenRect, clampToRect } from "./utils.js?v=9880b7aa";
+import { screenRect, clampToRect } from "./utils.js?v=498a29d7";
 
 export function initDesktop() {
   const scene = document.getElementById("hero-scene");
@@ -56,7 +56,7 @@ export function initDesktop() {
         left: ((box.x - parent.x) / parent.width) * 100,
         top: ((box.y - parent.y) / parent.height) * 100,
         width: (box.width / parent.width) * 100,
-        bar: (winBar.getBoundingClientRect().height / parent.height) * 100,
+        height: (box.height / parent.height) * 100,
       };
     }
 
@@ -68,9 +68,12 @@ export function initDesktop() {
       const now = measure();
       if (!now) return;
 
+      /* The whole window, not just the bar: nothing clips these layers, so a
+         window pushed past the bottom of the screen is simply drawn on the
+         desk. It may still slide under the taskbar, which paints after it. */
       at = {
         left: clamp(left, SCREEN.left, SCREEN.left + SCREEN.width - now.width),
-        top: clamp(top, SCREEN.top, SCREEN.top + SCREEN.height - now.bar),
+        top: clamp(top, SCREEN.top, SCREEN.top + SCREEN.height - now.height),
       };
       pixelWindow.style.left = `${at.left}%`;
       pixelWindow.style.top = `${at.top}%`;
@@ -94,7 +97,10 @@ export function initDesktop() {
       from = { x: event.clientX, y: event.clientY, left: at.left, top: at.top, parent: now.parent };
       winBar.setPointerCapture(event.pointerId);
       pixelWindow.classList.add("is-dragging");
-      event.preventDefault();
+      /* No preventDefault: it suppresses the compatibility mouse events, and
+         the pixel cursor is drawn from mousemove/mousedown — the arrow froze
+         mid-drag and never took its pressed state. Selection and scrolling
+         are already handled by user-select and touch-action on the bar. */
     });
 
     winBar.addEventListener("pointermove", (event) => {

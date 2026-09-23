@@ -227,46 +227,62 @@ test("the published CVs carry no personal contact details", async ({ page }) => 
 
 test("the pixel window is draggable, and cannot be dragged off the screen", async ({ page }) => {
   // A title bar that does not move is a picture of a window. It moves by
-  // pointer and by keyboard, and it stops at the edges of the CRT — a window
-  // dropped outside the screen it lives on could never be picked up again.
+  // pointer and by keyboard, and it stops at the edges of the CRT — nothing
+  // clips these layers, so a window pushed past the bottom of the screen is
+  // simply drawn on the desk.
   await page.goto("/");
 
   const artboard = page.locator(".hero-artboard");
   const win = page.locator(".pixel-window");
 
+  // Everything here is measured in artboard percentages, because the artboard
+  // is a different size on every viewport — a drag of 60 device pixels is a
+  // nudge on a desktop and half the desk on a phone.
   const position = async () => {
     const [art, box] = await Promise.all([artboard.boundingBox(), win.boundingBox()]);
     return { left: ((box.x - art.x) / art.width) * 100, top: ((box.y - art.y) / art.height) * 100 };
   };
 
-  const bar = await page.locator(".win-bar").boundingBox();
+  const grab = async () => {
+    const bar = await page.locator(".win-bar").boundingBox();
+    await page.mouse.move(bar.x + 3, bar.y + bar.height / 2);
+    await page.mouse.down();
+  };
+
+  const art = await artboard.boundingBox();
   const start = await position();
 
-  // Grab the left of the bar, away from the three buttons on the right.
-  await page.mouse.move(bar.x + 4, bar.y + bar.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(bar.x - 60, bar.y + bar.height / 2 + 30, { steps: 8 });
+  await grab();
+  await page.mouse.move(art.x + art.width * 0.4, art.y + art.height * 0.48, { steps: 8 });
   await page.mouse.up();
 
   const moved = await position();
-  expect(moved.left).toBeLessThan(start.left);
-  expect(moved.top).toBeGreaterThan(start.top);
+  expect(moved).not.toEqual(start);
 
-  // Now shove it well past the top-left corner of the screen and check it stops
-  // there: .win-bg sits at 38% / 42% of the artboard.
-  await page.mouse.move(bar.x - 56, bar.y + bar.height / 2 + 30);
-  await page.mouse.down();
-  await page.mouse.move(0, 0, { steps: 10 });
+  // Now shove it well past the top-left corner of the screen and check it
+  // stops there: .win-bg sits at 38% / 42% of the artboard.
+  await grab();
+  await page.mouse.move(art.x - art.width, art.y - art.height, { steps: 10 });
   await page.mouse.up();
 
   const pinned = await position();
   expect(pinned.left).toBeCloseTo(38, 0);
   expect(pinned.top).toBeCloseTo(42, 0);
 
+  // And past the bottom-right: the window is 10% x 26% of the artboard, so it
+  // comes to rest with its far edge on the far edge of the screen.
+  await grab();
+  await page.mouse.move(art.x + art.width * 2, art.y + art.height * 2, { steps: 10 });
+  await page.mouse.up();
+
+  const far = await position();
+  expect(far.left + 10).toBeCloseTo(38 + 24, 0);
+  expect(far.top + 26).toBeCloseTo(42 + 31, 0);
+
   // WCAG 2.5.7: the same move without a drag.
   await page.locator(".win-bar").focus();
-  await page.keyboard.press("ArrowRight");
-  expect((await position()).left).toBeGreaterThan(pinned.left);
+  await page.keyboard.press("ArrowLeft");
+  expect((await position()).left).toBeLessThan(far.left);
 
   await page.keyboard.press("Home");
   const back = await position();

@@ -502,6 +502,8 @@
      24% x 31% de uma prancheta 16:9, ou seja 384:279. Com 4:3 sobrava uma
      faixa por baixo do wallpaper e faltava um dedo à direita — e a janela do
      Paint, que no monitor fica escondida pelo bisel, aparecia nessa faixa. */
+  /* 96vw left a margin nobody needed on a phone, where the stage is limited
+     by width and every pixel of it is the screen. */
   width: min(96vw, calc(96vh * 384 / 279));
   aspect-ratio: 384 / 279;
   overflow: hidden;
@@ -525,6 +527,27 @@
   font-size: 0.7rem;
   line-height: 1.55;
   -webkit-font-smoothing: none;
+}
+
+.fullscreen-hint .hint-tap { display: none; }
+
+/* On a phone the stage is about 360px wide and this notice was covering its
+   top third — the title bar and the menu of the window it was there to show.
+   It moves out of the way and says the thing a phone can actually do. */
+@media (pointer: coarse), (max-width: 620px) {
+  .fullscreen-hint {
+    top: auto;
+    right: 8px;
+    bottom: 8px;
+    left: 8px;
+    padding: 7px 9px;
+    font-size: 0.42rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .fullscreen-hint .hint-keys { display: none; }
+  .fullscreen-hint .hint-tap { display: inline; }
 }
 
 .fullscreen-hint[hidden] { display: none; }

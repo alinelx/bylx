@@ -32,11 +32,11 @@ export function initCursor() {
   }, { passive: true });
 
   document.addEventListener("mouseover", (event) => {
-    if (event.target.closest("a, button")) cursor.classList.add("hover");
+    if (event.target.closest("a, button, .win-bar")) cursor.classList.add("hover");
   });
 
   document.addEventListener("mouseout", (event) => {
-    if (event.target.closest("a, button")) cursor.classList.remove("hover");
+    if (event.target.closest("a, button, .win-bar")) cursor.classList.remove("hover");
   });
 
   window.addEventListener("mousedown", () => cursor.classList.add("click"));

@@ -110,8 +110,11 @@
     flex-direction: column;
   }
 
+  /* It is the one piece of art in the About section and it was reading as a
+     thumbnail: a 200px cap on a 393px phone left it smaller than the text
+     beside it. */
   .about-gif {
-    width: min(200px, 60%);
+    width: min(320px, 88%);
   }
 }
 

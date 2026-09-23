@@ -129,7 +129,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=9880b7aa" />
+  <link rel="stylesheet" href="styles.css?v=498a29d7" />
 </head>
 
 <body>
@@ -312,7 +312,12 @@
 
       <div class="fullscreen-mode" role="dialog" aria-modal="true" aria-label="Fullscreen monitor" tabindex="-1" hidden>
         <div class="fullscreen-screen">
-          <p class="fullscreen-hint" hidden>Press <kbd>F11</kbd> or <kbd>Esc</kbd> to return</p>
+          <!-- Two ways out, and the one that is shown is the one the visitor
+               has: a phone has no Esc key, and was being told to press it. -->
+          <p class="fullscreen-hint" hidden>
+            <span class="hint-keys">Press <kbd>F11</kbd> or <kbd>Esc</kbd> to return</span>
+            <span class="hint-tap">Tap outside the screen to return</span>
+          </p>
         </div>
       </div>
     </section>
@@ -994,6 +999,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=9880b7aa"></script>
+  <script type="module" src="script.js?v=498a29d7"></script>
 </body>
 </html>

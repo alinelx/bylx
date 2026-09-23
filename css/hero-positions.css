@@ -449,12 +449,30 @@
   left: 46.5%;
   top: 44%;
   width: 10%;
-  height: 30%;
+  /* 26%, not 30%: the desktop runs from 42% to the taskbar at 70.5%, and a
+     30% window starting at 44% ended at 74% — past the bottom of the CRT.
+     That is why the sprite's colour palette always looked cut off, and why
+     dragging it down walked it out onto the desk. */
+  height: 26%;
   display: grid;
   grid-template-rows: var(--tile) 1fr;
   border: var(--edge) solid var(--bg);
   background-color: var(--cyan);
   pointer-events: none;
+  /* The desktop is there first and the window opens onto it, the way a
+     machine that has just finished booting does. */
+  animation: window-open 220ms steps(4, end) 1100ms both;
+}
+
+@keyframes window-open {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 .win-bar {
@@ -535,7 +553,7 @@
   position: absolute;
   left: 26.667%;
   top: 5.94%;
-  width: 73.333%;
+  width: 71.7%; /* stops at sprite x=236, leaving the chrome a right edge */
   height: 82.5%;
   object-fit: cover;
   object-position: center top;
