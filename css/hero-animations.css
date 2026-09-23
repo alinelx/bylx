@@ -39,6 +39,28 @@
 
 /* Neutral hover policy: no fill wash, no brightness/hue shift on the sprite —
    only the per-prop animation runs (phone ring, instax sheet, mp3 groove) */
+
+/* Two more per-prop reactions, in the same register as the phone and the
+   instax: something a hand would do to the object, once, while the pointer is
+   on it. The glass tips the way a glass tips when you reach for it; the tray
+   slides the way a tray slides when you pull it closer. */
+@keyframes cocktail-tip {
+  to { transform: var(--base-transform) rotate(-3deg) translateY(-2px); }
+}
+
+@keyframes sushi-slide {
+  to { transform: var(--base-transform) translate(2px, -2px); }
+}
+
+.hotspot-cocktail:hover .hotspot-visual,
+.hotspot-cocktail:focus-visible .hotspot-visual {
+  animation: cocktail-tip 160ms steps(3, end) forwards;
+}
+
+.hotspot-sushi:hover .hotspot-visual,
+.hotspot-sushi:focus-visible .hotspot-visual {
+  animation: sushi-slide 160ms steps(3, end) forwards;
+}
 .hotspot:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px rgba(89, 243, 255, 0.9);

@@ -64,8 +64,6 @@
    which otherwise beats .hotspot's pointer-events (same specificity,
    hero-positions.css loads after hero-animations.css) */
 .layer.hotspot,
-.layer.cocktail,
-.layer.sushi,
 .layer.keyboard-keys {
   pointer-events: auto;
 }
@@ -576,14 +574,27 @@
   height: 100%;
   z-index: 2;
   mix-blend-mode: multiply;
+  /* The one sprite in the scene that is not allowed to be pixelated, and the
+     only one that is heavily DOWNSCALED: 320px of art in about 95px of window,
+     0.296x. image-rendering: pixelated is nearest-neighbour, which at that
+     ratio does not shrink a one-pixel stroke — it deletes it. Measured side by
+     side: pixelated rendered the menu as "...ed Edit View Ima... Hel", with
+     whole letters gone; smooth rendering keeps "File Edit View Image Options
+     Help" readable. Soft and legible beats crisp and broken.
+
+     The real fix is upstream: export the frame at the size it is shown, around
+     96px, and this line can go back to pixelated. */
+  image-rendering: auto;
 }
 
 .toolbar-strip {
   position: absolute;
   z-index: 8;
-  left: 38.5%;
+  /* Flush with the screen, 38% to 62%: it used to start half a percent in,
+     which on a taskbar reads as a gap nobody put there. */
+  left: 38%;
   top: 70.5%;
-  width: 23.2%;
+  width: 24%;
   height: 2%;
   display: flex;
   align-items: stretch;

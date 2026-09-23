@@ -95,7 +95,11 @@ test("mp3 hotspot opens the player and the dial actually plays audio", async ({ 
   // audio.js drives a detached `new Audio()`, so there is no <audio> in the DOM
   // to inspect. `is-playing` is still a real signal rather than a CSS guess:
   // only the media element's own "play" event handler ever adds it.
-  await expect(page.locator(".mp3-player")).toHaveClass(/is-playing/, { timeout: 10_000 });
+  // 20s, not 10: this is the only assertion in the suite waiting on a real
+  // media decode, and under the full parallel run it is the one that loses the
+  // race. It passes alone every time, which is the signature of the machine
+  // being busy rather than the player being broken.
+  await expect(page.locator(".mp3-player")).toHaveClass(/is-playing/, { timeout: 20_000 });
   await expect(page.locator("[data-mp3-state]")).toHaveText("▶");
 
   await page.keyboard.press("Escape");
@@ -288,4 +292,61 @@ test("the pixel window is draggable, and cannot be dragged off the screen", asyn
   const back = await position();
   expect(back.left).toBeCloseTo(start.left, 1);
   expect(back.top).toBeCloseTo(start.top, 1);
+});
+
+test("the cocktail and the sushi open their panels", async ({ page }) => {
+  // Two more props that do what they look like they do. They are buttons over
+  // sprites with transparent corners, so these click rather than dispatch.
+  await page.goto("/");
+
+  for (const [label, modal, heading] of [
+    ["Open: two cities", "#cities-modal", "Two cities"],
+    ["Open: how this desk was drawn", "#craft-modal", "How this desk was drawn"],
+  ]) {
+    await page.getByRole("button", { name: label }).click();
+    await expect(page.locator(modal)).toHaveClass(/is-open/);
+    await expect(page.locator(`${modal} h2`)).toHaveText(heading);
+
+    await page.keyboard.press("Escape");
+    await expect(page.locator(modal)).not.toHaveClass(/is-open/);
+  }
+
+  // They are panels, not case studies: no slug, so no generated page and no
+  // sitemap entry.
+  const slugs = await page.locator("[data-work-slug]").evaluateAll((els) =>
+    els.map((el) => el.id)
+  );
+  expect(slugs).not.toContain("cities-modal");
+  expect(slugs).not.toContain("craft-modal");
+});
+
+test("cinema mode cannot be entered twice, and always gives the scroll back", async ({ page }) => {
+  // The Start menu is reachable from inside cinema mode and its first item
+  // still says "enter cinema mode". Entering twice borrowed the screen items
+  // into a second board while the bookkeeping still pointed at the first, so
+  // putting them back threw — and the throw happened before the scroll lock
+  // came off, leaving the page stuck with no way out.
+  await page.goto("/");
+
+  const locked = () =>
+    page.evaluate(() => getComputedStyle(document.documentElement).overflow === "hidden");
+
+  const enter = async () => {
+    await page.locator(".start-btn").click();
+    await page.locator('.start-menu [data-start-action="fullscreen"]').click();
+  };
+
+  await enter();
+  expect(await locked()).toBe(true);
+
+  await enter(); // the second one must be a no-op
+  await page.keyboard.press("Escape");
+
+  await expect(page.locator(".fullscreen-mode")).toBeHidden();
+  expect(await locked()).toBe(false);
+  await expect(page.locator(".fullscreen-artboard")).toHaveCount(0);
+
+  // and the borrowed furniture is back on the desk
+  await expect(page.locator("#hero-scene .pixel-window")).toHaveCount(1);
+  await expect(page.locator("#hero-scene .toolbar-strip")).toHaveCount(1);
 });

@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx desktop — monitor power, pixel-window close, start menu, fullscreen */
 
-import { screenRect, clampToRect } from "./utils.js?v=498a29d7";
+import { screenRect, clampToRect } from "./utils.js?v=dc7bc75c";
 
 export function initDesktop() {
   const scene = document.getElementById("hero-scene");
@@ -196,7 +196,12 @@ export function initDesktop() {
     /* Uma janela do sistema não sai do ecrã: largura, altura e as duas
        coordenadas são limitadas ao rectângulo do CRT, e o menu abre para cima
        a partir da barra de tarefas, como o Windows que imita. */
-    const pad = Math.max(2, screen.width * 0.02);
+    /* 2px, not 2% of the screen. The percentage was invisible while the
+       taskbar sat half a percent in from the left edge; once START moved flush
+       with it, the menu could no longer line up with the button it opens from
+       — it was held 7px to the right of its own trigger. A system menu opens
+       in the corner. */
+    const pad = 2;
     menu.style.width = `${Math.min(280, screen.width - pad * 2)}px`;
     menu.style.maxHeight = `${screen.height - pad * 2}px`;
 
@@ -350,12 +355,23 @@ export function initDesktop() {
   }
 
   function returnScreenItems() {
-    for (const { node, parent, next } of borrowed) parent.insertBefore(node, next);
+    for (const { node, parent, next } of borrowed) {
+      /* next may no longer be a child of parent — insertBefore throws then,
+         and this runs on the way out of cinema mode, before the scroll lock
+         comes off. One bad sibling left the whole page unscrollable. */
+      if (next && next.parentNode === parent) parent.insertBefore(node, next);
+      else parent.appendChild(node);
+    }
     borrowed = [];
   }
 
   function openFullscreen(opener) {
-    if (!fsMode) return;
+    /* Already open: the Start menu is reachable from inside cinema mode and
+       its first item still says "enter cinema mode". Entering twice borrowed
+       the screen items into a second board while `borrowed` still pointed at
+       the first, and putting them back afterwards threw — leaving the page
+       scroll-locked with no way out. */
+    if (!fsMode || !fsMode.hidden) return;
     const from = opener ?? document.activeElement;
     lastFocus = from && from !== document.body ? from : startBtn;
 

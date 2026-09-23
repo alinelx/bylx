@@ -129,7 +129,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=498a29d7" />
+  <link rel="stylesheet" href="styles.css?v=dc7bc75c" />
 </head>
 
 <body>
@@ -163,8 +163,27 @@
 
           <img class="asset layer table" src="assets/hero/table.png" alt="" />
 
-          <img class="asset layer cocktail desk-object" src="assets/hero/cocktail.png" alt="" />
-          <img class="asset layer sushi desk-object" src="assets/hero/sushi.png" alt="" />
+          <button
+            class="asset layer desk-object hotspot hotspot-cocktail cocktail"
+            type="button"
+            aria-label="Open: two cities"
+            data-modal-target="cities-modal"
+          >
+            <span class="hotspot-visual">
+              <img src="assets/hero/cocktail.png" alt="" />
+            </span>
+          </button>
+
+          <button
+            class="asset layer desk-object hotspot hotspot-sushi sushi"
+            type="button"
+            aria-label="Open: how this desk was drawn"
+            data-modal-target="craft-modal"
+          >
+            <span class="hotspot-visual">
+              <img src="assets/hero/sushi.png" alt="" />
+            </span>
+          </button>
 
           <button
             class="asset layer desk-object hotspot hotspot-instax instax"
@@ -787,6 +806,59 @@
       </section>
     </div>
 
+    <!-- Not case studies, so no data-work-slug: these are the desk talking
+         about itself, not work that deserves a URL of its own. -->
+    <div class="modal pixel-modal" id="cities-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="cities-title">
+        <header class="modal-header">
+          <h2 id="cities-title">Two cities</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close">&times;</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p>Look out of the window behind the monitor. Cristo Redentor and Pão de Açúcar stand on one side of it; the Ponte 25 de Abril and the Torre de Belém on the other. That is not a mixed metaphor that got away from me — it is the whole point of the desk.</p>
+
+          <h3 class="cs-heading">What Rio gave me</h3>
+          <p>Colour, texture, warmth, and the nerve to use all three at once. I studied Design &amp; Visual Communication at UFRJ's Escola de Belas Artes, in a city where nothing is beige. The palette on this site — the cyan, the pink, the purple that has no business working next to either — is a Rio palette. So is the instinct that a portfolio should be somewhere you want to stay, not a document you scroll.</p>
+
+          <h3 class="cs-heading">What Lisbon taught me</h3>
+          <p>Restraint, and how much can be said with very little. I took a CET in Cultural Tourism &amp; Heritage here, which is a formal way of saying I learned to read a place. dark28.pt came out of that — a dark-tourism route along Tram 28, written for people standing at the stop. konochan.pt is run from a flat in Greater Lisbon. Five years at Accenture happened here too, in three time zones at once.</p>
+
+          <h3 class="cs-heading">Why the drink</h3>
+          <p>Because it is the Rio half of the desk, sitting next to a Portuguese keyboard, in front of a window that cannot decide which city it is looking at. Neither can I. That turned out to be the useful part: Brazil taught me what to say, Portugal taught me how much to leave out, and the work happens where the two argue.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="craft-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="craft-title">
+        <header class="modal-header">
+          <h2 id="craft-title">How this desk was drawn</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close">&times;</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <p>Every object you can click here was drawn, placed and measured by hand. This is how.</p>
+
+          <h3 class="cs-heading">The grid</h3>
+          <p>The scene is laid out on a 64&times;64 grid translated into percentages, so nothing is positioned in pixels and the desk is the same desk at 320px and at 3440px. No object is ever repositioned for a smaller screen — the phone shows you the same room, further away.</p>
+
+          <h3 class="cs-heading">The ruler</h3>
+          <p>The keyboard is a 36cm tenkeyless board, and everything else is measured against it. The monitor comes out at 0.95&times; life size, the CRT tube at exactly 1.00&times; — a real 15-inch — the instax at 0.94&times;, the cocktail at 0.88&times;. The desk reads about a metre across. It is a small desk, and the props fill it exactly, because they were checked against the real objects rather than eyeballed.</p>
+
+          <h3 class="cs-heading">The rules</h3>
+          <p>Motion uses <code>steps()</code> easing, never smooth tweens: a tween between two pixel positions draws pixels that are not in the art. The one exception is a marquee, where stepping judders and linear is correct. Nothing on the desk asks to be clicked — a CRT may tick and a corner may blink, because a real object would do that while nobody watched, but no button here pulses at you.</p>
+
+          <h3 class="cs-heading">The parts</h3>
+          <p>Forty-odd sprites, seventeen lo-fi tracks the mp3 player genuinely streams, one design-token file, and a single dependency in the whole project — which only runs the tests. No framework, no build step for the page itself. The window you just dragged is a CSS border and one sprite.</p>
+        </div>
+      </section>
+    </div>
+
     <div class="modal pixel-modal" id="gallery-modal" aria-hidden="true">
       <div class="modal-backdrop" data-close-modal></div>
 
@@ -999,6 +1071,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=498a29d7"></script>
+  <script type="module" src="script.js?v=dc7bc75c"></script>
 </body>
 </html>
