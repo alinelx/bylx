@@ -54,6 +54,12 @@
   transition: transform 80ms steps(2, end), box-shadow 80ms steps(2, end);
 }
 
+/* [hidden] is display:none in the UA stylesheet, and .project-card sets
+   display:flex, which outranks it — so filtering set the attribute and the
+   card stayed on screen. Stating it here is the whole fix; without it the
+   filter appeared to work in JS and did nothing on the page. */
+.project-card[hidden] { display: none; }
+
 .project-card:hover {
   transform: translate(-2px, -2px);
   box-shadow: 8px 8px 0 var(--pink);
@@ -1359,4 +1365,63 @@
 .about-badges li.is-linked a:focus-visible {
   outline: 3px solid var(--text);
   outline-offset: 2px;
+}
+
+
+/* ── Projects filter ─────────────────────────────────────────────────────
+   Product · Client · Tool · Design. A card can be more than one, so the
+   counts add up to more than the grid — konochan is a product and a brand,
+   luparoad is client work and a rebrand. */
+.projects-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0;
+}
+
+.filter-btn {
+  appearance: none;
+  padding: 7px 10px;
+  border: 2px solid var(--cyan);
+  border-radius: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+  cursor: none;
+}
+
+.filter-btn:hover { border-color: var(--pink); }
+
+.filter-btn[aria-pressed="true"] {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  color: var(--bg);
+}
+
+.filter-btn:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+
+.filter-count { opacity: 0.65; }
+
+.projects-count {
+  margin: 0.8rem 0 0;
+  font-family: var(--font-ui);
+  font-size: 0.45rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* Three across, stated rather than inferred. auto-fill happened to give
+   three at this container width, but it would quietly become four on a
+   wider one and two the moment a card grew — and the grid staying a grid
+   is the point. Case studies are added three at a time for the same
+   reason: seven cards is two rows and an orphan. */
+@media (min-width: 1000px) {
+  .projects-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-btn { transition: none; }
 }

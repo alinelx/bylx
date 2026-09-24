@@ -387,3 +387,53 @@ test("every image the site loads carries its own cache stamp", async ({ page }) 
   // A stamp that points at nothing is worse than no stamp.
   expect(bad).toEqual([]);
 });
+
+test("the projects filter narrows the grid without stranding anything", async ({ page }) => {
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+
+  const cards = page.locator(".project-card");
+  const total = await cards.count();
+
+  /* Three at a time, so the grid stays a grid. Seven cards is two rows and an
+     orphan, which is why Workspace Automations came out. */
+  expect(total % 3).toBe(0);
+
+  // Every card declares at least one of the four kinds, or the filter lies.
+  const kinds = await cards.evaluateAll((els) => els.map((e) => (e.dataset.kind || "").split(/\s+/).filter(Boolean)));
+  const ALLOWED = ["product", "client", "tool", "design"];
+  for (const list of kinds) {
+    expect(list.length).toBeGreaterThan(0);
+    for (const k of list) expect(ALLOWED).toContain(k);
+  }
+
+  const bar = page.locator("#projects-filter");
+  await expect(bar).toBeVisible();
+
+  for (const kind of ALLOWED) {
+    const button = bar.locator(`[data-filter="${kind}"]`);
+    const expected = kinds.filter((list) => list.includes(kind)).length;
+
+    // A button for a kind nothing carries is removed rather than left dead.
+    if (expected === 0) {
+      await expect(button).toHaveCount(0);
+      continue;
+    }
+
+    await expect(button).toContainText(String(expected));
+    await button.click();
+
+    await expect(cards.locator("visible=true")).toHaveCount(expected);
+    await expect(button).toHaveAttribute("aria-pressed", "true");
+
+    /* hidden, not display:none in a class: a card you cannot see must not stay
+       in the tab order either. */
+    const focusable = await page.evaluate(() =>
+      [...document.querySelectorAll(".project-card[hidden]")].filter((c) => c.offsetParent !== null).length
+    );
+    expect(focusable).toBe(0);
+  }
+
+  await bar.locator('[data-filter="all"]').click();
+  await expect(cards.locator("visible=true")).toHaveCount(total);
+});

@@ -103,8 +103,7 @@
             { "@type": "ListItem", "position": 3, "url": "https://bylx.dev/work/irs-pt/", "name": "irs-pt" },
             { "@type": "ListItem", "position": 4, "url": "https://bylx.dev/work/respondaja/", "name": "respondaja.click" },
             { "@type": "ListItem", "position": 5, "url": "https://bylx.dev/work/konochan/", "name": "konochan.pt" },
-            { "@type": "ListItem", "position": 6, "url": "https://bylx.dev/work/luparoad/", "name": "luparoad.com" },
-            { "@type": "ListItem", "position": 7, "url": "https://bylx.dev/work/workspace-automations/", "name": "Workspace Automations" }
+            { "@type": "ListItem", "position": 6, "url": "https://bylx.dev/work/luparoad/", "name": "luparoad.com" }
           ]
         }
       ]
@@ -130,7 +129,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=bb969af6" />
+  <link rel="stylesheet" href="styles.css?v=8dbfaf3e" />
 </head>
 
 <body>
@@ -349,8 +348,21 @@
           <h2 id="projects-title">Projects</h2>
         </div>
 
+        <!-- hidden until JS removes it: a filter that cannot filter is worse
+             than no filter, the same reason the arcade drops its arrows when
+             there is one machine. The counts are written by the script so they
+             can never disagree with the grid. -->
+        <div class="projects-filter" id="projects-filter" role="group" aria-label="Filter projects by kind" hidden>
+          <button type="button" class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="filter-btn" data-filter="product" aria-pressed="false">Product</button>
+          <button type="button" class="filter-btn" data-filter="client" aria-pressed="false">Client</button>
+          <button type="button" class="filter-btn" data-filter="tool" aria-pressed="false">Tool</button>
+          <button type="button" class="filter-btn" data-filter="design" aria-pressed="false">Design</button>
+        </div>
+        <p class="projects-count" id="projects-count" role="status" aria-live="polite"></p>
+
         <div class="projects-grid">
-          <article class="project-card" aria-labelledby="card-dark28-title">
+          <article class="project-card" data-kind="product" aria-labelledby="card-dark28-title">
             <div class="card-body">
               <span class="card-status card-status--live">LIVE</span>
               <h3 id="card-dark28-title"><button type="button" class="card-trigger" data-modal-target="casestudy-dark28-modal">dark28.pt</button></h3>
@@ -364,7 +376,7 @@
             </div>
           </article>
 
-          <article class="project-card" aria-labelledby="card-bylx-title">
+          <article class="project-card" data-kind="design" aria-labelledby="card-bylx-title">
             <div class="card-body">
               <span class="card-status card-status--live">LIVE</span>
               <h3 id="card-bylx-title"><button type="button" class="card-trigger" data-modal-target="casestudy-bylx-modal">bylx.dev</button></h3>
@@ -377,7 +389,7 @@
             </div>
           </article>
 
-          <article class="project-card" aria-labelledby="card-irspt-title">
+          <article class="project-card" data-kind="tool" aria-labelledby="card-irspt-title">
             <div class="card-body">
               <span class="card-status card-status--live">OPEN SOURCE</span>
               <h3 id="card-irspt-title"><button type="button" class="card-trigger" data-modal-target="casestudy-irspt-modal">irs-pt</button></h3>
@@ -390,7 +402,7 @@
             </div>
           </article>
 
-          <article class="project-card" aria-labelledby="card-respondaja-title">
+          <article class="project-card" data-kind="product" aria-labelledby="card-respondaja-title">
             <div class="card-body">
               <span class="card-status card-status--live">LIVE</span>
               <h3 id="card-respondaja-title"><button type="button" class="card-trigger" data-modal-target="casestudy-respondaja-modal">respondaja.click</button></h3>
@@ -403,7 +415,7 @@
             </div>
           </article>
 
-          <article class="project-card" aria-labelledby="card-konochan-title">
+          <article class="project-card" data-kind="product design" aria-labelledby="card-konochan-title">
             <div class="card-body">
               <span class="card-status card-status--shipped">SHIPPED</span>
               <h3 id="card-konochan-title"><button type="button" class="card-trigger" data-modal-target="casestudy-konochan-modal">konochan.pt</button></h3>
@@ -416,7 +428,7 @@
             </div>
           </article>
 
-          <article class="project-card" aria-labelledby="card-lupa-title">
+          <article class="project-card" data-kind="client design" aria-labelledby="card-lupa-title">
             <div class="card-body">
               <span class="card-status card-status--client">CLIENT WORK</span>
               <h3 id="card-lupa-title"><button type="button" class="card-trigger" data-modal-target="casestudy-lupa-modal">luparoad.com</button></h3>
@@ -425,19 +437,6 @@
                 <span class="card-tag">WordPress</span>
                 <span class="card-tag">UX</span>
                 <span class="card-tag">Branding</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card" aria-labelledby="card-gas-title">
-            <div class="card-body">
-              <span class="card-status card-status--internal">IN PRODUCTION · INTERNAL</span>
-              <h3 id="card-gas-title"><button type="button" class="card-trigger" data-modal-target="casestudy-gas-modal">Workspace Automations</button></h3>
-              <p>Google Apps Script tools a 40+ person team at Accenture uses every day.</p>
-              <div class="card-meta">
-                <span class="card-tag">Apps Script</span>
-                <span class="card-tag">Automation</span>
-                <span class="card-tag">Google Workspace</span>
               </div>
             </div>
           </article>
@@ -847,50 +846,6 @@
       </section>
     </div>
 
-    <div class="modal pixel-modal" id="casestudy-gas-modal" aria-hidden="true"
-         data-work-slug="workspace-automations"
-         data-work-title="Workspace Automations — Google Apps Script for a 40-person team"
-         data-work-description="Case study: Apps Script automations in daily production since 2022 — scheduled triggers, Sheets API, error handling, and the adoption problem behind the code.">
-      <div class="modal-backdrop" data-close-modal></div>
-
-      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-gas-title">
-        <header class="modal-header">
-          <h2 id="casestudy-gas-title">Workspace Automations — Case Study</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
-        </header>
-
-        <div class="modal-body case-study-body">
-          <ul class="cs-chips">
-            <li>Google Apps Script</li>
-            <li>Google Workspace</li>
-            <li>Automation</li>
-          </ul>
-
-          <h3 class="cs-heading">The question</h3>
-          <p>A 40+ person team at Accenture was losing hours every week to repetitive Google Workspace workflows — manual reporting, copy-paste pipelines, spreadsheet drudgery. No budget line, no IT ticket. What could one person automate from inside?</p>
-
-          <h3 class="cs-heading">What I built</h3>
-          <p>A set of Google Apps Script automations and lightweight internal tools, deployed to the whole team and used in production daily.</p>
-          <ul class="cs-list">
-            <li>Automated reporting flows that replaced manual spreadsheet work</li>
-            <li>Dashboards for team visibility without leaving Workspace</li>
-            <li>Lightweight internal tools shaped around how the team already worked</li>
-          </ul>
-
-          <h3 class="cs-heading">Technical decisions</h3>
-          <p><strong>Apps Script, deliberately</strong> — it lives where the work already happens. Zero install, zero procurement, corporate-compliant by default.</p>
-          <p><strong>Scripts as products</strong> — permissions, error handling, and documentation, because a tool 40 people depend on can't behave like a weekend script.</p>
-
-          <h3 class="cs-heading">What I learned</h3>
-          <p>Automation adoption is a UX problem: the hard part isn't the code, it's making a tool people trust enough to change their routine for. Corporate code stays private — the process is what transfers.</p>
-
-          <div class="cs-footer-links">
-            <p class="cs-permalink"><a href="/work/workspace-automations/">bylx.dev/work/workspace-automations/</a></p>
-          </div>
-        </div>
-      </section>
-    </div>
-
     <!-- Not case studies, so no data-work-slug: these are the desk talking
          about itself, not work that deserves a URL of its own. -->
     <div class="modal pixel-modal" id="cities-modal" aria-hidden="true">
@@ -1156,6 +1111,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=bb969af6"></script>
+  <script type="module" src="script.js?v=8dbfaf3e"></script>
 </body>
 </html>
