@@ -65,14 +65,14 @@ test("the picker lists real links, and hides controls it cannot use", async ({ p
   expect(errors).toEqual([]);
 });
 
-test("the purikura machine runs, and asks nobody else for its parts", async ({ page }) => {
+test("the Cute Gal machine runs, and asks nobody else for its parts", async ({ page }) => {
   const errors = [];
   const requests = [];
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
   page.on("pageerror", (e) => errors.push(String(e)));
   page.on("request", (r) => requests.push(r.url()));
 
-  const response = await page.goto("/arcade/purikura/");
+  const response = await page.goto("/arcade/cutegal/");
   expect(response?.status()).toBe(200);
   await expect(page.locator("h1")).toHaveCount(1);
 
@@ -102,7 +102,7 @@ test("the purikura machine runs, and asks nobody else for its parts", async ({ p
    resized away from the size they were drawn at, and an applied frame ate every
    click meant for the pen. */
 test("the machine keeps pixel art on the grid, and lets the pen through", async ({ page }) => {
-  await page.goto("/arcade/purikura/");
+  await page.goto("/arcade/cutegal/");
   await page.waitForLoadState("networkidle");
   await expect(page.locator("#konvaContainer canvas").first()).toBeVisible();
 
@@ -171,7 +171,7 @@ test("the machine keeps pixel art on the grid, and lets the pen through", async 
 });
 
 test("the booth is one step at a time, and fits a phone", async ({ page }) => {
-  await page.goto("/arcade/purikura/");
+  await page.goto("/arcade/cutegal/");
   await page.waitForLoadState("networkidle");
 
   /* Five numbered steps, one panel open. Everything used to be open at once in
@@ -230,7 +230,7 @@ test("the booth is one step at a time, and fits a phone", async ({ page }) => {
 });
 
 test("undo steps back one stroke, and text gets the font it asked for", async ({ page }) => {
-  await page.goto("/arcade/purikura/");
+  await page.goto("/arcade/cutegal/");
   await page.waitForLoadState("networkidle");
   await page.locator("#tab-pen").click();
 

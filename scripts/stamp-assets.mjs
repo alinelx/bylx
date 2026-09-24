@@ -68,11 +68,11 @@ const targets = [
   /* The arcade picker is a page of its own: it loads the site stylesheet and
      imports two modules by absolute path. Without this it would serve whatever
      CSS the edge happened to keep, for as long as it felt like keeping it. The
-     purikura machine needs nothing here — its CSS and JS are inline, and Konva
+     Cute Gal machine needs nothing here — its CSS and JS are inline, and Konva
      carries its version in the filename. */
   { file: join("arcade", "index.html"), pattern: /(href="\/styles\.css|from "\/js\/[a-z-]+\.js)(\?v=[a-z0-9]+)?/g },
   /* The machine borrows one file from the site: the palette. */
-  { file: join("arcade", "purikura", "index.html"), pattern: /(href="\/css\/tokens\.css)(\?v=[a-z0-9]+)?/g },
+  { file: join("arcade", "cutegal", "index.html"), pattern: /(href="\/css\/tokens\.css)(\?v=[a-z0-9]+)?/g },
   ...jsFiles.map((f) => ({ file: join("js", f), pattern: /(from "\.\/[a-z-]+\.js)(\?v=[a-z0-9]+)?/g })),
 ];
 

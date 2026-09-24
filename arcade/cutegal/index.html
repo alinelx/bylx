@@ -9,12 +9,12 @@
        here would collide on --muted and fight over the page background. It also
        does without the pixel cursor — this is precision work over a photograph,
        and hiding the real pointer makes that harder, not prettier. -->
-  <title>Cute Gal · purikura editor · bylx.dev arcade</title>
-  <meta name="description" content="A purikura-style photo editor built in vanilla JavaScript with Konva: stickers, frames, outlined text, a brush with undo, and filters. Nothing is uploaded anywhere." />
-  <link rel="canonical" href="https://bylx.dev/arcade/purikura/" />
-  <meta property="og:title" content="Cute Gal · a purikura editor" />
-  <meta property="og:description" content="A purikura-style photo editor in vanilla JavaScript. Stickers, frames, outlined text, brush and filters — all in the browser." />
-  <meta property="og:url" content="https://bylx.dev/arcade/purikura/" />
+  <title>Cute Gal · photo booth · bylx.dev arcade</title>
+  <meta name="description" content="Cute Gal is a photo booth in the browser, built in vanilla JavaScript with Konva: stickers, frames, outlined text, a brush with undo, and filters. Nothing is uploaded anywhere." />
+  <link rel="canonical" href="https://bylx.dev/arcade/cutegal/" />
+  <meta property="og:title" content="Cute Gal · a photo booth in your browser" />
+  <meta property="og:description" content="A photo booth in vanilla JavaScript. Stickers, frames, outlined text, brush and filters — all in the browser." />
+  <meta property="og:url" content="https://bylx.dev/arcade/cutegal/" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://bylx.dev/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -380,7 +380,7 @@
 <div class="wrap">
     <header class="pk-head">
       <img class="pk-mark" src="/assets/arcade/cute-gal-logo.png" alt="" width="128" height="64" />
-      <h1>Cute Gal — purikura editor</h1>
+      <h1>Cute Gal — photo booth editor</h1>
       <p class="pk-lede">Pick a photo, dress it up, save the PNG. Nothing is uploaded — every pixel stays in this tab.</p>
     </header>
 
@@ -851,7 +851,7 @@
       // ---------- UI wiring ----------
       el.filePhoto.addEventListener('change', e=>{ const f=e.target.files&&e.target.files[0]; if(f) loadPhotoFromUrl(URL.createObjectURL(f)); });
       el.btnUseUrl.addEventListener('click', ()=>{ const u=el.urlPhoto.value.trim(); if(u) loadPhotoFromUrl(u); });
-      el.btnExport.addEventListener('click', ()=>{ try{ const uri=stage.toDataURL({pixelRatio:2, imageSmoothingEnabled:false}); const a=document.createElement('a'); a.href=uri; a.download='purikura.png'; a.click(); } catch(err){ alert('Não foi possível exportar (CORS). Use ficheiro local ou URL com CORS permitido.'); } });
+      el.btnExport.addEventListener('click', ()=>{ try{ const uri=stage.toDataURL({pixelRatio:2, imageSmoothingEnabled:false}); const a=document.createElement('a'); a.href=uri; a.download='cutegal.png'; a.click(); } catch(err){ alert('Não foi possível exportar (CORS). Use ficheiro local ou URL com CORS permitido.'); } });
 
       // filters
       function setFilter(name){ currentFilter=name; Array.from(el.filterButtons.querySelectorAll('[data-filter]')).forEach(b=> b.classList.toggle('active', b.getAttribute('data-filter')===name)); applyFilter(); }
@@ -887,7 +887,7 @@
          already 403ing, and publishing someone else's licensed art on this
          domain is the problem the Hello Angel note warns about. Placeholders —
          plain geometry in the brand palette — until real pixel art replaces
-         them. Adding one is a file in assets/arcade/purikura/ and a line here. */
+         them. Adding one is a file in assets/arcade/cutegal/ and a line here. */
       /* The stickers are the site's own art — the sakura the cursor trails, the
          wordmark, and the landmarks from the window behind the desk. Nothing is
          borrowed and nothing is hotlinked: the earlier set came from vecteezy,
@@ -925,7 +925,12 @@
         ]},
         {label:'Arcade', items:[
           {label:'Cabinet',  src:'/assets/arcade/cabinet.png'},
-          {label:'Start',    src:'/assets/arcade/start.png'}
+          /* start-plate.png, not start.png: the plate is 38x35 of art inside a
+             256 canvas, drawn to sit on the cabinet screen, so as a sticker it
+             was an invisible thumbnail and a mostly empty drag box. The 256
+             version stays exactly as it is — the homepage stacks it on
+             cabinet.png and that shared canvas IS the alignment. */
+          {label:'Start',    src:'/assets/arcade/start-plate.png'}
         ]},
         {label:'Rio & Lisboa', items:[
           {label:'Cristo',   src:'/assets/hero/cristo_redentor.png'},
@@ -961,10 +966,10 @@
         ]}
       ];
       const BUILTIN_FRAMES=[
-        {label:'Hearts',  src:'/assets/arcade/purikura/frame-hearts.png'},
-        {label:'Bows',    src:'/assets/arcade/purikura/frame-bows.png'},
-        {label:'Static',  src:'/assets/arcade/purikura/frame-static.png'},
-        {label:'Rawr',    src:'/assets/arcade/purikura/frame-rawr.png'}
+        {label:'Hearts',  src:'/assets/arcade/cutegal/frame-hearts.png'},
+        {label:'Bows',    src:'/assets/arcade/cutegal/frame-bows.png'},
+        {label:'Static',  src:'/assets/arcade/cutegal/frame-static.png'},
+        {label:'Rawr',    src:'/assets/arcade/cutegal/frame-rawr.png'}
       ];
       STICKER_GROUPS.forEach(group=>{
         const wrap=document.createElement('div'); wrap.className='sticker-group';

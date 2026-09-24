@@ -34,6 +34,11 @@ FileETag MTime Size
   RewriteEngine On
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+  # The machine shipped at /arcade/purikura/ and was renamed to the name it
+  # actually goes by. That path was public and listed in the sitemap, so it
+  # redirects rather than 404s — a renamed URL that dies throws away whatever
+  # the old one earned.
+  RewriteRule ^arcade/purikura/?$ /arcade/cutegal/ [R=301,L]
 </IfModule>
 
 # 404.html existed but nothing pointed Apache at it, so Apache served its own
