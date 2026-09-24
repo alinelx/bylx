@@ -89,7 +89,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background-image: url("../assets/hero/instax.png");
+  background-image: url("../assets/hero/instax.png?v=df7f62eb");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -98,7 +98,7 @@
 .hotspot-instax:hover .instax-sprite::before,
 .hotspot-instax:focus-visible .instax-sprite::before {
   width: 800%;
-  background-image: url("../assets/hero/instax_spritesheet.png");
+  background-image: url("../assets/hero/instax_spritesheet.png?v=7dfee3d7");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: left top;

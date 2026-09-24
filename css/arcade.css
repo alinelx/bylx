@@ -9,7 +9,7 @@
 /* ᑲყᥣx arcade — the cabinet on "/" and the machine picker at /arcade/ */
 
 /* ── The cabinet ──────────────────────────────────────────────────────────
-   assets/arcade/cabinet.png is 256×256 and is only ever shown at a whole
+   assets/arcade/cabinet.png?v=cbf9080c is 256×256 and is only ever shown at a whole
    multiple of itself: 256 on a phone, 512 from 720px up. Never in between,
    and never smaller — nearest-neighbour upscaling of pixel art is crisp,
    downscaling it deletes one-pixel strokes outright (see the note about
@@ -158,7 +158,7 @@
 @media (min-width: 900px) {
   .deck {
     width: 880px;
-    background: url("../assets/arcade/card-bg.png") center / 880px 530px no-repeat;
+    background: url("../assets/arcade/card-bg.png?v=f81a7cf8") center / 880px 530px no-repeat;
     image-rendering: pixelated;
     display: grid;
     align-items: center;

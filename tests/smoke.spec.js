@@ -350,3 +350,40 @@ test("cinema mode cannot be entered twice, and always gives the scroll back", as
   await expect(page.locator("#hero-scene .pixel-window")).toHaveCount(1);
   await expect(page.locator("#hero-scene .toolbar-strip")).toHaveCount(1);
 });
+
+test("every image the site loads carries its own cache stamp", async ({ page }) => {
+  /* The edge holds images for a week by URL, so redrawing a sprite and keeping
+     its name leaves every visitor on the old art until it expires — measured
+     2026-09-24, when a fixed image kept arriving broken with age: 6200. The
+     stamp is a hash of each file on its own, not one shared number: a shared
+     one would give new URLs to all 140-odd sprites every time a single picture
+     changed, throwing away a warm cache for the whole diorama. */
+  const bad = [];
+  page.on("response", (r) => r.status() >= 400 && bad.push(r.status() + " " + new URL(r.url()).pathname));
+
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+
+  // Trail some petals: their path used to be built at runtime, which is the one
+  // shape the stamper cannot see.
+  for (let i = 0; i < 10; i++) await page.mouse.move(300 + i * 40, 400 + i * 12);
+  await page.waitForTimeout(400);
+  expect(await page.locator(".sakura-bit").count()).toBeGreaterThan(0);
+
+  const unstamped = await page.evaluate(() => {
+    const out = [];
+    for (const img of document.images) {
+      const src = img.getAttribute("src");
+      if (src && src.includes("assets/") && !/\?v=[a-z0-9]+/.test(src)) out.push(src);
+    }
+    for (const el of document.querySelectorAll("*")) {
+      const bg = getComputedStyle(el).backgroundImage;
+      if (bg && bg.includes("assets/") && !/\?v=[a-z0-9]+/.test(bg)) out.push(bg.slice(0, 90));
+    }
+    return [...new Set(out)];
+  });
+  expect(unstamped).toEqual([]);
+
+  // A stamp that points at nothing is worse than no stamp.
+  expect(bad).toEqual([]);
+});

@@ -514,7 +514,7 @@
   flex: 0 0 auto;
   aspect-ratio: 192 / 64;
   align-self: stretch;
-  background-image: url("../assets/hero/win_top_right.png");
+  background-image: url("../assets/hero/win_top_right.png?v=f3d76f99");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

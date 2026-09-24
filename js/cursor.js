@@ -58,10 +58,21 @@ export function initSakuraTrail() {
   let lastTrail = 0;
   let liveCount = 0;
 
+  /* Written out one by one, not built with `sakura${n}.png`. A path assembled
+     at runtime cannot be found by scripts/stamp-assets.mjs, so these four were
+     the only images on the site the cache stamp could not reach — and the
+     stamp is what lets a redrawn sprite actually reach anybody. */
+  const PETALS = [
+    "assets/particles/sakura1.png?v=a67f7115",
+    "assets/particles/sakura2.png?v=60c68da2",
+    "assets/particles/sakura3.png?v=2879f8d7",
+    "assets/particles/sakura4.png?v=3d87957f",
+  ];
+
   function spawnPetal(x, y, kind) {
     if (liveCount >= MAX_PETALS) return;
 
-    const variant = Math.floor(Math.random() * 4) + 1;
+    const variant = Math.floor(Math.random() * PETALS.length);
 
     let angle, power, gravity, duration, size;
 
@@ -85,7 +96,7 @@ export function initSakuraTrail() {
 
     const petal = document.createElement("img");
     petal.className = "sakura-bit";
-    petal.src = `assets/particles/sakura${variant}.png`;
+    petal.src = PETALS[variant];
     petal.alt = "";
     petal.style.left  = `${x}px`;
     petal.style.top   = `${y}px`;

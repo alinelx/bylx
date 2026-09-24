@@ -20,7 +20,7 @@
   width: 40px;
   height: 40px;
   pointer-events: none;
-  background-image: url("../assets/cursor/arrow.png");
+  background-image: url("../assets/cursor/arrow.png?v=d471117f");
   background-repeat: no-repeat;
   background-size: contain;
   image-rendering: pixelated;
@@ -32,11 +32,11 @@
 }
 
 .cursor.hover {
-  background-image: url("../assets/cursor/pointer.png");
+  background-image: url("../assets/cursor/pointer.png?v=a8fa4dea");
 }
 
 .cursor.click {
-  background-image: url("../assets/cursor/click.png");
+  background-image: url("../assets/cursor/click.png?v=3816ea87");
   transform: translate(-4px, -4px) scale(0.95);
 }
 

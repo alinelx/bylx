@@ -20,8 +20,8 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#fdf2f8" />
 
-  <link rel="stylesheet" href="/css/tokens.css?v=922772a2" />
-  <link rel="icon" href="/assets/logo/bylx_logo_semdev.png" type="image/png">
+  <link rel="stylesheet" href="/css/tokens.css?v=bb969af6" />
+  <link rel="icon" href="/assets/logo/bylx_logo_semdev.png?v=3d70cfcd" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&family=Cute+Font&family=Dela+Gothic+One&family=Mochiy+Pop+P+One&family=Potta+One&family=Short+Stack&display=swap" rel="stylesheet">
@@ -379,7 +379,7 @@
 
 <div class="wrap">
     <header class="pk-head">
-      <img class="pk-mark" src="/assets/arcade/cute-gal-logo.png" alt="" width="128" height="64" />
+      <img class="pk-mark" src="/assets/arcade/cute-gal-logo.png?v=4411694f" alt="" width="128" height="64" />
       <h1>Cute Gal — photo booth editor</h1>
       <p class="pk-lede">Pick a photo, dress it up, save the PNG. Nothing is uploaded — every pixel stays in this tab.</p>
     </header>
@@ -590,7 +590,7 @@
       stage.add(markLayer);
 
       const markImg = new Image();
-      markImg.src = '/assets/arcade/cute-gal-logo.png';
+      markImg.src = '/assets/arcade/cute-gal-logo.png?v=4411694f';
       markImg.onload = ()=>{
         const w = markImg.naturalWidth, h = markImg.naturalHeight;  // 128x64, shown 1:1
         markLayer.add(new Konva.Image({
@@ -906,70 +906,70 @@
          which is a wall, not a sticker. */
       const STICKER_GROUPS=[
         {label:'Desk', items:[
-          {label:'Instax',   src:'/assets/hero/instax.png'},
-          {label:'Cocktail', src:'/assets/hero/cocktail.png'},
-          {label:'Sushi',    src:'/assets/hero/sushi.png'},
-          {label:'Phone',    src:'/assets/hero/phone.png'},
-          {label:'Mouse',    src:'/assets/hero/mouse.png'},
-          {label:'MP3',      src:'/assets/hero/mp3_player.png'},
-          {label:'Monitor',  src:'/assets/hero/monitor_frame.png'},
-          {label:'Paint',    src:'/assets/hero/paint_frame.png'},
-          {label:'Schizo',   src:'/assets/hero/schizomputer_frame1.png'},
-          {label:'Poster',   src:'/assets/hero/japan_poster.png'}
+          {label:'Instax',   src:'/assets/hero/instax.png?v=df7f62eb'},
+          {label:'Cocktail', src:'/assets/hero/cocktail.png?v=5c5759c4'},
+          {label:'Sushi',    src:'/assets/hero/sushi.png?v=23f41f66'},
+          {label:'Phone',    src:'/assets/hero/phone.png?v=3d7f8ead'},
+          {label:'Mouse',    src:'/assets/hero/mouse.png?v=100f8ee1'},
+          {label:'MP3',      src:'/assets/hero/mp3_player.png?v=254517dc'},
+          {label:'Monitor',  src:'/assets/hero/monitor_frame.png?v=4600d74c'},
+          {label:'Paint',    src:'/assets/hero/paint_frame.png?v=bbb81744'},
+          {label:'Schizo',   src:'/assets/hero/schizomputer_frame1.png?v=3e2c47c9'},
+          {label:'Poster',   src:'/assets/hero/japan_poster.png?v=a29fee57'}
         ]},
         {label:'Screen', items:[
-          {label:'Window',   src:'/assets/hero/window_frame.png'},
-          {label:'Desktop',  src:'/assets/hero/win_background.png'},
-          {label:'Start bar',src:'/assets/hero/toolbar.png'},
-          {label:'Gradient', src:'/assets/hero/gradient.png'}
+          {label:'Window',   src:'/assets/hero/window_frame.png?v=f3ff7334'},
+          {label:'Desktop',  src:'/assets/hero/win_background.png?v=720965ac'},
+          {label:'Start bar',src:'/assets/hero/toolbar.png?v=82d5a121'},
+          {label:'Gradient', src:'/assets/hero/gradient.png?v=7c773948'}
         ]},
         {label:'Arcade', items:[
-          {label:'Cabinet',  src:'/assets/arcade/cabinet.png'},
+          {label:'Cabinet',  src:'/assets/arcade/cabinet.png?v=cbf9080c'},
           /* start-plate.png, not start.png: the plate is 38x35 of art inside a
              256 canvas, drawn to sit on the cabinet screen, so as a sticker it
              was an invisible thumbnail and a mostly empty drag box. The 256
              version stays exactly as it is — the homepage stacks it on
              cabinet.png and that shared canvas IS the alignment. */
-          {label:'Start',    src:'/assets/arcade/start-plate.png'}
+          {label:'Start',    src:'/assets/arcade/start-plate.png?v=23aa5f8b'}
         ]},
         {label:'Rio & Lisboa', items:[
-          {label:'Cristo',   src:'/assets/hero/cristo_redentor.png'},
-          {label:'Pão de Açúcar', src:'/assets/hero/pao_de_acucar.png'},
-          {label:'Belém',    src:'/assets/hero/torre_belem.png'},
-          {label:'Ponte 25', src:'/assets/hero/ponte_25abril.png'},
-          {label:'Morro',    src:'/assets/hero/morro.png'}
+          {label:'Cristo',   src:'/assets/hero/cristo_redentor.png?v=cf608c55'},
+          {label:'Pão de Açúcar', src:'/assets/hero/pao_de_acucar.png?v=9f0fa165'},
+          {label:'Belém',    src:'/assets/hero/torre_belem.png?v=e56e7d68'},
+          {label:'Ponte 25', src:'/assets/hero/ponte_25abril.png?v=25d7bc45'},
+          {label:'Morro',    src:'/assets/hero/morro.png?v=be7fedc6'}
         ]},
         {label:'Wordmarks', items:[
-          {label:'bylx',     src:'/assets/logo/bylx_logo.png'},
-          {label:'Line',     src:'/assets/logo/bylx_logo_line.png'},
-          {label:'Cyan',     src:'/assets/logo/bylx_logo_line_cyan.png'},
-          {label:'Pink',     src:'/assets/logo/bylx_logo_line_pink.png'},
-          {label:'Purple',   src:'/assets/logo/bylx_logo_line_purple.png'},
-          {label:'bylx.',    src:'/assets/logo/bylx_logo_semdev.png'},
-          {label:'Cute Gal', src:'/assets/arcade/cute-gal-logo.png'}
+          {label:'bylx',     src:'/assets/logo/bylx_logo.png?v=d6f6faea'},
+          {label:'Line',     src:'/assets/logo/bylx_logo_line.png?v=2d354004'},
+          {label:'Cyan',     src:'/assets/logo/bylx_logo_line_cyan.png?v=3cb3efea'},
+          {label:'Pink',     src:'/assets/logo/bylx_logo_line_pink.png?v=a762fd8f'},
+          {label:'Purple',   src:'/assets/logo/bylx_logo_line_purple.png?v=0b4e4595'},
+          {label:'bylx.',    src:'/assets/logo/bylx_logo_semdev.png?v=3d70cfcd'},
+          {label:'Cute Gal', src:'/assets/arcade/cute-gal-logo.png?v=4411694f'}
         ]},
         {label:'Stack', items:[
-          {label:'HTML',     src:'/assets/hero/html_icon.png'},
-          {label:'CSS',      src:'/assets/hero/css_icon.png'},
-          {label:'JS',       src:'/assets/hero/javascript_icon.png'},
-          {label:'TS',       src:'/assets/hero/typescript_icon.png'},
-          {label:'React',    src:'/assets/hero/react_icon.png'},
-          {label:'Node',     src:'/assets/hero/node_icon.png'},
-          {label:'Figma',    src:'/assets/hero/figma_icon.png'},
-          {label:'WP',       src:'/assets/hero/wordpress_icon.png'},
-          {label:'dark28',   src:'/assets/hero/dark28-linepixel.png'}
+          {label:'HTML',     src:'/assets/hero/html_icon.png?v=84c4ce08'},
+          {label:'CSS',      src:'/assets/hero/css_icon.png?v=338cbcee'},
+          {label:'JS',       src:'/assets/hero/javascript_icon.png?v=6a68cb3e'},
+          {label:'TS',       src:'/assets/hero/typescript_icon.png?v=14784b64'},
+          {label:'React',    src:'/assets/hero/react_icon.png?v=fc37dc0f'},
+          {label:'Node',     src:'/assets/hero/node_icon.png?v=49500239'},
+          {label:'Figma',    src:'/assets/hero/figma_icon.png?v=27030627'},
+          {label:'WP',       src:'/assets/hero/wordpress_icon.png?v=f79d63a4'},
+          {label:'dark28',   src:'/assets/hero/dark28-linepixel.png?v=8727c131'}
         ]},
         {label:'Cursor', items:[
-          {label:'Arrow',    src:'/assets/cursor/arrow.png'},
-          {label:'Click',    src:'/assets/cursor/click.png'},
-          {label:'Pointer',  src:'/assets/cursor/pointer.png'}
+          {label:'Arrow',    src:'/assets/cursor/arrow.png?v=d471117f'},
+          {label:'Click',    src:'/assets/cursor/click.png?v=3816ea87'},
+          {label:'Pointer',  src:'/assets/cursor/pointer.png?v=a8fa4dea'}
         ]}
       ];
       const BUILTIN_FRAMES=[
-        {label:'Hearts',  src:'/assets/arcade/cutegal/frame-hearts.png'},
-        {label:'Bows',    src:'/assets/arcade/cutegal/frame-bows.png'},
-        {label:'Static',  src:'/assets/arcade/cutegal/frame-static.png'},
-        {label:'Rawr',    src:'/assets/arcade/cutegal/frame-rawr.png'}
+        {label:'Hearts',  src:'/assets/arcade/cutegal/frame-hearts.png?v=35103fb2'},
+        {label:'Bows',    src:'/assets/arcade/cutegal/frame-bows.png?v=6c9eff6f'},
+        {label:'Static',  src:'/assets/arcade/cutegal/frame-static.png?v=e6350b2a'},
+        {label:'Rawr',    src:'/assets/arcade/cutegal/frame-rawr.png?v=fdedd5da'}
       ];
       STICKER_GROUPS.forEach(group=>{
         const wrap=document.createElement('div'); wrap.className='sticker-group';
