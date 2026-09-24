@@ -242,7 +242,22 @@
 
     .hidden { display: none; }
 
-    .back-link { display: inline-block; margin-top: 2.5rem; font-family: var(--pixel); font-size: 0.45rem; letter-spacing: 0.06em; }
+    .foot { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 2.5rem; }
+    .back-link { display: inline-block; font-family: var(--pixel); font-size: 0.45rem; letter-spacing: 0.06em; }
+
+    /* Quiet on purpose. A reading that ends by asking for money loudly is a
+       different kind of object; this is the size of the way out, next to it. */
+    .kofi {
+      padding: 7px 12px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 999px;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+
+    .kofi:hover { border-color: var(--gold); color: var(--gold); }
+    .kofi:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
     /* ── Saving as PDF ───────────────────────────────────────────────────
        There is no PDF library here and there should not be: every browser
@@ -288,7 +303,10 @@
          time, so a screen reader never walks a deck that is not on the table. -->
     <main id="app" aria-live="polite"></main>
 
-    <a class="back-link no-print" href="/arcade/" data-i18n="back">← voltar ao arcade</a>
+    <p class="foot no-print">
+      <a class="back-link" href="/arcade/" data-i18n="back">← voltar ao arcade</a>
+      <a class="kofi" href="https://ko-fi.com/alinelx" target="_blank" rel="noopener noreferrer" data-i18n="kofi">☕ Oferece-me um café</a>
+    </p>
   </div>
 
   <script>
@@ -312,6 +330,7 @@
       subtitle: { pt: "78 arcanos · ereto e invertido · leitura por posição e geral",
                   en: "78 cards · upright and reversed · read by position and as a whole" },
       back:     { pt: "← voltar ao arcade", en: "← back to the arcade" },
+      kofi:     { pt: "☕ Oferece-me um café", en: "☕ Buy me a coffee" },
       step1:    { pt: "1. Escolhe o tema", en: "1. Choose a theme" },
       step2:    { pt: "2. Escolhe a abertura", en: "2. Choose a spread" },
       step3:    { pt: "3. Como escolher as cartas", en: "3. How to pick the cards" },

@@ -367,6 +367,27 @@
 
     .pk-back:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
 
+    /* A way to say thanks, not a funnel. Same weight as the way out, sat
+       beside it, and nothing about it moves: the rule against CTAs that ask
+       to be clicked applies to this more than to anything else on the site. */
+    .pk-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 22px; }
+    .pk-foot .pk-back { margin: 0; }
+
+    .pk-kofi {
+      display: inline-block;
+      padding: 8px 12px;
+      border: 3px solid var(--muted);
+      background: var(--bg);
+      color: var(--muted);
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.45rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .pk-kofi:hover { border-color: var(--pink); color: var(--pink); }
+    .pk-kofi:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+
     @media (prefers-reduced-motion: reduce) {
       .btn:active { transform: none; }
     }
@@ -375,7 +396,6 @@
   
 </head>
 <body>
-  <a class="pk-back" href="/arcade/">← back to the arcade</a>
 
 <div class="wrap">
     <header class="pk-head">
@@ -498,6 +518,11 @@
   <!-- Vendored, not from a CDN: the version is in the filename, so it is
        immutable and needs no cache stamp, and the machine still works on a day
        unpkg does not. -->
+    <p class="pk-foot">
+      <a class="pk-back" href="/arcade/">← back to the arcade</a>
+      <a class="pk-kofi" href="https://ko-fi.com/alinelx" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a>
+    </p>
+
   <script src="/assets/vendor/konva-9.3.16.min.js"></script>
   <script>
 // Rewritten, consolidated JS (fixes stray token & rebinds events via delegation)

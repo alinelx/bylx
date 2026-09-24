@@ -408,3 +408,45 @@ test("the tarot deals a full deck, in both languages, and prints", async ({ page
   await page.waitForLoadState("networkidle");
   expect(errors).toEqual([]);
 });
+
+test.describe("supporting the arcade", () => {
+  for (const path of ["/arcade/cutegal/", "/arcade/tarot/"]) {
+    test(`${path} offers a way to say thanks without begging`, async ({ page }) => {
+      await page.goto(path);
+      await page.waitForLoadState("networkidle");
+
+      const kofi = page.locator('a[href*="ko-fi.com"]');
+      await expect(kofi).toHaveCount(1);
+      await expect(kofi).toBeVisible();
+      await expect(kofi).toHaveAttribute("href", "https://ko-fi.com/alinelx");
+
+      /* An external link opened in a new tab must not hand the opener over. */
+      const rel = (await kofi.getAttribute("rel")) || "";
+      expect(rel).toContain("noopener");
+      expect(await kofi.getAttribute("target")).toBe("_blank");
+
+      // The way out still works, and is not the thing that got replaced.
+      await expect(page.locator('a[href="/arcade/"]').first()).toBeVisible();
+
+      /* Nothing about it may move. The rule against motion that asks to be
+         clicked applies here more than anywhere else on the site. */
+      expect(await kofi.evaluate((el) => {
+        const cs = getComputedStyle(el);
+        return { animation: cs.animationName, transition: cs.transitionProperty.includes("transform") };
+      })).toEqual({ animation: "none", transition: false });
+    });
+  }
+
+  test("the saved reading does not ask for money", async ({ page }) => {
+    await page.goto("/arcade/tarot/");
+    await page.locator("[data-go]").click();
+    await expect(page.locator(".face").first()).toBeVisible();
+
+    /* A donation button inside a PDF someone keeps is a different object from
+       a quiet link under the reading. The print stylesheet drops it. */
+    await page.emulateMedia({ media: "print" });
+    await expect(page.locator('a[href*="ko-fi.com"]')).toBeHidden();
+    await page.emulateMedia({ media: "screen" });
+    await expect(page.locator('a[href*="ko-fi.com"]')).toBeVisible();
+  });
+});
