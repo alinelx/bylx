@@ -140,24 +140,36 @@
   min-height: 22rem;
 }
 
-/* There is no backdrop here any more, and the removal is the point.
-   card-bg.png is 88×53 — the screen of the cabinet Aline drew — and stretching
-   it across a 880px deck asked pixelfit for the largest whole multiple that
-   fits, which on a 1280 screen at 1.25 DPR came out at FIFTEEN. Every source
-   pixel became a 15×15 block. Nothing was scaled wrongly: whole multiples,
-   nearest-neighbour, all correct, and it still looked like a smear, because
-   the art is a small screen graphic and the job was a page-wide backdrop.
+/* The select-screen chrome behind the cards. card-bg.png is 88×53, so 880 is
+   ×10 — and the art is crisp at ×10; what went wrong was never the art.
 
-   Whole-number scaling keeps pixel art honest; it cannot invent detail that
-   was never drawn. To bring a backdrop back, the art has to be drawn near the
-   size it is shown at — about 220×140, which lands on ×4 here and is tall
-   enough to hold a card. */
+   data-pixel-max="880" is the load-bearing part. pixelfit picks the largest
+   WHOLE multiple of 88 that fits the room it is given, and without a cap the
+   room was the full 1100 container: on a 1280 screen at 1.25 DPR it chose 15
+   device pixels per source pixel and blew the backdrop up to 1056×636, a fifth
+   bigger than it was drawn for and dominating the page. The cap keeps it at
+   the size it was designed for while pixelfit still guarantees whole DEVICE
+   pixels at every ratio — ×10 at 1x, ×12 (844.8 CSS px) at 1.25x, ×20 at 2x.
+   Neither the plain CSS ×10 nor the uncapped pixelfit gets both.
+
+   Below 900px the rule does not apply, the background computes to none, and
+   pixelfit hands the element back to the stylesheet: no multiple of 88 is both
+   wide enough to hold a 304px card and narrow enough to fit. */
 @media (min-width: 900px) {
   .deck {
     width: 880px;
+    background: url("../assets/arcade/card-bg.png") center / 880px 530px no-repeat;
+    image-rendering: pixelated;
     display: grid;
     align-items: center;
   }
+
+  /* Off centre on purpose: dead centre put the card over the TIME 99 / NORMAL
+     header the cabinet screen is drawn with. Only here — below 900px there is
+     no backdrop to clear and only 87px of slack to spend. */
+  /* .deck .deck-card, not .deck-card: the base rule sits LOWER in this file,
+     so an equally specific override here would lose on order alone. */
+  .deck .deck-card { top: 57%; }
 }
 
 .deck-cards {

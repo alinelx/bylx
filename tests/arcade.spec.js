@@ -293,3 +293,49 @@ test("undo steps back one stroke, and text gets the font it asked for", async ({
   // Five faces that all fell back to the same one would share a width.
   expect(widths.size).toBe(5);
 });
+
+test("the deck backdrop stays the size it was drawn for, at whole device pixels", async ({ page }) => {
+  await page.goto("/arcade/");
+  await page.waitForLoadState("networkidle");
+
+  /* card-bg.png is 88x53 and is drawn for x10 — 880 wide. js/pixelfit.js picks
+     the largest whole multiple that fits the room it is given, so without
+     data-pixel-max it took the whole 1100 column and reached x15 on a 1.25 DPR
+     screen: 1056x636, a fifth bigger than intended. The cap holds the size
+     while pixelfit still guarantees whole DEVICE pixels at any ratio. */
+  for (const [width, dpr] of [[1280, 1], [1600, 1], [2560, 1]]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.waitForTimeout(250);
+
+    const seen = await page.evaluate(() => {
+      const deck = document.querySelector(".deck");
+      const box = deck.getBoundingClientRect();
+      const card = document.querySelector(".deck-card a").getBoundingClientRect();
+      return {
+        hasBackdrop: getComputedStyle(deck).backgroundImage !== "none",
+        cssWidth: box.width,
+        deviceMultiple: (box.width * devicePixelRatio) / 88,
+        heightMultiple: (box.height * devicePixelRatio) / 53,
+        cardInside: card.top >= box.top - 1 && card.bottom <= box.bottom + 1,
+      };
+    });
+
+    expect(seen.hasBackdrop, `backdrop at ${width}`).toBe(true);
+    // Never grows past what the art was drawn for, however wide the screen is.
+    expect(seen.cssWidth).toBeLessThanOrEqual(880);
+    const k = Math.round(seen.deviceMultiple);
+    expect(Math.abs(seen.deviceMultiple - k), `whole multiple at ${width}`).toBeLessThan(0.01);
+    expect(Math.abs(seen.heightMultiple - k), `same multiple both axes at ${width}`).toBeLessThan(0.01);
+    expect(seen.cardInside, `card sits on the backdrop at ${width}`).toBe(true);
+  }
+
+  /* Below 900px no multiple of 88 is both wide enough for a 304px card and
+     narrow enough to fit, so the rule drops out and pixelfit hands the element
+     back to the stylesheet rather than sizing a background that is not there. */
+  await page.setViewportSize({ width: 700, height: 900 });
+  await page.waitForTimeout(250);
+  expect(await page.evaluate(() => {
+    const deck = document.querySelector(".deck");
+    return { backdrop: getComputedStyle(deck).backgroundImage !== "none", inline: deck.style.width };
+  })).toEqual({ backdrop: false, inline: "" });
+});

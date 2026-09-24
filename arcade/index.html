@@ -25,7 +25,7 @@
     href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="/styles.css?v=86c1c50e" />
+  <link rel="stylesheet" href="/styles.css?v=b755f4b3" />
 </head>
 <body>
   <main class="cab">
@@ -41,7 +41,7 @@
     <!-- A list of links that happens to look like a coverflow. Every card is in
          the DOM and in order; js/arcade.js only moves an index. Adding a machine
          is one <li> here and one folder next to this file. -->
-    <div class="deck" data-deck>
+    <div class="deck" data-deck data-pixel-w="88" data-pixel-h="53" data-pixel-bg data-pixel-max="880">
       <button class="deck-arrow deck-arrow--prev" type="button" data-deck-prev aria-label="Previous machine">&#9664;</button>
 
       <ul class="deck-cards">
@@ -78,9 +78,9 @@
   <div class="cursor" aria-hidden="true"></div>
 
   <script type="module">
-    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=86c1c50e";
-    import { initArcade } from "/js/arcade.js?v=86c1c50e";
-    import { initPixelFit } from "/js/pixelfit.js?v=86c1c50e";
+    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=b755f4b3";
+    import { initArcade } from "/js/arcade.js?v=b755f4b3";
+    import { initPixelFit } from "/js/pixelfit.js?v=b755f4b3";
 
     for (const [name, init] of [["cursor", initCursor], ["sakura", initSakuraTrail], ["arcade", initArcade], ["pixelfit", initPixelFit]]) {
       try {
