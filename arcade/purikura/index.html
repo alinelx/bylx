@@ -20,71 +20,247 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#fdf2f8" />
 
+  <link rel="stylesheet" href="/css/tokens.css?v=56a3ad55" />
   <link rel="icon" href="/assets/logo/bylx_logo_semdev.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dela+Gothic+One&family=Mochiy+Pop+P+One&family=Potta+One&family=Short+Stack&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&family=Cute+Font&family=Dela+Gothic+One&family=Mochiy+Pop+P+One&family=Potta+One&family=Short+Stack&display=swap" rel="stylesheet">
 
   <style>
-:root{
-      --bg1:#fdf2f8; /* fuchsia-50 */
-      --panel:#ffffff;
-      --ink:#0f172a; /* slate-900 */
-      --accent:#e879f9; /* fuchsia-400 */
-      --accent-2:#d946ef; /* fuchsia-500 */
-      --muted:#64748b; /* slate-500 */
+    /* The machine wears the house colours. The tokens come from the site's own
+       css/tokens.css — one small file, no duplicated palette — and everything
+       below is the 8-bit dialect: square corners, three-pixel borders, hard
+       shadows with no blur, and the two type faces the rest of bylx.dev uses.
+
+       It still does not load styles.css. That file carries the scene, the
+       sections and a `cursor: none` this editor would be worse for. */
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Pixelify Sans", ui-sans-serif, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;color:var(--ink);background:linear-gradient(#fdf2f8, #fff);} 
-    h1{margin:0 0 12px;font-size:28px;font-weight:800}
-    .wrap{max-width:900px;margin:0 auto;padding:24px}
-    .grid{display:grid;grid-template-columns:1fr;gap:24px}
-    .panel{background:var(--panel);border-radius:16px;box-shadow:0 10px 20px rgba(2,6,23,.06);padding:16px}
-    .row{display:flex;gap:8px;align-items:center;min-width:0}
-    .row>label{min-width:90px;font-size:12px;color:var(--muted)}
-    .grow{flex:1;min-width:0}
-    .btn{appearance:none;border:0;border-radius:12px;background:#f1f5f9;padding:6px 10px;cursor:pointer;white-space:nowrap;font-size:13px}
-    .btn.primary{background:var(--accent-2);color:#fff}
-    .btn.pill{border-radius:999px}
-    .btn.active{background:var(--accent);color:#fff}
-    .btn:hover{filter:brightness(0.97)}
-    input[type="range"]{width:100%}
-    input[type="color"]{width:100%;height:40px;padding:0;border-radius:10px;border:1px solid #e2e8f0;background:#fff}
-    select, input[type="url"], input[type="text"], input[type="number"], input[type="file"]{width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:10px;min-width:0}
-    input[type="file"]{padding:6px}
-    .hint{font-size:12px;color:var(--muted)}
-    .thumbs{display:flex;flex-wrap:wrap;gap:8px}
-    .thumb{display:inline-flex;align-items:center;gap:8px;background:#fdf4ff;border:1px solid #f5d0fe;border-radius:10px;padding:6px 10px;cursor:pointer}
-    .thumb img{width:22px;height:22px;object-fit:contain}
-    .canvas-wrap{display:flex;justify-content:center;position:relative}
-    .frame{border:8px solid #fbcfe8;border-radius:16px;overflow:hidden}
-    .kawaii{font-family:"Cute Font", "Mochiy Pop P One", "Potta One", cursive}
-    .btn-group{display:flex;gap:8px;flex-wrap:wrap}
-    .toggle{display:inline-flex;align-items:center;gap:6px}
-    .trash-hint{position:absolute;right:12px;bottom:12px;background:#fff;border:2px dashed #94a3b8;color:#475569;padding:6px 10px;border-radius:10px;box-shadow:0 6px 14px rgba(2,6,23,.08)}
-  .panel.collapsed #toolsBody{display:none}
-  .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px}
-    .toolcol{background:#fafafa;border:1px solid #e2e8f0;border-radius:12px;padding:10px;max-height:48vh;overflow:auto}
-    .toolcol h3{margin:0 0 8px;font-size:14px;color:#334155}
-  </style>
 
-  <style>
-    /* The only thing the site adds to this machine: a way back to the arcade. */
+    .wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 16px 20px 64px;
+    }
+
+    h1 {
+      margin: 18px 0 20px;
+      font-family: "Press Start 2P", monospace;
+      font-size: clamp(0.7rem, 2.4vw, 1rem);
+      line-height: 1.6;
+      color: var(--pink);
+      text-shadow: 3px 3px 0 var(--purple);
+    }
+
+    h2,
+    h3 {
+      margin: 0 0 10px;
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.56rem;
+      letter-spacing: 0.06em;
+      color: var(--cyan);
+      text-transform: uppercase;
+    }
+
+    .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+
+    /* A panel is a window: flat fill, hard edge, hard shadow. No radius, no
+       blur — a blurred shadow is the one thing pixel art never has. */
+    .panel {
+      padding: 16px;
+      border: 3px solid var(--cyan);
+      background: var(--bylx-bg-ink);
+      box-shadow: 6px 6px 0 var(--purple);
+    }
+
+    .row { display: flex; gap: 8px; align-items: center; min-width: 0; }
+
+    .row > label {
+      min-width: 92px;
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.4rem;
+      line-height: 1.7;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .grow { flex: 1; min-width: 0; }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .toolcol { display: grid; gap: 10px; align-content: start; }
+
+    .btn {
+      appearance: none;
+      padding: 8px 12px;
+      border: 3px solid var(--bg);
+      border-radius: 0;
+      background: var(--muted);
+      color: var(--bg);
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.45rem;
+      line-height: 1.6;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--purple);
+    }
+
+    .btn:hover { background: var(--cyan); }
+
+    .btn:active {
+      transform: translate(3px, 3px);
+      box-shadow: none;
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid var(--pink);
+      outline-offset: 2px;
+    }
+
+    .btn.primary,
+    .btn.active {
+      background: var(--pink);
+      color: var(--bg);
+    }
+
+    /* .pill keeps its name from the old rounded design; here it is square like
+       everything else, because a pill is a curve and this alphabet has none. */
+    .btn.pill { border-radius: 0; }
+
+    .btn-group { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      padding: 7px 9px;
+      border: 3px solid var(--cyan);
+      border-radius: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Pixelify Sans", ui-sans-serif, sans-serif;
+      font-size: 0.95rem;
+    }
+
+    input[type="file"] { max-width: 100%; font-size: 0.8rem; color: var(--muted); }
+
+    input[type="color"] {
+      width: 52px;
+      height: 34px;
+      padding: 0;
+      border: 3px solid var(--cyan);
+      background: var(--bg);
+      cursor: pointer;
+    }
+
+    /* Stepped on purpose: a slider that can stop between two pixels is a
+       slider that can put a sticker on half of one. */
+    input[type="range"] {
+      appearance: none;
+      width: 100%;
+      height: 14px;
+      background: var(--bg);
+      border: 3px solid var(--cyan);
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      margin-top: -1px;
+      background: var(--pink);
+      border: 0;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border: 0;
+      border-radius: 0;
+      background: var(--pink);
+    }
+
+    .thumbs { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .thumb {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 9px 6px 6px;
+      border: 3px solid var(--cyan);
+      background: var(--bylx-bg-ink);
+      color: var(--text);
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.4rem;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+    }
+
+    .thumb:hover { border-color: var(--pink); }
+
+    .thumb img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+
+    /* The canvas is the artwork, so it gets the frame the artwork deserves —
+       and a checkerboard behind it, the way every pixel editor says
+       "transparent". */
+    #konvaContainer {
+      border: 3px solid var(--cyan);
+      box-shadow: 8px 8px 0 var(--purple);
+      background-color: var(--bylx-bg-ink);
+      background-image:
+        linear-gradient(45deg, rgba(247, 242, 255, 0.06) 25%, transparent 25%, transparent 75%, rgba(247, 242, 255, 0.06) 75%),
+        linear-gradient(45deg, rgba(247, 242, 255, 0.06) 25%, transparent 25%, transparent 75%, rgba(247, 242, 255, 0.06) 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 8px 8px;
+      max-width: 100%;
+    }
+
+    .collapsed { display: none; }
+
     .pk-back {
       display: inline-block;
-      margin: 16px 0 0 24px;
-      padding: 7px 13px;
-      border-radius: 999px;
-      background: #fff;
-      color: #0f172a;
-      font: 600 13px/1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      margin: 18px 0 0;
+      padding: 8px 12px;
+      border: 3px solid var(--cyan);
+      background: var(--bg);
+      color: var(--cyan);
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.45rem;
+      letter-spacing: 0.04em;
       text-decoration: none;
-      box-shadow: 0 10px 20px rgba(2, 6, 23, .06);
+      box-shadow: 3px 3px 0 var(--purple);
     }
 
-    .pk-back:hover,
-    .pk-back:focus-visible { background: #fdf2f8; }
+    .pk-back:hover { background: var(--cyan); color: var(--bg); }
+
+    .pk-back:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .btn:active { transform: none; }
+    }
   </style>
+
+  
 </head>
 <body>
   <a class="pk-back" href="/arcade/">← back to the arcade</a>
@@ -132,6 +308,7 @@
                 <button class="btn pill active" data-brush="pen">Normal</button>
                 <button class="btn pill" data-brush="neon">Neon</button>
                 <button class="btn pill" data-brush="glow">Glow</button>
+                <button class="btn pill" data-brush="sakura">Sakura</button>
               </div>
               <div class="row" style="margin-top:6px">
                 <label style="min-width:auto">Color</label><input id="colorBrush" type="color" value="#ff3b81">
@@ -192,7 +369,7 @@
 
       <main class="panel canvas-wrap">
         <div class="frame">
-          <div id="konvaContainer" style="width:900px;height:900px"></div>
+          <div id="konvaContainer" style="width:512px;height:512px"></div>
         </div>
         <div class="trash-hint" id="trashHint">🗑️ Trash</div>
       </main>
@@ -271,7 +448,11 @@
       }
 
       // ---------- Stage & Layers ----------
-      const CANVAS_W = 900, CANVAS_H = 900;
+      /* 512, not 900. Every frame is stretched to exactly this, so the canvas has to
+         be a whole multiple of the art: at 512 a 512 frame is 1:1, a 256 one is x2
+         and a 128 one is x4. At 900 a 512 frame was 1.758x, which is the same half
+         pixel that made the backdrop look horrible. Export doubles it to 1024. */
+      const CANVAS_W = 512, CANVAS_H = 512;
       const stage = new Konva.Stage({container:'konvaContainer', width:CANVAS_W, height:CANVAS_H});
       const photoLayer = new Konva.Layer({name:'photoLayer'});
       const drawLayer = new Konva.Layer({name:'drawLayer'});
@@ -372,8 +553,8 @@
            art look like a bad JPEG: 16 goes to x13 (208), 64 to x3 (192), 256
            to a half (128). Never 13.75x. */
         const long=Math.max(img.width,img.height);
-        const fit=long<=220?Math.max(1,Math.floor(220/long)):1/Math.ceil(long/220);
-        const st=new Konva.Image({image:img,x:60,y:60,draggable:true,name:'sticker',width:Math.round(img.width*fit),height:Math.round(img.height*fit),imageSmoothingEnabled:false}); bindDecor(st); decorLayer.add(st); selectNode(st); decorLayer.draw(); }; }
+        const fit=long<=128?Math.max(1,Math.floor(128/long)):1/Math.ceil(long/128);
+        const st=new Konva.Image({image:img,x:32,y:32,draggable:true,name:'sticker',width:Math.round(img.width*fit),height:Math.round(img.height*fit),imageSmoothingEnabled:false}); bindDecor(st); decorLayer.add(st); selectNode(st); decorLayer.draw(); }; }
       function addTextDecor(){
         const textValue = el.txtText.value || '';
         const colorText = el.colorText.value;
@@ -414,6 +595,36 @@
 
       // ---------- Brush + history ----------
       let penEnabled = true, brushStyle='pen', brushColor='#ff3b81', brushSize=6;
+
+      /* The sakura brush stamps the same four petals the cursor trails across
+         the site, instead of drawing a line. Whole ratios only, like everything
+         else here, and spaced by distance so a slow hand does not pile fifty
+         petals on one spot. */
+      const SAKURA = ['sakura1','sakura2','sakura3','sakura4'].map(n=>{ const i=new Image(); i.src='/assets/particles/'+n+'.png'; return i; });
+      let lastPetal = null;
+
+      function stampSakura(p){
+        const gap = Math.max(6, brushSize * 2);
+        if (lastPetal && Math.hypot(p.x-lastPetal.x, p.y-lastPetal.y) < gap) return;
+        lastPetal = {x:p.x, y:p.y};
+        const img = SAKURA[Math.floor(Math.random()*SAKURA.length)];
+        if (!img.complete || !img.naturalWidth) return;
+        const k = Math.max(1, Math.round(brushSize/4));
+        const w = img.naturalWidth*k, h = img.naturalHeight*k;
+        drawLayer.add(new Konva.Image({
+          image: img, x: p.x, y: p.y, width: w, height: h,
+          offsetX: w/2, offsetY: h/2,
+          /* Quarter turns and a flip, never a free angle: rotating pixel art by
+             37 degrees resamples every pixel and the petal comes out soft. Four
+             sprites x four turns x two flips is thirty-two variations, all of
+             them still on the grid. */
+          rotation: Math.floor(Math.random()*4)*90,
+          scaleX: Math.random() < 0.5 ? -1 : 1,
+          opacity: 0.8 + Math.random()*0.2,
+          imageSmoothingEnabled: false
+        }));
+        drawLayer.batchDraw();
+      }
       let drawing=false, lineRef=null, neonGlow=null, neonCore=null;
       const DRAW_HISTORY_LIMIT=60, drawHistory=[], drawFuture=[];
       function pushDrawHistory(){ const json=drawLayer.toJSON(); drawHistory.push(json); if(drawHistory.length>DRAW_HISTORY_LIMIT) drawHistory.shift(); drawFuture.length=0; updateDrawButtons(); }
@@ -423,8 +634,8 @@
       function updateDrawButtons(){ if(el.btnDrawUndo) el.btnDrawUndo.disabled = drawHistory.length===0; if(el.btnDrawRedo) el.btnDrawRedo.disabled = drawFuture.length===0; }
       pushDrawHistory();
       function canStartDrawingOnTarget(target){ if(!target) return false; if(target===stage) return true; const layer = target.getLayer && target.getLayer(); return layer===photoLayer || layer===drawLayer; }
-      stage.on('mousedown touchstart', (e)=>{ if(!penEnabled) return; if(!canStartDrawingOnTarget(e.target)) return; selectNode(null); drawing=true; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='neon'){ neonGlow=new Konva.Line({points:[p.x,p.y], stroke:brushColor, opacity:.7, strokeWidth:brushSize*3, lineCap:'round', lineJoin:'round', shadowColor:brushColor, shadowBlur:16, globalCompositeOperation:'lighter'}); neonCore=new Konva.Line({points:[p.x,p.y], stroke:'#fff', strokeWidth:Math.max(1,Math.round(brushSize*.6)), lineCap:'round', lineJoin:'round', globalCompositeOperation:'lighter'}); drawLayer.add(neonGlow); drawLayer.add(neonCore); drawLayer.draw(); } else { lineRef=new Konva.Line({points:[p.x,p.y], stroke:brushColor, strokeWidth:brushSize, lineCap:'round', lineJoin:'round', tension:.4}); if(brushStyle==='glow'){ lineRef.shadowColor(brushColor); lineRef.shadowBlur(14); lineRef.opacity(.9); lineRef.globalCompositeOperation('lighter'); } drawLayer.add(lineRef); drawLayer.draw(); } });
-      stage.on('mousemove touchmove', ()=>{ if(!drawing) return; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='neon'){ if(neonGlow&&neonCore){ neonGlow.points(neonGlow.points().concat([p.x,p.y])); neonCore.points(neonCore.points().concat([p.x,p.y])); drawLayer.batchDraw(); } } else if(lineRef){ lineRef.points(lineRef.points().concat([p.x,p.y])); drawLayer.batchDraw(); } });
+      stage.on('mousedown touchstart', (e)=>{ if(!penEnabled) return; if(!canStartDrawingOnTarget(e.target)) return; selectNode(null); drawing=true; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='sakura'){ lastPetal=null; stampSakura(p); } else if(brushStyle==='neon'){ neonGlow=new Konva.Line({points:[p.x,p.y], stroke:brushColor, opacity:.7, strokeWidth:brushSize*3, lineCap:'round', lineJoin:'round', shadowColor:brushColor, shadowBlur:16, globalCompositeOperation:'lighter'}); neonCore=new Konva.Line({points:[p.x,p.y], stroke:'#fff', strokeWidth:Math.max(1,Math.round(brushSize*.6)), lineCap:'round', lineJoin:'round', globalCompositeOperation:'lighter'}); drawLayer.add(neonGlow); drawLayer.add(neonCore); drawLayer.draw(); } else { lineRef=new Konva.Line({points:[p.x,p.y], stroke:brushColor, strokeWidth:brushSize, lineCap:'round', lineJoin:'round', tension:.4}); if(brushStyle==='glow'){ lineRef.shadowColor(brushColor); lineRef.shadowBlur(14); lineRef.opacity(.9); lineRef.globalCompositeOperation('lighter'); } drawLayer.add(lineRef); drawLayer.draw(); } });
+      stage.on('mousemove touchmove', ()=>{ if(!drawing) return; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='sakura'){ stampSakura(p); } else if(brushStyle==='neon'){ if(neonGlow&&neonCore){ neonGlow.points(neonGlow.points().concat([p.x,p.y])); neonCore.points(neonCore.points().concat([p.x,p.y])); drawLayer.batchDraw(); } } else if(lineRef){ lineRef.points(lineRef.points().concat([p.x,p.y])); drawLayer.batchDraw(); } });
       stage.on('mouseup touchend', ()=>{ if(!drawing) return; drawing=false; lineRef=null; neonGlow=null; neonCore=null; pushDrawHistory(); });
 
       // ---------- UI wiring ----------
@@ -472,8 +683,6 @@
          borrowed and nothing is hotlinked: the earlier set came from vecteezy,
          pngtree and picmix, which 403 and licence. */
       const BUILTIN_STICKERS=[
-        {label:'Sakura',   src:'/assets/particles/sakura1.png'},
-        {label:'Petal',    src:'/assets/particles/sakura2.png'},
         {label:'bylx',     src:'/assets/logo/bylx_logo.png'},
         {label:'Cristo',   src:'/assets/hero/cristo_redentor.png'},
         {label:'Belém',    src:'/assets/hero/torre_belem.png'},
