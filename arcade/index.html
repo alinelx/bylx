@@ -25,7 +25,7 @@
     href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="/styles.css?v=74ddebf8" />
+  <link rel="stylesheet" href="/styles.css?v=f8d36fb6" />
 </head>
 <body>
   <main class="cab">
@@ -48,7 +48,8 @@
         <li class="deck-card">
           <a href="/arcade/purikura/">
             <span class="deck-shot" aria-hidden="true" style="--shot: url(/assets/arcade/purikura-shot.png)"></span>
-            <span class="deck-name">Purikura Editor</span>
+            <img class="deck-logo" src="/assets/arcade/cute-gal-logo.png" alt="Cute Gal" width="128" height="64" />
+            <span class="deck-name">Cute Gal · purikura editor</span>
             <span class="deck-note">A photo booth in a browser: stickers, frames, outlined text, a brush with undo, and filters. Vanilla JavaScript and Konva.</span>
           </a>
         </li>
@@ -77,8 +78,8 @@
   <div class="cursor" aria-hidden="true"></div>
 
   <script type="module">
-    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=74ddebf8";
-    import { initArcade } from "/js/arcade.js?v=74ddebf8";
+    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=f8d36fb6";
+    import { initArcade } from "/js/arcade.js?v=f8d36fb6";
 
     for (const [name, init] of [["cursor", initCursor], ["sakura", initSakuraTrail], ["arcade", initArcade]]) {
       try {

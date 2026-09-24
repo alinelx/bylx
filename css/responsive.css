@@ -78,9 +78,15 @@
 }
 
 @media (max-width: 520px) {
+  /* The work and arcade pages opt into the pixel cursor with two classes, which
+     outranks a bare `*` — so on a narrow screen the native cursor stayed hidden
+     while .cursor was display:none, and there was no pointer at all. Whatever
+     turns the pixel cursor off has to turn the real one back on. */
   html,
   body,
-  * {
+  *,
+  .is-work-page.has-pixel-cursor,
+  .is-work-page.has-pixel-cursor * {
     cursor: auto !important;
   }
 

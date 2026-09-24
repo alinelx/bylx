@@ -124,7 +124,9 @@
 .deck {
   position: relative;
   margin: clamp(2rem, 6vw, 3.5rem) auto 0;
-  min-height: 21rem;
+  /* The cards are absolutely positioned, so nothing here inherits their
+     height — it has to be stated, and it has to clear the tallest card. */
+  min-height: 30rem;
 }
 
 /* The select-screen chrome sits behind the cards. The file is 88×53 — it was
@@ -142,13 +144,12 @@
     align-items: center;
   }
 
-  .deck-cards { height: 530px; display: grid; align-items: center; }
-  .deck-card { top: auto; }
+  .deck-cards { height: 530px; }
 }
 
 .deck-cards {
   position: relative;
-  height: 21rem;
+  height: 30rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -156,12 +157,15 @@
 
 .deck-card {
   position: absolute;
-  top: 0;
+  /* Centred both ways so the card sits in the middle of the cabinet screen
+     whatever its own height turns out to be — the logo made it taller and it
+     ran off the bottom of the backdrop. */
+  top: 50%;
   left: 50%;
   width: min(19rem, 76vw);
   /* --i is how far this card sits from the active one; js/arcade.js writes it. */
   --i: 0;
-  transform: translateX(-50%) translateX(calc(var(--i) * 68%)) scale(calc(1 - 0.16 * max(var(--i), var(--i) * -1)));
+  transform: translate(-50%, -50%) translateX(calc(var(--i) * 68%)) scale(calc(1 - 0.16 * max(var(--i), var(--i) * -1)));
   opacity: 1;
   z-index: 2;
   transition: transform 220ms steps(5, end), opacity 220ms steps(5, end);
@@ -198,13 +202,27 @@
   border: 2px solid var(--bg);
 }
 
-.deck-name {
+/* The wordmark is the game's title, the way an arcade card carries cover art.
+   128×64 shown at ×2 — whole multiple, like everything else here. */
+.deck-logo {
   display: block;
-  margin-top: 0.85rem;
-  font-family: var(--font-ui);
-  font-size: 0.62rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  width: 256px;
+  height: 128px;
+  margin: 0.6rem auto 0;
+  image-rendering: pixelated;
+}
+
+/* The logo says it; this is the accessible name and the fallback if the art
+   ever fails to load. */
+.deck-name {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .deck-note {
