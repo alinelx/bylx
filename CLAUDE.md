@@ -62,6 +62,10 @@ Case studies follow the structure: The question → What I built → Technical d
 
 7. **Case studies have URLs** — done (2026-09-22): they were dialogs of "/", so `site:bylx.dev` returned exactly one indexed result while five case studies sat in the markup, and none of them could be linked in an application or a post. Now: opening one writes `/work/<slug>/`, and that path is a real page generated from the same modal (`npm run build`). Six pages, breadcrumbs, per-page OG cards, `ItemList` + `CreativeWork` JSON-LD, and a sitemap that lists them. What is NOT done: a PT version of the copy, and submitting the sitemap in Search Console — the second one is the only reason Google will notice quickly
 
+9. **Sete case studies** desde 2026-09-24: o `respondaja.click` entrou e é o primeiro a mostrar pagamentos, chamada LLM do lado do servidor, quota e licença assinada. O `ItemList` do JSON-LD deixou de ser mantido à mão — o `build-work-pages.mjs` escreve-o a partir dos mesmos modais, porque à sétima case study já listava seis
+
+10. **Arcade e ferramentas internas** — planeado, ver `docs/superpowers/specs/2026-09-24-respondaja-e-arcade-design.md`. Existe fora do repositório uma pasta com oito ferramentas internas **reconstruídas de raiz em contextos fictícios**, com as suas próprias regras de confidencialidade e um verificador de termos que **ficam de fora do repositório público** (a própria lista revelaria vocabulário interno). Duas delas têm destino no Arcade, ao lado do purikura — por isso o carrossel de cartões vai ter mais do que um cartão. Regra: importar uma de cada vez, e só depois da anterior estar no ar
+
 8. Hero copy vs positioning — settled (2026-09-22): "no shortcuts" is deleted from the meta description and from this file's positioning line. The hero's own line ("vanilla code, optional shortcuts through AI and tech debug") stands, and it is now the only claim the site makes about shortcuts. Don't reintroduce "no shortcuts"
 
 ## Cache
