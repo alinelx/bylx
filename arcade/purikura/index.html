@@ -705,22 +705,27 @@
         });
       }
       function selectNode(node){ if(node) tr.nodes([node]); else tr.nodes([]); decorLayer.batchDraw(); }
-      function addStickerFromUrl(url){ const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ /* min() on each side independently squashed anything that was not square: a
+      function addStickerFromUrl(url, mine){ const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ /* min() on each side independently squashed anything that was not square: a
            300x150 sticker came out 220x150. Cap the LONG side and scale both by the
            same factor. Smoothing is off on the layer, not here: the canvas smooths by
            default, which turns a crisp sticker into mush the moment it is
            stretched. */
-        /* Native size, 1:1. The art was drawn at the size it is meant to be
-           read at — a 16px sakura petal is a 16px petal — and forcing every
-           sticker up to one house size made them all the same size as each
-           other. The handles resize whatever needs resizing.
+        /* Native size, 1:1, for everything this site drew. The art was made at
+           the size it is meant to be read at — a 16px sakura petal is a 16px
+           petal — and forcing it to one house size made every sticker the same
+           size as every other. The handles resize what needs resizing.
 
-           The exception is a photo off a phone, thousands of pixels wide, which
-           at 1:1 would cover the canvas several times over. That one is divided
-           by the smallest WHOLE number that fits: a half or a quarter lands on
-           the grid, 0.17x does not. */
+           Three of them (the window, the desktop, the start bar) are WIDER than
+           the canvas, and they stay 1:1 anyway: halving pixel art drops every
+           second row, which on Win98 chrome is the one-pixel line that makes it
+           chrome. Better to hang off the edge and be dragged.
+
+           Only art from outside — an upload, a URL — is divided down, because
+           a phone photo at 1:1 covers the canvas several times over. Divided by
+           the smallest WHOLE number that fits: a half or a quarter lands on the
+           grid, 0.17x does not. */
         const long=Math.max(img.width,img.height);
-        const fit=long<=CANVAS_W?1:1/Math.ceil(long/CANVAS_W);
+        const fit=(mine||long<=CANVAS_W)?1:1/Math.ceil(long/CANVAS_W);
         const st=new Konva.Image({image:img,x:32,y:32,draggable:true,name:'sticker',width:Math.round(img.width*fit),height:Math.round(img.height*fit)}); bindDecor(st); decorLayer.add(st); selectNode(st); decorLayer.draw(); }; }
       /* A canvas paints with whatever font is loaded at that instant, and
          nothing reflows when a webfont arrives later: Konva measured and drew
@@ -891,12 +896,14 @@
          the desk, the two cities, the wordmarks, the stack, the cursor. All of
          them are placed at the size they were drawn at.
 
-         Left out on purpose, and the only ones: the window chrome
-         (win_top_left and its seven siblings, window_frame, toolbar,
-         win_background) which are edge pieces that mean nothing alone,
-         gradient.png which is a wash rather than an object, and
-         instax_spritesheet.png which is eight frames on one strip and would
-         paste as a filmstrip. */
+         Left out, and the only ones: win_top_left and its seven siblings,
+         which are single edge pieces of a frame and mean nothing alone (the
+         whole window_frame is here instead), and instax_spritesheet.png, which
+         is eight frames on one strip and would paste as a filmstrip.
+
+         The keyboard, its keys and the table came out again: at native size
+         they are 512 and 1024 wide strips that cover the canvas edge to edge,
+         which is a wall, not a sticker. */
       const STICKER_GROUPS=[
         {label:'Desk', items:[
           {label:'Instax',   src:'/assets/hero/instax.png'},
@@ -905,13 +912,20 @@
           {label:'Phone',    src:'/assets/hero/phone.png'},
           {label:'Mouse',    src:'/assets/hero/mouse.png'},
           {label:'MP3',      src:'/assets/hero/mp3_player.png'},
-          {label:'Keyboard', src:'/assets/hero/keyboard_board.png'},
-          {label:'Keys',     src:'/assets/hero/keyboard_keys.png'},
           {label:'Monitor',  src:'/assets/hero/monitor_frame.png'},
           {label:'Paint',    src:'/assets/hero/paint_frame.png'},
           {label:'Schizo',   src:'/assets/hero/schizomputer_frame1.png'},
-          {label:'Poster',   src:'/assets/hero/japan_poster.png'},
-          {label:'Table',    src:'/assets/hero/table.png'}
+          {label:'Poster',   src:'/assets/hero/japan_poster.png'}
+        ]},
+        {label:'Screen', items:[
+          {label:'Window',   src:'/assets/hero/window_frame.png'},
+          {label:'Desktop',  src:'/assets/hero/win_background.png'},
+          {label:'Start bar',src:'/assets/hero/toolbar.png'},
+          {label:'Gradient', src:'/assets/hero/gradient.png'}
+        ]},
+        {label:'Arcade', items:[
+          {label:'Cabinet',  src:'/assets/arcade/cabinet.png'},
+          {label:'Start',    src:'/assets/arcade/start.png'}
         ]},
         {label:'Rio & Lisboa', items:[
           {label:'Cristo',   src:'/assets/hero/cristo_redentor.png'},
@@ -960,7 +974,7 @@
           const elBtn=document.createElement('button');
           elBtn.type='button'; elBtn.className='thumb'; elBtn.title=s.label;
           elBtn.innerHTML='<img src="'+s.src+'" alt=""/><span>'+s.label+'</span>';
-          elBtn.addEventListener('click', ()=>addStickerFromUrl(s.src));
+          elBtn.addEventListener('click', ()=>addStickerFromUrl(s.src, true));
           row.appendChild(elBtn);
         });
         wrap.appendChild(row);

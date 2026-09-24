@@ -133,14 +133,11 @@ test("the machine keeps pixel art on the grid, and lets the pen through", async 
     Konva.stages[0].find(".sticker").map((s) => [s.width(), s.height(), s.image().naturalWidth, s.image().naturalHeight])
   );
   expect(placed).toHaveLength(n);
-  for (const [w, h, nw, nh] of placed) {
-    /* 1:1, unless the source is bigger than the canvas — table.png is 1024
-       wide — in which case it is divided by a WHOLE number. Never a fraction. */
-    const k = nw / w;
-    expect(Number.isInteger(k), nw + "x" + nh + " drawn at " + w + "x" + h).toBe(true);
-    expect([w, h]).toEqual([nw / k, nh / k]);
-    if (nw <= 512 && nh <= 512) expect(k).toBe(1);
-  }
+  /* 1:1, with no exception. Three of these — the window, the desktop, the
+     start bar — are wider than the canvas and stay 1:1 anyway: halving pixel
+     art drops every second row, which on Win98 chrome is the line that makes
+     it chrome. Only art from outside is divided down, and by a whole number. */
+  for (const [w, h, nw, nh] of placed) expect([w, h]).toEqual([nw, nh]);
 
   /* The watermark signs the print, so it is the last layer and it takes no
      clicks — a frame on top of it, or a click swallowed by it, both defeat it. */
@@ -192,8 +189,15 @@ test("the booth is one step at a time, and fits a phone", async ({ page }) => {
 
   // Every sprite the site is drawn with, and every one of them actually loads.
   await page.locator("#tab-stickers").click();
-  await expect(page.locator(".sticker-group")).toHaveCount(5);
+  await expect(page.locator(".sticker-group")).toHaveCount(7);
   expect(await page.locator("#stickersBuiltIn .thumb").count()).toBeGreaterThan(30);
+
+  /* The keyboard, its keys and the table are deliberately absent: at native
+     size they are 512 and 1024 wide strips that cover the canvas edge to edge,
+     which is a wall, not a sticker. */
+  expect(await page.evaluate(() =>
+    [...document.querySelectorAll("#stickersBuiltIn img")].map((i) => i.src).filter((u) => /keyboard|table/.test(u))
+  )).toEqual([]);
   await page.waitForTimeout(600);
   expect(await page.evaluate(() =>
     [...document.querySelectorAll("#stickersBuiltIn img")].filter((i) => !i.naturalWidth).map((i) => i.src)
