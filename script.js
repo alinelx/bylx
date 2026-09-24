@@ -3,15 +3,15 @@
    Import and initialise every feature module.
    ============================================================ */
 
-import { initParallax }                             from "./js/parallax.js?v=dc7bc75c";
-import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=dc7bc75c";
-import { initModals }                               from "./js/modals.js?v=dc7bc75c";
-import { initDeeplink }                            from "./js/deeplink.js?v=dc7bc75c";
-import { initGalleryViewer }                        from "./js/gallery.js?v=dc7bc75c";
-import { initContactForm }                          from "./js/contact.js?v=dc7bc75c";
-import { initAudio }                                from "./js/audio.js?v=dc7bc75c";
-import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=dc7bc75c";
-import { initDesktop }                              from "./js/desktop.js?v=dc7bc75c";
+import { initParallax }                             from "./js/parallax.js?v=0555087c";
+import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=0555087c";
+import { initModals }                               from "./js/modals.js?v=0555087c";
+import { initDeeplink }                            from "./js/deeplink.js?v=0555087c";
+import { initGalleryViewer }                        from "./js/gallery.js?v=0555087c";
+import { initContactForm }                          from "./js/contact.js?v=0555087c";
+import { initAudio }                                from "./js/audio.js?v=0555087c";
+import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=0555087c";
+import { initDesktop }                              from "./js/desktop.js?v=0555087c";
 
 /* Each module is independent, and a throw in one used to take every module
    after it down with it — silently, since nothing here catches. */

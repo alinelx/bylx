@@ -956,6 +956,15 @@
   top: 2rem;
 }
 
+/* The flex item here is the <picture>, not the <img> inside it. A width on the
+   image resolves against a box that shrink-wraps the image, so on any layout
+   that does not stretch the item the percentage is circular and the art can
+   never grow past its own 70px. Size the picture; the image fills it. */
+.about-side picture {
+  display: block;
+  width: 100%;
+}
+
 .about-gif {
   width: 100%;
   border: 3px solid var(--purple);
