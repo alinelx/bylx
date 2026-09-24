@@ -3,16 +3,16 @@
    Import and initialise every feature module.
    ============================================================ */
 
-import { initParallax }                             from "./js/parallax.js?v=fada9da4";
-import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=fada9da4";
-import { initModals }                               from "./js/modals.js?v=fada9da4";
-import { initDeeplink }                            from "./js/deeplink.js?v=fada9da4";
-import { initGalleryViewer }                        from "./js/gallery.js?v=fada9da4";
-import { initContactForm }                          from "./js/contact.js?v=fada9da4";
-import { initAudio }                                from "./js/audio.js?v=fada9da4";
-import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=fada9da4";
-import { initPixelFit }                          from "./js/pixelfit.js?v=fada9da4";
-import { initDesktop }                              from "./js/desktop.js?v=fada9da4";
+import { initParallax }                             from "./js/parallax.js?v=86c1c50e";
+import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=86c1c50e";
+import { initModals }                               from "./js/modals.js?v=86c1c50e";
+import { initDeeplink }                            from "./js/deeplink.js?v=86c1c50e";
+import { initGalleryViewer }                        from "./js/gallery.js?v=86c1c50e";
+import { initContactForm }                          from "./js/contact.js?v=86c1c50e";
+import { initAudio }                                from "./js/audio.js?v=86c1c50e";
+import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=86c1c50e";
+import { initPixelFit }                          from "./js/pixelfit.js?v=86c1c50e";
+import { initDesktop }                              from "./js/desktop.js?v=86c1c50e";
 
 /* Each module is independent, and a throw in one used to take every module
    after it down with it — silently, since nothing here catches. */

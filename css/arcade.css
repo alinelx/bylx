@@ -134,31 +134,35 @@
   position: relative;
   margin: clamp(2rem, 6vw, 3.5rem) auto 0;
   /* The cards are absolutely positioned, so nothing here inherits their
-     height — it has to be stated, and it has to clear the tallest card. */
-  min-height: 30rem;
+     height — it has to be stated, and it has to clear the tallest card. The
+     card is 265px; this used to be 480, then 530 at desktop, because it was
+     sized to a backdrop that no longer exists. */
+  min-height: 22rem;
 }
 
-/* The select-screen chrome sits behind the cards. The file is 88×53 — it was
-   cropped to its own art, and it is only ever shown at a whole multiple of that: ×10 from
-   900px up. Below that no multiple is both big enough to hold a 304px card and
-   small enough to fit, so the cards stand alone rather than sit on a blurred
-   backdrop — the rule that cost us the Paint window. */
+/* There is no backdrop here any more, and the removal is the point.
+   card-bg.png is 88×53 — the screen of the cabinet Aline drew — and stretching
+   it across a 880px deck asked pixelfit for the largest whole multiple that
+   fits, which on a 1280 screen at 1.25 DPR came out at FIFTEEN. Every source
+   pixel became a 15×15 block. Nothing was scaled wrongly: whole multiples,
+   nearest-neighbour, all correct, and it still looked like a smear, because
+   the art is a small screen graphic and the job was a page-wide backdrop.
+
+   Whole-number scaling keeps pixel art honest; it cannot invent detail that
+   was never drawn. To bring a backdrop back, the art has to be drawn near the
+   size it is shown at — about 220×140, which lands on ×4 here and is tall
+   enough to hold a card. */
 @media (min-width: 900px) {
   .deck {
     width: 880px;
-    min-height: 530px;
-    background: url("../assets/arcade/card-bg.png") center / 880px 530px no-repeat;
-    image-rendering: pixelated;
     display: grid;
     align-items: center;
   }
-
-  .deck-cards { height: 530px; }
 }
 
 .deck-cards {
   position: relative;
-  height: 30rem;
+  height: 22rem;
   margin: 0;
   padding: 0;
   list-style: none;
