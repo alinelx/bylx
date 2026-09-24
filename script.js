@@ -3,17 +3,17 @@
    Import and initialise every feature module.
    ============================================================ */
 
-import { initParallax }                             from "./js/parallax.js?v=44d9cf35";
-import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=44d9cf35";
-import { initModals }                               from "./js/modals.js?v=44d9cf35";
-import { initDeeplink }                            from "./js/deeplink.js?v=44d9cf35";
-import { initGalleryViewer }                        from "./js/gallery.js?v=44d9cf35";
-import { initContactForm }                          from "./js/contact.js?v=44d9cf35";
-import { initAudio }                                from "./js/audio.js?v=44d9cf35";
-import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=44d9cf35";
-import { initPixelFit }                          from "./js/pixelfit.js?v=44d9cf35";
-import { initDesktop }                              from "./js/desktop.js?v=44d9cf35";
-import { initProjectsFilter } from "./js/projects-filter.js?v=44d9cf35";
+import { initParallax }                             from "./js/parallax.js?v=ffbb65de";
+import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=ffbb65de";
+import { initModals }                               from "./js/modals.js?v=ffbb65de";
+import { initDeeplink }                            from "./js/deeplink.js?v=ffbb65de";
+import { initGalleryViewer }                        from "./js/gallery.js?v=ffbb65de";
+import { initContactForm }                          from "./js/contact.js?v=ffbb65de";
+import { initAudio }                                from "./js/audio.js?v=ffbb65de";
+import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=ffbb65de";
+import { initPixelFit }                          from "./js/pixelfit.js?v=ffbb65de";
+import { initDesktop }                              from "./js/desktop.js?v=ffbb65de";
+import { initProjectsFilter } from "./js/projects-filter.js?v=ffbb65de";
 
 /* Each module is independent, and a throw in one used to take every module
    after it down with it — silently, since nothing here catches. */

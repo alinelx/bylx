@@ -25,7 +25,7 @@
     href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="/styles.css?v=44d9cf35" />
+  <link rel="stylesheet" href="/styles.css?v=ffbb65de" />
 </head>
 <body>
   <main class="cab">
@@ -54,12 +54,11 @@
           </a>
         </li>
 
-        <!-- No wordmark drawn for this one yet, so the name is the art:
-             .deck-card--text makes the label visible instead of leaving an
-             empty slot where a logo should be. -->
-        <li class="deck-card deck-card--text">
+        <li class="deck-card">
           <a href="/arcade/tarot/">
-            <span class="deck-name">Tarot</span>
+            <img class="deck-logo" src="/assets/arcade/mythic-tarot-logo.png?v=7d093a13" alt="Mythic Tarot" width="128" height="64"
+                 data-pixel-w="128" data-pixel-h="64" data-pixel-max="256" />
+            <span class="deck-name">Tarot Mitológico</span>
             <span class="deck-note">A tarot table and a manual: 78 cards with the Greek myth behind each one, 22 spreads from one card to thirteen, and a reading you can save as PDF. Vanilla JavaScript, no dependencies at all.</span>
           </a>
         </li>
@@ -88,9 +87,9 @@
   <div class="cursor" aria-hidden="true"></div>
 
   <script type="module">
-    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=44d9cf35";
-    import { initArcade } from "/js/arcade.js?v=44d9cf35";
-    import { initPixelFit } from "/js/pixelfit.js?v=44d9cf35";
+    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=ffbb65de";
+    import { initArcade } from "/js/arcade.js?v=ffbb65de";
+    import { initPixelFit } from "/js/pixelfit.js?v=ffbb65de";
 
     for (const [name, init] of [["cursor", initCursor], ["sakura", initSakuraTrail], ["arcade", initArcade], ["pixelfit", initPixelFit]]) {
       try {

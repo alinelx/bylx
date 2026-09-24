@@ -66,7 +66,16 @@ ErrorDocument 404 /404.html
 # is denied here. Verified served with 200 before this block: /CLAUDE.md,
 # /DESIGN.md, /package.json, /playwright.config.js, /bylx.design-system.json,
 # /tests/*.spec.js. CLAUDE.md in particular documents internal decisions.
-<FilesMatch "\.(md|json|mjs|spec\.js|lock)$">
+# deck.json is the exception and has to be: it is not repository metadata,
+# it is the tarot's 78 cards, fetched by its own page. Without the lookahead
+# this block returned 403 for it and the machine came up empty — measured on
+# the live site, alongside package.json and CLAUDE.md getting the same 403,
+# which is how the rule was meant to work for those two.
+#
+# FilesMatch tests the basename, so the exception is by name rather than by
+# path. Any future data file the site actually serves needs adding here, or
+# it will disappear the same way.
+<FilesMatch "^(?!deck\.json$).*\.(md|json|mjs|spec\.js|lock)$">
   Require all denied
 </FilesMatch>
 
