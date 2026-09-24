@@ -304,3 +304,22 @@
 @media (prefers-reduced-motion: reduce) {
   .deck-card { transition: none; }
 }
+
+
+/* A machine with no wordmark yet. .deck-name is visually hidden on a card
+   that has art, because the art already says it; here it is the art, so it
+   is unhidden and set in the display face. */
+.deck-card--text .deck-name {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0.6rem 0 0.4rem;
+  padding: 0;
+  overflow: visible;
+  clip-path: none;
+  display: block;
+  font-family: var(--font-display, var(--font-ui));
+  font-size: 2rem;
+  line-height: 1.1;
+  text-align: center;
+}

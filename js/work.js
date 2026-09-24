@@ -12,7 +12,7 @@
    owes the visitor is the cursor, because base.css hides the native one for
    the whole document. Importing the real module keeps one implementation. */
 
-import { initCursor, initSakuraTrail } from "./cursor.js?v=8dbfaf3e";
+import { initCursor, initSakuraTrail } from "./cursor.js?v=44d9cf35";
 
 function start(name, init) {
   try {

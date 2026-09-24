@@ -63,10 +63,10 @@ export function initSakuraTrail() {
      the only images on the site the cache stamp could not reach — and the
      stamp is what lets a redrawn sprite actually reach anybody. */
   const PETALS = [
-    "assets/particles/sakura1.png?v=a67f7115",
-    "assets/particles/sakura2.png?v=60c68da2",
-    "assets/particles/sakura3.png?v=2879f8d7",
-    "assets/particles/sakura4.png?v=3d87957f",
+    "/assets/particles/sakura1.png?v=a67f7115",
+    "/assets/particles/sakura2.png?v=60c68da2",
+    "/assets/particles/sakura3.png?v=2879f8d7",
+    "/assets/particles/sakura4.png?v=3d87957f",
   ];
 
   function spawnPetal(x, y, kind) {

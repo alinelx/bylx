@@ -25,7 +25,7 @@
     href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="/styles.css?v=8dbfaf3e" />
+  <link rel="stylesheet" href="/styles.css?v=44d9cf35" />
 </head>
 <body>
   <main class="cab">
@@ -53,6 +53,16 @@
             <span class="deck-note">A photo booth in a browser: stickers, frames, outlined text, a brush with undo, and filters. Vanilla JavaScript and Konva.</span>
           </a>
         </li>
+
+        <!-- No wordmark drawn for this one yet, so the name is the art:
+             .deck-card--text makes the label visible instead of leaving an
+             empty slot where a logo should be. -->
+        <li class="deck-card deck-card--text">
+          <a href="/arcade/tarot/">
+            <span class="deck-name">Tarot</span>
+            <span class="deck-note">A full 78-card reading in the browser: six spreads, upright and reversed, Portuguese or English, and a reading you can save as PDF. Vanilla JavaScript, no dependencies at all.</span>
+          </a>
+        </li>
       </ul>
 
       <button class="deck-arrow deck-arrow--next" type="button" data-deck-next aria-label="Next machine">&#9654;</button>
@@ -78,9 +88,9 @@
   <div class="cursor" aria-hidden="true"></div>
 
   <script type="module">
-    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=8dbfaf3e";
-    import { initArcade } from "/js/arcade.js?v=8dbfaf3e";
-    import { initPixelFit } from "/js/pixelfit.js?v=8dbfaf3e";
+    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=44d9cf35";
+    import { initArcade } from "/js/arcade.js?v=44d9cf35";
+    import { initPixelFit } from "/js/pixelfit.js?v=44d9cf35";
 
     for (const [name, init] of [["cursor", initCursor], ["sakura", initSakuraTrail], ["arcade", initArcade], ["pixelfit", initPixelFit]]) {
       try {

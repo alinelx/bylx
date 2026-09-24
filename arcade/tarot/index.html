@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Tiragem de Tarot · bylx.dev arcade</title>
+  <meta name="description" content="A tarot reading in the browser: 78 cards, upright and reversed, six spreads, in Portuguese or English. Nothing is uploaded — the whole deck runs in this tab." />
+  <link rel="canonical" href="https://bylx.dev/arcade/tarot/" />
+  <meta property="og:title" content="Tiragem de Tarot · a tarot reading in your browser" />
+  <meta property="og:description" content="78 cards, upright and reversed, six spreads, PT/EN, and a reading you can save as PDF. No account, no upload." />
+  <meta property="og:url" content="https://bylx.dev/arcade/tarot/" />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="/assets/logo/bylx_logo_semdev.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    /* The machine keeps the reading's own clothes — parchment, gold, oxblood,
+       garamond — rather than the site's pixel art. A tarot that looks like a
+       Game Boy is a different object; the arcade is a shelf of small machines,
+       not a house style imposed on all of them. What it does borrow is the
+       shell: the back link, the breadcrumb, the focus rings.
+
+       It does not load styles.css for the same reason Cute Gal does not: that
+       file carries the scene, the sections, and a cursor: none this would be
+       worse for. */
+    :root {
+      --ink: #15110d;
+      --ink2: #1f1a14;
+      --parchment: #efe6d2;
+      --parchment2: #ddcfa9;
+      --gold: #c19a3f;
+      --gold-dim: #8a7136;
+      --oxblood: #8c2b3c;
+      --sage: #6b7a5c;
+      --text-dim: #c7bda3;
+      --serif: "EB Garamond", Georgia, serif;
+      --display: "Cormorant Garamond", Georgia, serif;
+      --pixel: "Press Start 2P", monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
+      color: var(--parchment);
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .wrap { max-width: 980px; margin: 0 auto; padding: 14px 20px 72px; }
+
+    a { color: var(--gold); }
+
+    .crumbs { font-family: var(--pixel); font-size: 0.5rem; letter-spacing: 0.08em; color: var(--gold-dim); }
+    .crumbs a { text-decoration: none; }
+    .crumbs a:hover { text-decoration: underline; }
+
+    .topbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+
+    /* ── Language ─────────────────────────────────────────────────────────
+       Two buttons, not a <select>: there are exactly two and the current one
+       has to be readable at a glance. aria-pressed rather than aria-current,
+       because this is a toggle, not navigation. */
+    .lang { display: flex; gap: 0; border: 1px solid var(--gold-dim); }
+
+    .lang button {
+      appearance: none;
+      padding: 6px 12px;
+      border: 0;
+      background: transparent;
+      color: var(--text-dim);
+      font-family: var(--pixel);
+      font-size: 0.45rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+    }
+
+    .lang button[aria-pressed="true"] { background: var(--gold); color: var(--ink); }
+    .lang button:focus-visible { outline: 2px solid var(--oxblood); outline-offset: -2px; }
+
+    header.head { text-align: center; margin: 2rem 0 2.5rem; }
+
+    header.head h1 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(1.9rem, 5vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--gold);
+    }
+
+    header.head p { margin: 0.4rem 0 0; color: var(--text-dim); font-size: 0.95rem; }
+
+    h2 {
+      margin: 0 0 0.8rem;
+      font-family: var(--display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .step { margin-bottom: 2.2rem; }
+
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .pill {
+      appearance: none;
+      padding: 8px 16px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--parchment2);
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .pill[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+    .pill:focus-visible, .spread:focus-visible, .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+    .spreads { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+
+    .spread {
+      appearance: none;
+      padding: 14px;
+      text-align: left;
+      border: 1px solid var(--gold-dim);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--parchment);
+      font-family: var(--serif);
+      cursor: pointer;
+    }
+
+    .spread[aria-pressed="true"] { border-color: var(--gold); background: rgba(193, 154, 63, 0.12); }
+    .spread b { display: block; font-family: var(--display); font-size: 1.1rem; font-weight: 600; color: var(--gold); }
+    .spread span { font-size: 0.85rem; color: var(--text-dim); }
+
+    .btn {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: var(--oxblood);
+      color: var(--parchment);
+      font-family: var(--display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn--ghost { background: transparent; border-color: var(--gold); color: var(--gold); font-size: 0.9rem; padding: 8px 16px; }
+    .btn--quiet { background: transparent; border-color: var(--gold-dim); color: var(--parchment); font-size: 0.9rem; padding: 8px 16px; }
+
+    .go { display: flex; justify-content: center; }
+
+    /* ── Cards ───────────────────────────────────────────────────────────
+       No icon library. The original pulled 26 glyphs from lucide-react; here a
+       major arcanum shows its Roman numeral and a minor shows its suit mark,
+       which is what the cards themselves have always done. One dependency
+       fewer and nothing to keep in step. */
+    .face {
+      width: 116px;
+      height: 172px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--parchment);
+      border: 2px solid var(--gold);
+      border-radius: 6px;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+
+    .face .mark {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--gold);
+      font-family: var(--display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      transition: transform 0.4s;
+    }
+
+    .face[data-reversed] .mark { transform: rotate(180deg); }
+    .face .mark svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+
+    .face .name { font-family: var(--display); font-size: 0.82rem; font-weight: 700; line-height: 1.15; text-align: center; }
+    .face .rev { margin-top: 3px; font-family: var(--pixel); font-size: 0.34rem; letter-spacing: 0.08em; color: var(--oxblood); }
+
+    .draw-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-height: 22rem; overflow-y: auto; padding: 8px; }
+
+    .back {
+      width: 46px;
+      height: 70px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 5px;
+      background: radial-gradient(circle at 50% 50%, #5e1f2b 0%, transparent 62%), var(--ink2);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .back:hover:not(:disabled) { transform: translateY(-4px); }
+    .back:disabled { opacity: 0.15; cursor: default; }
+    .back:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+    .spread-out { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
+    .slot { width: 190px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .slot .pos { font-family: var(--pixel); font-size: 0.4rem; letter-spacing: 0.06em; color: var(--gold); text-align: center; line-height: 1.6; }
+    .slot .read { font-size: 0.88rem; line-height: 1.45; color: var(--text-dim); text-align: center; }
+
+    .synthesis { margin-top: 2.5rem; padding: 20px; border: 1px solid var(--gold-dim); border-radius: 8px; background: rgba(193, 154, 63, 0.08); }
+    .synthesis h2 { margin-bottom: 0.5rem; }
+
+    .verdict { margin: 0 0 1.5rem; padding: 14px; text-align: center; border: 1px solid var(--gold-dim); border-radius: 8px; background: rgba(193, 154, 63, 0.1); font-family: var(--display); font-size: 1.2rem; }
+    .verdict small { display: block; font-family: var(--serif); font-size: 0.82rem; color: var(--text-dim); }
+
+    .result-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; }
+    .result-head .meta { font-size: 0.85rem; color: var(--text-dim); }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .export { margin-top: 1.5rem; padding: 14px; border: 1px solid var(--gold-dim); border-radius: 8px; background: rgba(0, 0, 0, 0.25); }
+    .export textarea { width: 100%; min-height: 15rem; padding: 12px; background: var(--parchment); color: var(--ink); border: 1px solid var(--gold); border-radius: 6px; font-family: var(--serif); font-size: 0.85rem; line-height: 1.5; resize: vertical; }
+    .export .hint { margin: 6px 0 0; font-size: 0.8rem; color: var(--text-dim); }
+
+    .hidden { display: none; }
+
+    .back-link { display: inline-block; margin-top: 2.5rem; font-family: var(--pixel); font-size: 0.45rem; letter-spacing: 0.06em; }
+
+    /* ── Saving as PDF ───────────────────────────────────────────────────
+       There is no PDF library here and there should not be: every browser
+       prints to PDF, and its typesetting beats anything a 300KB canvas-based
+       generator produces — real text, selectable, searchable, at the paper
+       size the reader chose. So the button opens the print dialogue and this
+       block is the document it prints: ink on white, no controls, nothing
+       clipped, and each reading kept whole across a page break. */
+    @media print {
+      body { background: #fff; color: #15110d; }
+      .wrap { max-width: none; padding: 0; }
+      .no-print { display: none !important; }
+      .face { border-color: #8a7136; }
+      .slot .read, .synthesis, .verdict small, .result-head .meta { color: #3a332a; }
+      .synthesis, .verdict { background: none; border-color: #8a7136; }
+      .slot { break-inside: avoid; page-break-inside: avoid; }
+      .print-only { display: block !important; }
+    }
+
+    .print-only { display: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .face .mark, .back { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar no-print">
+      <p class="crumbs"><a href="/">bylx.dev</a> / <a href="/arcade/">arcade</a> / <span data-i18n="crumb">tarot</span></p>
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-lang="pt" aria-pressed="true">PT</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+
+    <header class="head">
+      <h1 data-i18n="title">Tiragem de Tarot</h1>
+      <p data-i18n="subtitle">78 arcanos · ereto e invertido · leitura por posição e geral</p>
+    </header>
+
+    <!-- The whole machine is three screens. Only one is in the document at a
+         time, so a screen reader never walks a deck that is not on the table. -->
+    <main id="app" aria-live="polite"></main>
+
+    <a class="back-link no-print" href="/arcade/" data-i18n="back">← voltar ao arcade</a>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    /* ── Language ───────────────────────────────────────────────────────
+       Every string lives as {pt, en} next to the thing it describes, rather
+       than in a separate key file. A tarot meaning read out of context is
+       impossible to translate well, and a key file guarantees exactly that. */
+    var lang = (function () {
+      try { var s = localStorage.getItem("bylx-tarot-lang"); if (s === "pt" || s === "en") return s; } catch (e) {}
+      return (navigator.language || "pt").toLowerCase().indexOf("pt") === 0 ? "pt" : "en";
+    })();
+
+    function t(v) { return v && typeof v === "object" ? (v[lang] || v.pt) : v; }
+
+    var UI = {
+      crumb:    { pt: "tarot", en: "tarot" },
+      title:    { pt: "Tiragem de Tarot", en: "Tarot Reading" },
+      subtitle: { pt: "78 arcanos · ereto e invertido · leitura por posição e geral",
+                  en: "78 cards · upright and reversed · read by position and as a whole" },
+      back:     { pt: "← voltar ao arcade", en: "← back to the arcade" },
+      step1:    { pt: "1. Escolhe o tema", en: "1. Choose a theme" },
+      step2:    { pt: "2. Escolhe a abertura", en: "2. Choose a spread" },
+      step3:    { pt: "3. Como escolher as cartas", en: "3. How to pick the cards" },
+      manual:   { pt: "Eu escolho, uma a uma", en: "I pick them, one by one" },
+      random:   { pt: "Atribuir tudo ao acaso", en: "Let chance decide" },
+      goManual: { pt: "Baralhar e escolher", en: "Shuffle and pick" },
+      goRandom: { pt: "Revelar tiragem", en: "Reveal the reading" },
+      pickFor:  { pt: "Escolhe a carta para:", en: "Pick the card for:" },
+      chosen:   { pt: "escolhidas de", en: "chosen of" },
+      goBack:   { pt: "← voltar", en: "← back" },
+      cards:    { pt: "cartas", en: "cards" },
+      card1:    { pt: "carta", en: "card" },
+      reversed: { pt: "INVERTIDA", en: "REVERSED" },
+      revLong:  { pt: "invertida", en: "reversed" },
+      upLong:   { pt: "ereta", en: "upright" },
+      general:  { pt: "Leitura geral", en: "The reading as a whole" },
+      again:    { pt: "Nova tiragem", en: "New reading" },
+      showText: { pt: "Copiar leitura", en: "Copy the reading" },
+      hideText: { pt: "Ocultar texto", en: "Hide the text" },
+      savePdf:  { pt: "Guardar em PDF", en: "Save as PDF" },
+      copy:     { pt: "Copiar para a área de transferência", en: "Copy to clipboard" },
+      copied:   { pt: "Copiado!", en: "Copied!" },
+      copyHint: { pt: "Se o botão não copiar, clica na caixa (o texto fica selecionado) e usa Ctrl+C / Cmd+C.",
+                  en: "If the button does not copy, click inside the box (the text is already selected) and press Ctrl+C / Cmd+C." },
+      textTitle:{ pt: "Texto da leitura", en: "The reading, as text" },
+      pdfHint:  { pt: "Abre o diálogo de impressão — escolhe “Guardar como PDF” como destino.",
+                  en: "Opens the print dialogue — choose “Save as PDF” as the destination." },
+      yes:      { pt: "As cartas pendem para SIM", en: "The cards lean towards YES" },
+      no:       { pt: "As cartas pendem para NÃO", en: "The cards lean towards NO" },
+      yesNote:  { pt: "(uma tendência a explorar, não uma certeza — vê o porquê em cada carta abaixo)",
+                  en: "(a leaning to explore, not a certainty — the why is in each card below)" },
+      exTitle:  { pt: "TIRAGEM DE TAROT", en: "TAROT READING" },
+      exDate:   { pt: "Data", en: "Date" },
+      exTheme:  { pt: "Tema", en: "Theme" },
+      exSpread: { pt: "Tiragem", en: "Spread" },
+      exGeneral:{ pt: "LEITURA GERAL", en: "THE READING AS A WHOLE" },
+      at:       { pt: "às", en: "at" }
+    };
+
+    /* ── The deck ───────────────────────────────────────────────────────
+       22 majors written out, 56 minors generated from ten numbers, four
+       courts and four suits — the same shape the original had, because a
+       Three of Cups is genuinely "the number three, in the territory of
+       cups" and writing 56 of those by hand invites 56 inconsistencies. */
+    var MAJORS = [
+      ["0", { pt: "O Louco", en: "The Fool" },
+        { pt: "início, espontaneidade, fé no salto", en: "beginnings, spontaneity, faith in the leap" },
+        { pt: "Um começo sem mapa. Coragem de dar o primeiro passo mesmo sem garantias, confiando no processo.",
+          en: "A beginning with no map. The nerve to take the first step without guarantees, trusting the process." },
+        { pt: "imprudência, hesitação, risco mal calculado", en: "recklessness, hesitation, a badly judged risk" },
+        { pt: "Ou o salto virou imprudência, ou o medo travou o primeiro passo por completo.",
+          en: "Either the leap turned reckless, or fear stopped the first step entirely." }],
+      ["I", { pt: "O Mago", en: "The Magician" },
+        { pt: "vontade, recursos, manifestação", en: "will, resources, making things real" },
+        { pt: "Tens todas as ferramentas na mesa. É hora de agir com intenção clara e transformar potencial em resultado concreto.",
+          en: "Every tool is already on the table. Time to act with clear intent and turn potential into something concrete." },
+        { pt: "manipulação, potencial desperdiçado", en: "manipulation, wasted potential" },
+        { pt: "Recursos mal usados, talento disperso, ou alguém a usar a própria habilidade para enganar em vez de construir.",
+          en: "Resources misused, talent scattered, or someone using their skill to deceive rather than build." }],
+      ["II", { pt: "A Sacerdotisa", en: "The High Priestess" },
+        { pt: "intuição, mistério, saber interior", en: "intuition, mystery, inner knowing" },
+        { pt: "Uma verdade que ainda não é para ser dita em voz alta. Confia no que sentes antes de precisares de prová-lo.",
+          en: "A truth not yet meant to be said out loud. Trust what you sense before you can prove it." },
+        { pt: "segredos revelados, desconexão da intuição", en: "secrets surfacing, cut off from instinct" },
+        { pt: "Informação escondida a vir ao de cima, ou uma desconexão do próprio instinto que gera confusão.",
+          en: "Hidden information coming to light, or a disconnection from your own instinct that breeds confusion." }],
+      ["III", { pt: "A Imperatriz", en: "The Empress" },
+        { pt: "abundância, criação, nutrição", en: "abundance, creation, nurture" },
+        { pt: "Fertilidade em todos os sentidos — criativa, material, afetiva. Algo está a crescer e precisa de cuidado, não de pressa.",
+          en: "Fertility in every sense — creative, material, emotional. Something is growing and needs care, not hurry." },
+        { pt: "bloqueio criativo, excesso ou negligência", en: "creative block, excess or neglect" },
+        { pt: "Criatividade travada, autocuidado esquecido, ou o oposto: excesso que virou sufoco.",
+          en: "Creativity stalled, self-care forgotten, or the opposite: abundance that became smothering." }],
+      ["IV", { pt: "O Imperador", en: "The Emperor" },
+        { pt: "estrutura, autoridade, controlo", en: "structure, authority, control" },
+        { pt: "Ordem onde havia caos. Estabelecer limites claros e assumir a liderança da própria vida.",
+          en: "Order where there was chaos. Setting clear limits and taking charge of your own life." },
+        { pt: "rigidez, autoritarismo, falta de disciplina", en: "rigidity, domineering, no discipline at all" },
+        { pt: "Controlo que virou rigidez excessiva, ou o oposto: ausência total de estrutura.",
+          en: "Control that hardened into rigidity, or the opposite: no structure whatsoever." }],
+      ["V", { pt: "O Hierofante", en: "The Hierophant" },
+        { pt: "tradição, aprendizagem, sistema de crenças", en: "tradition, learning, belief systems" },
+        { pt: "Sabedoria que vem de fora — um mentor, uma instituição, um caminho já testado por outros.",
+          en: "Wisdom that comes from outside — a mentor, an institution, a path others have already tested." },
+        { pt: "ruptura com a tradição, dogma questionado", en: "breaking with tradition, dogma questioned" },
+        { pt: "Regras que já não servem, ou rebeldia contra uma autoridade que perdeu a legitimidade.",
+          en: "Rules that no longer fit, or rebellion against an authority that lost its legitimacy." }],
+      ["VI", { pt: "Os Enamorados", en: "The Lovers" },
+        { pt: "escolha, união, alinhamento de valores", en: "choice, union, values in line" },
+        { pt: "Uma decisão que revela quem realmente és. Uma conexão que só funciona se os valores estiverem alinhados.",
+          en: "A decision that reveals who you actually are. A connection that only works if the values match." },
+        { pt: "desalinhamento, escolha evitada, desequilíbrio na relação", en: "misalignment, a choice avoided, an uneven relationship" },
+        { pt: "Uma escolha adiada, ou uma relação onde os valores dos dois lados deixaram de se encontrar.",
+          en: "A choice put off, or a relationship where the two sets of values stopped meeting." }],
+      ["VII", { pt: "O Carro", en: "The Chariot" },
+        { pt: "vontade, direção, vitória pelo foco", en: "will, direction, winning through focus" },
+        { pt: "Avançar com determinação, mesmo com forças opostas a puxar em direções diferentes — porque sabes controlá-las.",
+          en: "Moving forward with resolve even while opposing forces pull in different directions — because you can hold them." },
+        { pt: "perda de direção, forças internas desalinhadas", en: "direction lost, inner forces at odds" },
+        { pt: "As rédeas escaparam. Direção perdida, ou vontade que não se traduz em movimento por falta de alinhamento interno.",
+          en: "The reins slipped. Direction lost, or will that never becomes movement because nothing inside agrees." }],
+      ["VIII", { pt: "A Força", en: "Strength" },
+        { pt: "coragem gentil, domínio interior, paciência", en: "gentle courage, inner mastery, patience" },
+        { pt: "Força que não precisa de gritar. Domar o instinto mais difícil com paciência e compaixão, não com violência.",
+          en: "Strength that does not need to shout. Taming the hardest instinct with patience and compassion, not force." },
+        { pt: "dúvida da própria força, autocontrolo perdido", en: "doubting your own strength, self-control lost" },
+        { pt: "Insegurança sobre a própria capacidade, ou perda de controlo diante de um impulso mais forte que a razão.",
+          en: "Doubt about what you are capable of, or losing control to an impulse stronger than reason." }],
+      ["IX", { pt: "O Eremita", en: "The Hermit" },
+        { pt: "introspecção, busca interior, orientação solitária", en: "introspection, inward search, solitary guidance" },
+        { pt: "Um recuo necessário. A resposta que procuras não está lá fora — precisa de silêncio para aparecer.",
+          en: "A necessary retreat. The answer you want is not out there — it needs quiet before it will show up." },
+        { pt: "isolamento excessivo, recusa em pedir ajuda", en: "too much isolation, refusing to ask for help" },
+        { pt: "A solidão deixou de ser reflexiva e virou isolamento. Talvez seja hora de pedir ajuda.",
+          en: "Solitude stopped being reflective and turned into isolation. It may be time to ask for help." }],
+      ["X", { pt: "A Roda da Fortuna", en: "Wheel of Fortune" },
+        { pt: "ciclos, mudança, destino em movimento", en: "cycles, change, fate in motion" },
+        { pt: "A roda gira — o que estava parado começa a mudar, trazendo uma virada que não estava nas tuas mãos.",
+          en: "The wheel turns — what was stuck begins to move, bringing a change that was never yours to arrange." },
+        { pt: "resistência à mudança, azar percebido, ciclo repetido", en: "resisting change, luck that feels against you, the same loop" },
+        { pt: "Resistir ao que já está a mudar, ou sentires-te presa a repetir o mesmo ciclo sem saída.",
+          en: "Resisting what is already changing, or feeling stuck repeating the same cycle with no way out." }],
+      ["XI", { pt: "A Justiça", en: "Justice" },
+        { pt: "causa e efeito, verdade, equilíbrio", en: "cause and effect, truth, balance" },
+        { pt: "Uma conta que fecha certo. As consequências refletem com precisão o que realmente aconteceu.",
+          en: "An account that balances. The consequences reflect exactly what actually happened." },
+        { pt: "injustiça percebida, desequilíbrio, verdade distorcida", en: "injustice felt, imbalance, truth bent" },
+        { pt: "Um desequilíbrio real, ou a sensação de injustiça a nublar a visão clara dos factos.",
+          en: "A real imbalance, or a sense of injustice clouding a clear view of the facts." }],
+      ["XII", { pt: "O Enforcado", en: "The Hanged Man" },
+        { pt: "pausa, novo ângulo, rendição consciente", en: "pause, a new angle, willing surrender" },
+        { pt: "Parar de lutar contra a corrente. Ver a mesma situação de um ângulo completamente novo antes de agir.",
+          en: "Stop fighting the current. See the same situation from a completely new angle before acting." },
+        { pt: "resistência à pausa, sacrifício sem sentido", en: "refusing the pause, pointless sacrifice" },
+        { pt: "Recusa em fazer a pausa necessária, ou um sacrifício que já não traz nenhum crescimento.",
+          en: "Refusing the pause that is needed, or a sacrifice that has stopped producing any growth." }],
+      ["XIII", { pt: "A Morte", en: "Death" },
+        { pt: "fim de ciclo, transformação, deixar ir", en: "an ending, transformation, letting go" },
+        { pt: "Um capítulo está a fechar — não como castigo, mas como espaço necessário para o que vem a seguir.",
+          en: "A chapter is closing — not as punishment, but as the room the next one needs." },
+        { pt: "resistência à mudança, fim adiado", en: "resisting the change, an ending postponed" },
+        { pt: "Agarrares-te a algo que já terminou, prolongando um fim que seria mais gentil se aceite.",
+          en: "Holding on to something already over, stretching out an ending that would be kinder accepted." }],
+      ["XIV", { pt: "A Temperança", en: "Temperance" },
+        { pt: "equilíbrio, mistura, paciência alquímica", en: "balance, blending, alchemical patience" },
+        { pt: "Encontrar o meio-termo certo entre extremos. Nada de pressa — é um processo que precisa de tempo para se misturar bem.",
+          en: "Finding the right middle between extremes. No rushing — this is a process that needs time to combine." },
+        { pt: "desequilíbrio, excesso, impaciência", en: "imbalance, excess, impatience" },
+        { pt: "Excesso de um lado, falta do outro. Impaciência a estragar um processo que precisava de calma.",
+          en: "Too much on one side, too little on the other. Impatience spoiling a process that needed calm." }],
+      ["XV", { pt: "O Diabo", en: "The Devil" },
+        { pt: "apego, tentação, padrões que prendem", en: "attachment, temptation, patterns that hold" },
+        { pt: "Uma corrente que, olhando bem, está mais solta do que parece — mas que continuas a escolher não largar.",
+          en: "A chain that, looked at properly, is looser than it seems — and that you keep choosing not to drop." },
+        { pt: "libertação, reconhecimento do padrão, quebra de ciclo", en: "release, seeing the pattern, the loop broken" },
+        { pt: "O início da libertação: ver o padrão claramente é o primeiro passo para sair dele.",
+          en: "The beginning of release: seeing the pattern clearly is the first step out of it." }],
+      ["XVI", { pt: "A Torre", en: "The Tower" },
+        { pt: "colapso súbito, revelação, ruptura necessária", en: "sudden collapse, revelation, a necessary break" },
+        { pt: "Uma estrutura que já não aguentava cai de repente — doloroso, mas verdadeiro. O que resta é mais real.",
+          en: "A structure that could no longer hold comes down at once — painful, but true. What is left is more real." },
+        { pt: "colapso evitado, mudança adiada, medo da ruptura", en: "collapse avoided, change deferred, fear of the break" },
+        { pt: "Adiar o inevitável, ou sobreviver a uma queda menor que ainda assim mudou tudo por dentro.",
+          en: "Putting off the inevitable, or surviving a smaller fall that still changed everything inside." }],
+      ["XVII", { pt: "A Estrela", en: "The Star" },
+        { pt: "esperança, cura, confiança renovada", en: "hope, healing, trust restored" },
+        { pt: "Depois da tempestade, um respiro genuíno. Motivo real para acreditar que as coisas podem melhorar.",
+          en: "After the storm, a genuine breath. Real reason to believe things can get better." },
+        { pt: "desespero, fé abalada, desconexão da esperança", en: "despair, shaken faith, hope out of reach" },
+        { pt: "A esperança parece distante, ou a fé no processo foi abalada por deceções recentes.",
+          en: "Hope feels far off, or faith in the process was shaken by recent disappointments." }],
+      ["XVIII", { pt: "A Lua", en: "The Moon" },
+        { pt: "ilusão, intuição, o que ainda não está claro", en: "illusion, intuition, what is not yet clear" },
+        { pt: "Nem tudo está visível à luz do dia. Confia no instinto mesmo sem conseguires explicar tudo com lógica.",
+          en: "Not everything is visible in daylight. Trust the instinct even where logic cannot explain it." },
+        { pt: "confusão a dissipar-se, medos revelados como infundados", en: "confusion lifting, fears shown to be unfounded" },
+        { pt: "A névoa começa a levantar — medos que pareciam enormes mostram-se menores à luz.",
+          en: "The fog begins to lift — fears that looked enormous turn out smaller in the light." }],
+      ["XIX", { pt: "O Sol", en: "The Sun" },
+        { pt: "clareza, alegria, sucesso visível", en: "clarity, joy, success you can see" },
+        { pt: "Tudo fica mais simples à luz do dia. Um momento de clareza, vitalidade e alegria genuína.",
+          en: "Everything gets simpler in daylight. A moment of clarity, vitality and genuine joy." },
+        { pt: "otimismo forçado, clareza adiada", en: "forced optimism, clarity delayed" },
+        { pt: "Uma nuvem passageira a tapar o sol — otimismo forçado, ou uma vitória ainda por reconhecer.",
+          en: "A passing cloud over the sun — forced optimism, or a win not yet acknowledged." }],
+      ["XX", { pt: "O Julgamento", en: "Judgement" },
+        { pt: "despertar, chamada, avaliação honesta", en: "awakening, a calling, an honest reckoning" },
+        { pt: "Um chamado para olhar para trás com honestidade e decidir, com clareza, o que levas contigo daqui para a frente.",
+          en: "A call to look back honestly and decide, clearly, what you carry forward from here." },
+        { pt: "autocrítica excessiva, recusa em ouvir o chamado", en: "harsh self-judgement, refusing the call" },
+        { pt: "Julgamento severo demais sobre ti mesma, ou recusa em ouvir um chamado que já bate à porta.",
+          en: "Judging yourself far too harshly, or refusing to hear a call that is already knocking." }],
+      ["XXI", { pt: "O Mundo", en: "The World" },
+        { pt: "conclusão, integração, ciclo completo", en: "completion, integration, the full circle" },
+        { pt: "Um ciclo inteiro a fechar-se com sucesso. Tudo o que foi trabalhado finalmente encaixa.",
+          en: "A whole cycle closing well. Everything worked for finally fits together." },
+        { pt: "conclusão incompleta, último passo em falta", en: "not quite finished, one step missing" },
+        { pt: "Quase lá — falta um último passo, ou um fecho que está a ser adiado sem necessidade.",
+          en: "Almost there — one last step missing, or a close being put off for no good reason." }]
+    ].map(function (r) {
+      return {
+        id: "M-" + r[0], arcana: "major", numeral: r[0], name: r[1],
+        upright: { kw: r[2], meaning: r[3] }, reversed: { kw: r[4], meaning: r[5] }
+      };
+    });
+
+    /* Four suit marks, written here rather than pulled from an icon package:
+       a wand, a cup, a sword and a coin are four shapes, and a dependency for
+       four shapes is a dependency too many. */
+    var MARKS = {
+      paus:    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21 17 5"/><path d="M14 3h6v6"/></svg>',
+      copas:   '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v4a5 5 0 0 1-10 0z"/><path d="M12 13v6"/><path d="M8 19h8"/></svg>',
+      espadas: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v14"/><path d="M8 16h8"/><path d="M12 16v6"/></svg>',
+      ouros:   '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>'
+    };
+
+    var SUITS = [
+      { key: "paus",    name: { pt: "Paus", en: "Wands" },     element: { pt: "Fogo", en: "Fire" },  domain: { pt: "ação, vontade e iniciativa", en: "action, will and initiative" } },
+      { key: "copas",   name: { pt: "Copas", en: "Cups" },     element: { pt: "Água", en: "Water" }, domain: { pt: "emoções, relacionamentos e intuição", en: "feeling, relationships and intuition" } },
+      { key: "espadas", name: { pt: "Espadas", en: "Swords" }, element: { pt: "Ar", en: "Air" },     domain: { pt: "mente, conflito e verdade", en: "mind, conflict and truth" } },
+      { key: "ouros",   name: { pt: "Ouros", en: "Pentacles" },element: { pt: "Terra", en: "Earth" },domain: { pt: "dinheiro, corpo e trabalho prático", en: "money, body and practical work" } }
+    ];
+
+    var NUMBER_NAMES = [
+      null,
+      { pt: "Ás", en: "Ace" }, { pt: "Dois", en: "Two" }, { pt: "Três", en: "Three" },
+      { pt: "Quatro", en: "Four" }, { pt: "Cinco", en: "Five" }, { pt: "Seis", en: "Six" },
+      { pt: "Sete", en: "Seven" }, { pt: "Oito", en: "Eight" }, { pt: "Nove", en: "Nine" },
+      { pt: "Dez", en: "Ten" }
+    ];
+
+    var NUMBERS = {
+      1:  { upKw: { pt: "potencial puro", en: "raw potential" },
+            up:   { pt: "Uma semente nova. Toda a energia bruta do naipe, ainda por moldar.", en: "A new seed. All the raw energy of the suit, not yet shaped." },
+            revKw:{ pt: "oportunidade perdida", en: "an opening missed" },
+            rev:  { pt: "Um começo bloqueado, ou uma oferta que passou despercebida.", en: "A beginning blocked, or an offer that went unnoticed." } },
+      2:  { upKw: { pt: "escolha, equilíbrio", en: "choice, balance" },
+            up:   { pt: "Uma escolha ou parceria a formar-se, pedindo equilíbrio entre duas forças.", en: "A choice or partnership forming, asking for balance between two forces." },
+            revKw:{ pt: "indecisão", en: "indecision" },
+            rev:  { pt: "Indecisão, desequilíbrio, ou uma parceria desalinhada.", en: "Indecision, imbalance, or a partnership out of step." } },
+      3:  { upKw: { pt: "crescimento, colaboração", en: "growth, collaboration" },
+            up:   { pt: "Os primeiros resultados de um esforço em conjunto começam a aparecer.", en: "The first results of a shared effort start to show." },
+            revKw:{ pt: "crescimento travado", en: "growth stalled" },
+            rev:  { pt: "Colaboração desalinhada, ou um crescimento que ainda não pegou ritmo.", en: "Collaboration out of step, or growth that has not found its rhythm." } },
+      4:  { upKw: { pt: "estabilidade, estrutura", en: "stability, structure" },
+            up:   { pt: "Uma pausa para consolidar o que já foi construído.", en: "A pause to consolidate what has been built." },
+            revKw:{ pt: "estagnação", en: "stagnation" },
+            rev:  { pt: "Estabilidade que virou estagnação, ou resistência a qualquer mudança.", en: "Stability that became stagnation, or resistance to any change at all." } },
+      5:  { upKw: { pt: "conflito, disrupção", en: "conflict, disruption" },
+            up:   { pt: "Um confronto necessário, mesmo que desconfortável, para reorganizar as coisas.", en: "A necessary confrontation, uncomfortable as it is, that rearranges things." },
+            revKw:{ pt: "conflito não resolvido", en: "conflict unresolved" },
+            rev:  { pt: "Conflito evitado por baixo do tapete, ou resquícios de uma disputa antiga.", en: "Conflict swept under the rug, or the remains of an old dispute." } },
+      6:  { upKw: { pt: "harmonia, generosidade", en: "harmony, generosity" },
+            up:   { pt: "Um momento de troca equilibrada e cooperação genuína.", en: "A moment of even exchange and genuine cooperation." },
+            revKw:{ pt: "trocas desiguais", en: "uneven exchange" },
+            rev:  { pt: "Generosidade unilateral, ou um desequilíbrio real nas trocas entre as partes.", en: "Generosity going one way only, or a real imbalance between the parties." } },
+      7:  { upKw: { pt: "avaliação, esforço", en: "assessment, effort" },
+            up:   { pt: "Um teste de convicção — vale a pena avaliar com calma antes de continuar.", en: "A test of conviction — worth assessing calmly before going on." },
+            revKw:{ pt: "dúvida, dispersão", en: "doubt, scattering" },
+            rev:  { pt: "Dúvida a minar o esforço, ou desistência prematura antes da hora.", en: "Doubt eating at the effort, or giving up well before the point." } },
+      8:  { upKw: { pt: "movimento, poder em ação", en: "movement, power in action" },
+            up:   { pt: "As coisas ganham velocidade. Energia em movimento rápido e direcionado.", en: "Things pick up speed. Energy moving fast and pointed somewhere." },
+            revKw:{ pt: "obstáculos, atrasos", en: "obstacles, delays" },
+            rev:  { pt: "Atrasos, força mal direcionada, ou obstáculos a travar o avanço.", en: "Delays, force aimed wrongly, or obstacles holding the advance." } },
+      9:  { upKw: { pt: "resiliência, quase lá", en: "resilience, nearly there" },
+            up:   { pt: "Quase no fim do ciclo — força acumulada, mesmo que o cansaço já se note.", en: "Near the end of the cycle — strength accumulated, even if the tiredness shows." },
+            revKw:{ pt: "exaustão", en: "exhaustion" },
+            rev:  { pt: "Exaustão, cautela excessiva, ou vontade de desistir perto demais da meta.", en: "Exhaustion, excessive caution, or wanting to quit far too close to the finish." } },
+      10: { upKw: { pt: "conclusão, culminação", en: "completion, culmination" },
+            up:   { pt: "O ciclo completo — todo o peso e todo o fruto do que foi percorrido.", en: "The full cycle — all the weight and all the fruit of the road travelled." },
+            revKw:{ pt: "sobrecarga", en: "overload" },
+            rev:  { pt: "Sobrecarga, um fim que se arrasta mais do que devia, ou alívio necessário.", en: "Overload, an ending dragging on longer than it should, or relief that is overdue." } }
+    };
+
+    var COURTS = [
+      { key: "pajem", name: { pt: "Pajem", en: "Page" },
+        upKw: { pt: "mensagem, aprendizagem", en: "a message, learning" },
+        up:   { pt: "Uma mensagem ou início de aprendizagem — curiosidade genuína sobre este território.", en: "A message, or the start of learning — genuine curiosity about this territory." },
+        revKw:{ pt: "imaturidade", en: "immaturity" },
+        rev:  { pt: "Imaturidade, uma notícia atrasada, ou insegurança em dar o primeiro passo.", en: "Immaturity, news held up, or nerves about taking the first step." } },
+      { key: "cavaleiro", name: { pt: "Cavaleiro", en: "Knight" },
+        upKw: { pt: "ação rápida", en: "quick action" },
+        up:   { pt: "Movimento decidido — sair da teoria e ir atrás do que se quer, com energia direta.", en: "Decisive movement — leaving theory and going after it, directly." },
+        revKw:{ pt: "impulsividade", en: "impulsiveness" },
+        rev:  { pt: "Pressa mal calculada, impulsividade, ou energia dispersa em várias direções.", en: "Badly judged haste, impulsiveness, or energy scattered in several directions." } },
+      { key: "rainha", name: { pt: "Rainha", en: "Queen" },
+        upKw: { pt: "domínio maduro", en: "mature mastery" },
+        up:   { pt: "Domínio maduro e intuitivo sobre este território — cuidar dele com sabedoria própria.", en: "Mature, intuitive command of this territory — tending it with a wisdom of your own." },
+        revKw:{ pt: "insegurança interna", en: "inner insecurity" },
+        rev:  { pt: "Insegurança neste território, ou energia voltada para dentro de forma pesada.", en: "Insecurity here, or energy turned inward in a heavy way." } },
+      { key: "rei", name: { pt: "Rei", en: "King" },
+        upKw: { pt: "autoridade consolidada", en: "settled authority" },
+        up:   { pt: "Autoridade e controlo consolidados — liderar este território com maturidade.", en: "Authority and control settled — leading this territory with maturity." },
+        revKw:{ pt: "autoritarismo ou fragilidade", en: "domineering, or brittle" },
+        rev:  { pt: "Autoritarismo e rigidez, ou o oposto: uma autoridade enfraquecida e insegura.", en: "Domineering rigidity, or the opposite: an authority weakened and unsure." } }
+    ];
+
+    function joinPT(a, b) { return a + " " + b; }
+
+    function buildMinors() {
+      var out = [];
+      SUITS.forEach(function (suit) {
+        var n;
+        for (n = 1; n <= 10; n++) {
+          (function (n) {
+            var m = NUMBERS[n];
+            out.push({
+              id: suit.key + "-" + n, arcana: "minor", suit: suit.key, mark: suit.key,
+              name: { pt: t2(NUMBER_NAMES[n], "pt") + " de " + t2(suit.name, "pt"),
+                      en: t2(NUMBER_NAMES[n], "en") + " of " + t2(suit.name, "en") },
+              upright: { kw: m.upKw, meaning: {
+                pt: joinPT(t2(m.up, "pt"), "Aplicado ao território de " + t2(suit.domain, "pt") + " (elemento " + t2(suit.element, "pt") + ")."),
+                en: joinPT(t2(m.up, "en"), "In the territory of " + t2(suit.domain, "en") + " (element: " + t2(suit.element, "en") + ").") } },
+              reversed: { kw: m.revKw, meaning: {
+                pt: joinPT(t2(m.rev, "pt"), "No território de " + t2(suit.domain, "pt") + "."),
+                en: joinPT(t2(m.rev, "en"), "In the territory of " + t2(suit.domain, "en") + ".") } }
+            });
+          })(n);
+        }
+        COURTS.forEach(function (c) {
+          out.push({
+            id: suit.key + "-" + c.key, arcana: "minor", suit: suit.key, mark: suit.key,
+            name: { pt: t2(c.name, "pt") + " de " + t2(suit.name, "pt"),
+                    en: t2(c.name, "en") + " of " + t2(suit.name, "en") },
+            upright: { kw: c.upKw, meaning: {
+              pt: joinPT(t2(c.up, "pt"), "No território de " + t2(suit.domain, "pt") + "."),
+              en: joinPT(t2(c.up, "en"), "In the territory of " + t2(suit.domain, "en") + ".") } },
+            reversed: { kw: c.revKw, meaning: {
+              pt: joinPT(t2(c.rev, "pt"), "No território de " + t2(suit.domain, "pt") + "."),
+              en: joinPT(t2(c.rev, "en"), "In the territory of " + t2(suit.domain, "en") + ".") } }
+          });
+        });
+      });
+      return out;
+    }
+
+    function t2(v, l) { return v && typeof v === "object" ? (v[l] || v.pt) : v; }
+
+    var DECK = MAJORS.concat(buildMinors());
+
+    var THEMES = [
+      { key: "geral",    label: { pt: "Visão Geral", en: "General" },  intro: { pt: "No teu momento de vida em geral", en: "In your life as it stands" } },
+      { key: "amor",     label: { pt: "Amor", en: "Love" },            intro: { pt: "No campo do amor e dos relacionamentos", en: "In love and relationships" } },
+      { key: "dinheiro", label: { pt: "Dinheiro", en: "Money" },       intro: { pt: "No campo financeiro e material", en: "In money and material things" } },
+      { key: "carreira", label: { pt: "Carreira", en: "Work" },        intro: { pt: "No campo profissional e de propósito", en: "In work and purpose" } },
+      { key: "futuro",   label: { pt: "Futuro", en: "What's ahead" },  intro: { pt: "A olhar para onde as coisas caminham", en: "Looking at where things are heading" } }
+    ];
+
+    function P(pt, en, dpt, den) { return { label: { pt: pt, en: en }, desc: { pt: dpt || "", en: den || "" } }; }
+
+    var SPREADS = [
+      { key: "one", name: { pt: "1 Carta", en: "1 Card" }, desc: { pt: "Uma pergunta, uma resposta direta.", en: "One question, one direct answer." },
+        positions: [P("Mensagem", "Message", "a energia central para a tua pergunta agora", "the core energy for your question right now")] },
+      { key: "three", name: { pt: "3 Cartas", en: "3 Cards" }, desc: { pt: "Passado, presente e futuro.", en: "Past, present and future." },
+        positions: [
+          P("Passado", "Past", "o que veio antes e ainda influencia", "what came before and still weighs"),
+          P("Presente", "Present", "onde estás agora", "where you are now"),
+          P("Futuro", "Future", "para onde isto caminha se nada mudar", "where this goes if nothing changes")] },
+      { key: "yesno", name: { pt: "Sim ou Não", en: "Yes or No" }, special: "yesno",
+        desc: { pt: "3 cartas — a tendência predominante aponta o caminho.", en: "3 cards — the prevailing lean points the way." },
+        positions: [P("Carta 1", "Card 1"), P("Carta 2", "Card 2"), P("Carta 3", "Card 3")] },
+      { key: "horseshoe", name: { pt: "Ferradura", en: "Horseshoe" },
+        desc: { pt: "7 cartas para uma pergunta com mais camadas.", en: "7 cards for a question with more layers." },
+        positions: [
+          P("Passado", "Past", "raízes da situação", "the roots of the situation"),
+          P("Presente", "Present", "onde estás agora", "where you are now"),
+          P("Influências ocultas", "Hidden influences", "o que age nos bastidores", "what is acting behind the scenes"),
+          P("Obstáculos", "Obstacles", "o que está no caminho", "what is in the way"),
+          P("Ambiente", "Surroundings", "pessoas e contexto ao redor", "the people and context around you"),
+          P("Atitude recomendada", "Suggested stance", "como agir a partir daqui", "how to act from here"),
+          P("Resultado", "Outcome", "para onde isto tende a ir", "where this tends to go")] },
+      { key: "celtic", name: { pt: "Cruz Celta", en: "Celtic Cross" },
+        desc: { pt: "A tiragem clássica de 10 cartas — o panorama completo.", en: "The classic ten-card spread — the whole picture." },
+        positions: [
+          P("Presente", "Present", "o cerne da questão", "the heart of the matter"),
+          P("Desafio", "Challenge", "o obstáculo ou força que cruza a questão", "what crosses it"),
+          P("Base", "Foundation", "o alicerce subconsciente da situação", "the subconscious ground it stands on"),
+          P("Passado recente", "Recent past", "o que está a dissipar-se", "what is fading out"),
+          P("Meta consciente", "Conscious aim", "o que buscas conscientemente", "what you are consciously after"),
+          P("Futuro próximo", "Near future", "o que se aproxima", "what is coming"),
+          P("Atitude", "Your stance", "como te vês nisto", "how you see yourself in this"),
+          P("Influências externas", "Outside forces", "forças fora do teu controlo", "what is outside your control"),
+          P("Esperanças e medos", "Hopes and fears", "o que desejas e temes", "what you want and what you dread"),
+          P("Resultado", "Outcome", "para onde caminha se nada mudar", "where it goes if nothing changes")] },
+      { key: "mandala", name: { pt: "Mandala Astrológica", en: "Astrological Mandala" },
+        desc: { pt: "12 cartas — as doze casas astrológicas como mapa das áreas da vida.", en: "12 cards — the twelve astrological houses as a map of life's areas." },
+        positions: [
+          P("Casa 1 — Eu", "House 1 — Self", "identidade, corpo, como te apresentas ao mundo", "identity, body, how you show up"),
+          P("Casa 2 — Recursos", "House 2 — Resources", "dinheiro, valores, autoestima material", "money, values, material self-worth"),
+          P("Casa 3 — Comunicação", "House 3 — Communication", "mente, palavras, irmãos, o dia a dia próximo", "mind, words, siblings, daily life close by"),
+          P("Casa 4 — Lar e raízes", "House 4 — Home and roots", "família, origem, fundação emocional", "family, origin, emotional foundation"),
+          P("Casa 5 — Criatividade", "House 5 — Creativity", "prazer, romance, expressão pessoal", "pleasure, romance, self-expression"),
+          P("Casa 6 — Rotina e saúde", "House 6 — Routine and health", "trabalho do dia a dia, corpo, hábitos", "daily work, body, habits"),
+          P("Casa 7 — Relacionamentos", "House 7 — Relationships", "parcerias, casamento, o outro", "partnership, marriage, the other person"),
+          P("Casa 8 — Transformação", "House 8 — Transformation", "o que é partilhado, crises, renascimento", "what is shared, crisis, rebirth"),
+          P("Casa 9 — Expansão", "House 9 — Expansion", "crenças, estudos, viagens, sentido maior", "belief, study, travel, larger meaning"),
+          P("Casa 10 — Carreira", "House 10 — Career", "propósito público, reputação, vocação", "public purpose, reputation, vocation"),
+          P("Casa 11 — Comunidade", "House 11 — Community", "amizades, redes, esperanças de futuro", "friendship, networks, hopes ahead"),
+          P("Casa 12 — Inconsciente", "House 12 — The unconscious", "espiritualidade, o que fica escondido, encerramentos", "spirit, what stays hidden, endings")] }
+    ];
+
+    /* ── State ──────────────────────────────────────────────────────────── */
+    var state = { step: "setup", theme: "geral", spread: "three", mode: "random",
+                  deck: [], used: {}, draws: [], date: null, showText: false, copied: false };
+
+    function theme() { return THEMES.filter(function (x) { return x.key === state.theme; })[0]; }
+    function spread() { return SPREADS.filter(function (x) { return x.key === state.spread; })[0]; }
+
+    function shuffled() {
+      var arr = DECK.map(function (card) { return { card: card, reversed: Math.random() < 0.42 }; });
+      var i, j, tmp;
+      for (i = arr.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+      }
+      return arr;
+    }
+
+    /* ── Reading ────────────────────────────────────────────────────────── */
+    function interpret(d, pos) {
+      var meaning = t(d.reversed ? d.card.reversed.meaning : d.card.upright.meaning);
+      var orient = t(d.reversed ? UI.revLong : UI.upLong);
+      var desc = t(pos.desc) ? " (" + t(pos.desc) + ")" : "";
+      if (lang === "pt") {
+        return t(theme().intro) + ', na posição "' + t(pos.label) + '"' + desc + ", " + t(d.card.name) + " " + orient + " sugere: " + meaning;
+      }
+      return t(theme().intro) + ', in the "' + t(pos.label) + '" position' + desc + ", " + t(d.card.name) + " " + orient + " suggests: " + meaning;
+    }
+
+    function synthesis() {
+      var draws = state.draws, sp = spread(), total = draws.length;
+      var rev = draws.filter(function (d) { return d.reversed; }).length;
+      var major = draws.filter(function (d) { return d.card.arcana === "major"; }).length;
+      var counts = {}, dominant = null;
+      draws.forEach(function (d) { if (d.card.suit) counts[d.card.suit] = (counts[d.card.suit] || 0) + 1; });
+      Object.keys(counts).forEach(function (k) { if (!dominant || counts[k] > counts[dominant]) dominant = k; });
+
+      var out = t(theme().intro) + (lang === "pt"
+        ? ", esta tiragem reúne " + total + " carta" + (total > 1 ? "s" : "") + ". "
+        : ", this reading holds " + total + " card" + (total > 1 ? "s" : "") + ". ");
+
+      if (total === 1) {
+        var d0 = draws[0];
+        out += lang === "pt"
+          ? t(d0.card.name) + (d0.reversed ? " invertida" : "") + " é, hoje, a energia que mais precisa da tua atenção."
+          : t(d0.card.name) + (d0.reversed ? " reversed" : "") + " is the energy asking for your attention today.";
+        return out;
+      }
+
+      out += major / total >= 0.4
+        ? (lang === "pt"
+            ? "Com " + major + " arcano" + (major > 1 ? "s" : "") + " maior" + (major > 1 ? "es" : "") + " em jogo, o tema pesa mais do que o dia a dia — há forças de fundo, quase arquetípicas, e não só pequenas decisões. "
+            : "With " + major + " major arcan" + (major > 1 ? "a" : "um") + " in play, this weighs more than the everyday — there are deep, almost archetypal forces here, not just small decisions. ")
+        : (lang === "pt"
+            ? "Predominam arcanos menores, o que sugere que isto se resolve mais no terreno prático do dia a dia do que em grandes reviravoltas. "
+            : "Minor arcana dominate, which suggests this resolves on practical, everyday ground rather than through some great turn. ");
+
+      out += rev / total >= 0.6
+        ? (lang === "pt" ? "A maioria das cartas saiu invertida — há energia represada, processos ainda por destravar. Vale desacelerar antes de agir. "
+                         : "Most cards came up reversed — energy is dammed and processes are not yet unstuck. Worth slowing down before acting. ")
+        : rev === 0
+        ? (lang === "pt" ? "Todas as cartas saíram eretas — a energia flui sem grandes bloqueios internos, o que favorece agir com mais confiança. "
+                         : "Every card came up upright — the energy runs with no great inner blockage, which favours acting with confidence. ")
+        : (lang === "pt" ? "Há equilíbrio entre energia a fluir e energia represada — parte da situação já está pronta para avançar, outra parte ainda pede paciência. "
+                         : "There is a balance between energy flowing and energy held — part of this is ready to move, part of it still asks for patience. ");
+
+      if (dominant && counts[dominant] >= Math.max(2, Math.ceil(total * 0.3))) {
+        var suit = SUITS.filter(function (s) { return s.key === dominant; })[0];
+        if (suit) {
+          out += lang === "pt"
+            ? "O naipe de " + t(suit.name) + " aparece com destaque, apontando " + t(suit.domain) + " como o eixo real por trás do resto. "
+            : "The suit of " + t(suit.name) + " stands out, pointing at " + t(suit.domain) + " as the real axis behind the rest. ";
+        }
+      }
+
+      var last = draws[draws.length - 1];
+      var lastPos = t(sp.positions[sp.positions.length - 1].label);
+      out += lang === "pt"
+        ? 'Vale olhar com atenção especial para "' + lastPos + '" (' + t(last.card.name) + (last.reversed ? " invertida" : "") + ") antes de decidir o próximo passo."
+        : 'It is worth looking hard at "' + lastPos + '" (' + t(last.card.name) + (last.reversed ? " reversed" : "") + ") before deciding the next step.";
+      return out;
+    }
+
+    function verdict() {
+      var up = state.draws.filter(function (d) { return !d.reversed; }).length;
+      return up >= 2 ? { label: t(UI.yes), tone: "var(--sage)" } : { label: t(UI.no), tone: "var(--oxblood)" };
+    }
+
+    function dateLabel() {
+      if (!state.date) return "";
+      var loc = lang === "pt" ? "pt-PT" : "en-GB";
+      return state.date.toLocaleDateString(loc, { day: "2-digit", month: "long", year: "numeric" }) +
+             " " + t(UI.at) + " " + state.date.toLocaleTimeString(loc, { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function exportText() {
+      var sp = spread(), lines = [];
+      lines.push(t(UI.exTitle));
+      lines.push(t(UI.exDate) + ": " + dateLabel());
+      lines.push(t(UI.exTheme) + ": " + t(theme().label));
+      lines.push(t(UI.exSpread) + ": " + t(sp.name));
+      if (sp.special === "yesno") lines.push(verdict().label);
+      lines.push("");
+      state.draws.forEach(function (d, i) {
+        lines.push((i + 1) + ". " + t(sp.positions[i].label) + " — " + t(d.card.name) +
+          " (" + t(d.reversed ? UI.revLong : UI.upLong) + ")");
+        lines.push(interpret(d, sp.positions[i]));
+        lines.push("");
+      });
+      lines.push(t(UI.exGeneral));
+      lines.push(synthesis());
+      return lines.join("\n");
+    }
+
+    /* ── Rendering ──────────────────────────────────────────────────────── */
+    var app = document.getElementById("app");
+
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+
+    function faceHTML(d) {
+      var mark = d.card.arcana === "major" ? esc(d.card.numeral) : MARKS[d.card.mark];
+      return '<div class="face"' + (d.reversed ? " data-reversed" : "") + '>' +
+        '<div class="mark">' + mark + '</div>' +
+        '<div><div class="name">' + esc(t(d.card.name)) + '</div>' +
+        (d.reversed ? '<div class="rev">' + esc(t(UI.reversed)) + "</div>" : "") +
+        "</div></div>";
+    }
+
+    function setupHTML() {
+      var sp = spread();
+      return '<div class="step"><h2>' + esc(t(UI.step1)) + "</h2>" +
+        '<div class="pills">' + THEMES.map(function (x) {
+          return '<button type="button" class="pill" data-theme="' + x.key + '" aria-pressed="' +
+            (state.theme === x.key) + '">' + esc(t(x.label)) + "</button>";
+        }).join("") + "</div></div>" +
+
+        '<div class="step"><h2>' + esc(t(UI.step2)) + "</h2><div class=\"spreads\">" +
+        SPREADS.map(function (x) {
+          var n = x.positions.length;
+          return '<button type="button" class="spread" data-spread="' + x.key + '" aria-pressed="' +
+            (state.spread === x.key) + '"><b>' + esc(t(x.name)) + " · " + n + " " +
+            esc(t(n > 1 ? UI.cards : UI.card1)) + "</b><span>" + esc(t(x.desc)) + "</span></button>";
+        }).join("") + "</div></div>" +
+
+        '<div class="step"><h2>' + esc(t(UI.step3)) + "</h2>" +
+        '<div class="pills">' +
+        '<button type="button" class="pill" data-mode="manual" aria-pressed="' + (state.mode === "manual") + '">' + esc(t(UI.manual)) + "</button>" +
+        '<button type="button" class="pill" data-mode="random" aria-pressed="' + (state.mode === "random") + '">' + esc(t(UI.random)) + "</button>" +
+        "</div></div>" +
+
+        '<div class="go"><button type="button" class="btn" data-go>' +
+        esc(t(state.mode === "manual" ? UI.goManual : UI.goRandom)) + " →</button></div>";
+    }
+
+    function drawHTML() {
+      var sp = spread(), pos = sp.positions[state.draws.length];
+      return '<button type="button" class="btn btn--quiet" data-reset>' + esc(t(UI.goBack)) + "</button>" +
+        '<div style="text-align:center;margin:1.5rem 0 0.5rem">' +
+        '<h2 style="margin:0">' + esc(t(UI.pickFor)) + " " + esc(t(pos.label)) + "</h2>" +
+        (t(pos.desc) ? '<p style="margin:.2rem 0 0;color:var(--text-dim);font-size:.9rem">' + esc(t(pos.desc)) + "</p>" : "") +
+        '<p style="margin:.4rem 0 0;color:var(--text-dim);font-size:.85rem">' +
+        state.draws.length + " " + esc(t(UI.chosen)) + " " + sp.positions.length + "</p></div>" +
+        '<div class="draw-grid">' + state.deck.map(function (_, i) {
+          return '<button type="button" class="back" data-pick="' + i + '"' +
+            (state.used[i] ? " disabled" : "") + ' aria-label="' + esc(t(UI.pickFor)) + " " + esc(t(pos.label)) + '"></button>';
+        }).join("") + "</div>";
+    }
+
+    function resultHTML() {
+      var sp = spread();
+      var v = sp.special === "yesno" ? verdict() : null;
+      return '<div class="result-head">' +
+        "<div><h2 style=\"margin:0\">" + esc(t(sp.name)) + " · " + esc(t(theme().label)) + "</h2>" +
+        '<p class="meta" style="margin:.2rem 0 0">' + esc(dateLabel()) + "</p></div>" +
+        '<div class="actions no-print">' +
+        '<button type="button" class="btn btn--ghost" data-pdf>' + esc(t(UI.savePdf)) + "</button>" +
+        '<button type="button" class="btn btn--ghost" data-text>' + esc(t(state.showText ? UI.hideText : UI.showText)) + "</button>" +
+        '<button type="button" class="btn btn--quiet" data-reset>' + esc(t(UI.again)) + "</button>" +
+        "</div></div>" +
+
+        (v ? '<div class="verdict" style="color:' + v.tone + '">' + esc(v.label) +
+             "<small>" + esc(t(UI.yesNote)) + "</small></div>" : "") +
+
+        '<div class="spread-out">' + state.draws.map(function (d, i) {
+          return '<div class="slot"><div class="pos">' + (i + 1) + ". " + esc(t(sp.positions[i].label)) + "</div>" +
+            faceHTML(d) + '<div class="read">' + esc(interpret(d, sp.positions[i])) + "</div></div>";
+        }).join("") + "</div>" +
+
+        '<div class="synthesis"><h2>' + esc(t(UI.general)) + "</h2><p style=\"margin:0\">" + esc(synthesis()) + "</p></div>" +
+
+        (state.showText ? '<div class="export no-print"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px">' +
+          "<h2 style=\"margin:0\">" + esc(t(UI.textTitle)) + "</h2>" +
+          '<button type="button" class="btn btn--ghost" data-copy>' + esc(t(state.copied ? UI.copied : UI.copy)) + "</button></div>" +
+          '<textarea id="export-area" readonly>' + esc(exportText()) + "</textarea>" +
+          '<p class="hint">' + esc(t(UI.copyHint)) + "</p></div>" : "");
+    }
+
+    function render() {
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        var key = el.getAttribute("data-i18n");
+        if (UI[key]) el.textContent = t(UI[key]);
+      });
+      document.querySelectorAll(".lang button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.lang === lang));
+      });
+      app.innerHTML = state.step === "setup" ? setupHTML() : state.step === "draw" ? drawHTML() : resultHTML();
+    }
+
+    /* One listener on the container rather than one per control: the screens
+       are replaced wholesale on every render, and per-node listeners would be
+       rebound (or leaked) every time. */
+    app.addEventListener("click", function (event) {
+      var el = event.target.closest("[data-theme],[data-spread],[data-mode],[data-go],[data-pick],[data-reset],[data-text],[data-copy],[data-pdf]");
+      if (!el) return;
+
+      if (el.dataset.theme) { state.theme = el.dataset.theme; return render(); }
+      if (el.dataset.spread) { state.spread = el.dataset.spread; return render(); }
+      if (el.dataset.mode) { state.mode = el.dataset.mode; return render(); }
+
+      if (el.hasAttribute("data-go")) {
+        var fresh = shuffled();
+        if (state.mode === "random") {
+          state.draws = fresh.slice(0, spread().positions.length);
+          state.date = new Date();
+          state.step = "result";
+        } else {
+          state.deck = fresh; state.used = {}; state.draws = []; state.step = "draw";
+        }
+        return render();
+      }
+
+      if (el.hasAttribute("data-pick")) {
+        var i = +el.dataset.pick;
+        if (state.used[i] || state.draws.length >= spread().positions.length) return;
+        state.used[i] = true;
+        state.draws.push(state.deck[i]);
+        if (state.draws.length === spread().positions.length) { state.date = new Date(); state.step = "result"; }
+        return render();
+      }
+
+      if (el.hasAttribute("data-reset")) {
+        state.step = "setup"; state.draws = []; state.deck = []; state.used = {};
+        state.date = null; state.showText = false; state.copied = false;
+        return render();
+      }
+
+      if (el.hasAttribute("data-text")) { state.showText = !state.showText; state.copied = false; return render(); }
+
+      /* No PDF library. Every browser prints to PDF, its typesetting beats a
+         canvas-based generator, and the output is real selectable text. */
+      if (el.hasAttribute("data-pdf")) { window.print(); return; }
+
+      if (el.hasAttribute("data-copy")) {
+        var text = exportText();
+        var done = function () { state.copied = true; render(); setTimeout(function () { state.copied = false; render(); }, 2000); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, fallback);
+        } else { fallback(); }
+        function fallback() {
+          var ta = document.getElementById("export-area");
+          if (!ta) return;
+          ta.focus(); ta.select();
+          try { document.execCommand("copy"); done(); } catch (e) { /* the text is selected; Ctrl+C works */ }
+        }
+      }
+    });
+
+    document.querySelector(".lang").addEventListener("click", function (event) {
+      var b = event.target.closest("[data-lang]");
+      if (!b || b.dataset.lang === lang) return;
+      lang = b.dataset.lang;
+      try { localStorage.setItem("bylx-tarot-lang", lang); } catch (e) {}
+      render();
+    });
+
+    render();
+  })();
+  </script>
+</body>
+</html>
