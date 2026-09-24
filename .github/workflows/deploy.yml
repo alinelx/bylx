@@ -1,0 +1,146 @@
+# Deploys bylx.dev to Hostinger over FTPS whenever main moves.
+#
+# Three things this does that a plain "upload everything" would not:
+#
+#  1. It refuses to deploy a stale build. `npm run predeploy` re-runs the
+#     stamper and the page generator in --check mode and exits 1 if either
+#     would change a file. Deploying with a stale ?v= is how the CDN ends up
+#     handing out last week's CSS.
+#
+#  2. It runs the test suite first. The site is static, so "it built" proves
+#     nothing; the Playwright suite is the only gate there is.
+#
+#  3. It uploads index.html LAST, in a second pass. Hostinger's CDN caches by
+#     URL and ignores the origin's no-cache, so if index.html went up first a
+#     visitor could load it mid-deploy, and the edge would cache the new
+#     ?v=<hash> URLs pointing at files that are still the old ones — cached,
+#     by definition, under a URL that will never change again. Assets first,
+#     then the file that points at them.
+#
+# Setup, once: add three repository secrets under
+# Settings -> Secrets and variables -> Actions:
+#
+#   FTP_SERVER     the FTP host from hPanel (e.g. ftp.bylx.dev)
+#   FTP_USERNAME   the FTP account user
+#   FTP_PASSWORD   its password
+#
+# And check SERVER_DIR below matches the account's web root.
+#
+# FIRST RUN: this action tracks what it has uploaded in a state file on the
+# server. That file does not exist yet, so the first run uploads everything and
+# deletes nothing. The folders the rename left behind have to go by hand, once:
+#   arcade/purikura/   assets/arcade/purikura/   assets/arcade/purikura-shot.png
+
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Rehearse: connect, list what would change, write nothing"
+        type: boolean
+        default: false
+
+# Never let two deploys interleave over one FTP account, and never cancel one
+# half-way: a partial upload is exactly the state the two-pass order exists to
+# avoid.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+env:
+  SERVER_DIR: /public_html/
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      # Fail in seconds with the reason, rather than after a five-minute test
+      # run and then an FTP error about connecting to an empty host.
+      - name: Check the FTP secrets exist
+        run: |
+          missing=""
+          [ -n "${{ secrets.FTP_SERVER }}" ]   || missing="$missing FTP_SERVER"
+          [ -n "${{ secrets.FTP_USERNAME }}" ] || missing="$missing FTP_USERNAME"
+          [ -n "${{ secrets.FTP_PASSWORD }}" ] || missing="$missing FTP_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing"
+            echo "Add them under Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+          echo "All three FTP secrets are set."
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Would the stamper or the page generator change anything? Then what is
+      # committed is not what should ship, and the deploy stops here.
+      - name: Check the build is current
+        run: npm run predeploy
+
+      # Both Playwright projects are Chromium, so this is one browser.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Test
+        run: npm test
+
+      - name: Hold index.html back for the second pass
+        run: |
+          mkdir -p .entry
+          mv index.html .entry/index.html
+
+      - name: Upload everything except index.html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          dry-run: ${{ inputs.dry_run == true }}
+          server-dir: ${{ env.SERVER_DIR }}
+          state-name: .ftp-deploy-assets.json
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .entry/**
+            .github/**
+            tests/**
+            scripts/**
+            docs/**
+            test-results/**
+            playwright-report/**
+            blob-report/**
+            playwright.config.js
+            package.json
+            package-lock.json
+            CLAUDE.md
+            DESIGN.md
+            README.md
+            bylx.dev - Standalone.html
+
+      # Only now does the page that names those URLs go up.
+      - name: Upload index.html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          dry-run: ${{ inputs.dry_run == true }}
+          local-dir: ./.entry/
+          server-dir: ${{ env.SERVER_DIR }}
+          state-name: .ftp-deploy-entry.json

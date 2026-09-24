@@ -5,10 +5,15 @@ playwright-report/
 blob-report/
 .playwright/
 
-# A second, separate clone of this repo that lives inside the working copy and
-# carries its own .git plus uncommitted work. Ignored so it is never uploaded
-# or committed by accident. Do NOT delete it — see CLAUDE.md backlog.
+# A second, separate clone of this repo that used to live inside the working
+# copy, carrying its own .git and 64MB of duplicated mp3s. It was deleted on
+# 2026-09-22 (see CLAUDE.md); this entry stays so it cannot come back by
+# accident. The note here used to read "do NOT delete it", which is the
+# opposite of what happened and of what should happen - one machine, one copy.
 /bylx/
+
+# Where the deploy workflow parks index.html so it can be uploaded last.
+.entry/
 
 # OS noise
 Thumbs.db
