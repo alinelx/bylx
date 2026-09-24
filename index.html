@@ -130,7 +130,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=0555087c" />
+  <link rel="stylesheet" href="styles.css?v=d18876d7" />
 </head>
 
 <body>
@@ -442,6 +442,23 @@
             </div>
           </article>
         </div>
+      </div>
+    </section>
+
+    <!-- The cabinet is an illustration with a real control on it, not a frame
+         around content: the whole thing is one link, and START is what says so.
+         The machines themselves live behind /arcade/, so nothing they need —
+         Konva included — is loaded on this page. -->
+    <section class="arcade" id="arcade" aria-labelledby="arcade-title">
+      <div class="arcade-inner">
+        <p class="eyebrow">arcade</p>
+        <h2 id="arcade-title" class="arcade-heading">Some of it you can play.</h2>
+        <p class="arcade-lede">Not everything I build is a case study. A few are small machines that just run in a browser, and they live in here.</p>
+
+        <a class="arcade-cabinet" href="/arcade/">
+          <img src="assets/arcade/cabinet.png" alt="" width="256" height="256" />
+          <span class="arcade-start">Press start</span>
+        </a>
       </div>
     </section>
 
@@ -1134,6 +1151,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=0555087c"></script>
+  <script type="module" src="script.js?v=d18876d7"></script>
 </body>
 </html>

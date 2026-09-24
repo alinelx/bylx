@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- A machine in the arcade, and self-contained on purpose: it ships its own
+       :root tokens and its own body background, so loading the site stylesheet
+       here would collide on --muted and fight over the page background. It also
+       does without the pixel cursor — this is precision work over a photograph,
+       and hiding the real pointer makes that harder, not prettier. -->
+  <title>Purikura Editor · bylx.dev arcade</title>
+  <meta name="description" content="A purikura-style photo editor built in vanilla JavaScript with Konva: stickers, frames, outlined text, a brush with undo, and filters. Nothing is uploaded anywhere." />
+  <link rel="canonical" href="https://bylx.dev/arcade/purikura/" />
+  <meta property="og:title" content="Purikura Editor · bylx.dev arcade" />
+  <meta property="og:description" content="A purikura-style photo editor in vanilla JavaScript. Stickers, frames, outlined text, brush and filters — all in the browser." />
+  <meta property="og:url" content="https://bylx.dev/arcade/purikura/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://bylx.dev/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#fdf2f8" />
+
+  <link rel="icon" href="/assets/logo/bylx_logo_semdev.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dela+Gothic+One&family=Mochiy+Pop+P+One&family=Potta+One&family=Short+Stack&display=swap" rel="stylesheet">
+
+  <style>
+:root{
+      --bg1:#fdf2f8; /* fuchsia-50 */
+      --panel:#ffffff;
+      --ink:#0f172a; /* slate-900 */
+      --accent:#e879f9; /* fuchsia-400 */
+      --accent-2:#d946ef; /* fuchsia-500 */
+      --muted:#64748b; /* slate-500 */
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;color:var(--ink);background:linear-gradient(#fdf2f8, #fff);} 
+    h1{margin:0 0 12px;font-size:28px;font-weight:800}
+    .wrap{max-width:900px;margin:0 auto;padding:24px}
+    .grid{display:grid;grid-template-columns:1fr;gap:24px}
+    .panel{background:var(--panel);border-radius:16px;box-shadow:0 10px 20px rgba(2,6,23,.06);padding:16px}
+    .row{display:flex;gap:8px;align-items:center;min-width:0}
+    .row>label{min-width:90px;font-size:12px;color:var(--muted)}
+    .grow{flex:1;min-width:0}
+    .btn{appearance:none;border:0;border-radius:12px;background:#f1f5f9;padding:6px 10px;cursor:pointer;white-space:nowrap;font-size:13px}
+    .btn.primary{background:var(--accent-2);color:#fff}
+    .btn.pill{border-radius:999px}
+    .btn.active{background:var(--accent);color:#fff}
+    .btn:hover{filter:brightness(0.97)}
+    input[type="range"]{width:100%}
+    input[type="color"]{width:100%;height:40px;padding:0;border-radius:10px;border:1px solid #e2e8f0;background:#fff}
+    select, input[type="url"], input[type="text"], input[type="number"], input[type="file"]{width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:10px;min-width:0}
+    input[type="file"]{padding:6px}
+    .hint{font-size:12px;color:var(--muted)}
+    .thumbs{display:flex;flex-wrap:wrap;gap:8px}
+    .thumb{display:inline-flex;align-items:center;gap:8px;background:#fdf4ff;border:1px solid #f5d0fe;border-radius:10px;padding:6px 10px;cursor:pointer}
+    .thumb img{width:22px;height:22px;object-fit:contain}
+    .canvas-wrap{display:flex;justify-content:center;position:relative}
+    .frame{border:8px solid #fbcfe8;border-radius:16px;overflow:hidden}
+    .kawaii{font-family:"Cute Font", "Mochiy Pop P One", "Potta One", cursive}
+    .btn-group{display:flex;gap:8px;flex-wrap:wrap}
+    .toggle{display:inline-flex;align-items:center;gap:6px}
+    .trash-hint{position:absolute;right:12px;bottom:12px;background:#fff;border:2px dashed #94a3b8;color:#475569;padding:6px 10px;border-radius:10px;box-shadow:0 6px 14px rgba(2,6,23,.08)}
+  .panel.collapsed #toolsBody{display:none}
+  .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px}
+    .toolcol{background:#fafafa;border:1px solid #e2e8f0;border-radius:12px;padding:10px;max-height:48vh;overflow:auto}
+    .toolcol h3{margin:0 0 8px;font-size:14px;color:#334155}
+  </style>
+
+  <style>
+    /* The only thing the site adds to this machine: a way back to the arcade. */
+    .pk-back {
+      display: inline-block;
+      margin: 16px 0 0 24px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: #fff;
+      color: #0f172a;
+      font: 600 13px/1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      text-decoration: none;
+      box-shadow: 0 10px 20px rgba(2, 6, 23, .06);
+    }
+
+    .pk-back:hover,
+    .pk-back:focus-visible { background: #fdf2f8; }
+  </style>
+</head>
+<body>
+  <a class="pk-back" href="/arcade/">← back to the arcade</a>
+
+<div class="wrap">
+    <h1 class="kawaii">CuteGal Editor — purikura style</h1>
+    <div class="grid">
+      <section id="tools" class="panel">
+        <div class="row" style="justify-content:space-between; align-items:center">
+          <h2 class="kawaii" style="font-size:20px;margin:0">Tools</h2>
+          <button id="btnToggleTools" class="btn pill">Hide</button>
+        </div>
+        <div id="toolsBody">
+          <div class="tools-grid">
+            <!-- Column 1: Foto, Filtros, Zoom -->
+            <div class="toolcol">
+              <h3>Photo & Export</h3>
+              <div class="row"><label>Upload</label><input id="filePhoto" type="file" accept="image/*"></div>
+              <div class="row"><label>or Img URL</label><div class="grow row" style="gap:8px"><input id="urlPhoto" class="grow" type="url" placeholder="https://... .jpg/.png"><button id="btnUseUrl" class="btn">Use URL</button></div></div>
+              <div class="row" style="justify-content:flex-end;margin-top:6px"><button id="btnExport" class="btn primary">Save as PNG</button></div>
+
+              <hr style="margin:10px 0;border:none;border-top:1px solid #eee"/>
+
+              <h3>Filter</h3>
+              <div id="filterButtons" class="btn-group">
+                <button class="btn pill active" data-filter="none">No filter</button>
+                <button class="btn pill" data-filter="kawaii-soft">Kawaii Soft</button>
+                <button class="btn pill" data-filter="vivid-pop">Vivid Pop</button>
+                <button class="btn pill" data-filter="peachy-glow">Peachy Glow</button>
+              </div>
+              <div class="row" style="margin-top:6px"><label style="min-width:auto">Intens.</label><input id="rangeIntensity" class="grow" type="range" min="0" max="100" value="60"><span id="lblIntensity" class="hint">60</span></div>
+              <div class="row"><label style="min-width:auto">Whitening</label><button id="btnWhitening" class="btn pill">OFF</button></div>
+
+              <hr style="margin:10px 0;border:none;border-top:1px solid #eee"/>
+
+              <h3>Zoom</h3>
+              <div class="row"><label>Zoom</label><div class="grow row" style="gap:8px"><input id="rangeZoom" class="grow" type="range" min="50" max="200" value="100"><span id="lblZoom" class="hint">100%</span></div></div>
+              <div class="row" style="gap:8px;justify-content:flex-end"><button id="btnFitContain" class="btn">Ajust</button><button id="btnFitCover" class="btn">Cover</button></div>
+            </div>
+
+            <!-- Column 2: Caneta, Texto -->
+            <div class="toolcol">
+              <h3>Pen</h3>
+              <div id="brushButtons" class="btn-group">
+                <button class="btn pill active" data-brush="pen">Normal</button>
+                <button class="btn pill" data-brush="neon">Neon</button>
+                <button class="btn pill" data-brush="glow">Glow</button>
+              </div>
+              <div class="row" style="margin-top:6px">
+                <label style="min-width:auto">Color</label><input id="colorBrush" type="color" value="#ff3b81">
+              </div>
+              <div class="row" style="margin-top:6px">
+                <label style="min-width:auto">Density</label><input id="rangeBrush" class="grow" type="range" min="1" max="40" value="6"><span id="lblBrush" class="hint">6px</span>
+              </div>
+              <div class="row" style="margin-top:6px">
+                <button id="btnTogglePen" class="btn pill toggle"><span></span><span id="penState">ON</span></button>
+              </div>
+              <div class="btn-group" style="margin-top:6px"><button id="btnDrawUndo" class="btn" disabled>↶</button><button id="btnDrawRedo" class="btn" disabled>↷</button></div>
+
+              <hr style="margin:10px 0;border:none;border-top:1px solid #eee"/>
+
+              <h3>Text</h3>
+              <div class="row"><label>Content</label><input id="txtText" type="text" value="kawaii ✨"></div>
+              <div class="row"><label>Font</label>
+                <select id="selFont">
+                  <option value="Cute Font" style="font-family:'Cute Font'">Cute Font</option>
+                  <option value="Mochiy Pop P One" style="font-family:'Mochiy Pop P One'">Mochiy Pop P One</option>
+                  <option value="Potta One" style="font-family:'Potta One'">Potta One</option>
+                  <option value="Dela Gothic One" style="font-family:'Dela Gothic One'">Dela Gothic One</option>
+                  <option value="Short Stack" style="font-family:'Short Stack'">Short Stack</option>
+                </select>
+              </div>
+              <div class="row"><label>Size</label><input id="rangeTextSize" type="range" min="18" max="140" value="56"><span id="lblTextSize" class="hint">56</span></div>
+              <div class="row"><label>Color</label><input id="colorText" type="color" value="#ff3b81"></div>
+              <div class="row"><label>Outline 1</label><input id="rangeOutlineOuter" type="range" min="0" max="16" value="8"><span id="lblOutlineOuter" class="hint">8</span></div>
+              <div class="row"><label>Color O1</label><input id="colorOutlineOuter" type="color" value="#ffffff"></div>
+              <div class="row"><label>Outline 2</label><input id="rangeOutlineInner" type="range" min="0" max="12" value="4"><span id="lblOutlineInner" class="hint">4</span></div>
+              <div class="row"><label>Color O2</label><input id="colorOutlineInner" type="color" value="#ffb5e8"></div>
+              <div class="row"><label>Text Align</label>
+                <select id="selAlign">
+                  <option value="left">Left</option>
+                  <option value="center" selected>Center</option>
+                  <option value="right">Right</option>
+                </select>
+              </div>
+              <div class="row" style="justify-content:flex-end"><button id="btnAddText" class="btn">+ Add text</button></div>
+            </div>
+
+            <!-- Column 3: Stickers, Molduras -->
+            <div class="toolcol">
+              <h3>Stickers</h3>
+              <div class="row"><label>Upload</label><input id="fileSticker" type="file" accept="image/png"></div>
+              <div class="row"><label>or Img URL</label><div class="grow row" style="gap:8px"><input id="urlSticker" class="grow" type="url" placeholder="https://... .png"><button id="btnAddStickerUrl" class="btn">Add</button></div></div>
+              <div class="thumbs" id="stickersBuiltIn"></div>
+
+              <hr style="margin:10px 0;border:none;border-top:1px solid #eee"/>
+
+              <h3>Frames</h3>
+              <div class="row" style="justify-content:flex-end"><button id="btnRemoveFrame" class="btn">Remove</button></div>
+              <div class="thumbs" id="framesBuiltIn"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main class="panel canvas-wrap">
+        <div class="frame">
+          <div id="konvaContainer" style="width:900px;height:900px"></div>
+        </div>
+        <div class="trash-hint" id="trashHint">🗑️ Trash</div>
+      </main>
+    </div>
+  </div>
+
+  <!-- All JS wrapped to avoid leaking into UI if an earlier tag breaks -->
+
+  <!-- Vendored, not from a CDN: the version is in the filename, so it is
+       immutable and needs no cache stamp, and the machine still works on a day
+       unpkg does not. -->
+  <script src="/assets/vendor/konva-9.3.16.min.js"></script>
+  <script>
+// Rewritten, consolidated JS (fixes stray token & rebinds events via delegation)
+  window.addEventListener('DOMContentLoaded', function(){
+    'use strict';
+    try{
+      // ------------ Cache DOM -------------
+      const el = {
+        filePhoto: document.getElementById('filePhoto'),
+        urlPhoto: document.getElementById('urlPhoto'),
+        btnUseUrl: document.getElementById('btnUseUrl'),
+        btnExport: document.getElementById('btnExport'),
+        filterButtons: document.getElementById('filterButtons'),
+        rangeIntensity: document.getElementById('rangeIntensity'),
+        lblIntensity: document.getElementById('lblIntensity'),
+        btnWhitening: document.getElementById('btnWhitening'),
+        brushButtons: document.getElementById('brushButtons'),
+        colorBrush: document.getElementById('colorBrush'),
+        rangeBrush: document.getElementById('rangeBrush'),
+        lblBrush: document.getElementById('lblBrush'),
+        btnTogglePen: document.getElementById('btnTogglePen'),
+        penState: document.getElementById('penState'),
+        btnDrawUndo: document.getElementById('btnDrawUndo'),
+        btnDrawRedo: document.getElementById('btnDrawRedo'),
+        // text
+        txtText: document.getElementById('txtText'),
+        selFont: document.getElementById('selFont'),
+        rangeTextSize: document.getElementById('rangeTextSize'),
+        lblTextSize: document.getElementById('lblTextSize'),
+        colorText: document.getElementById('colorText'),
+        rangeOutlineOuter: document.getElementById('rangeOutlineOuter'),
+        lblOutlineOuter: document.getElementById('lblOutlineOuter'),
+        colorOutlineOuter: document.getElementById('colorOutlineOuter'),
+        rangeOutlineInner: document.getElementById('rangeOutlineInner'),
+        lblOutlineInner: document.getElementById('lblOutlineInner'),
+        colorOutlineInner: document.getElementById('colorOutlineInner'),
+        selAlign: document.getElementById('selAlign'),
+        btnAddText: document.getElementById('btnAddText'),
+        // stickers/frames
+        fileSticker: document.getElementById('fileSticker'),
+        urlSticker: document.getElementById('urlSticker'),
+        btnAddStickerUrl: document.getElementById('btnAddStickerUrl'),
+        stickersBuiltIn: document.getElementById('stickersBuiltIn'),
+        framesBuiltIn: document.getElementById('framesBuiltIn'),
+        btnRemoveFrame: document.getElementById('btnRemoveFrame'),
+        // zoom/tools
+        rangeZoom: document.getElementById('rangeZoom'),
+        lblZoom: document.getElementById('lblZoom'),
+        btnFitContain: document.getElementById('btnFitContain'),
+        btnFitCover: document.getElementById('btnFitCover'),
+        // tools collapse
+        btnToggleTools: document.getElementById('btnToggleTools'),
+        toolsPanel: document.getElementById('tools')
+      };
+
+      // ---------- Helpers ----------
+      function fitPhotoToCanvasSize(imgW, imgH, canvasW, canvasH){
+        if(!imgW||!imgH) return {x:0,y:0,width:canvasW,height:canvasH};
+        const ratio = Math.min(canvasW/imgW, canvasH/imgH);
+        const width = Math.round(imgW*ratio);
+        const height = Math.round(imgH*ratio);
+        const x = Math.round((canvasW-width)/2);
+        const y = Math.round((canvasH-height)/2);
+        return {x,y,width,height};
+      }
+
+      // ---------- Stage & Layers ----------
+      const CANVAS_W = 900, CANVAS_H = 900;
+      const stage = new Konva.Stage({container:'konvaContainer', width:CANVAS_W, height:CANVAS_H});
+      const photoLayer = new Konva.Layer({name:'photoLayer'});
+      const drawLayer = new Konva.Layer({name:'drawLayer'});
+      const decorLayer = new Konva.Layer({name:'decorLayer'});
+      const frameLayer = new Konva.Layer({name:'frameLayer'});
+      stage.add(photoLayer); stage.add(frameLayer); stage.add(drawLayer); stage.add(decorLayer);
+
+      const tr = new Konva.Transformer({rotateEnabled:true, enabledAnchors:["top-left","top-right","bottom-left","bottom-right"], boundBoxFunc:(oldBox,newBox)=> (newBox.width<20||newBox.height<20)?oldBox:newBox});
+      decorLayer.add(tr);
+
+      let photoNode = null, frameNode = null, baseFit=null, currentZoom=100;
+
+      // ---------- Filters ----------
+      let currentFilter = 'none'; let filterIntensity = +el.rangeIntensity.value; let whitening=false;
+      function applyFilter(){
+        if(!photoNode) return;
+        if(photoNode.width() === 0 || photoNode.height() === 0) return;
+        const t = Math.max(0, Math.min(1, filterIntensity/100));
+        photoNode.cache();
+        photoNode.filters([]);
+        photoNode.brightness(0); photoNode.contrast(0); photoNode.blurRadius(0);
+        photoNode.hue(0); photoNode.saturation(0); photoNode.luminance(0);
+        const wBoost = whitening ? 0.12 : 0;
+        switch(currentFilter){
+          case 'none':
+            if(whitening){ photoNode.filters([Konva.Filters.Brighten]); photoNode.brightness(wBoost); }
+            break;
+          case 'kawaii-soft':
+            photoNode.filters([Konva.Filters.Blur, Konva.Filters.Brighten, Konva.Filters.Contrast, Konva.Filters.HSL]);
+            photoNode.blurRadius(0.5 + 2.5*t);
+            photoNode.brightness(wBoost + (0.04 + 0.18*t));
+            photoNode.contrast(0.03 + 0.10*t);
+            photoNode.hue(3 + 10*t);
+            photoNode.saturation(0.06 + 0.20*t);
+            break;
+          case 'vivid-pop':
+            photoNode.filters([Konva.Filters.Contrast, Konva.Filters.HSL, Konva.Filters.Brighten]);
+            photoNode.contrast(0.08 + 0.32*t);
+            photoNode.saturation(0.10 + 0.40*t);
+            photoNode.brightness(wBoost);
+            break;
+          case 'peachy-glow':
+            photoNode.filters([Konva.Filters.Brighten, Konva.Filters.HSL]);
+            photoNode.brightness(wBoost + (0.05 + 0.20*t));
+            photoNode.hue(8 + 14*t);
+            photoNode.saturation(0.05 + 0.18*t);
+            break;
+        }
+        photoLayer.batchDraw();
+      }
+
+      // ---------- Photo load & zoom ----------
+      function loadPhotoFromUrl(url){
+        const img = new Image(); img.crossOrigin='anonymous'; img.src=url;
+        img.onload = ()=>{
+          baseFit = fitPhotoToCanvasSize(img.width, img.height, CANVAS_W, CANVAS_H);
+          currentZoom = 100;
+          if(!photoNode){ photoNode = new Konva.Image({image:img, name:'photo', ...baseFit}); photoLayer.add(photoNode); }
+          else { photoNode.image(img); photoNode.setAttrs(baseFit); }
+          photoNode.scale({x:1,y:1}); photoNode.position({x:baseFit.x, y:baseFit.y});
+          el.rangeZoom.value = String(currentZoom); el.lblZoom.textContent = currentZoom+'%';
+          applyFilter(); photoLayer.draw();
+        };
+        img.onerror = ()=> console.warn('Falha ao carregar imagem (CORS/URL inválida).');
+      }
+      function applyPhotoZoom(percent){
+        if(!photoNode || !baseFit) return;
+        const s = Math.max(0.1, percent/100);
+        photoNode.scale({x:s, y:s});
+        const w = baseFit.width * s, h = baseFit.height * s;
+        const x = (CANVAS_W - w)/2, y = (CANVAS_H - h)/2;
+        photoNode.position({ x, y });
+        photoLayer.batchDraw();
+      }
+      function fitContain(){ if(!photoNode||!baseFit) return; currentZoom=100; applyPhotoZoom(currentZoom); syncZoomLabel(); }
+      function fitCover(){ if(!photoNode||!baseFit) return; const scale=Math.max(CANVAS_W/baseFit.width, CANVAS_H/baseFit.height); currentZoom=Math.round(scale*100); applyPhotoZoom(currentZoom); syncZoomLabel(); }
+      function syncZoomLabel(){ el.lblZoom.textContent=currentZoom+'%'; }
+
+      // ---------- Stickers & Text ----------
+      function bindDecor(node){
+        node.off('click tap dragend transformend');
+        node.on('click tap', ()=> selectNode(node));
+        node.on('dragend transformend', ()=>{
+          const p = stage.getPointerPosition(); if(!p) return;
+          const domTrash = document.getElementById('trashHint').getBoundingClientRect();
+          const domStage = stage.container().getBoundingClientRect();
+          const absX = domStage.left + p.x; const absY = domStage.top + p.y;
+          if(absX>=domTrash.left && absX<=domTrash.right && absY>=domTrash.top && absY<=domTrash.bottom){ node.destroy(); decorLayer.draw(); tr.nodes([]); }
+        });
+      }
+      function selectNode(node){ if(node) tr.nodes([node]); else tr.nodes([]); decorLayer.batchDraw(); }
+      function addStickerFromUrl(url){ const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ const st=new Konva.Image({image:img,x:60,y:60,draggable:true,name:'sticker',width:Math.min(220,img.width),height:Math.min(220,img.height)}); bindDecor(st); decorLayer.add(st); selectNode(st); decorLayer.draw(); }; }
+      function addTextDecor(){
+        const textValue = el.txtText.value || '';
+        const colorText = el.colorText.value;
+        const fontFamily = el.selFont.value;
+        const size = +el.rangeTextSize.value;
+        const align = el.selAlign.value;
+        const outerW = +el.rangeOutlineOuter.value;
+        const outerC = el.colorOutlineOuter.value;
+        const innerW = +el.rangeOutlineInner.value;
+        const innerC = el.colorOutlineInner.value;
+        const group = new Konva.Group({x:80, y:80, draggable:true, name:'textGroup'});
+        const base = {text:textValue, fontFamily, fontSize:size, align, padding:2};
+        const tOuter = new Konva.Text({...base, stroke:outerC, strokeWidth:outerW, fill:'transparent', name:'tOuter'});
+        const tInner = new Konva.Text({...base, stroke:innerC, strokeWidth:innerW, fill:'transparent', name:'tInner'});
+        const tFill  = new Konva.Text({...base, fill:colorText, name:'tFill'});
+        group.add(tOuter); group.add(tInner); group.add(tFill);
+        bindDecor(group); decorLayer.add(group); selectNode(group); decorLayer.draw();
+      }
+      function updateSelectedTextGroup(){
+        const node = tr.nodes()[0]; if(!node || node.className!=='Group') return;
+        const textValue = el.txtText.value || '';
+        const colorText = el.colorText.value;
+        const fontFamily = el.selFont.value;
+        const size = +el.rangeTextSize.value;
+        const align = el.selAlign.value;
+        const outerW = +el.rangeOutlineOuter.value;
+        const outerC = el.colorOutlineOuter.value;
+        const innerW = +el.rangeOutlineInner.value;
+        const innerC = el.colorOutlineInner.value;
+        const tOuter = node.findOne('.tOuter'); const tInner = node.findOne('.tInner'); const tFill = node.findOne('.tFill');
+        const base = {text:textValue, fontFamily, fontSize:size, align, padding:2};
+        tOuter.setAttrs({...base, stroke:outerC, strokeWidth:outerW, fill:'transparent'});
+        tInner.setAttrs({...base, stroke:innerC, strokeWidth:innerW, fill:'transparent'});
+        tFill.setAttrs({...base, fill:colorText});
+        decorLayer.batchDraw();
+      }
+      function setFrameUrl(url){ if(!url){ if(frameNode){frameNode.destroy(); frameNode=null; frameLayer.draw();} return; } const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ if(frameNode) frameNode.destroy(); frameNode=new Konva.Image({image:img,x:0,y:0,width:CANVAS_W,height:CANVAS_H}); frameLayer.destroyChildren(); frameLayer.add(frameNode); frameLayer.draw(); } }
+
+      // ---------- Brush + history ----------
+      let penEnabled = true, brushStyle='pen', brushColor='#ff3b81', brushSize=6;
+      let drawing=false, lineRef=null, neonGlow=null, neonCore=null;
+      const DRAW_HISTORY_LIMIT=60, drawHistory=[], drawFuture=[];
+      function pushDrawHistory(){ const json=drawLayer.toJSON(); drawHistory.push(json); if(drawHistory.length>DRAW_HISTORY_LIMIT) drawHistory.shift(); drawFuture.length=0; updateDrawButtons(); }
+      function restoreDrawFromJSON(json){ const temp=Konva.Node.create(json); drawLayer.destroyChildren(); temp.getChildren().forEach(ch=>drawLayer.add(ch)); drawLayer.batchDraw(); }
+      function drawUndo(){ if(drawHistory.length===0) return; const last=drawHistory.pop(); drawFuture.unshift(last); const prev=drawHistory[drawHistory.length-1]; if(prev) restoreDrawFromJSON(prev); else {drawLayer.destroyChildren(); drawLayer.draw();} updateDrawButtons(); }
+      function drawRedo(){ if(drawFuture.length===0) return; const next=drawFuture.shift(); drawHistory.push(next); restoreDrawFromJSON(next); updateDrawButtons(); }
+      function updateDrawButtons(){ if(el.btnDrawUndo) el.btnDrawUndo.disabled = drawHistory.length===0; if(el.btnDrawRedo) el.btnDrawRedo.disabled = drawFuture.length===0; }
+      pushDrawHistory();
+      function canStartDrawingOnTarget(target){ if(!target) return false; if(target===stage) return true; const layer = target.getLayer && target.getLayer(); return layer===photoLayer || layer===drawLayer; }
+      stage.on('mousedown touchstart', (e)=>{ if(!penEnabled) return; if(!canStartDrawingOnTarget(e.target)) return; selectNode(null); drawing=true; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='neon'){ neonGlow=new Konva.Line({points:[p.x,p.y], stroke:brushColor, opacity:.7, strokeWidth:brushSize*3, lineCap:'round', lineJoin:'round', shadowColor:brushColor, shadowBlur:16, globalCompositeOperation:'lighter'}); neonCore=new Konva.Line({points:[p.x,p.y], stroke:'#fff', strokeWidth:Math.max(1,Math.round(brushSize*.6)), lineCap:'round', lineJoin:'round', globalCompositeOperation:'lighter'}); drawLayer.add(neonGlow); drawLayer.add(neonCore); drawLayer.draw(); } else { lineRef=new Konva.Line({points:[p.x,p.y], stroke:brushColor, strokeWidth:brushSize, lineCap:'round', lineJoin:'round', tension:.4}); if(brushStyle==='glow'){ lineRef.shadowColor(brushColor); lineRef.shadowBlur(14); lineRef.opacity(.9); lineRef.globalCompositeOperation('lighter'); } drawLayer.add(lineRef); drawLayer.draw(); } });
+      stage.on('mousemove touchmove', ()=>{ if(!drawing) return; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='neon'){ if(neonGlow&&neonCore){ neonGlow.points(neonGlow.points().concat([p.x,p.y])); neonCore.points(neonCore.points().concat([p.x,p.y])); drawLayer.batchDraw(); } } else if(lineRef){ lineRef.points(lineRef.points().concat([p.x,p.y])); drawLayer.batchDraw(); } });
+      stage.on('mouseup touchend', ()=>{ if(!drawing) return; drawing=false; lineRef=null; neonGlow=null; neonCore=null; pushDrawHistory(); });
+
+      // ---------- UI wiring ----------
+      el.filePhoto.addEventListener('change', e=>{ const f=e.target.files&&e.target.files[0]; if(f) loadPhotoFromUrl(URL.createObjectURL(f)); });
+      el.btnUseUrl.addEventListener('click', ()=>{ const u=el.urlPhoto.value.trim(); if(u) loadPhotoFromUrl(u); });
+      el.btnExport.addEventListener('click', ()=>{ try{ const uri=stage.toDataURL({pixelRatio:2}); const a=document.createElement('a'); a.href=uri; a.download='purikura.png'; a.click(); } catch(err){ alert('Não foi possível exportar (CORS). Use ficheiro local ou URL com CORS permitido.'); } });
+
+      // filters
+      function setFilter(name){ currentFilter=name; Array.from(el.filterButtons.querySelectorAll('[data-filter]')).forEach(b=> b.classList.toggle('active', b.getAttribute('data-filter')===name)); applyFilter(); }
+      el.filterButtons.addEventListener('click', (e)=>{ const btn=e.target.closest('[data-filter]'); if(!btn) return; e.preventDefault(); setFilter(btn.getAttribute('data-filter')); });
+      el.rangeIntensity.addEventListener('input', e=>{ filterIntensity=+e.target.value; el.lblIntensity.textContent=filterIntensity; applyFilter(); });
+      el.btnWhitening.addEventListener('click', (e)=>{ whitening=!whitening; e.target.textContent = whitening? 'ON':'OFF'; applyFilter(); });
+
+      // zoom
+      el.rangeZoom.addEventListener('input', (e)=>{ currentZoom=+e.target.value; applyPhotoZoom(currentZoom); syncZoomLabel(); });
+      el.btnFitContain.addEventListener('click', fitContain);
+      el.btnFitCover.addEventListener('click', fitCover);
+
+      // brush
+      el.brushButtons.addEventListener('click', (e)=>{ const b=e.target.closest('[data-brush]'); if(!b) return; brushStyle=b.getAttribute('data-brush'); Array.from(el.brushButtons.querySelectorAll('[data-brush]')).forEach(x=>x.classList.remove('active')); b.classList.add('active'); });
+      el.colorBrush.addEventListener('input', e=>{ brushColor=e.target.value; });
+      el.rangeBrush.addEventListener('input', e=>{ brushSize=+e.target.value; el.lblBrush.textContent=brushSize+'px'; });
+      el.btnTogglePen.addEventListener('click', ()=>{ penEnabled=!penEnabled; el.penState.textContent = penEnabled? 'ON':'OFF'; });
+      el.btnDrawUndo.addEventListener('click', drawUndo);
+      el.btnDrawRedo.addEventListener('click', drawRedo);
+
+      // text
+      el.btnAddText.addEventListener('click', addTextDecor);
+      ['txtText','colorText','selFont','rangeTextSize','selAlign','rangeOutlineOuter','colorOutlineOuter','rangeOutlineInner','colorOutlineInner'].forEach(id=> document.getElementById(id).addEventListener('input', updateSelectedTextGroup));
+      el.rangeTextSize.addEventListener('input', e=> el.lblTextSize.textContent=e.target.value);
+      el.rangeOutlineOuter.addEventListener('input', e=> el.lblOutlineOuter.textContent=e.target.value);
+      el.rangeOutlineInner.addEventListener('input', e=> el.lblOutlineInner.textContent=e.target.value);
+
+      // stickers/frames
+      el.fileSticker.addEventListener('change', e=>{ const f=e.target.files&&e.target.files[0]; if(f) addStickerFromUrl(URL.createObjectURL(f)); });
+      el.btnAddStickerUrl.addEventListener('click', ()=>{ const u=el.urlSticker.value.trim(); if(u) addStickerFromUrl(u); });
+      /* Ours, and local. These three shipped hotlinked from stock-image sites
+         (vecteezy, pngtree, picmix): the hosts block hotlinking, so they were
+         already 403ing, and publishing someone else's licensed art on this
+         domain is the problem the Hello Angel note warns about. Placeholders —
+         plain geometry in the brand palette — until real pixel art replaces
+         them. Adding one is a file in assets/arcade/purikura/ and a line here. */
+      const BUILTIN_STICKERS=[
+        {label:'Heart', src:'/assets/arcade/purikura/sticker-heart.png'},
+        {label:'Star',  src:'/assets/arcade/purikura/sticker-star.png'}
+      ];
+      const BUILTIN_FRAMES=[
+        {label:'Candy', src:'/assets/arcade/purikura/frame-candy.png'}
+      ];
+      BUILTIN_STICKERS.forEach(s=>{ const elBtn=document.createElement('button'); elBtn.className='thumb'; elBtn.title=s.label; elBtn.innerHTML='<img src="'+s.src+'" alt=""/><span>'+s.label+'</span>'; elBtn.addEventListener('click', ()=>addStickerFromUrl(s.src)); el.stickersBuiltIn.appendChild(elBtn); });
+      BUILTIN_FRAMES.forEach(f=>{ const elBtn=document.createElement('button'); elBtn.className='thumb'; elBtn.title=f.label; elBtn.innerHTML='<img src="'+f.src+'" alt=""/><span>'+f.label+'</span>'; elBtn.addEventListener('click', ()=> setFrameUrl(f.src)); el.framesBuiltIn.appendChild(elBtn); });
+      el.btnRemoveFrame.addEventListener('click', ()=> setFrameUrl(null));
+
+      // tools collapse
+      el.btnToggleTools.addEventListener('click', ()=>{
+        const isHidden = el.toolsPanel.classList.toggle('collapsed');
+        el.btnToggleTools.textContent = isHidden ? 'Show' : 'Hide';
+      });
+
+    }catch(err){ console.error('Erro fatal no inicializador:', err); alert('Ocorreu um erro ao inicializar o editor. Veja a consola para detalhes.'); }
+  });
+  </script>
+</body>
+</html>

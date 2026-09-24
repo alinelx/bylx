@@ -1,0 +1,245 @@
+/* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
+  _               _
+ | |__    _   _  | | __  __
+ | '_ \  | | | | | | \ \/ /
+ | |_) | | |_| | | |  >  <
+ |_.__/   \__, | |_| /_/\_\
+          |___/
+*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
+/* ᑲყᥣx arcade — the cabinet on "/" and the machine picker at /arcade/ */
+
+/* ── The cabinet ──────────────────────────────────────────────────────────
+   assets/arcade/cabinet.png is 256×256 and is only ever shown at a whole
+   multiple of itself: 256 on a phone, 512 from 720px up. Never in between,
+   and never smaller — nearest-neighbour upscaling of pixel art is crisp,
+   downscaling it deletes one-pixel strokes outright (see the note about
+   paint_frame.png in CLAUDE.md). */
+.arcade {
+  padding: clamp(3rem, 8vw, 6rem) 1.25rem;
+}
+
+.arcade-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.arcade-heading {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-display, var(--font-ui));
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  line-height: 1.15;
+}
+
+.arcade-lede {
+  max-width: 46ch;
+  margin: 0.9rem auto 0;
+  color: var(--muted);
+}
+
+.arcade-cabinet {
+  display: inline-block;
+  position: relative;
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  text-decoration: none;
+}
+
+.arcade-cabinet img {
+  width: 256px;
+  height: 256px;
+  image-rendering: pixelated;
+}
+
+@media (min-width: 720px) {
+  .arcade-cabinet img {
+    width: 512px;
+    height: 512px;
+  }
+}
+
+/* Diegetic: an arcade cabinet does say PRESS START while nobody is playing.
+   It is the machine talking, not the page asking to be clicked — the line the
+   ambient-vs-attention-seeking rule in CLAUDE.md draws. */
+.arcade-start {
+  display: block;
+  margin-top: 0.9rem;
+  color: var(--cyan);
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.arcade-cabinet:hover .arcade-start,
+.arcade-cabinet:focus-visible .arcade-start {
+  color: var(--pink);
+}
+
+.arcade-cabinet:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: 6px;
+}
+
+/* ── The picker at /arcade/ ───────────────────────────────────────────────── */
+.cab {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+.cab-crumbs {
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.cab-crumbs a { color: var(--cyan); }
+
+.cab-head {
+  margin: 2.5rem 0 0;
+  text-align: center;
+}
+
+.cab-head h1 {
+  margin: 0;
+  font-family: var(--font-display, var(--font-ui));
+  font-size: clamp(1.8rem, 5vw, 3rem);
+}
+
+.cab-head p {
+  margin: 0.7rem auto 0;
+  max-width: 44ch;
+  color: var(--muted);
+}
+
+/* The deck is a real list of real links. The coverflow is only how it looks:
+   every card stays in the DOM, in order, reachable by Tab, and the one that
+   takes focus becomes the active one — so the keyboard and the animation can
+   never disagree about which machine you are on. */
+.deck {
+  position: relative;
+  margin: clamp(2rem, 6vw, 3.5rem) auto 0;
+  min-height: 21rem;
+}
+
+.deck-cards {
+  position: relative;
+  height: 21rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.deck-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(19rem, 76vw);
+  /* --i is how far this card sits from the active one; js/arcade.js writes it. */
+  --i: 0;
+  transform: translateX(-50%) translateX(calc(var(--i) * 68%)) scale(calc(1 - 0.16 * max(var(--i), var(--i) * -1)));
+  opacity: 1;
+  z-index: 2;
+  transition: transform 220ms steps(5, end), opacity 220ms steps(5, end);
+}
+
+/* Anything beyond the immediate neighbours is out of the frame. Hidden with
+   visibility, not display, so the element keeps its box and Tab order. */
+.deck-card[data-far] {
+  opacity: 0;
+  visibility: hidden;
+  z-index: 0;
+}
+
+.deck-card[data-active] { z-index: 3; }
+
+.deck-card > a {
+  display: block;
+  padding: 1rem 1rem 1.2rem;
+  border: 3px solid var(--bg);
+  background: var(--paper);
+  box-shadow: 6px 6px 0 var(--purple);
+  color: var(--bg);
+  text-decoration: none;
+}
+
+.deck-card:not([data-active]) > a {
+  filter: saturate(0.7) brightness(0.92);
+}
+
+.deck-shot {
+  display: block;
+  aspect-ratio: 4 / 3;
+  background: var(--bylx-bg-ink) var(--shot, none) center / cover no-repeat;
+  border: 2px solid var(--bg);
+}
+
+.deck-name {
+  display: block;
+  margin-top: 0.85rem;
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.deck-note {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(9, 5, 27, 0.62);
+}
+
+/* The arrows exist only when there is somewhere to go. js/arcade.js removes
+   them outright rather than disabling them: a control that can never do
+   anything is worse than no control. */
+.deck-arrow {
+  position: absolute;
+  top: 45%;
+  z-index: 4;
+  padding: 0.5rem 0.7rem;
+  border: 3px solid var(--bg);
+  background: var(--cyan);
+  color: var(--bg);
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  line-height: 1;
+  cursor: none;
+}
+
+.deck-arrow--prev { left: 0; }
+.deck-arrow--next { right: 0; }
+
+.deck-arrow:hover { background: var(--pink); }
+
+.deck-arrow:focus-visible {
+  outline: 3px solid var(--pink);
+  outline-offset: 3px;
+}
+
+.deck-status {
+  margin: 1.4rem 0 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.cab-back {
+  display: inline-block;
+  margin-top: 2.5rem;
+  color: var(--cyan);
+  font-family: var(--font-ui);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+}
+
+/* Touch drags the deck sideways; the page must not scroll sideways with it. */
+.deck-cards { touch-action: pan-y; }
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-card { transition: none; }
+}

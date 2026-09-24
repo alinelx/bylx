@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" class="is-work-page">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Arcade · bylx.dev</title>
+  <meta name="description" content="Small machines that run in a browser — pick one. Part of bylx.dev, a pixel-art portfolio built in vanilla HTML, CSS and JavaScript." />
+  <link rel="canonical" href="https://bylx.dev/arcade/" />
+  <meta property="og:title" content="Arcade · bylx.dev" />
+  <meta property="og:description" content="Small machines that run in a browser — pick one." />
+  <meta property="og:url" content="https://bylx.dev/arcade/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://bylx.dev/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="bylx.dev" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#09051b" />
+
+  <link rel="icon" href="/assets/logo/bylx_logo_semdev.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/styles.css?v=d18876d7" />
+</head>
+<body>
+  <main class="cab">
+    <nav class="cab-crumbs" aria-label="Breadcrumb">
+      <a href="/">bylx.dev</a> / arcade
+    </nav>
+
+    <header class="cab-head">
+      <h1>Arcade</h1>
+      <p>Not everything I build is a case study. These are small machines that just run — no account, no upload, nothing leaves your browser.</p>
+    </header>
+
+    <!-- A list of links that happens to look like a coverflow. Every card is in
+         the DOM and in order; js/arcade.js only moves an index. Adding a machine
+         is one <li> here and one folder next to this file. -->
+    <div class="deck" data-deck>
+      <button class="deck-arrow deck-arrow--prev" type="button" data-deck-prev aria-label="Previous machine">&#9664;</button>
+
+      <ul class="deck-cards">
+        <li class="deck-card">
+          <a href="/arcade/purikura/">
+            <span class="deck-shot" aria-hidden="true" style="--shot: url(/assets/arcade/purikura-shot.png)"></span>
+            <span class="deck-name">Purikura Editor</span>
+            <span class="deck-note">A photo booth in a browser: stickers, frames, outlined text, a brush with undo, and filters. Vanilla JavaScript and Konva.</span>
+          </a>
+        </li>
+      </ul>
+
+      <button class="deck-arrow deck-arrow--next" type="button" data-deck-next aria-label="Next machine">&#9654;</button>
+    </div>
+
+    <p class="deck-status" data-deck-status aria-live="polite"></p>
+
+    <a class="cab-back" href="/#arcade">&#8592; back to the portfolio</a>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand"><a href="/">bylx.dev</a></p>
+      <ul class="footer-links" aria-label="Social links">
+        <li><a href="https://instagram.com/bylx.dev" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li><a href="https://github.com/alinelx" target="_blank" rel="me noopener noreferrer">GitHub</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Aline Lopes Xavier · Built with vanilla HTML, CSS &amp; JS.</p>
+    </div>
+  </footer>
+
+  <div class="sakura-cursor" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+
+  <script type="module">
+    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=d18876d7";
+    import { initArcade } from "/js/arcade.js?v=d18876d7";
+
+    for (const [name, init] of [["cursor", initCursor], ["sakura", initSakuraTrail], ["arcade", initArcade]]) {
+      try {
+        init();
+      } catch (error) {
+        console.error(`[bylx] ${name} failed to start`, error);
+      }
+    }
+
+    if (document.querySelector(".cursor")) {
+      document.documentElement.classList.add("has-pixel-cursor");
+    }
+  </script>
+</body>
+</html>

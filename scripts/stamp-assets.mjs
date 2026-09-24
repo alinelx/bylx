@@ -64,6 +64,13 @@ const targets = [
   { file: "index.html", pattern: /(href="styles\.css|src="script\.js)(\?v=[a-z0-9]+)?/g },
   { file: "styles.css", pattern: /(@import "(?:\.\/)?css\/[a-z-]+\.css)(\?v=[a-z0-9]+)?/g },
   { file: "script.js", pattern: /(from "\.\/js\/[a-z-]+\.js)(\?v=[a-z0-9]+)?/g },
+
+  /* The arcade picker is a page of its own: it loads the site stylesheet and
+     imports two modules by absolute path. Without this it would serve whatever
+     CSS the edge happened to keep, for as long as it felt like keeping it. The
+     purikura machine needs nothing here — its CSS and JS are inline, and Konva
+     carries its version in the filename. */
+  { file: join("arcade", "index.html"), pattern: /(href="\/styles\.css|from "\/js\/[a-z-]+\.js)(\?v=[a-z0-9]+)?/g },
   ...jsFiles.map((f) => ({ file: join("js", f), pattern: /(from "\.\/[a-z-]+\.js)(\?v=[a-z0-9]+)?/g })),
 ];
 
