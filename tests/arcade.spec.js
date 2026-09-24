@@ -96,3 +96,69 @@ test("the purikura machine runs, and asks nobody else for its parts", async ({ p
   await page.waitForLoadState("networkidle");
   expect(errors).toEqual([]);
 });
+
+/* Three bugs the machine had that nothing caught, because none of them threw:
+   Konva ignored a smoothing flag passed in the wrong place, stickers were
+   resized away from the size they were drawn at, and an applied frame ate every
+   click meant for the pen. */
+test("the machine keeps pixel art on the grid, and lets the pen through", async ({ page }) => {
+  await page.goto("/arcade/purikura/");
+  await page.waitForLoadState("networkidle");
+  await expect(page.locator("#konvaContainer canvas").first()).toBeVisible();
+
+  /* imageSmoothingEnabled is a LAYER property in Konva and defaults to true.
+     Passed to a Konva.Image it is silently ignored, which is how every stretched
+     sticker came out bilinear. The photo layer keeps smoothing: a photo is not
+     pixel art. */
+  expect(await page.evaluate(() =>
+    Object.fromEntries(Konva.stages[0].getLayers().map((l) => [l.name(), l.imageSmoothingEnabled()]))
+  )).toEqual({
+    photoLayer: true,
+    frameLayer: false,
+    drawLayer: false,
+    decorLayer: false,
+    markLayer: false,
+  });
+
+  // Every built-in sticker is placed at the size it was drawn at.
+  const thumbs = page.locator("#stickersBuiltIn .thumb");
+  const n = await thumbs.count();
+  expect(n).toBeGreaterThan(0);
+  for (let i = 0; i < n; i++) await thumbs.nth(i).click();
+  await page.waitForTimeout(400);
+
+  const placed = await page.evaluate(() =>
+    Konva.stages[0].find(".sticker").map((s) => [s.width(), s.height(), s.image().naturalWidth, s.image().naturalHeight])
+  );
+  expect(placed).toHaveLength(n);
+  for (const [w, h, nw, nh] of placed) expect([w, h]).toEqual([nw, nh]);
+
+  /* The watermark signs the print, so it is the last layer and it takes no
+     clicks — a frame on top of it, or a click swallowed by it, both defeat it. */
+  expect(await page.evaluate(() => {
+    const layers = Konva.stages[0].getLayers();
+    const mark = layers.at(-1);
+    return { last: mark.name(), listening: mark.listening(), count: mark.getChildren().length };
+  })).toEqual({ last: "markLayer", listening: false, count: 1 });
+
+  /* A frame is a full-canvas image with a transparent middle. Konva hit-tests
+     its BOX, so while one was applied it caught every click and the pen did
+     nothing at all. */
+  await page.locator("#framesBuiltIn .thumb").first().click();
+  await page.waitForTimeout(400);
+
+  expect(await page.evaluate(() => {
+    const s = Konva.stages[0];
+    const layer = s.getLayers().find((l) => l.name() === "drawLayer");
+    const before = layer.getChildren().length;
+    const box = s.container().getBoundingClientRect();
+    s.setPointersPositions({ clientX: box.left + 200, clientY: box.top + 200 });
+    s.fire("mousedown", { target: s, evt: {} }, true);
+    for (let i = 0; i < 8; i++) {
+      s.setPointersPositions({ clientX: box.left + 200 + i * 10, clientY: box.top + 200 + i * 6 });
+      s.fire("mousemove", { evt: {} }, true);
+    }
+    s.fire("mouseup", { evt: {} }, true);
+    return layer.getChildren().length - before;
+  })).toBeGreaterThan(0);
+});

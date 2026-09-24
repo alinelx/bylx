@@ -223,6 +223,10 @@
     /* The canvas is the artwork, so it gets the frame the artwork deserves —
        and a checkerboard behind it, the way every pixel editor says
        "transparent". */
+    /* Konva's flag covers what is drawn INTO the canvas; this covers the
+       canvas element itself, which the browser scales down on a narrow screen. */
+    #konvaContainer canvas { image-rendering: pixelated; }
+
     #konvaContainer {
       border: 3px solid var(--cyan);
       box-shadow: 8px 8px 0 var(--purple);
@@ -454,11 +458,37 @@
          pixel that made the backdrop look horrible. Export doubles it to 1024. */
       const CANVAS_W = 512, CANVAS_H = 512;
       const stage = new Konva.Stage({container:'konvaContainer', width:CANVAS_W, height:CANVAS_H});
+      /* imageSmoothingEnabled is a LAYER setting in Konva, and it defaults to
+         true. It was being passed to each Konva.Image instead, where it is not
+         an attribute at all and was silently ignored — so every sticker, petal
+         and frame was bilinear-resampled the moment it was stretched, which is
+         the "bad JPEG" look in a different room. Turned off where it actually
+         reads: the photo layer keeps it, because a photo is not pixel art. */
       const photoLayer = new Konva.Layer({name:'photoLayer'});
-      const drawLayer = new Konva.Layer({name:'drawLayer'});
-      const decorLayer = new Konva.Layer({name:'decorLayer'});
-      const frameLayer = new Konva.Layer({name:'frameLayer'});
+      const drawLayer = new Konva.Layer({name:'drawLayer', imageSmoothingEnabled:false});
+      const decorLayer = new Konva.Layer({name:'decorLayer', imageSmoothingEnabled:false});
+      const frameLayer = new Konva.Layer({name:'frameLayer', imageSmoothingEnabled:false, listening:false});
       stage.add(photoLayer); stage.add(frameLayer); stage.add(drawLayer); stage.add(decorLayer);
+
+      /* The booth signs its own prints. Its own layer, added last so nothing —
+         frame, sticker or text — can cover it, and listening(false) so it never
+         swallows a click meant for the canvas underneath. It is in the export
+         because it is on the stage: there is no separate path to forget. */
+      const markLayer = new Konva.Layer({name:'markLayer', listening:false, imageSmoothingEnabled:false});
+      stage.add(markLayer);
+
+      const markImg = new Image();
+      markImg.src = '/assets/arcade/cute-gal-logo.png';
+      markImg.onload = ()=>{
+        const w = markImg.naturalWidth, h = markImg.naturalHeight;  // 128x64, shown 1:1
+        markLayer.add(new Konva.Image({
+          image: markImg,
+          x: CANVAS_W - w - 16,
+          y: CANVAS_H - h - 16,
+          width: w, height: h
+        }));
+        markLayer.draw();
+      };
 
       const tr = new Konva.Transformer({rotateEnabled:true, enabledAnchors:["top-left","top-right","bottom-left","bottom-right"], boundBoxFunc:(oldBox,newBox)=> (newBox.width<20||newBox.height<20)?oldBox:newBox});
       decorLayer.add(tr);
@@ -546,15 +576,21 @@
       function selectNode(node){ if(node) tr.nodes([node]); else tr.nodes([]); decorLayer.batchDraw(); }
       function addStickerFromUrl(url){ const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ /* min() on each side independently squashed anything that was not square: a
            300x150 sticker came out 220x150. Cap the LONG side and scale both by the
-           same factor. imageSmoothingEnabled:false because these are pixel art — the
-           canvas smooths by default, which turns a crisp sticker into mush. */
-        /* Whole ratios only, up or down. The site's own art runs from a 16px
-           sakura petal to a 256px phone, and half a pixel is what makes pixel
-           art look like a bad JPEG: 16 goes to x13 (208), 64 to x3 (192), 256
-           to a half (128). Never 13.75x. */
+           same factor. Smoothing is off on the layer, not here: the canvas smooths by
+           default, which turns a crisp sticker into mush the moment it is
+           stretched. */
+        /* Native size, 1:1. The art was drawn at the size it is meant to be
+           read at — a 16px sakura petal is a 16px petal — and forcing every
+           sticker up to one house size made them all the same size as each
+           other. The handles resize whatever needs resizing.
+
+           The exception is a photo off a phone, thousands of pixels wide, which
+           at 1:1 would cover the canvas several times over. That one is divided
+           by the smallest WHOLE number that fits: a half or a quarter lands on
+           the grid, 0.17x does not. */
         const long=Math.max(img.width,img.height);
-        const fit=long<=128?Math.max(1,Math.floor(128/long)):1/Math.ceil(long/128);
-        const st=new Konva.Image({image:img,x:32,y:32,draggable:true,name:'sticker',width:Math.round(img.width*fit),height:Math.round(img.height*fit),imageSmoothingEnabled:false}); bindDecor(st); decorLayer.add(st); selectNode(st); decorLayer.draw(); }; }
+        const fit=long<=CANVAS_W?1:1/Math.ceil(long/CANVAS_W);
+        const st=new Konva.Image({image:img,x:32,y:32,draggable:true,name:'sticker',width:Math.round(img.width*fit),height:Math.round(img.height*fit)}); bindDecor(st); decorLayer.add(st); selectNode(st); decorLayer.draw(); }; }
       function addTextDecor(){
         const textValue = el.txtText.value || '';
         const colorText = el.colorText.value;
@@ -591,7 +627,7 @@
         tFill.setAttrs({...base, fill:colorText});
         decorLayer.batchDraw();
       }
-      function setFrameUrl(url){ if(!url){ if(frameNode){frameNode.destroy(); frameNode=null; frameLayer.draw();} return; } const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ if(frameNode) frameNode.destroy(); frameNode=new Konva.Image({image:img,x:0,y:0,width:CANVAS_W,height:CANVAS_H,imageSmoothingEnabled:false}); frameLayer.destroyChildren(); frameLayer.add(frameNode); frameLayer.draw(); } }
+      function setFrameUrl(url){ if(!url){ if(frameNode){frameNode.destroy(); frameNode=null; frameLayer.draw();} return; } const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ if(frameNode) frameNode.destroy(); frameNode=new Konva.Image({image:img,x:0,y:0,width:CANVAS_W,height:CANVAS_H}); frameLayer.destroyChildren(); frameLayer.add(frameNode); frameLayer.draw(); } }
 
       // ---------- Brush + history ----------
       let penEnabled = true, brushStyle='pen', brushColor='#ff3b81', brushSize=6;
@@ -609,8 +645,10 @@
         lastPetal = {x:p.x, y:p.y};
         const img = SAKURA[Math.floor(Math.random()*SAKURA.length)];
         if (!img.complete || !img.naturalWidth) return;
-        const k = Math.max(1, Math.round(brushSize/4));
-        const w = img.naturalWidth*k, h = img.naturalHeight*k;
+        /* Stamped at the size it was drawn. The size slider moves the SPACING
+           above, not the sprite: a bigger brush is a looser trail of the same
+           petal, not a blown-up petal. */
+        const w = img.naturalWidth, h = img.naturalHeight;
         drawLayer.add(new Konva.Image({
           image: img, x: p.x, y: p.y, width: w, height: h,
           offsetX: w/2, offsetY: h/2,
@@ -620,8 +658,7 @@
              them still on the grid. */
           rotation: Math.floor(Math.random()*4)*90,
           scaleX: Math.random() < 0.5 ? -1 : 1,
-          opacity: 0.8 + Math.random()*0.2,
-          imageSmoothingEnabled: false
+          opacity: 0.8 + Math.random()*0.2
         }));
         drawLayer.batchDraw();
       }
@@ -633,6 +670,9 @@
       function drawRedo(){ if(drawFuture.length===0) return; const next=drawFuture.shift(); drawHistory.push(next); restoreDrawFromJSON(next); updateDrawButtons(); }
       function updateDrawButtons(){ if(el.btnDrawUndo) el.btnDrawUndo.disabled = drawHistory.length===0; if(el.btnDrawRedo) el.btnDrawRedo.disabled = drawFuture.length===0; }
       pushDrawHistory();
+      /* The pen draws on the canvas, not on a sticker: clicking a sticker
+         selects it. The frame and the watermark are listening:false, so they
+         never turn up here at all. */
       function canStartDrawingOnTarget(target){ if(!target) return false; if(target===stage) return true; const layer = target.getLayer && target.getLayer(); return layer===photoLayer || layer===drawLayer; }
       stage.on('mousedown touchstart', (e)=>{ if(!penEnabled) return; if(!canStartDrawingOnTarget(e.target)) return; selectNode(null); drawing=true; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='sakura'){ lastPetal=null; stampSakura(p); } else if(brushStyle==='neon'){ neonGlow=new Konva.Line({points:[p.x,p.y], stroke:brushColor, opacity:.7, strokeWidth:brushSize*3, lineCap:'round', lineJoin:'round', shadowColor:brushColor, shadowBlur:16, globalCompositeOperation:'lighter'}); neonCore=new Konva.Line({points:[p.x,p.y], stroke:'#fff', strokeWidth:Math.max(1,Math.round(brushSize*.6)), lineCap:'round', lineJoin:'round', globalCompositeOperation:'lighter'}); drawLayer.add(neonGlow); drawLayer.add(neonCore); drawLayer.draw(); } else { lineRef=new Konva.Line({points:[p.x,p.y], stroke:brushColor, strokeWidth:brushSize, lineCap:'round', lineJoin:'round', tension:.4}); if(brushStyle==='glow'){ lineRef.shadowColor(brushColor); lineRef.shadowBlur(14); lineRef.opacity(.9); lineRef.globalCompositeOperation('lighter'); } drawLayer.add(lineRef); drawLayer.draw(); } });
       stage.on('mousemove touchmove', ()=>{ if(!drawing) return; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='sakura'){ stampSakura(p); } else if(brushStyle==='neon'){ if(neonGlow&&neonCore){ neonGlow.points(neonGlow.points().concat([p.x,p.y])); neonCore.points(neonCore.points().concat([p.x,p.y])); drawLayer.batchDraw(); } } else if(lineRef){ lineRef.points(lineRef.points().concat([p.x,p.y])); drawLayer.batchDraw(); } });
@@ -641,7 +681,7 @@
       // ---------- UI wiring ----------
       el.filePhoto.addEventListener('change', e=>{ const f=e.target.files&&e.target.files[0]; if(f) loadPhotoFromUrl(URL.createObjectURL(f)); });
       el.btnUseUrl.addEventListener('click', ()=>{ const u=el.urlPhoto.value.trim(); if(u) loadPhotoFromUrl(u); });
-      el.btnExport.addEventListener('click', ()=>{ try{ const uri=stage.toDataURL({pixelRatio:2}); const a=document.createElement('a'); a.href=uri; a.download='purikura.png'; a.click(); } catch(err){ alert('Não foi possível exportar (CORS). Use ficheiro local ou URL com CORS permitido.'); } });
+      el.btnExport.addEventListener('click', ()=>{ try{ const uri=stage.toDataURL({pixelRatio:2, imageSmoothingEnabled:false}); const a=document.createElement('a'); a.href=uri; a.download='purikura.png'; a.click(); } catch(err){ alert('Não foi possível exportar (CORS). Use ficheiro local ou URL com CORS permitido.'); } });
 
       // filters
       function setFilter(name){ currentFilter=name; Array.from(el.filterButtons.querySelectorAll('[data-filter]')).forEach(b=> b.classList.toggle('active', b.getAttribute('data-filter')===name)); applyFilter(); }
@@ -690,7 +730,10 @@
         {label:'Cocktail', src:'/assets/hero/cocktail.png'}
       ];
       const BUILTIN_FRAMES=[
-        {label:'Candy', src:'/assets/arcade/purikura/frame-candy.png'}
+        {label:'Hearts',  src:'/assets/arcade/purikura/frame-hearts.png'},
+        {label:'Bows',    src:'/assets/arcade/purikura/frame-bows.png'},
+        {label:'Static',  src:'/assets/arcade/purikura/frame-static.png'},
+        {label:'Rawr',    src:'/assets/arcade/purikura/frame-rawr.png'}
       ];
       BUILTIN_STICKERS.forEach(s=>{ const elBtn=document.createElement('button'); elBtn.className='thumb'; elBtn.title=s.label; elBtn.innerHTML='<img src="'+s.src+'" alt=""/><span>'+s.label+'</span>'; elBtn.addEventListener('click', ()=>addStickerFromUrl(s.src)); el.stickersBuiltIn.appendChild(elBtn); });
       BUILTIN_FRAMES.forEach(f=>{ const elBtn=document.createElement('button'); elBtn.className='thumb'; elBtn.title=f.label; elBtn.innerHTML='<img src="'+f.src+'" alt=""/><span>'+f.label+'</span>'; elBtn.addEventListener('click', ()=> setFrameUrl(f.src)); el.framesBuiltIn.appendChild(elBtn); });
