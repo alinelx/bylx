@@ -115,6 +115,14 @@
     .pill[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: var(--ink); }
     .pill:focus-visible, .spread:focus-visible, .btn:focus-visible, .entry:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
+    .filters { display: grid; gap: 10px; margin-bottom: 1.4rem; }
+    .filter-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .filter-label { font-family: var(--display); font-size: 1rem; font-weight: 600; color: var(--gold); min-width: 3.5rem; }
+    .filter-count { margin: 0; font-size: 0.85rem; color: var(--text-dim); }
+
+    .filter-row input[type="range"] { flex: 1; min-width: 160px; max-width: 320px; accent-color: var(--gold); }
+    .filter-row output { font-size: 0.9rem; color: var(--text-dim); min-width: 5.5rem; }
+
     .spreads { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); }
 
     .spread {
@@ -128,9 +136,9 @@
     .spread span { font-size: 0.85rem; color: var(--text-dim); }
 
     .tag {
-      display: inline-block; margin: 0 6px 4px 0; padding: 3px 8px; border: 1px solid var(--gold-dim);
-      border-radius: 999px; font-family: var(--pixel); font-size: 0.34rem;
-      letter-spacing: 0.06em; color: var(--text-dim); vertical-align: middle;
+      display: inline-block; margin: 0 6px 4px 0; padding: 2px 10px; border: 1px solid var(--gold-dim);
+      border-radius: 999px; font-family: var(--serif); font-size: 0.78rem;
+      letter-spacing: 0.02em; color: var(--text-dim); vertical-align: middle;
     }
 
     .btn {
@@ -181,7 +189,7 @@
 
     .spread-out { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
     .slot { width: 210px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .slot .pos { font-family: var(--pixel); font-size: 0.4rem; letter-spacing: 0.06em; color: var(--gold); text-align: center; line-height: 1.6; }
+    .slot .pos { font-family: var(--display); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em; color: var(--gold); text-align: center; line-height: 1.3; }
     .slot .read { font-size: 0.88rem; line-height: 1.45; color: var(--text-dim); text-align: center; }
 
     .synthesis { margin-top: 2.5rem; padding: 20px; border: 1px solid var(--gold-dim); border-radius: 8px; background: rgba(193, 154, 63, 0.08); }
@@ -218,7 +226,7 @@
     }
 
     .detail dl { margin: 0; }
-    .detail dt { margin-top: 1.1rem; font-family: var(--pixel); font-size: 0.4rem; letter-spacing: 0.08em; color: var(--gold); }
+    .detail dt { margin-top: 1.1rem; font-family: var(--display); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold); }
     .detail dd { margin: 0.35rem 0 0; }
     .detail dd.dim { color: var(--text-dim); }
     .detail ol { margin: 0; padding-left: 1.2rem; }
@@ -235,6 +243,10 @@
       border: 1px solid var(--gold); border-radius: 3px; background: var(--ink2);
       font-family: var(--display); font-size: 0.75rem; font-style: normal; color: var(--gold);
     }
+
+    .intro { max-width: 62ch; margin: 0 auto 2rem; text-align: center; }
+    .intro p { margin: 0 0 0.7rem; }
+    .intro .fine { font-size: 0.85rem; line-height: 1.45; color: var(--text-dim); }
 
     .foot { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 2.5rem; }
     .back-link { display: inline-block; font-family: var(--pixel); font-size: 0.45rem; letter-spacing: 0.06em; }
@@ -282,6 +294,16 @@
       <h1 data-i18n="title">Tarot Mitológico</h1>
       <p data-i18n="subtitle">78 cartas e o mito por trás de cada uma · 22 aberturas · mesa e manual</p>
     </header>
+
+    <!-- Who made the deck, and what this is not. Both belong above the fold:
+         the cards are Sharman-Burke and Greene's work, not this site's, and a
+         tarot page that does not say plainly that it is a mirror rather than a
+         forecast is being coy about the one thing worth being clear on. -->
+    <section class="intro">
+      <p data-i18n="intro">Fiz isto para estudar o <i>Tarot Mitológico</i> — o baralho que uso — e acabou uma ferramenta de duas metades: uma mesa que tira as cartas e um manual que explica cada uma.</p>
+      <p class="fine" data-i18n="credit">O <i>Mythic Tarot</i> é de Juliet Sharman-Burke e Liz Greene, ilustrado por Tricia Newell, publicado pela U.S. Games Systems. Os textos aqui são meus, escritos a partir do estudo do baralho — não são o livro.</p>
+      <p class="fine" data-i18n="disclaimer">Isto é para reflexão, não é previsão. Nenhuma carta sabe o teu futuro e nada aqui substitui aconselhamento médico, psicológico, jurídico ou financeiro. Usa-o como um espelho para pensar melhor, e as decisões continuam a ser tuas.</p>
+    </section>
 
     <div class="modes no-print" role="tablist" aria-label="Ler ou aprender">
       <button type="button" class="mode" role="tab" id="tab-read" aria-controls="app" aria-selected="true" data-mode="read" data-i18n="modeRead">Ler</button>
@@ -392,6 +414,17 @@
       positions:{ pt: "Posições", en: "Positions" },
       themes:   { pt: "Temas", en: "Themes" },
       useIt:    { pt: "Tirar esta abertura", en: "Deal this spread" },
+      intro:    { pt: "Fiz isto para estudar o Tarot Mitológico — o baralho que uso — e acabou uma ferramenta de duas metades: uma mesa que tira as cartas e um manual que explica cada uma.",
+                  en: "I built this to study the Mythic Tarot — the deck I use — and it ended up a tool in two halves: a table that deals the cards and a manual that explains each one." },
+      credit:   { pt: "O Mythic Tarot é de Juliet Sharman-Burke e Liz Greene, ilustrado por Tricia Newell, publicado pela U.S. Games Systems. Os textos aqui são meus, escritos a partir do estudo do baralho — não são o livro.",
+                  en: "The Mythic Tarot is by Juliet Sharman-Burke and Liz Greene, illustrated by Tricia Newell, published by U.S. Games Systems. The words here are mine, written from studying the deck — they are not the book." },
+      disclaimer:{ pt: "Isto é para reflexão, não é previsão. Nenhuma carta sabe o teu futuro e nada aqui substitui aconselhamento médico, psicológico, jurídico ou financeiro. Usa-o como um espelho para pensar melhor, e as decisões continuam a ser tuas.",
+                  en: "This is for reflection, not prediction. No card knows your future, and nothing here replaces medical, psychological, legal or financial advice. Use it as a mirror to think with — the decisions stay yours." },
+      level:    { pt: "Nível", en: "Level" },
+      any:      { pt: "Todos", en: "Any" },
+      upTo:     { pt: "Até", en: "Up to" },
+      showing:  { pt: "aberturas", en: "spreads" },
+      none:     { pt: "Nenhuma abertura com estes filtros.", en: "No spread matches those filters." },
       iniciante:{ pt: "iniciante", en: "beginner" },
       intermedio:{ pt: "intermédio", en: "intermediate" },
       avancado: { pt: "avançado", en: "advanced" }
@@ -408,7 +441,7 @@
     var DATA = null, DECK = [];
     var state = { mode: "read", step: "setup", spread: null, pick: "random",
                   deck: [], used: {}, draws: [], date: null, showText: false, copied: false,
-                  section: "majors", open: null };
+                  section: "spreads", open: null, level: "any", maxCards: 13 };
 
     var app = document.getElementById("app");
 
@@ -550,8 +583,31 @@
       var sorted = DATA.spreads.slice().sort(function (a, b) {
         return (order[a.nivel] - order[b.nivel]) || (a.cartas - b.cartas);
       });
-      return '<div class="step"><h2>' + esc(t(UI.step1)) + '</h2><div class="spreads">' +
-        sorted.map(function (sp) {
+
+      /* Twenty-two spreads is a wall. Two filters cut it to what someone can
+         actually use right now: how practised they are, and how long they
+         have. The card count is a ceiling rather than an exact match — an
+         exact one lands on nothing for most of the range, since the spreads
+         are 1, 2, 3, 5, 6, 7, 8, 10, 12 and 13 cards and nothing in between. */
+      var visible = sorted.filter(function (sp) {
+        return (state.level === "any" || sp.nivel === state.level) && sp.cartas <= state.maxCards;
+      });
+
+      var levels = ["any", "iniciante", "intermedio", "avancado"];
+      var controls = '<div class="filters">' +
+        '<div class="filter-row"><span class="filter-label">' + esc(t(UI.level)) + '</span>' +
+        '<span class="pills">' + levels.map(function (lv) {
+          return '<button type="button" class="pill" data-level="' + lv + '" aria-pressed="' +
+            (state.level === lv) + '">' + esc(lv === "any" ? t(UI.any) : levelLabel(lv)) + "</button>";
+        }).join("") + "</span></div>" +
+        '<div class="filter-row"><label class="filter-label" for="max-cards">' + esc(t(UI.upTo)) + "</label>" +
+        '<input id="max-cards" type="range" min="1" max="13" value="' + state.maxCards + '" data-max>' +
+        '<output for="max-cards">' + state.maxCards + " " + esc(t(state.maxCards > 1 ? UI.cards : UI.card1)) + "</output></div>" +
+        '<p class="filter-count" role="status">' + visible.length + " " + esc(t(UI.showing)) + "</p></div>";
+
+      return '<div class="step"><h2>' + esc(t(UI.step1)) + "</h2>" + controls +
+        (visible.length ? '<div class="spreads">' : '<p class="note">' + esc(t(UI.none)) + "</p><div hidden>") +
+        visible.map(function (sp) {
           return '<button type="button" class="spread" data-spread="' + esc(sp.id) + '" aria-pressed="' +
             (state.spread && state.spread.id === sp.id) + '"><b>' + esc(tx(sp, "nome")) + "</b><span>" +
             '<span class="tag">' + esc(levelLabel(sp.nivel)) + "</span>" +
@@ -605,12 +661,15 @@
     }
 
     /* ── Rendering: learn ───────────────────────────────────────────────── */
+    /* Teaching order, not data order: you pick a spread before you need any
+       card, then the majors, then the suits that frame the minors, and only
+       then the court and the numbers inside them. */
     var SECTIONS = [
+      { key: "spreads", label: UI.secSpread },
       { key: "majors",  label: UI.secMajors },
-      { key: "courts",  label: UI.secCourt },
-      { key: "numbers", label: UI.secNums },
       { key: "suits",   label: UI.secSuits },
-      { key: "spreads", label: UI.secSpread }
+      { key: "courts",  label: UI.secCourt },
+      { key: "numbers", label: UI.secNums }
     ];
 
     function row(labelKey, value, dim) {
@@ -712,8 +771,10 @@
     /* One listener on the container: the screens are replaced wholesale on
        every render, and per-node listeners would be rebound every time. */
     app.addEventListener("click", function (event) {
-      var el = event.target.closest("[data-spread],[data-pick],[data-go],[data-card],[data-reset],[data-text],[data-copy],[data-pdf],[data-section],[data-open],[data-close],[data-deal]");
+      var el = event.target.closest("[data-spread],[data-pick],[data-go],[data-card],[data-reset],[data-text],[data-copy],[data-pdf],[data-section],[data-open],[data-close],[data-deal],[data-level]");
       if (!el) return;
+
+      if (el.dataset.level) { state.level = el.dataset.level; return render(); }
 
       if (el.dataset.spread) {
         state.spread = DATA.spreads.filter(function (s) { return s.id === el.dataset.spread; })[0];
@@ -776,6 +837,18 @@
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
         else fallback();
       }
+    });
+
+    /* The slider re-renders the list on every step, so the focus has to go
+       back to it afterwards — otherwise dragging with the keyboard moves it
+       once and then loses the handle. */
+    app.addEventListener("input", function (event) {
+      var range = event.target.closest("[data-max]");
+      if (!range) return;
+      state.maxCards = +range.value;
+      render();
+      var again = document.getElementById("max-cards");
+      if (again) again.focus();
     });
 
     document.querySelector(".modes").addEventListener("click", function (event) {

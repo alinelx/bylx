@@ -460,3 +460,78 @@ test.describe("supporting the arcade", () => {
     await expect(page.locator('a[href*="ko-fi.com"]')).toBeVisible();
   });
 });
+
+test("the tarot says whose deck it is, and cuts 22 spreads down to a choice", async ({ page }) => {
+  await page.goto("/arcade/tarot/");
+  await page.waitForLoadState("networkidle");
+
+  /* The cards are Sharman-Burke and Greene's work, not this site's, and a
+     tarot page that does not say plainly that it is a mirror rather than a
+     forecast is being coy about the one thing worth being clear on. Both sit
+     above the fold, before the reader can deal anything. */
+  const intro = page.locator(".intro");
+  await expect(intro).toBeVisible();
+  await expect(intro).toContainText("Sharman-Burke");
+  await expect(intro).toContainText("U.S. Games Systems");
+  await expect(intro).toContainText(/previsão|prediction/);
+
+  expect(await intro.evaluate((el) => {
+    const modes = document.querySelector(".modes");
+    return el.compareDocumentPosition(modes) & Node.DOCUMENT_POSITION_FOLLOWING ? "before" : "after";
+  })).toBe("before");
+
+  /* Set in the text face, not the pixel one. Only the arcade shell — the
+     breadcrumb, the back link, the language switch — stays pixel, because
+     that is the part that belongs to the site rather than to the reading. */
+  expect(await page.locator(".tag").first().evaluate((el) => getComputedStyle(el).fontFamily))
+    .toContain("EB Garamond");
+  expect(await page.locator(".crumbs").evaluate((el) => getComputedStyle(el).fontFamily))
+    .toContain("Press Start 2P");
+
+  // Twenty-two spreads is a wall; two filters cut it to what fits right now.
+  const spreads = page.locator("[data-spread]");
+  await expect(spreads).toHaveCount(22);
+
+  for (const [level, n] of [["iniciante", 5], ["intermedio", 13], ["avancado", 4], ["any", 22]]) {
+    await page.locator(`[data-level="${level}"]`).click();
+    await expect(spreads).toHaveCount(n);
+    await expect(page.locator(".filter-count")).toContainText(String(n));
+  }
+
+  /* A ceiling, not an exact match: the spreads are 1, 2, 3, 5, 6, 7, 8, 10,
+     12 and 13 cards, so an exact slider would land on nothing for most of
+     its range. */
+  const slide = async (value) => {
+    await page.evaluate((v) => {
+      const r = document.getElementById("max-cards");
+      r.value = String(v);
+      r.dispatchEvent(new Event("input", { bubbles: true }));
+    }, value);
+  };
+
+  await slide(3);
+  await expect(spreads).toHaveCount(4);
+  // Re-rendering the list must not drop the handle the keyboard was holding.
+  expect(await page.evaluate(() => document.activeElement.id)).toBe("max-cards");
+
+  await slide(1);
+  await page.locator('[data-level="avancado"]').click();
+  await expect(spreads).toHaveCount(0);
+  await expect(page.locator(".note")).toBeVisible();
+});
+
+test("the manual is ordered the way it is taught", async ({ page }) => {
+  await page.goto("/arcade/tarot/");
+  await page.waitForLoadState("networkidle");
+  await page.locator('[data-mode="learn"]').click();
+
+  /* Teaching order, not data order: you pick a spread before you need a card,
+     then the majors, then the suits that frame the minors, and only then the
+     court and the numbers inside them. */
+  expect(await page.locator("[data-section]").evaluateAll((els) => els.map((e) => e.dataset.section)))
+    .toEqual(["spreads", "majors", "suits", "courts", "numbers"]);
+
+  // And it opens on the first of them rather than somewhere in the middle.
+  expect(await page.evaluate(() => document.querySelector('[data-section][aria-pressed="true"]').dataset.section))
+    .toBe("spreads");
+});
