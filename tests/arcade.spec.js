@@ -120,7 +120,9 @@ test("the machine keeps pixel art on the grid, and lets the pen through", async 
     markLayer: false,
   });
 
-  // Every built-in sticker is placed at the size it was drawn at.
+  // Every built-in sticker is placed at the size it was drawn at. They live
+  // behind step 3 now, so the tab has to be opened before they can be clicked.
+  await page.locator("#tab-stickers").click();
   const thumbs = page.locator("#stickersBuiltIn .thumb");
   const n = await thumbs.count();
   expect(n).toBeGreaterThan(0);
@@ -131,7 +133,14 @@ test("the machine keeps pixel art on the grid, and lets the pen through", async 
     Konva.stages[0].find(".sticker").map((s) => [s.width(), s.height(), s.image().naturalWidth, s.image().naturalHeight])
   );
   expect(placed).toHaveLength(n);
-  for (const [w, h, nw, nh] of placed) expect([w, h]).toEqual([nw, nh]);
+  for (const [w, h, nw, nh] of placed) {
+    /* 1:1, unless the source is bigger than the canvas — table.png is 1024
+       wide — in which case it is divided by a WHOLE number. Never a fraction. */
+    const k = nw / w;
+    expect(Number.isInteger(k), nw + "x" + nh + " drawn at " + w + "x" + h).toBe(true);
+    expect([w, h]).toEqual([nw / k, nh / k]);
+    if (nw <= 512 && nh <= 512) expect(k).toBe(1);
+  }
 
   /* The watermark signs the print, so it is the last layer and it takes no
      clicks — a frame on top of it, or a click swallowed by it, both defeat it. */
@@ -144,6 +153,7 @@ test("the machine keeps pixel art on the grid, and lets the pen through", async 
   /* A frame is a full-canvas image with a transparent middle. Konva hit-tests
      its BOX, so while one was applied it caught every click and the pen did
      nothing at all. */
+  await page.locator("#tab-frame").click();
   await page.locator("#framesBuiltIn .thumb").first().click();
   await page.waitForTimeout(400);
 
@@ -161,4 +171,121 @@ test("the machine keeps pixel art on the grid, and lets the pen through", async 
     s.fire("mouseup", { evt: {} }, true);
     return layer.getChildren().length - before;
   })).toBeGreaterThan(0);
+});
+
+test("the booth is one step at a time, and fits a phone", async ({ page }) => {
+  await page.goto("/arcade/purikura/");
+  await page.waitForLoadState("networkidle");
+
+  /* Five numbered steps, one panel open. Everything used to be open at once in
+     three columns above the canvas, which put the artwork below the fold. */
+  await expect(page.locator('[role="tab"]')).toHaveCount(5);
+  await expect(page.locator(".tabpanel:not(.collapsed)")).toHaveCount(1);
+  await expect(page.locator("#panel-photo")).toBeVisible();
+
+  // A tablist owes the keyboard arrow keys, not five separate tab stops.
+  await page.locator("#tab-photo").focus();
+  await page.keyboard.press("ArrowRight");
+  expect(await page.evaluate(() => document.activeElement.id)).toBe("tab-frame");
+  await expect(page.locator("#panel-frame")).toBeVisible();
+  await expect(page.locator("#panel-photo")).toBeHidden();
+
+  // Every sprite the site is drawn with, and every one of them actually loads.
+  await page.locator("#tab-stickers").click();
+  await expect(page.locator(".sticker-group")).toHaveCount(5);
+  expect(await page.locator("#stickersBuiltIn .thumb").count()).toBeGreaterThan(30);
+  await page.waitForTimeout(600);
+  expect(await page.evaluate(() =>
+    [...document.querySelectorAll("#stickersBuiltIn img")].filter((i) => !i.naturalWidth).map((i) => i.src)
+  )).toEqual([]);
+
+  /* The stage is always 512 and only its presentation shrinks, so the canvas
+     stays square and the page never scrolls sideways. A 512 canvas on a 390
+     phone did both wrong. */
+  for (const width of [320, 390, 1280]) {
+    await page.setViewportSize({ width, height: 860 });
+    await page.waitForTimeout(250);
+    const seen = await page.evaluate(() => {
+      const de = document.documentElement;
+      const box = (n) => { const r = n.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)]; };
+      const container = document.getElementById("konvaContainer");
+      return {
+        sideways: de.scrollWidth > de.clientWidth,
+        container: box(container),
+        canvas: box(container.querySelector("canvas")),
+        /* The canvas ATTRIBUTE is 512 x devicePixelRatio, so ask the stage:
+           that is the number the artwork and the export are drawn in. */
+        stage: [Konva.stages[0].width(), Konva.stages[0].height()],
+      };
+    });
+    expect(seen.sideways, `sideways scroll at ${width}`).toBe(false);
+    expect(seen.container[0], `square at ${width}`).toBe(seen.container[1]);
+    expect(seen.canvas).toEqual(seen.container);
+    expect(seen.stage).toEqual([512, 512]);
+  }
+});
+
+test("undo steps back one stroke, and text gets the font it asked for", async ({ page }) => {
+  await page.goto("/arcade/purikura/");
+  await page.waitForLoadState("networkidle");
+  await page.locator("#tab-pen").click();
+
+  // Nothing drawn, nothing to undo — the empty canvas is history[0].
+  await expect(page.locator("#btnDrawUndo")).toBeDisabled();
+
+  const canvas = page.locator("#konvaContainer canvas").first();
+  const box = await canvas.boundingBox();
+  const strokes = await page.evaluate(() =>
+    Konva.stages[0].getLayers().find((l) => l.name() === "drawLayer").getChildren().length
+  );
+  expect(strokes).toBe(0);
+
+  for (const y of [100, 160, 220, 280]) {
+    await page.mouse.move(box.x + 60, box.y + y);
+    await page.mouse.down();
+    await page.mouse.move(box.x + 300, box.y + y, { steps: 5 });
+    await page.mouse.up();
+    await page.waitForTimeout(120);
+  }
+
+  const count = () => page.evaluate(() =>
+    Konva.stages[0].getLayers().find((l) => l.name() === "drawLayer").getChildren().length
+  );
+  expect(await count()).toBe(4);
+
+  /* One at a time. getChildren() is a live collection and add() removes the
+     node from its old parent, so restoring by iterating it dropped every second
+     stroke: four strokes, one undo, two left. */
+  for (const left of [3, 2, 1, 0]) {
+    await page.locator("#btnDrawUndo").click();
+    await page.waitForTimeout(180);
+    expect(await count()).toBe(left);
+  }
+  await expect(page.locator("#btnDrawUndo")).toBeDisabled();
+
+  for (const back of [1, 2, 3, 4]) {
+    await page.locator("#btnDrawRedo").click();
+    await page.waitForTimeout(180);
+    expect(await count()).toBe(back);
+  }
+
+  /* A canvas paints with whatever font is loaded at that instant and nothing
+     reflows when a webfont lands later, so text drew in a fallback and stayed
+     there. Each face has to be loaded AND measurably its own. */
+  await page.locator("#tab-text").click();
+  const widths = new Set();
+  for (const font of ["Cute Font", "Mochiy Pop P One", "Potta One", "Dela Gothic One", "Short Stack"]) {
+    await page.selectOption("#selFont", font);
+    await page.locator("#btnAddText").click();
+    await page.waitForTimeout(600);
+    const seen = await page.evaluate(() => {
+      const t = Konva.stages[0].findOne("Transformer").nodes()[0].findOne(".tFill");
+      return { font: t.fontFamily(), width: Math.round(t.width()), loaded: document.fonts.check('56px "' + t.fontFamily() + '"') };
+    });
+    expect(seen.font).toBe(font);
+    expect(seen.loaded, font + " never loaded").toBe(true);
+    widths.add(seen.width);
+  }
+  // Five faces that all fell back to the same one would share a width.
+  expect(widths.size).toBe(5);
 });

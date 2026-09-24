@@ -204,20 +204,15 @@
   filter: saturate(0.7) brightness(0.92);
 }
 
-.deck-shot {
-  display: block;
-  aspect-ratio: 4 / 3;
-  background: var(--bylx-bg-ink) var(--shot, none) center / cover no-repeat;
-  border: 2px solid var(--bg);
-}
-
-/* The wordmark is the game's title, the way an arcade card carries cover art.
-   128×64 shown at ×2 — whole multiple, like everything else here. */
+/* The wordmark IS the cover art — the card used to lead with a screenshot of
+   the editor's toolbar, which reads as a grey rectangle at card size. 128×64
+   shown at ×2, a whole multiple like everything else here. */
 .deck-logo {
   display: block;
   width: 256px;
   height: 128px;
-  margin: 0.6rem auto 0;
+  max-width: 100%;
+  margin: 0.4rem auto 0.2rem;
   image-rendering: pixelated;
 }
 
