@@ -91,3 +91,42 @@ for (const slug of SLUGS) {
     expect(errors).toEqual([]);
   });
 }
+
+test("every case study shows the thing it is about, on both surfaces", async ({ page }) => {
+  const broken = [];
+  page.on("response", (r) => r.status() >= 400 && broken.push(r.status() + " " + new URL(r.url()).pathname));
+
+  /* A case study with no picture of the product is a text about invisible
+     work, which is what these were until the shots went in. */
+  const slugs = ["dark28", "bylx-dev", "irs-pt", "respondaja", "konochan", "luparoad"];
+
+  for (const slug of slugs) {
+    await page.goto(`/work/${slug}/`);
+    await page.waitForLoadState("networkidle");
+
+    const shot = page.locator(".cs-shot img");
+    await expect(shot).toHaveCount(1);
+
+    /* The src must be ABSOLUTE. index.html has <base href="/"> so a relative
+       path resolves there, but these pages have no base — the same string
+       became /work/irs-pt/assets/work/irs-pt.webp and 404ed on every one. */
+    expect(await shot.getAttribute("src")).toMatch(/^\/assets\/work\//);
+    expect(await shot.evaluate((i) => i.complete && i.naturalWidth > 0), `${slug} shot loaded`).toBe(true);
+
+    // An image with no alt is furniture; this one carries information.
+    expect((await shot.getAttribute("alt"))?.length ?? 0).toBeGreaterThan(20);
+
+    // Dimensions on the tag, so the text does not jump when it arrives.
+    expect(await shot.getAttribute("width")).toBeTruthy();
+    expect(await shot.getAttribute("height")).toBeTruthy();
+  }
+
+  // And the same figure inside the modal on the home page.
+  await page.goto("/");
+  await page.locator('[data-modal-target="casestudy-irspt-modal"]').click();
+  const inModal = page.locator("#casestudy-irspt-modal .cs-shot img");
+  await expect(inModal).toBeVisible();
+  expect(await inModal.evaluate((i) => i.complete && i.naturalWidth > 0)).toBe(true);
+
+  expect(broken).toEqual([]);
+});

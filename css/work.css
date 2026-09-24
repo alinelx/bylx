@@ -178,3 +178,34 @@
 
 .site-footer .footer-brand a:hover,
 .site-footer .footer-brand a:focus-visible { color: var(--cyan); }
+
+
+/* ── The shot ──────────────────────────────────────────────────────────
+   One picture of the thing, above the writing. A case study with no image
+   of the product is a text about invisible work, which is what these were.
+
+   The src is ABSOLUTE. index.html has <base href="/"> so a relative path
+   would resolve there, but the generated /work/<slug>/ pages have no base and
+   the same string became /work/irs-pt/assets/work/irs-pt.webp?v=33b5ccac — 404 on every
+   one of them. Same trap the cursor petals fell into.
+
+   They are square crops of each site's own first screen, not pixel art and
+   not mockups: five are WebP at quality 82, and bylx.dev's is WebP LOSSLESS
+   because it is a shot of the pixel scene — 7537 colours of gradient and
+   dither, 271KB against 480KB as PNG, and not one pixel changed. Lossy on
+   that one would undo the whole no-transform fix in a different way. */
+.cs-shot {
+  margin: 1.4rem 0 0;
+  border: 3px solid var(--cyan);
+  background: var(--bylx-bg-ink);
+  line-height: 0;
+}
+
+.cs-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* A screenshot is not pixel art: these are photographs of a screen and
+     smooth is the honest way to shrink one. */
+  image-rendering: auto;
+}
