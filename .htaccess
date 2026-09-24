@@ -16,6 +16,23 @@ FileETag MTime Size
     Header set Cache-Control "no-cache"
   </FilesMatch>
 
+
+  # The CDN was re-encoding every PNG on this site to lossy WebP. Measured
+  # 2026-09-24, asking for each file the way a browser asks (Accept:
+  # image/webp): cute-gal-logo.png went from 3 colours to 1623,
+  # bylx_logo.png from 4 to 1081, card-bg.png from 5 to 2382, cabinet.png
+  # from 41 to 12234. Every one of them came back LARGER than the PNG, so
+  # the optimisation lost on both counts — it is simply the wrong tool for
+  # flat-colour pixel art, where a soft gradient is not a smaller file, it
+  # is a destroyed drawing. That is what "renders badly" was, all along, and
+  # it was never the CSS or the scaling.
+  #
+  # no-transform is the HTTP directive that forbids exactly this: a proxy
+  # may cache the response but may not change its bytes (RFC 9111 5.2.2.6).
+  # If the edge ignores it, the toggle in hPanel is the other way.
+  <FilesMatch "\.(png|gif|ico|webp|avif|svg)$">
+    Header set Cache-Control "public, max-age=604800, no-transform"
+  </FilesMatch>
   <FilesMatch "\.(css|js)$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
