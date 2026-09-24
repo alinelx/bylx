@@ -87,6 +87,13 @@ function walk(dir, out = []) {
 }
 
 const fileStamp = new Map();
+
+/* The tarot keeps its 78 cards in a JSON file beside its page rather than
+   inline: 108KB of prose has no business in front of the first paint. It is
+   edge-cached by URL like everything else, so a corrected card would sit
+   behind the old bytes for a week without a stamp of its own. */
+const DECK = join("arcade", "tarot", "deck.json");
+fileStamp.set("arcade/tarot/deck.json", createHash("sha256").update(readFileSync(join(ROOT, DECK))).digest("hex").slice(0, 8));
 for (const rel of walk("assets")) {
   if (!new RegExp(`\\.(?:${ASSET_EXT}|pdf)$`, "i").test(rel)) continue;
   fileStamp.set(rel, createHash("sha256").update(readFileSync(join(ROOT, rel))).digest("hex").slice(0, 8));
@@ -119,6 +126,7 @@ const assetTargets = [
   "404.html",
   join("arcade", "index.html"),
   join("arcade", "cutegal", "index.html"),
+  join("arcade", "tarot", "index.html"),
   ...cssFiles.map((f) => join("css", f)),
   ...jsFiles.map((f) => join("js", f)),
 ];
@@ -136,6 +144,11 @@ const targets = [
   { file: join("arcade", "index.html"), pattern: /(href="\/styles\.css|from "\/js\/[a-z-]+\.js)(\?v=[a-z0-9]+)?/g },
   /* The machine borrows one file from the site: the palette. */
   { file: join("arcade", "cutegal", "index.html"), pattern: /(href="\/css\/tokens\.css)(\?v=[a-z0-9]+)?/g },
+  {
+    file: join("arcade", "tarot", "index.html"),
+    pattern: /(DECK_URL = "deck\.json)(\?v=[a-z0-9]+)?/g,
+    replace: (_, head) => `${head}?v=${fileStamp.get("arcade/tarot/deck.json")}`,
+  },
   ...jsFiles.map((f) => ({ file: join("js", f), pattern: /(from "\.\/[a-z-]+\.js)(\?v=[a-z0-9]+)?/g })),
 ];
 

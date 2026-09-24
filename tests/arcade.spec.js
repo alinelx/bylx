@@ -340,7 +340,7 @@ test("the deck backdrop stays the size it was drawn for, at whole device pixels"
   })).toEqual({ backdrop: false, inline: "" });
 });
 
-test("the tarot deals a full deck, in both languages, and prints", async ({ page }) => {
+test("the tarot deals, teaches, and prints", async ({ page }) => {
   const errors = [];
   const foreign = [];
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
@@ -354,54 +354,64 @@ test("the tarot deals a full deck, in both languages, and prints", async ({ page
   expect(response?.status()).toBe(200);
   await expect(page.locator("h1")).toHaveCount(1);
 
-  /* Ported from a React artifact that imported 26 icons from lucide-react.
-     None of that shipped: the majors show their numeral, the minors their
-     suit mark, and the page asks nobody for anything. */
+  /* Ported from a React bundle that imported 26 icons from lucide-react and
+     shipped 378KB. None of that came with it: a major shows its numeral, a
+     minor its suit mark, and the page asks nobody for anything. */
   expect(foreign).toEqual([]);
   expect(await page.evaluate(() => typeof window.React)).toBe("undefined");
 
-  await page.locator('[data-spread="three"]').click();
-  await page.locator('[data-mode="random"]').click();
+  // The manual's 22 spreads, not the six the first port had.
+  await expect(page.locator("[data-spread]")).toHaveCount(22);
+
+  await page.locator('[data-spread="cruz-celta"]').click();
+  await page.locator('[data-pick="random"]').click();
   await page.locator("[data-go]").click();
-  await expect(page.locator(".face")).toHaveCount(3);
+  await expect(page.locator(".face")).toHaveCount(10);
+
+  /* Pin the language: the page opens in whatever the browser asks for, so the
+     default is not something a test may assume. */
+  await page.locator('[data-lang="pt"]').click();
+  expect(await page.evaluate(() => document.documentElement.lang)).toBe("pt");
+  const ptChrome = await page.locator(".modes button").first().textContent();
+  await page.locator('[data-lang="en"]').click();
+  await expect(page.locator(".face")).toHaveCount(10);
+  expect(await page.locator(".modes button").first().textContent()).not.toBe(ptChrome);
+  expect(await page.evaluate(() => document.documentElement.lang)).toBe("en");
 
   // The whole deck, not a sample of it.
   await page.locator("[data-reset]").click();
-  await page.locator('[data-mode="manual"]').click();
-  await page.locator('[data-spread="one"]').click();
+  await page.locator('[data-spread="carta-do-dia"]').click();
+  await page.locator('[data-pick="manual"]').click();
   await page.locator("[data-go]").click();
   await expect(page.locator(".back")).toHaveCount(78);
   await page.locator(".back").first().click();
   await expect(page.locator(".face")).toHaveCount(1);
 
-  /* Switching language re-reads the SAME cards rather than dealing again —
-     the draw is state, the language is presentation. */
-  /* Pin the language first: the page opens in whatever the browser asks for,
-     so the default is not something a test may assume. */
-  await page.locator("[data-lang=\"pt\"]").click();
-  expect(await page.evaluate(() => document.documentElement.lang)).toBe("pt");
+  /* The manual: five sections, and the counts are the deck's own. */
+  await page.locator('[data-mode="learn"]').click();
+  await expect(page.locator("[data-section]")).toHaveCount(5);
+  for (const [section, n] of [["majors", 22], ["courts", 16], ["numbers", 40], ["suits", 4], ["spreads", 22]]) {
+    await page.locator(`[data-section="${section}"]`).click();
+    await expect(page.locator(".entry")).toHaveCount(n);
+  }
 
-  const before = await page.locator(".face .name").textContent();
-  const ptText = await page.locator(".slot .read").textContent();
-  await page.locator('[data-lang="en"]').click();
-  await expect(page.locator(".face")).toHaveCount(1);
-  expect(await page.locator(".slot .read").textContent()).not.toBe(ptText);
-  expect(await page.locator(".face .name").textContent()).not.toBe(before);
-  expect(await page.evaluate(() => document.documentElement.lang)).toBe("en");
+  /* A spread entry deals itself — the reason the two modes share a page. */
+  await page.locator(".entry").first().click();
+  await expect(page.locator(".map i")).toHaveCount(1);
+  await page.locator("[data-deal]").click();
+  await expect(page.locator("[data-go]")).toHaveCount(1);
 
   /* Saving as PDF is the browser's print dialogue, so the print stylesheet is
      the document: no controls, the reading intact, ink on white. */
+  await page.locator('[data-pick="random"]').click();
+  await page.locator("[data-go]").click();
+  await expect(page.locator(".face").first()).toBeVisible();
   await page.emulateMedia({ media: "print" });
   expect(await page.evaluate(() => {
     const gone = (sel) => getComputedStyle(document.querySelector(sel)).display === "none";
-    return {
-      controls: gone(".actions"),
-      topbar: gone(".topbar"),
-      cards: document.querySelectorAll(".face").length,
-      reading: !gone(".synthesis"),
-      background: getComputedStyle(document.body).backgroundColor,
-    };
-  })).toEqual({ controls: true, topbar: true, cards: 1, reading: true, background: "rgb(255, 255, 255)" });
+    return { controls: gone(".actions"), topbar: gone(".topbar"), modes: gone(".modes"),
+             reading: !gone(".synthesis"), background: getComputedStyle(document.body).backgroundColor };
+  })).toEqual({ controls: true, topbar: true, modes: true, reading: true, background: "rgb(255, 255, 255)" });
   await page.emulateMedia({ media: "screen" });
 
   await expect(page.locator(".back-link")).toHaveAttribute("href", "/arcade/");

@@ -1,0 +1,2885 @@
+{
+ "majors": [
+  {
+   "num": 0,
+   "romano": "0",
+   "nome": "O Louco",
+   "nomeEn": "The Fool",
+   "deus": "Dioniso",
+   "mito": "Dioniso nasceu duas vezes. Sémele, a mãe mortal, pediu para ver Zeus na sua forma verdadeira e foi consumida pelo raio; Zeus salvou o filho por nascer e cosendo-o à própria coxa levou-o até ao fim. Cresceu escondido, disfarçado, e depois percorreu o mundo com um cortejo de mulheres em êxtase, dando o vinho aos homens. Quem o acolhia recebia alegria; quem lhe resistia enlouquecia.",
+   "cena": "A carta mostra o jovem deus do vinho a avançar, despreocupado, num mundo que ainda não conhece. Ao seu lado segue um animal de companhia e à frente abre-se o precipício do desconhecido.",
+   "arquetipo": "o impulso do Self antes da forma",
+   "significado": "Vais dar um passo sem mapa e isso está certo. Não sabes onde aterras, mas o movimento é mais importante do que a garantia. Diz sim antes de teres o plano todo montado.",
+   "sombra": "Fugir das consequências e chamar-lhe liberdade, saltando de coisa em coisa sem nunca aterrar.",
+   "palavras": [
+    "início",
+    "confiança",
+    "risco",
+    "espontaneidade",
+    "inocência",
+    "salto"
+   ],
+   "pergunta": "O que é que eu faria hoje se não precisasse de garantias?",
+   "elementoOuPlaneta": "Urano"
+  },
+  {
+   "num": 1,
+   "romano": "I",
+   "nome": "O Mago",
+   "nomeEn": "The Magician",
+   "deus": "Hermes",
+   "mito": "No primeiro dia de vida, Hermes saiu do berço, roubou os bois de Apolo e apagou os rastos fazendo-os andar para trás. Quando foi apanhado, negou tudo com tal charme que Zeus se riu. Depois inventou a lira com a carapaça de uma tartaruga e ofereceu-a a Apolo em troca do gado. Ficou mensageiro dos deuses e único a atravessar livremente entre o mundo dos vivos e o dos mortos.",
+   "cena": "A carta mostra o jovem deus de sandálias aladas junto às ferramentas do seu ofício, entre o gado roubado e a lira acabada de inventar. Está no cruzamento de caminhos, sempre em trânsito.",
+   "arquetipo": "o trickster que traduz vontade em acção",
+   "significado": "Já tens tudo o que precisas para começar, mesmo que não pareça. Esta carta pede que uses a tua inteligência prática: negoceia, comunica, arranja-te. É a hora de fazer, não de estudar mais.",
+   "sombra": "Usar a esperteza para manipular, fintar e vender fumo em vez de criar algo real.",
+   "palavras": [
+    "habilidade",
+    "comunicação",
+    "engenho",
+    "início prático",
+    "astúcia"
+   ],
+   "pergunta": "Que recursos já tenho na mão e ainda não usei?",
+   "elementoOuPlaneta": "Mercúrio"
+  },
+  {
+   "num": 2,
+   "romano": "II",
+   "nome": "A Sacerdotisa",
+   "nomeEn": "The High Priestess",
+   "deus": "Perséfone",
+   "mito": "Perséfone colhia flores num prado quando a terra se abriu e Hades a levou para o mundo subterrâneo. Deméter procurou-a até o mundo secar. Foi devolvida à mãe, mas como tinha comido sementes de romã ficou ligada para sempre ao mundo de baixo. Passa parte do ano na luz e parte no escuro, e é rainha dos dois.",
+   "cena": "A carta mostra a jovem rainha entre dois mundos, com a romã que a prende ao subterrâneo. À sua volta há flores e sombra ao mesmo tempo.",
+   "arquetipo": "o inconsciente e o saber que não se explica",
+   "significado": "Há coisas que ainda não estão prontas para vir à superfície. Esta carta pede paciência e escuta em vez de decisão rápida. Presta atenção a sonhos, pressentimentos e ao que sabes sem saber porquê.",
+   "sombra": "Ficar fechada no mundo interior, passiva, a chamar-lhe intuição quando é medo de agir.",
+   "palavras": [
+    "intuição",
+    "silêncio",
+    "mistério",
+    "espera",
+    "interioridade"
+   ],
+   "pergunta": "O que é que eu já sei e ainda não quis admitir?",
+   "elementoOuPlaneta": "Lua"
+  },
+  {
+   "num": 3,
+   "romano": "III",
+   "nome": "A Imperatriz",
+   "nomeEn": "The Empress",
+   "deus": "Deméter",
+   "mito": "Deméter é a deusa dos cereais e de tudo o que cresce. Quando a filha Perséfone lhe foi arrebatada, recusou-se a deixar a terra dar fruto e o mundo entrou em fome. Só quando recuperou a filha, ainda que em parte do ano, é que os campos voltaram a verdejar. O seu amor faz crescer, mas também pode matar de fome quem lho tira.",
+   "cena": "A carta mostra a deusa da colheita rodeada de searas maduras e do fruto da terra. É a mãe abundante no seu campo.",
+   "arquetipo": "a Grande Mãe e o corpo que nutre",
+   "significado": "É tempo de cuidar, alimentar e deixar algo amadurecer no seu ritmo. Pode ser um projecto, uma casa, um corpo, uma relação. Não forces: rega e espera.",
+   "sombra": "Sufocar com cuidado, dar para prender, ou usar a culpa como forma de amor.",
+   "palavras": [
+    "abundância",
+    "cuidado",
+    "fertilidade",
+    "corpo",
+    "maternidade",
+    "crescimento"
+   ],
+   "pergunta": "Estou a nutrir isto ou a agarrá-lo com força a mais?",
+   "elementoOuPlaneta": "Vénus"
+  },
+  {
+   "num": 4,
+   "romano": "IV",
+   "nome": "O Imperador",
+   "nomeEn": "The Emperor",
+   "deus": "Zeus",
+   "mito": "Zeus derrubou o pai Cronos, libertou os irmãos engolidos e dividiu o mundo: para si o céu, para Poseidon o mar, para Hades o subterrâneo. Sentado no Olimpo, tornou-se garante das leis, dos juramentos e da hospitalidade. Governava com o raio na mão, mas também com regras que nem ele podia quebrar sem consequências.",
+   "cena": "A carta mostra o rei dos deuses entronizado no alto do Olimpo, com a águia e o raio, a olhar o mundo que ordena.",
+   "arquetipo": "o pai interior e a estrutura",
+   "significado": "Alguma coisa na tua vida precisa de estrutura, regras e limites claros. Assume o comando em vez de esperar autorização. Define o que se faz, quando e até onde.",
+   "sombra": "Rigidez e autoritarismo: controlar tudo por medo de que sem controlo tudo desabe.",
+   "palavras": [
+    "autoridade",
+    "ordem",
+    "limites",
+    "responsabilidade",
+    "estrutura"
+   ],
+   "pergunta": "Onde é que eu preciso de pôr uma regra clara e cumpri-la?",
+   "elementoOuPlaneta": "Áries"
+  },
+  {
+   "num": 5,
+   "romano": "V",
+   "nome": "O Hierofante",
+   "nomeEn": "The Hierophant",
+   "deus": "Quíron",
+   "mito": "Quíron era um centauro, mas diferente dos outros: sábio, culto e gentil. Ensinou medicina, música e caça a heróis como Aquiles, Jasão e Asclépio. Foi atingido por engano por uma flecha envenenada de Héracles e, sendo imortal, ficou com uma ferida que nunca sarava. No fim trocou a imortalidade pela libertação de Prometeu, transformando a dor em dádiva.",
+   "cena": "A carta mostra o centauro-mestre na boca da sua gruta, a ensinar, com a ferida que não fecha na perna e o discípulo à sua frente.",
+   "arquetipo": "o curador ferido e o mestre interior",
+   "significado": "Procura quem já passou por isto antes de ti: mentor, terapeuta, tradição, livro. Esta carta também diz que a tua própria ferida é o que te dá o que ensinar. Aprende com método, não por adivinhação.",
+   "sombra": "Seguir a doutrina à letra ou entregar a tua autoridade a um guru que decide por ti.",
+   "palavras": [
+    "ensino",
+    "mentor",
+    "tradição",
+    "cura",
+    "sentido",
+    "iniciação"
+   ],
+   "pergunta": "Que ferida minha já se tornou conhecimento útil?",
+   "elementoOuPlaneta": "Touro"
+  },
+  {
+   "num": 6,
+   "romano": "VI",
+   "nome": "Os Amantes",
+   "nomeEn": "The Lovers",
+   "deus": "Páris",
+   "mito": "Numa boda dos deuses, a Discórdia lançou uma maçã de ouro para a mais bela. Hera, Atena e Afrodite discutiram e Zeus mandou que fosse Páris, príncipe de Tróia, a decidir. Hera ofereceu-lhe poder, Atena sabedoria e Afrodite a mulher mais bela do mundo. Escolheu Afrodite, levou Helena e a escolha acendeu a guerra de Tróia.",
+   "cena": "A carta mostra o jovem pastor com a maçã de ouro na mão, diante das três deusas que esperam a decisão. Está no momento exacto antes de escolher.",
+   "arquetipo": "a escolha que define quem és",
+   "significado": "Tens de escolher e não podes ficar com tudo. Isto não é só sobre amor: é sobre valores, sobre o que decides tornar importante. Cada escolha fecha portas e é assim mesmo.",
+   "sombra": "Adiar a decisão à espera da opção perfeita, ou escolher só pelo desejo imediato sem ver o preço.",
+   "palavras": [
+    "escolha",
+    "desejo",
+    "valores",
+    "relação",
+    "encruzilhada"
+   ],
+   "pergunta": "O que é que eu estou disposta a perder por causa desta escolha?",
+   "elementoOuPlaneta": "Gémeos"
+  },
+  {
+   "num": 7,
+   "romano": "VII",
+   "nome": "O Carro",
+   "nomeEn": "The Chariot",
+   "deus": "Ares",
+   "mito": "Ares é o deus da guerra em bruto, do furor da batalha e não da estratégia. Filho de Zeus e Hera, era o menos amado no Olimpo por causa da sua violência. Conduzia o seu carro puxado por cavalos com nomes de terror e fuga. Quando a força era canalizada e conduzida, vencia; quando o levava a fúria cega, era ferido e humilhado.",
+   "cena": "A carta mostra o deus armado a conduzir o carro de guerra, a segurar rédeas de cavalos que puxam em direcções contrárias.",
+   "arquetipo": "a vontade que domina os impulsos",
+   "significado": "Tens força para avançar, mas precisas de direcção. Agarra as rédeas: escolhe um objectivo e mete lá toda a energia. Vitória vem de conduzir o impulso, não de o apagar.",
+   "sombra": "Atropelar tudo e todos, confundir agressividade com competência.",
+   "palavras": [
+    "vontade",
+    "avanço",
+    "controlo",
+    "coragem",
+    "foco",
+    "vitória"
+   ],
+   "pergunta": "Estou a conduzir esta energia ou a ser arrastada por ela?",
+   "elementoOuPlaneta": "Caranguejo"
+  },
+  {
+   "num": 8,
+   "romano": "VIII",
+   "nome": "A Força",
+   "nomeEn": "Strength",
+   "deus": "Héracles",
+   "mito": "Héracles, filho de Zeus com uma mortal, foi perseguido a vida toda pelo ciúme de Hera. Como penitência teve de cumprir doze trabalhos impossíveis. O primeiro foi o leão de Nemeia, cuja pele nenhuma arma furava: teve de o estrangular com os próprios braços e depois usou a pele como armadura. Cada trabalho seguinte exigiu menos força bruta e mais paciência e engenho.",
+   "cena": "A carta mostra o herói frente a frente com o leão, dominando-o com as mãos nuas, e a pele do animal que se torna a sua protecção.",
+   "arquetipo": "integrar o instinto em vez de o matar",
+   "significado": "A situação pede firmeza calma, não pancada. Aguenta, insiste, mantém-te em contacto com o que te assusta em vez de fugires. A tua parte mais selvagem pode virar-se a teu favor.",
+   "sombra": "Aguentar por orgulho até rebentar, ou reprimir o instinto até ele explodir noutro sítio.",
+   "palavras": [
+    "coragem",
+    "paciência",
+    "instinto",
+    "resistência",
+    "domínio suave"
+   ],
+   "pergunta": "O que é que eu estou a tentar dominar à força em vez de compreender?",
+   "elementoOuPlaneta": "Leão"
+  },
+  {
+   "num": 9,
+   "romano": "IX",
+   "nome": "O Eremita",
+   "nomeEn": "The Hermit",
+   "deus": "Cronos",
+   "mito": "Cronos castrou o pai Úrano para separar o céu da terra e tomou o poder. Depois, por temer a mesma sorte, engolia os próprios filhos à nascença. Zeus escapou, cresceu e derrubou-o. Destronado, Cronos foi enviado para os confins do mundo e ficou associado ao tempo que tudo devora e à velha idade de ouro perdida.",
+   "cena": "A carta mostra o velho deus sozinho num sítio afastado, com a foice do tempo, longe do bulício do Olimpo.",
+   "arquetipo": "o velho sábio e o recolhimento",
+   "significado": "Precisas de te afastar para ver com clareza. Menos gente, menos ruído, menos opinião. As respostas que procuras não vêm de fora, vêm de estares sozinha o tempo suficiente.",
+   "sombra": "Transformar o recolhimento em isolamento amargo e afastar quem se aproxima.",
+   "palavras": [
+    "solidão",
+    "tempo",
+    "prudência",
+    "reflexão",
+    "limites",
+    "maturidade"
+   ],
+   "pergunta": "De que é que eu preciso de me afastar para conseguir ouvir-me?",
+   "elementoOuPlaneta": "Virgem"
+  },
+  {
+   "num": 10,
+   "romano": "X",
+   "nome": "A Roda da Fortuna",
+   "nomeEn": "The Wheel of Fortune",
+   "deus": "As Moiras",
+   "mito": "As Moiras são três irmãs que fiam a vida de cada um. Cloto fia o fio, Láquesis mede o comprimento e Átropos corta-o com a tesoura. Nem os deuses lhes podiam alterar a decisão. Determinavam a quota de cada vida, e o que restava a cada um era como a vivia.",
+   "cena": "A carta mostra as três fiandeiras à volta da roda que gira, com o fio da vida a ser fiado, medido e cortado.",
+   "arquetipo": "o destino e os ciclos fora do teu controlo",
+   "significado": "Alguma coisa está a mudar e não foste tu que a puseste em marcha. Podes resistir ou acompanhar. A tua parte é escolher como reages, não travar a roda.",
+   "sombra": "Culpar o destino de tudo e não assumir a parte que te toca.",
+   "palavras": [
+    "ciclo",
+    "sorte",
+    "mudança",
+    "destino",
+    "viragem",
+    "aceitação"
+   ],
+   "pergunta": "O que é que aqui não depende de mim e eu ainda tento controlar?",
+   "elementoOuPlaneta": "Júpiter"
+  },
+  {
+   "num": 11,
+   "romano": "XI",
+   "nome": "A Justiça",
+   "nomeEn": "Justice",
+   "deus": "Atena",
+   "mito": "Atena nasceu já adulta e armada da cabeça de Zeus. Deusa da sabedoria e da estratégia, preferia a razão à fúria. Quando Orestes foi julgado pelo homicídio da mãe, foi ela que fundou o tribunal de Atenas e deu o voto de desempate, substituindo a vingança de sangue pela lei. A partir daí a culpa passou a ser julgada e não vingada.",
+   "cena": "A carta mostra a deusa de capacete e lança, serena, no papel de árbitro que pesa os dois lados de uma causa.",
+   "arquetipo": "discernimento e responsabilidade pelos actos",
+   "significado": "É hora de olhar para os factos com frieza e assumir a tua parte. Cada acção teve consequência e há uma conta a acertar. Decide com a cabeça, não com a mágoa.",
+   "sombra": "Julgamento seco e sem compaixão, ou usar a razão para se justificar sempre.",
+   "palavras": [
+    "equilíbrio",
+    "verdade",
+    "consequência",
+    "decisão",
+    "responsabilidade"
+   ],
+   "pergunta": "Se eu tirasse a emoção, o que é que os factos me diziam?",
+   "elementoOuPlaneta": "Balança"
+  },
+  {
+   "num": 12,
+   "romano": "XII",
+   "nome": "O Enforcado",
+   "nomeEn": "The Hanged Man",
+   "deus": "Prometeu",
+   "mito": "Prometeu era um Titã que tomou o partido dos homens. Roubou o fogo aos deuses e deu-lho, dando-lhes com ele a consciência e as artes. Zeus castigou-o acorrentando-o a um rochedo, onde uma águia lhe comia o fígado todos os dias, que voltava a crescer todas as noites. Aguentou séculos até Héracles o libertar.",
+   "cena": "A carta mostra o Titã preso ao rochedo, suspenso e imóvel, com a águia que regressa. É o sacrifício voluntário que ele nunca renegou.",
+   "arquetipo": "a rendição que muda a perspectiva",
+   "significado": "Estás em pausa forçada e não há nada a fazer senão esperar. Em vez de te debateres, vira a coisa ao contrário e olha de outro ângulo. Alguma coisa tem de ser entregue para se poder avançar.",
+   "sombra": "Fazer-se de mártir e cobrar depois o sacrifício a quem estiver por perto.",
+   "palavras": [
+    "pausa",
+    "sacrifício",
+    "outra perspectiva",
+    "entrega",
+    "espera"
+   ],
+   "pergunta": "O que é que eu ganho se parar de lutar contra isto?",
+   "elementoOuPlaneta": "Neptuno"
+  },
+  {
+   "num": 13,
+   "romano": "XIII",
+   "nome": "A Morte",
+   "nomeEn": "Death",
+   "deus": "Hades",
+   "mito": "Hades ficou com o mundo subterrâneo quando os três irmãos dividiram o cosmos. Era severo mas não cruel: recebia todos, sem excepção, e não deixava ninguém voltar. Raptou Perséfone para a ter como rainha e o seu reino tornou-se também lugar de sementes e renovação. Do seu nome vinha a riqueza escondida sob a terra.",
+   "cena": "A carta mostra o senhor do subterrâneo a levar a carruagem para o mundo de baixo, na passagem entre a luz e a sombra.",
+   "arquetipo": "o fim necessário antes do renascimento",
+   "significado": "Uma coisa acabou, mesmo que ainda não o queiras dizer em voz alta. Deixa cair o que já não vive. O espaço vazio é o que permite o que vem a seguir.",
+   "sombra": "Agarrar-se ao que já morreu, ou destruir tudo à pressa só para não sentir a perda.",
+   "palavras": [
+    "fim",
+    "transformação",
+    "libertação",
+    "luto",
+    "recomeço"
+   ],
+   "pergunta": "O que é que eu ainda estou a segurar e já não está vivo?",
+   "elementoOuPlaneta": "Escorpião"
+  },
+  {
+   "num": 14,
+   "romano": "XIV",
+   "nome": "A Temperança",
+   "nomeEn": "Temperance",
+   "deus": "Íris",
+   "mito": "Íris é a mensageira dos deuses e a personificação do arco-íris. Atravessa céu, terra e mar, ligando o Olimpo aos homens e descendo até às águas do Estige para trazer o juramento dos deuses. Não julga nem toma partido: transporta e liga. É a ponte por onde as mensagens passam.",
+   "cena": "A carta mostra a mensageira alada no arco-íris que une o céu à terra, com a taça do juramento nas mãos.",
+   "arquetipo": "a mediação entre opostos",
+   "significado": "Nada aqui se resolve por extremos. Mistura, doseia, encontra o meio-termo entre duas coisas que pareciam incompatíveis. Cura-se devagar e por gotas.",
+   "sombra": "Diluir tudo para evitar conflito e acabar sem posição nenhuma.",
+   "palavras": [
+    "equilíbrio",
+    "paciência",
+    "mistura",
+    "ponte",
+    "moderação",
+    "cura"
+   ],
+   "pergunta": "Onde é que eu estou a escolher entre dois extremos que podiam conviver?",
+   "elementoOuPlaneta": "Sagitário"
+  },
+  {
+   "num": 15,
+   "romano": "XV",
+   "nome": "O Diabo",
+   "nomeEn": "The Devil",
+   "deus": "Pã",
+   "mito": "Pã nasceu com pernas de bode, chifres e barba, e a própria mãe fugiu ao vê-lo. Vivia nos montes da Arcádia, entre rebanhos e ninfas, a tocar a flauta que fez dos canaviços em que a ninfa Siringe se transformou a fugir dele. Ao meio-dia, se lhe perturbassem o sono, enchia os viajantes de um medo súbito e irracional: o pânico.",
+   "cena": "A carta mostra o deus-bode selvagem no seu monte, com a flauta de canas, meio animal e meio homem, a olhar de frente.",
+   "arquetipo": "a Sombra e o instinto negado",
+   "significado": "Há aqui um desejo, um vício ou uma raiva que finges não ter. O que está agrilhoado não é o desejo: és tu, por não o reconheceres. Olha para o que te envergonha antes que ele decida por ti.",
+   "sombra": "Entregar-se por completo ao apetite e chamar-lhe autenticidade, ou projectar no outro o que não aceitas em ti.",
+   "palavras": [
+    "sombra",
+    "desejo",
+    "vício",
+    "medo",
+    "prisão",
+    "instinto"
+   ],
+   "pergunta": "O que é que eu recuso ver em mim e critico logo nos outros?",
+   "elementoOuPlaneta": "Capricórnio"
+  },
+  {
+   "num": 16,
+   "romano": "XVI",
+   "nome": "A Torre",
+   "nomeEn": "The Tower",
+   "deus": "Poseidon",
+   "mito": "Minos pediu a Poseidon um touro branco para lho sacrificar, mas achou-o belo de mais e ficou com ele. Poseidon vingou-se fazendo a rainha Pasífae desejar o touro, e desse desejo nasceu o Minotauro, fechado no labirinto sob o palácio de Cnossos. Poseidon, senhor do mar e dos terramotos, abalava as fundações do que os homens construíam. O palácio de Minos caiu, e com ele a mentira que o sustentava.",
+   "cena": "A carta mostra a torre do palácio a desfazer-se sob o abalo do deus do mar, com as figuras a caírem das muralhas.",
+   "arquetipo": "a queda das estruturas falsas",
+   "significado": "Alguma coisa cai de repente e não dá para segurar. Dói, mas o que cai estava assente numa mentira. Depois do estrondo há chão firme para construir outra vez.",
+   "sombra": "Deitar tudo abaixo por impulso, ou reconstruir a mesma torre com os mesmos alicerces.",
+   "palavras": [
+    "ruptura",
+    "revelação",
+    "colapso",
+    "choque",
+    "libertação"
+   ],
+   "pergunta": "Que verdade é que eu andava a evitar e agora não dá para tapar?",
+   "elementoOuPlaneta": "Marte"
+  },
+  {
+   "num": 17,
+   "romano": "XVII",
+   "nome": "A Estrela",
+   "nomeEn": "The Star",
+   "deus": "Pandora",
+   "mito": "Pandora foi a primeira mulher, feita pelos deuses e dotada por cada um com um dom. Recebeu um jarro com a ordem de nunca o abrir. A curiosidade venceu e dele saíram todos os males para o mundo: a doença, a velhice, o trabalho, a dor. Quando conseguiu fechar a tampa, ficou lá dentro uma só coisa: a esperança.",
+   "cena": "A carta mostra a primeira mulher junto ao jarro aberto, com a esperança que ainda ali resta, sob o céu estrelado.",
+   "arquetipo": "esperança depois da perda",
+   "significado": "Passaste por algo duro e ainda assim sobrou luz. Esta carta diz que vale a pena continuar. Cuida do que restou, é isso que te vai levar adiante.",
+   "sombra": "Optimismo ingénuo que serve para não olhar para o que correu mal.",
+   "palavras": [
+    "esperança",
+    "cura",
+    "fé",
+    "renovação",
+    "calma",
+    "inspiração"
+   ],
+   "pergunta": "Depois de tudo isto, o que é que ainda me faz querer continuar?",
+   "elementoOuPlaneta": "Aquário"
+  },
+  {
+   "num": 18,
+   "romano": "XVIII",
+   "nome": "A Lua",
+   "nomeEn": "The Moon",
+   "deus": "Hécate",
+   "mito": "Hécate é a deusa das encruzilhadas, da noite e da feitiçaria, com poder no céu, na terra e no mundo dos mortos. Foi a única, com Hélio, a ouvir o grito de Perséfone quando foi raptada, e depois tornou-se sua guia entre os dois mundos. Era honrada nos cruzamentos de três caminhos, com tochas na mão e cães a acompanhá-la.",
+   "cena": "A carta mostra a deusa de tochas acesas na encruzilhada nocturna, com os cães ao lado, no ponto onde três caminhos se separam.",
+   "arquetipo": "o inconsciente, o medo e a passagem escura",
+   "significado": "Estás numa fase em que nada se vê com nitidez e isso é normal. Não decidas nada de definitivo agora. Confia nos sonhos, nos sinais e no corpo, e avança devagar.",
+   "sombra": "Perder-se na fantasia, no medo ou na ilusão e tomar imaginação por realidade.",
+   "palavras": [
+    "ilusão",
+    "medo",
+    "sonho",
+    "transição",
+    "escuridão",
+    "instinto"
+   ],
+   "pergunta": "Este medo é real ou é a noite a aumentá-lo?",
+   "elementoOuPlaneta": "Peixes"
+  },
+  {
+   "num": 19,
+   "romano": "XIX",
+   "nome": "O Sol",
+   "nomeEn": "The Sun",
+   "deus": "Apolo",
+   "mito": "Apolo é o deus da luz, da música, da profecia e da cura, senhor do oráculo de Delfos, onde se lia a inscrição conhece-te a ti mesmo. O filho Faetonte quis provar que era mesmo filho do sol e pediu para conduzir o carro solar por um dia; não conseguiu segurar os cavalos e quase incendiou a terra. Zeus derrubou-o com um raio. A luz de Apolo dá clareza a quem a sabe conduzir.",
+   "cena": "A carta mostra o deus radiante a conduzir o carro do sol pelo céu, com os cavalos de fogo a puxar em pleno dia.",
+   "arquetipo": "a consciência e a identidade que brilha",
+   "significado": "Há clareza, energia e vontade de aparecer. É boa altura para mostrar o que fizeste e ocupar o teu lugar. As coisas ficam simples outra vez.",
+   "sombra": "Ego inflamado e vaidade, ou uma alegria de fachada que não deixa espaço à dúvida.",
+   "palavras": [
+    "clareza",
+    "sucesso",
+    "vitalidade",
+    "alegria",
+    "visibilidade",
+    "consciência"
+   ],
+   "pergunta": "Onde é que eu me estou a esconder quando já podia brilhar?",
+   "elementoOuPlaneta": "Sol"
+  },
+  {
+   "num": 20,
+   "romano": "XX",
+   "nome": "O Julgamento",
+   "nomeEn": "Judgement",
+   "deus": "Hermes Psychopompos",
+   "mito": "Além de mensageiro, Hermes tinha uma função só sua: conduzir as almas dos mortos até ao mundo de baixo. Chamavam-lhe Psicopompo, o guia das almas. Com o caduceu na mão, acordava os que tinham morrido e levava-os pelo caminho, sendo o único deus que atravessava as fronteiras nos dois sentidos. Foi ele que trouxe Perséfone de volta à luz.",
+   "cena": "A carta mostra o guia das almas a chamar os mortos para o caminho, com o caduceu erguido, na passagem entre os dois mundos.",
+   "arquetipo": "o chamamento e o balanço de uma vida",
+   "significado": "Chegou a hora de olhar para trás e fazer contas com honestidade. Alguma coisa te está a chamar para outra fase e não dá para ignorar. Perdoa o que houver a perdoar e segue.",
+   "sombra": "Ruminar o passado sem parar, ou julgar-se com uma dureza que não liberta nada.",
+   "palavras": [
+    "chamamento",
+    "balanço",
+    "perdão",
+    "renascimento",
+    "despertar"
+   ],
+   "pergunta": "Que capítulo é que eu preciso de fechar em paz para poder avançar?",
+   "elementoOuPlaneta": "Plutão"
+  },
+  {
+   "num": 21,
+   "romano": "XXI",
+   "nome": "O Mundo",
+   "nomeEn": "The World",
+   "deus": "Afrodite/Hermafrodito",
+   "mito": "Hermafrodito era filho de Hermes e Afrodite, belíssimo. A ninfa Sálmacis apaixonou-se por ele e, quando ele entrou no seu lago, agarrou-se-lhe e pediu aos deuses que nunca mais os separassem. Os deuses atenderam ao pé da letra: os dois corpos fundiram-se num só ser, masculino e feminino ao mesmo tempo. Afrodite, nascida da espuma do mar, é a deusa que junta o que estava separado.",
+   "cena": "A carta mostra o ser em que masculino e feminino se uniram, inteiro, dentro do círculo do mundo, com a deusa do amor a presidir à união.",
+   "arquetipo": "a totalidade e a integração dos opostos",
+   "significado": "Um ciclo fecha-se e sentes que tudo se encaixou. Aquilo que andava dividido dentro de ti encontrou lugar. Aproveita o descanso: um ciclo novo vem logo a seguir.",
+   "sombra": "Achar que se chegou ao fim do caminho e parar de crescer, ou adiar a conclusão por medo do vazio a seguir.",
+   "palavras": [
+    "conclusão",
+    "inteireza",
+    "integração",
+    "realização",
+    "unidade"
+   ],
+   "pergunta": "O que é que eu já completei e ainda não celebrei?",
+   "elementoOuPlaneta": "Saturno"
+  }
+ ],
+ "courts": [
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "rank": "Pajem",
+   "nome": "Pajem de Bastões",
+   "figura": "Frixo",
+   "signo": "",
+   "mito": "Frixo ia ser sacrificado pelo próprio pai. No último momento, a mãe Nefele enviou um carneiro de velo dourado que o levou pelos ares até à Cólquida. Ele sobreviveu porque aceitou montar sem saber para onde ia.",
+   "significado": "Chega uma faísca nova: um convite, uma ideia, uma oportunidade que aparece de repente. Ainda não tens o plano todo, e não precisas de ter. Esta carta pede que digas sim ao primeiro passo e resolvas o resto pelo caminho.",
+   "comoPessoa": "Alguém jovem de espírito, entusiasta, que te traz uma proposta ou uma notícia que mexe contigo.",
+   "palavras": [
+    "faísca",
+    "convite",
+    "coragem inicial",
+    "fuga salvadora",
+    "impulso"
+   ],
+   "pergunta": "Que ideia nova estou a adiar por ainda não ter o plano completo?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "rank": "Cavaleiro",
+   "nome": "Cavaleiro de Bastões",
+   "figura": "Belerofonte",
+   "signo": "Sagitário",
+   "mito": "Belerofonte domou o cavalo alado Pégaso e derrotou a Quimera. Depois quis mais: tentou voar até ao Olimpo para se sentar entre os deuses. Zeus enviou uma mosca, Pégaso escoiceou e Belerofonte caiu.",
+   "significado": "Estás em movimento rápido e com fé no teu talento. Isso é bom e leva-te longe. O aviso é simples: sabe onde parar, porque a mesma energia que te faz subir também te atira ao chão.",
+   "comoPessoa": "Uma pessoa ousada e magnética, que arranca projetos com facilidade mas nem sempre mede o limite.",
+   "palavras": [
+    "arranque",
+    "ousadia",
+    "aventura",
+    "excesso",
+    "velocidade"
+   ],
+   "pergunta": "Onde é que a minha ambição já passou a fronteira do saudável?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "rank": "Rainha",
+   "nome": "Rainha de Bastões",
+   "figura": "Penélope",
+   "signo": "Leão",
+   "mito": "Penélope esperou vinte anos por Odisseu, cercada de pretendentes em sua própria casa. Prometeu escolher marido quando acabasse de tecer um sudário e, todas as noites, desfazia o trabalho do dia. Governou pela paciência e pela astúcia.",
+   "significado": "Tens força para manter o teu rumo mesmo sob pressão dos outros. Não é passividade: é escolher o teu tempo. Protege o que é teu com criatividade em vez de confronto directo.",
+   "comoPessoa": "Uma mulher calorosa e leal, com dignidade e uma teimosia serena que ninguém dobra.",
+   "palavras": [
+    "lealdade",
+    "calor",
+    "estratégia paciente",
+    "dignidade",
+    "fidelidade a si"
+   ],
+   "pergunta": "O que estou a proteger ao recusar decidir já?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "rank": "Rei",
+   "nome": "Rei de Bastões",
+   "figura": "Teseu",
+   "signo": "Carneiro (Áries)",
+   "mito": "Teseu ofereceu-se para entrar no Labirinto e enfrentar o Minotauro. Usou o fio de Ariadne para voltar e, mais tarde, unificou as aldeias da Ática numa só cidade. Foi um fundador, não apenas um herói.",
+   "significado": "É hora de assumir a liderança do teu próprio assunto. Decide, define a direcção e leva os outros contigo. A carta pede iniciativa clara, não mais consulta.",
+   "comoPessoa": "Alguém decidido e inspirador, que abre caminho e assume a responsabilidade de o fazer.",
+   "palavras": [
+    "liderança",
+    "iniciativa",
+    "visão",
+    "coragem",
+    "fundar"
+   ],
+   "pergunta": "Qual é a decisão que só eu posso tomar aqui?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "rank": "Pajem",
+   "nome": "Pajem de Copas",
+   "figura": "Narciso",
+   "signo": "",
+   "mito": "Narciso rejeitou todos os que o amaram, incluindo a ninfa Eco. Junto a um lago, apaixonou-se pelo próprio reflexo e não conseguiu afastar-se. Ficou ali até se transformar na flor que tem o seu nome.",
+   "significado": "Nasce um sentimento novo, ainda frágil e voltado para dentro. Pode ser um começo bonito de amor, arte ou autoconhecimento. Também pode ser um aviso: estás a olhar para a tua imagem em vez de olhar para a pessoa à tua frente.",
+   "comoPessoa": "Alguém jovem, sensível e encantador, que ainda está a aprender a ver o outro de verdade.",
+   "palavras": [
+    "sentimento novo",
+    "reflexo",
+    "encanto",
+    "sensibilidade",
+    "auto-imagem"
+   ],
+   "pergunta": "Estou a ver esta pessoa ou apenas o que ela reflecte de mim?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "rank": "Cavaleiro",
+   "nome": "Cavaleiro de Copas",
+   "figura": "Perseu",
+   "signo": "Peixes",
+   "mito": "Perseu venceu a Medusa sem olhar directamente para ela: usou o escudo polido como espelho. No regresso, viu Andrómeda acorrentada a um rochedo e salvou-a do monstro marinho. Casou com ela e levou-a consigo.",
+   "significado": "Chega uma proposta romântica, criativa ou generosa. Aprende com Perseu: há verdades que só consegues encarar de forma indirecta, através de um sonho, de uma imagem ou de uma conversa lateral. Aproxima-te com delicadeza.",
+   "comoPessoa": "Um romântico corajoso, que se move por ideais e gosta de salvar quem ama.",
+   "palavras": [
+    "romance",
+    "resgate",
+    "intuição",
+    "ideal",
+    "aproximação indirecta"
+   ],
+   "pergunta": "Que verdade preciso de olhar pelo espelho, em vez de de frente?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "rank": "Rainha",
+   "nome": "Rainha de Copas",
+   "figura": "Helena de Troia",
+   "signo": "Escorpião",
+   "mito": "Helena era a mulher mais bela do mundo e a sua fuga com Páris levou mil navios a Troia. Nunca foi claro quanto foi escolha dela e quanto foi destino imposto pelos deuses. A beleza dela era ao mesmo tempo dom e sentença.",
+   "significado": "Há desejo forte em jogo e ele não é inocente. Esta carta fala de atracção, magnetismo e do poder que exerces sem dar por isso. Pergunta-te o que queres mesmo, antes que a paixão decida por ti.",
+   "comoPessoa": "Uma mulher intensa e magnética, difícil de ignorar, que mexe com toda a gente à volta.",
+   "palavras": [
+    "desejo",
+    "magnetismo",
+    "intensidade",
+    "consequência",
+    "profundidade"
+   ],
+   "pergunta": "Este desejo é meu ou é o papel que os outros esperam de mim?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "rank": "Rei",
+   "nome": "Rei de Copas",
+   "figura": "Orfeu",
+   "signo": "Caranguejo (Câncer)",
+   "mito": "Orfeu cantava tão bem que as pedras e os animais paravam para ouvir. Quando Eurídice morreu, desceu ao mundo dos mortos e comoveu Hades com a sua música. Só tinha de não olhar para trás durante a subida, e olhou.",
+   "significado": "Sabes transformar dor em arte e acalmar quem está à tua volta. Esta carta pede maturidade emocional: sentir tudo sem te afogares. Cuidado com a tentação de olhar sempre para trás.",
+   "comoPessoa": "Um homem sensível e artístico, bom ouvinte, que carrega uma tristeza antiga com elegância.",
+   "palavras": [
+    "arte",
+    "compaixão",
+    "luto",
+    "maturidade emocional",
+    "consolo"
+   ],
+   "pergunta": "O que ganho se parar de olhar para trás neste assunto?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "rank": "Pajem",
+   "nome": "Pajem de Espadas",
+   "figura": "Zéfiro",
+   "signo": "",
+   "mito": "Zéfiro é o vento oeste, o mais suave dos ventos, anunciador da primavera. Levava mensagens entre os deuses e os mortais. Mas foi também o seu sopro de ciúme que desviou o disco que matou Jacinto.",
+   "significado": "Chega informação: uma notícia, uma pergunta incómoda, uma conversa que muda o cenário. Mantém a curiosidade acesa e verifica antes de reagir. Palavras ditas ao acaso podem magoar mais do que imaginas.",
+   "comoPessoa": "Alguém jovem, curioso e falador, que traz notícias e faz perguntas directas.",
+   "palavras": [
+    "notícia",
+    "curiosidade",
+    "vigilância",
+    "palavra",
+    "mudança de vento"
+   ],
+   "pergunta": "Que informação me falta antes de eu responder a isto?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "rank": "Cavaleiro",
+   "nome": "Cavaleiro de Espadas",
+   "figura": "Castor e Pólux (Dioscuros)",
+   "signo": "Gémeos",
+   "mito": "Castor e Pólux eram irmãos inseparáveis, mas um era mortal e o outro filho de Zeus. Quando Castor morreu, Pólux recusou a imortalidade sozinho. Zeus deixou-os alternar: um dia no Olimpo, um dia no Hades, para sempre juntos.",
+   "significado": "Há duas vozes a discutir dentro da tua cabeça e ambas têm razão. Não tentes eliminar uma delas. Escreve os dois argumentos lado a lado e decide qual conduz nesta fase, sabendo que a outra volta depois.",
+   "comoPessoa": "Uma pessoa rápida, brilhante e argumentativa, que muda de posição com facilidade.",
+   "palavras": [
+    "dilema",
+    "duas vozes",
+    "debate",
+    "rapidez mental",
+    "alternância"
+   ],
+   "pergunta": "Quais são exactamente os dois lados que estão a discutir dentro de mim?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "rank": "Rainha",
+   "nome": "Rainha de Espadas",
+   "figura": "Atalanta",
+   "signo": "Aquário",
+   "mito": "Abandonada em bebé, Atalanta foi criada por uma ursa e tornou-se caçadora imbatível. Foi a primeira a ferir o javali de Cálidon e prometeu casar apenas com quem a vencesse a correr. Perdeu quando parou para apanhar maçãs de ouro.",
+   "significado": "Precisas de clareza e de cortar o que já não serve. Fala directo, define limites e não peças desculpa pela tua independência. Atenção às distracções brilhantes que aparecem quando estás quase a ganhar.",
+   "comoPessoa": "Uma mulher independente, lúcida e franca, que prefere a verdade ao conforto.",
+   "palavras": [
+    "clareza",
+    "limite",
+    "independência",
+    "verdade",
+    "distracção"
+   ],
+   "pergunta": "Qual é a maçã dourada que me está a desviar do que interessa?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "rank": "Rei",
+   "nome": "Rei de Espadas",
+   "figura": "Odisseu",
+   "signo": "Balança",
+   "mito": "Odisseu venceu Troia com o truque do cavalo de madeira, não pela força. Levou dez anos a voltar a casa e sobreviveu sempre pela inteligência e pela negociação. Mandou atar-se ao mastro para ouvir as sereias sem se perder.",
+   "significado": "Chegou o momento de pensar com frieza e escolher com critério. Pesa os dois lados, define regras claras e cumpre-as. A tua melhor arma agora é a estratégia, não a emoção.",
+   "comoPessoa": "Um homem inteligente e justo, hábil com palavras, que resolve problemas por engenho.",
+   "palavras": [
+    "estratégia",
+    "justiça",
+    "critério",
+    "negociação",
+    "autocontrolo"
+   ],
+   "pergunta": "Que regra clara posso definir agora para não me perder depois?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "rank": "Pajem",
+   "nome": "Pajem de Ouros",
+   "figura": "Triptólemo",
+   "signo": "",
+   "mito": "Deméter, enquanto procurava a filha Perséfone, foi acolhida na casa de Triptólemo. Em agradecimento, ensinou-lhe a agricultura e deu-lhe um carro puxado por serpentes aladas. Ele percorreu o mundo a ensinar os homens a semear.",
+   "significado": "É tempo de aprender uma coisa concreta e útil. Um curso, uma competência, um trabalho novo, um primeiro dinheiro. Começa pequeno e repete: aqui o progresso vem da prática, não da inspiração.",
+   "comoPessoa": "Alguém aplicado e paciente, em fase de aprendizagem, que leva o trabalho a sério.",
+   "palavras": [
+    "aprendizagem",
+    "semente",
+    "prática",
+    "primeiro passo",
+    "utilidade"
+   ],
+   "pergunta": "Que competência concreta posso começar a treinar esta semana?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "rank": "Cavaleiro",
+   "nome": "Cavaleiro de Ouros",
+   "figura": "Aristeu",
+   "signo": "Virgem",
+   "mito": "Aristeu era pastor e apicultor, mestre dos ofícios da terra. Ao perseguir Eurídice, provocou indirectamente a morte dela e, em castigo, perdeu todas as abelhas. Só as recuperou depois de reconhecer a culpa e cumprir os sacrifícios exigidos.",
+   "significado": "Continua o trabalho lento e bem feito, mesmo que pareça aborrecido. Se alguma coisa colapsou, verifica o que fizeste antes: aqui a reparação exige reconhecer o erro, não trabalhar mais horas.",
+   "comoPessoa": "Uma pessoa fiável e metódica, trabalhadora, que avança devagar mas nunca desiste.",
+   "palavras": [
+    "método",
+    "persistência",
+    "ofício",
+    "reparação",
+    "responsabilidade"
+   ],
+   "pergunta": "O que preciso de reconhecer antes de tentar consertar isto?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "rank": "Rainha",
+   "nome": "Rainha de Ouros",
+   "figura": "Ônfale",
+   "signo": "Touro",
+   "mito": "Ônfale era rainha da Lídia e comprou Héracles como escravo por um ano. Enquanto ela governava e usava a pele de leão, ele fiava lã aos seus pés. Ela mandava no reino, no corpo e no tempo dele sem levantar a voz.",
+   "significado": "Cuida do concreto: dinheiro, casa, corpo, prazer. Tens mais poder do que julgas sobre os teus recursos. Governa com calma e goza o que já tens em vez de correres atrás do que falta.",
+   "comoPessoa": "Uma mulher sensual, prática e segura, que gere bem a casa, o dinheiro e as pessoas.",
+   "palavras": [
+    "recursos",
+    "prazer",
+    "gestão",
+    "corpo",
+    "segurança"
+   ],
+   "pergunta": "O que já tenho e ainda não estou a aproveitar?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "rank": "Rei",
+   "nome": "Rei de Ouros",
+   "figura": "Midas",
+   "signo": "Capricórnio",
+   "mito": "Midas pediu a Dioniso que tudo o que tocasse se transformasse em ouro. Ficou rico e quase morreu de fome, porque a comida e a própria filha viraram metal. Teve de se lavar no rio Páctolo para se libertar do dom.",
+   "significado": "Tens capacidade de construir riqueza e estrutura duradouras. O risco é medires tudo pelo valor material e perderes o que não tem preço. Define quanto é suficiente antes de continuar a acumular.",
+   "comoPessoa": "Um homem sólido e provedor, bom com dinheiro, que às vezes confunde valor com preço.",
+   "palavras": [
+    "riqueza",
+    "estrutura",
+    "excesso",
+    "suficiente",
+    "valor real"
+   ],
+   "pergunta": "Quanto é suficiente para mim, em números concretos?"
+  }
+ ],
+ "suits": [
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "esfera": "ação, criatividade, propósito",
+   "mito": "Jasão e os Argonautas",
+   "pergunta": "O que quero fazer com a minha energia e para onde vou a seguir?",
+   "sinal": "Reconheces a pergunta deste naipe quando falas em começar, arriscar, criar ou mudar de rumo, e sentes inquietação no corpo."
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "esfera": "emoções, relações, vínculo",
+   "mito": "Eros e Psique",
+   "pergunta": "O que sinto e o que é que este vínculo me pede?",
+   "sinal": "Reconheces a pergunta deste naipe quando a questão envolve alguém que amas, mágoa antiga ou vontade de te aproximar ou afastar."
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "esfera": "pensamento, verdade, decisão e conflito",
+   "mito": "Orestes",
+   "pergunta": "O que é verdade aqui e que decisão tenho de tomar?",
+   "sinal": "Reconheces a pergunta deste naipe quando andas às voltas na cabeça, discutes contigo mesma ou precisas de dizer algo difícil."
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "esfera": "corpo, dinheiro, trabalho e realidade material",
+   "mito": "Dédalo",
+   "pergunta": "Como sustento isto na prática e o que é que já está construído?",
+   "sinal": "Reconheces a pergunta deste naipe quando o assunto tem números, prazos, casa, saúde ou contas envolvidas."
+  }
+ ],
+ "numbers": [
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "num": 1,
+   "nome": "Ás de Bastões",
+   "cenaMito": "Jasão chega descalço de um pé à corte de Iolco e ouve o desafio: traz o Velo de Ouro e o trono será teu. Uma faísca acende-se nele. Ainda não há navio, nem tripulação, nem plano, só o chamado.",
+   "numeroDiz": "O Ás é potencial puro, a semente antes de qualquer forma.",
+   "significado": "Chegou um impulso novo e ainda cru. Uma ideia, um convite, uma vontade súbita de começar. Não peças ainda um plano completo, guarda a energia e dá-lhe um primeiro gesto pequeno.",
+   "sombra": "Entusiasmo que arde muito depressa e não chega a pegar em nada concreto.",
+   "palavras": [
+    "faísca",
+    "chamado",
+    "início",
+    "vontade",
+    "potencial"
+   ],
+   "pergunta": "O que é que em mim já acendeu e eu ainda finjo não ter visto?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "num": 2,
+   "nome": "Dois de Bastões",
+   "cenaMito": "Jasão olha para o mar e pesa duas vidas: ficar em segurança ou partir atrás do Velo. Escolhe partir e começa a desenhar a rota. A decisão é tomada antes de existir qualquer garantia.",
+   "numeroDiz": "O Dois traz dualidade: duas hipóteses, uma escolha a fazer.",
+   "significado": "Estás no ponto de decidir. Há um caminho seguro e um caminho maior, e não dá para levar os dois. Escolhe com base no que queres construir, não no que te assusta menos.",
+   "sombra": "Ficar eternamente a comparar opções para não ter de assumir nenhuma.",
+   "palavras": [
+    "decisão",
+    "rota",
+    "escolha",
+    "visão",
+    "partida"
+   ],
+   "pergunta": "Qual das duas opções me faz crescer, mesmo que me dê medo?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "num": 3,
+   "nome": "Três de Bastões",
+   "cenaMito": "Corre a notícia pela Grécia e os heróis respondem ao apelo. Héracles, Orfeu, Castor e Pólux juntam-se à causa. Jasão percebe que a busca já não lhe pertence sozinho.",
+   "numeroDiz": "O Três é crescimento: o que era ideia ganha corpo e companhia.",
+   "significado": "O projeto começa a expandir-se para fora de ti. Pede ajuda, reúne pessoas, aceita alianças. O que estava na tua cabeça precisa agora de outras mãos.",
+   "sombra": "Querer fazer tudo sozinha e chamar a isso independência.",
+   "palavras": [
+    "aliados",
+    "expansão",
+    "convocar",
+    "colaboração",
+    "impulso"
+   ],
+   "pergunta": "Quem é que eu ainda não convidei para esta viagem?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "num": 4,
+   "nome": "Quatro de Bastões",
+   "cenaMito": "O Argo é construído, tábua a tábua, com uma viga falante da carvalha de Dodona na proa. Antes de largar amarras, os Argonautas fazem sacrifício e festejam na praia. Há alegria porque a base está feita.",
+   "numeroDiz": "O Quatro dá estabilidade: quatro pontos que seguram uma estrutura.",
+   "significado": "Uma etapa ficou sólida e merece ser marcada. Casa, contrato, equipa, rotina, algo assentou. Celebra e descansa aqui antes da fase seguinte.",
+   "sombra": "Instalar-se tão bem na fundação que nunca se chega a largar do cais.",
+   "palavras": [
+    "fundação",
+    "celebração",
+    "estrutura",
+    "pausa",
+    "chegada"
+   ],
+   "pergunta": "O que já está firme na minha vida e eu ainda não reconheci?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "num": 5,
+   "nome": "Cinco de Bastões",
+   "cenaMito": "Jasão semeia os dentes do dragão e do solo brotam guerreiros armados. Todos contra ele, todos ao mesmo tempo. Ele atira uma pedra ao meio do grupo e deixa-os lutar entre si.",
+   "numeroDiz": "O Cinco traz conflito: a estrutura é sacudida para poder mexer-se.",
+   "significado": "Há atrito, competição, vozes a puxar em direções diferentes. Nem tudo é ataque pessoal, muita coisa é só energia por organizar. Escolhe uma frente e larga as outras.",
+   "sombra": "Gastar-se em brigas pequenas e chegar sem forças à batalha que interessa.",
+   "palavras": [
+    "conflito",
+    "atrito",
+    "rivalidade",
+    "confusão",
+    "prova"
+   ],
+   "pergunta": "Qual destas lutas é mesmo minha?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "num": 6,
+   "nome": "Seis de Bastões",
+   "cenaMito": "Jasão adormece o dragão e tira o Velo de Ouro do carvalho sagrado. Sai do bosque com o troféu ao ombro e os companheiros aclamam-no. O impossível foi feito.",
+   "numeroDiz": "O Seis é harmonia e recuperação: o esforço encontra recompensa.",
+   "significado": "Chega o reconhecimento merecido. Um objetivo cumpre-se, alguém te aplaude, sentes que valeu a pena. Deixa entrar o elogio sem o minimizar.",
+   "sombra": "Precisar do aplauso dos outros para acreditar no próprio valor.",
+   "palavras": [
+    "vitória",
+    "troféu",
+    "reconhecimento",
+    "orgulho",
+    "conquista"
+   ],
+   "pergunta": "Consigo aceitar esta vitória sem lhe tirar importância?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "num": 7,
+   "nome": "Sete de Bastões",
+   "cenaMito": "O rei Eetes não aceita perder o Velo e volta-se contra Jasão com todo o seu poder. Jasão está sozinho em terra alheia, com o troféu nas mãos. Tem de defender aquilo que acabou de ganhar.",
+   "numeroDiz": "O Sete pede avaliação: provar o que vale aquilo que se conquistou.",
+   "significado": "O que ganhaste está a ser contestado. Vais ter de sustentar a tua posição, dizer não, repetir o teu preço. Mantém-te firme, mesmo em desvantagem numérica.",
+   "sombra": "Defender-se de tudo, até de quem não está a atacar.",
+   "palavras": [
+    "defesa",
+    "posição",
+    "coragem",
+    "pressão",
+    "limite"
+   ],
+   "pergunta": "O que estou disposta a defender mesmo sem apoio?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "num": 8,
+   "nome": "Oito de Bastões",
+   "cenaMito": "Os Argonautas largam à pressa da Cólquida com o Velo a bordo. Remos na água, vela cheia, a costa a ficar para trás. Já não há tempo para hesitar, só para navegar.",
+   "numeroDiz": "O Oito é movimento e maestria: a energia corre depressa e com direção.",
+   "significado": "As coisas aceleram de repente. Respostas chegam, viagens acontecem, mensagens desbloqueiam. Aproveita a onda e trata do que é urgente agora.",
+   "sombra": "Correr tanto que se decide sem pensar e se perde o rumo.",
+   "palavras": [
+    "velocidade",
+    "notícias",
+    "rumo",
+    "fluxo",
+    "urgência"
+   ],
+   "pergunta": "Onde é que a pressa me está a ajudar e onde me está a atropelar?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "num": 9,
+   "nome": "Nove de Bastões",
+   "cenaMito": "Falta atravessar as Simplégades, as rochas que se fecham sobre quem passa. Os Argonautas soltam uma pomba, medem o instante e remam com tudo o que resta. O Argo passa e perde apenas parte da popa.",
+   "numeroDiz": "O Nove é quase-completude: falta pouco, e esse pouco custa tudo.",
+   "significado": "Estás cansada e ainda assim quase lá. Este é o esforço final, não o momento de largar. Guarda o que resta de energia para a última passagem estreita.",
+   "sombra": "Endurecer tanto para aguentar que já não se aceita ajuda nenhuma.",
+   "palavras": [
+    "resistência",
+    "último esforço",
+    "cansaço",
+    "guarda",
+    "persistência"
+   ],
+   "pergunta": "O que preciso mesmo para aguentar esta última parte?"
+  },
+  {
+   "naipe": "Bastões",
+   "elemento": "Fogo",
+   "num": 10,
+   "nome": "Dez de Bastões",
+   "cenaMito": "Jasão regressa a casa carregado com o Velo, com promessas feitas e com o peso de tudo o que aconteceu no caminho. A busca acabou, os fardos não. O herói caminha curvado sob aquilo que conquistou.",
+   "numeroDiz": "O Dez fecha o ciclo: tudo o que foi acumulado pesa agora nos ombros.",
+   "significado": "Assumiste responsabilidades a mais e já quase não distingues quais são tuas. O ciclo terminou, o peso ficou. Faz a lista e larga o que já não te pertence.",
+   "sombra": "Confundir estar sobrecarregada com ser indispensável.",
+   "palavras": [
+    "sobrecarga",
+    "fardo",
+    "fim de ciclo",
+    "responsabilidade",
+    "largar"
+   ],
+   "pergunta": "Deste peso todo, o que é que é mesmo meu para carregar?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "num": 1,
+   "nome": "Ás de Copas",
+   "cenaMito": "Eros é enviado para punir Psique e fica ele próprio ferido pela sua seta ao vê-la. O amor entra sem pedir licença e muda o plano todo. É oferecida uma taça que ninguém esperava.",
+   "numeroDiz": "O Ás é potencial puro, o coração ainda a abrir-se.",
+   "significado": "Um sentimento novo começa. Pode ser paixão, amizade, ternura por ti mesma ou vontade de criar. Aceita a taça sem exigir já saber onde vai dar.",
+   "sombra": "Fechar o peito por antecipação, para não correr o risco de sentir.",
+   "palavras": [
+    "abertura",
+    "amor",
+    "taça",
+    "afeto",
+    "começo"
+   ],
+   "pergunta": "Que sentimento novo estou a tentar não notar?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "num": 2,
+   "nome": "Dois de Copas",
+   "cenaMito": "Psique é levada ao palácio invisível e encontra-se com Eros na escuridão. Não vê o rosto dele, mas reconhece-o. Entre os dois nasce uma união verdadeira, feita de confiança e não de provas.",
+   "numeroDiz": "O Dois traz dualidade: dois seres que se escolhem e se ligam.",
+   "significado": "Um encontro real entre duas pessoas. Atração, reciprocidade, aliança, um acordo que faz sentido aos dois. Vale a pena dizer em voz alta o que sentes.",
+   "sombra": "Fundir-se de tal modo no outro que se deixa de saber onde acabo eu.",
+   "palavras": [
+    "união",
+    "encontro",
+    "reciprocidade",
+    "confiança",
+    "vínculo"
+   ],
+   "pergunta": "Nesta ligação, continuo inteira?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "num": 3,
+   "nome": "Três de Copas",
+   "cenaMito": "Psique pede para rever a família e as irmãs são levadas ao palácio. Há abraços, vinho, riso e presentes. Por um momento a alegria é partilhada e completa.",
+   "numeroDiz": "O Três é crescimento: a alegria multiplica-se quando é partilhada.",
+   "significado": "Tempo de celebrar com quem gostas. Amizade, festa, reencontro, boas notícias em grupo. Diz sim ao convite e deixa-te acompanhar.",
+   "sombra": "Distrair-se na festa para não ouvir o que o coração anda a dizer baixinho.",
+   "palavras": [
+    "celebração",
+    "amizade",
+    "partilha",
+    "alegria",
+    "reencontro"
+   ],
+   "pergunta": "Com quem quero mesmo partilhar esta alegria?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "num": 4,
+   "nome": "Quatro de Copas",
+   "cenaMito": "As irmãs, com inveja, deixam a dúvida na cabeça de Psique: e se o teu marido for um monstro? Ela tem tudo à volta e deixa de ver. O palácio continua igual, mas o encanto azedou.",
+   "numeroDiz": "O Quatro dá estabilidade, e a estabilidade sem movimento vira tédio.",
+   "significado": "Tens coisas boas à frente e não lhes sentes o sabor. Alguém instalou uma dúvida, ou a rotina apagou o brilho. Antes de deitar tudo fora, pergunta de onde veio essa insatisfação.",
+   "sombra": "Recusar o que está oferecido enquanto se espera algo melhor que não chega.",
+   "palavras": [
+    "desencanto",
+    "dúvida",
+    "tédio",
+    "insatisfação",
+    "apatia"
+   ],
+   "pergunta": "Esta dúvida nasceu em mim ou alguém a plantou?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "num": 5,
+   "nome": "Cinco de Copas",
+   "cenaMito": "De candeia na mão, Psique olha o rosto adormecido de Eros e uma gota de óleo queima-lhe o ombro. Ele acorda, olha-a com dor e parte. Ela fica sozinha nas ruínas do que tinha.",
+   "numeroDiz": "O Cinco traz conflito e perda: algo se parte para que se possa ver melhor.",
+   "significado": "Houve uma perda e o arrependimento pesa. É legítimo chorar o que se foi. Repara que nem tudo caiu, ainda ficaram taças de pé atrás de ti.",
+   "sombra": "Ficar tanto tempo de olhos no que se perdeu que se ignora o que restou.",
+   "palavras": [
+    "perda",
+    "luto",
+    "arrependimento",
+    "separação",
+    "tristeza"
+   ],
+   "pergunta": "O que é que ainda está de pé, mesmo depois desta perda?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "num": 6,
+   "nome": "Seis de Copas",
+   "cenaMito": "Sozinha e desesperada, Psique lembra-se de quem foi antes e procura ajuda nos templos antigos. Ceres e Juno recebem-na com brandura. É a memória e a doçura do passado que a mantêm de pé.",
+   "numeroDiz": "O Seis é harmonia e recuperação: o passado devolve algum conforto.",
+   "significado": "A memória traz alívio ou uma pessoa do passado reaparece. Podes também precisar de pedir ajuda, e isso não te diminui. Volta ao que te dava segurança em criança.",
+   "sombra": "Refugiar-se na nostalgia para não ter de enfrentar o presente.",
+   "palavras": [
+    "memória",
+    "nostalgia",
+    "ajuda",
+    "doçura",
+    "infância"
+   ],
+   "pergunta": "A quem posso pedir ajuda hoje sem me sentir menor por isso?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "num": 7,
+   "nome": "Sete de Copas",
+   "cenaMito": "Vénus impõe tarefas impossíveis: separar montes de sementes misturadas, colher lã de carneiros ferozes, encher um frasco na fonte proibida. Tudo parece igualmente inviável. Psique tem de descobrir o que é real e o que é ilusão.",
+   "numeroDiz": "O Sete pede avaliação: separar o que é verdadeiro do que é miragem.",
+   "significado": "Há opções a mais e imaginação a demais. Nem todas as hipóteses que vês existem mesmo. Escolhe uma, a mais concreta, e começa por essa.",
+   "sombra": "Sonhar tantas versões da vida que nenhuma chega a ser vivida.",
+   "palavras": [
+    "ilusão",
+    "escolhas",
+    "fantasia",
+    "confusão",
+    "discernimento"
+   ],
+   "pergunta": "Destas opções, qual é a única que é real hoje?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "num": 8,
+   "nome": "Oito de Copas",
+   "cenaMito": "Psique deixa para trás o palácio, o conforto e a esperança fácil e desce ao mundo dos mortos para cumprir a última tarefa. Vira as costas ao que já não a serve. Parte sozinha e por sua vontade.",
+   "numeroDiz": "O Oito é movimento: sair do lugar para poder crescer.",
+   "significado": "Chegou a hora de deixar algo que já deu o que tinha a dar. Uma relação, um emprego, um hábito. Sair não é fracassar, é ir buscar o que falta.",
+   "sombra": "Fugir a meio, sempre, para nunca ter de sentir a despedida a sério.",
+   "palavras": [
+    "partida",
+    "desapego",
+    "procura",
+    "coragem",
+    "recomeço"
+   ],
+   "pergunta": "O que é que eu já superei e ainda estou a segurar?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "num": 9,
+   "nome": "Nove de Copas",
+   "cenaMito": "Eros, curado da ferida, procura Psique e desperta-a do sono da morte. O que ela mais desejava cumpre-se. Depois de tudo, a alegria volta e desta vez é escolhida.",
+   "numeroDiz": "O Nove é quase-completude: o desejo realiza-se, falta só selar.",
+   "significado": "Um desejo teu concretiza-se. Há prazer, contentamento, satisfação com o que construíste. Goza isto sem culpa, mereceste.",
+   "sombra": "Confundir prazer imediato com plenitude e parar de crescer aí.",
+   "palavras": [
+    "desejo cumprido",
+    "contentamento",
+    "prazer",
+    "gratidão",
+    "satisfação"
+   ],
+   "pergunta": "O que é que eu já tenho e ainda não celebrei?"
+  },
+  {
+   "naipe": "Copas",
+   "elemento": "Água",
+   "num": 10,
+   "nome": "Dez de Copas",
+   "cenaMito": "Zeus concede a imortalidade a Psique e recebe-a no Olimpo. Ela e Eros casam-se diante de todos os deuses e nasce-lhes uma filha, Prazer. Alma e amor ficam unidos para sempre.",
+   "numeroDiz": "O Dez fecha o ciclo: o afeto encontra a sua forma completa e duradoura.",
+   "significado": "Harmonia emocional e sensação de pertença. Família, casa, amor que se assume publicamente, paz interior. Aquilo que atravessaste transformou-se em algo estável.",
+   "sombra": "Idealizar o final feliz e depois exigir que a vida real esteja sempre à altura.",
+   "palavras": [
+    "plenitude",
+    "família",
+    "harmonia",
+    "pertença",
+    "amor maduro"
+   ],
+   "pergunta": "Como seria a minha vida se eu deixasse mesmo entrar esta paz?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "num": 1,
+   "nome": "Ás de Espadas",
+   "cenaMito": "Atreu convida o irmão Tiestes para um banquete de vingança e serve-lhe carne dos próprios filhos. Quando a verdade é dita à mesa, já nada pode ser desfeito. A maldição da casa entra em movimento com um só corte limpo.",
+   "numeroDiz": "O Ás é potencial puro: uma força nova que ainda não tomou forma.",
+   "significado": "Há uma verdade à espera de ser dita. Nomeia a coisa com clareza, mesmo que doa. Uma decisão mental corta o nevoeiro e abre caminho.",
+   "sombra": "Usar a lucidez como arma e ferir só porque tens razão.",
+   "palavras": [
+    "verdade",
+    "clareza",
+    "corte",
+    "início",
+    "lucidez"
+   ],
+   "pergunta": "Que verdade estou a adiar dizer em voz alta?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "num": 2,
+   "nome": "Dois de Espadas",
+   "cenaMito": "Em Áulis, a frota grega está parada e os ventos não sopram. Agamémnon tem de escolher entre a filha Ifigénia e a guerra que prometeu. Fica horas imóvel, de olhos fechados, sem querer ver nenhuma das duas hipóteses.",
+   "numeroDiz": "O Dois traz dualidade e decisão: duas forças frente a frente, à espera.",
+   "significado": "Estás num impasse e a recusa de olhar já é uma escolha. Tira a venda e vê as duas opções pelo que são. Uma decisão adiada continua a pesar.",
+   "sombra": "Fingir neutralidade para não assumir o custo de escolher.",
+   "palavras": [
+    "impasse",
+    "escolha",
+    "venda",
+    "adiamento",
+    "equilíbrio tenso"
+   ],
+   "pergunta": "O que é que eu já sei e finjo não ver?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "num": 3,
+   "nome": "Três de Espadas",
+   "cenaMito": "Ifigénia é levada ao altar e morre pela mão do pai. Clitemnestra fica de pé, com o coração atravessado, a perceber que foi enganada com a promessa de um casamento. A partir daí, a mágoa passa a ser o motor da sua vida.",
+   "numeroDiz": "O Três traz crescimento: alguma coisa nasce da junção de duas partes, aqui a dor.",
+   "significado": "Uma traição ou perda ficou marcada e ainda dói. Deixa a mágoa existir em vez de a explicar. Chorar é trabalho feito, não fraqueza.",
+   "sombra": "Guardar a ferida como prova e alimentá-la para não a largar.",
+   "palavras": [
+    "mágoa",
+    "traição",
+    "perda",
+    "desgosto",
+    "verdade dolorosa"
+   ],
+   "pergunta": "Que dor estou a transformar em identidade?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "num": 4,
+   "nome": "Quatro de Espadas",
+   "cenaMito": "Agamémnon parte para Tróia e o palácio de Micenas fica em silêncio durante dez anos. Clitemnestra recolhe-se, conta os dias e espera. Nada se resolve, mas tudo pára.",
+   "numeroDiz": "O Quatro traz estabilidade: uma estrutura firme que segura o que está dentro.",
+   "significado": "Precisas de descanso, mesmo que o problema continue por resolver. Retira-te por uns dias e não decidas nada. O corpo cansado pensa mal.",
+   "sombra": "Confundir fuga com repouso e ficar escondida para sempre.",
+   "palavras": [
+    "trégua",
+    "descanso",
+    "recolhimento",
+    "pausa",
+    "silêncio"
+   ],
+   "pergunta": "De que é que preciso de me afastar para voltar a pensar bem?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "num": 5,
+   "nome": "Cinco de Espadas",
+   "cenaMito": "Agamémnon regressa vencedor de Tróia, pisa o tapete de púrpura e entra no palácio. Clitemnestra prende-o numa rede e mata-o no banho. O grande vencedor perde tudo na sua própria casa.",
+   "numeroDiz": "O Cinco traz conflito: a estrutura racha e alguém sai a perder.",
+   "significado": "Ganhar aqui custa caro. Vê se a discussão vale o que vais deixar pelo caminho. Às vezes recuar é a jogada mais inteligente.",
+   "sombra": "Humilhar quem perdeu e chamar-lhe justiça.",
+   "palavras": [
+    "derrota",
+    "vitória amarga",
+    "humilhação",
+    "conflito",
+    "custo"
+   ],
+   "pergunta": "Quero ter razão ou quero ficar bem?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "num": 6,
+   "nome": "Seis de Espadas",
+   "cenaMito": "Electra faz sair o irmão pequeno de Micenas antes que também o matem. Um servo leva Orestes de barco até à Fócida, longe do palácio ensanguentado. A criança atravessa o mar sem perceber o que deixa para trás.",
+   "numeroDiz": "O Seis traz harmonia e recuperação: a água acalma depois da crise.",
+   "significado": "É altura de sair de um sítio que já não te faz bem. A travessia não apaga a dor, mas afasta-te dela. Leva só o essencial.",
+   "sombra": "Mudar de lugar e levar a mesma história na bagagem.",
+   "palavras": [
+    "partida",
+    "travessia",
+    "afastamento",
+    "transição",
+    "alívio"
+   ],
+   "pergunta": "O que é que eu preciso de deixar na margem?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "num": 7,
+   "nome": "Sete de Espadas",
+   "cenaMito": "Orestes volta adulto a Micenas, mas não se anuncia. Chega disfarçado, com uma urna e a notícia falsa da sua própria morte. Entra em casa da mãe pela porta da mentira.",
+   "numeroDiz": "O Sete traz avaliação: parar, medir o terreno e calcular o passo seguinte.",
+   "significado": "Alguém está a agir por vias indiretas, e podes ser tu. Uma estratégia discreta pode ser legítima, mas confirma a intenção. Verifica o que te estão a contar.",
+   "sombra": "Chamar prudência ao que é simplesmente falta de coragem para dizer a verdade.",
+   "palavras": [
+    "estratagema",
+    "disfarce",
+    "discrição",
+    "astúcia",
+    "desconfiança"
+   ],
+   "pergunta": "Estou a ser estratégica ou a esconder-me?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "num": 8,
+   "nome": "Oito de Espadas",
+   "cenaMito": "Dentro do palácio, Orestes fica paralisado. Apolo mandou vingar o pai, mas a pessoa que tem de matar é a mãe. Fique ou avance, sai de lá culpado, e essa ideia prende-o mais do que qualquer corda.",
+   "numeroDiz": "O Oito traz movimento e maestria: energia que quer avançar e ainda não sabe por onde.",
+   "significado": "Sentes-te presa, mas a jaula é feita de pensamentos. Escreve as regras que estás a obedecer e pergunta quem as pôs lá. Um passo pequeno já quebra a paralisia.",
+   "sombra": "Preferir a prisão conhecida ao risco de dar um passo.",
+   "palavras": [
+    "paralisia",
+    "prisão mental",
+    "medo",
+    "cegueira",
+    "limitação"
+   ],
+   "pergunta": "Que regra estou a cumprir sem nunca a ter escolhido?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "num": 9,
+   "nome": "Nove de Espadas",
+   "cenaMito": "Orestes mata Clitemnestra e Egisto e a casa fica finalmente vingada. Nessa noite, as Fúrias aparecem: vêm com serpentes, gritos e acusações e não o deixam dormir. Anda pela Grécia com o horror colado às costas.",
+   "numeroDiz": "O Nove traz quase-completude: falta pouco, e é esse pouco que tira o sono.",
+   "significado": "A culpa e a ansiedade estão a governar as tuas noites. Escreve o pesadelo de manhã e vê o tamanho real da coisa. Fala com alguém em vez de ruminar sozinha.",
+   "sombra": "Castigar-te em ciclo e chamar-lhe responsabilidade.",
+   "palavras": [
+    "pesadelo",
+    "culpa",
+    "ansiedade",
+    "insónia",
+    "remorso"
+   ],
+   "pergunta": "O que é que me acusa de noite e não resiste à luz do dia?"
+  },
+  {
+   "naipe": "Espadas",
+   "elemento": "Ar",
+   "num": 10,
+   "nome": "Dez de Espadas",
+   "cenaMito": "Orestes é julgado em Atenas, no tribunal do Areópago. Atena ouve as Fúrias, ouve a defesa e desempata a favor da vida. A vingança deixa de passar de mão em mão e a maldição da casa de Atreu acaba ali.",
+   "numeroDiz": "O Dez traz fim de ciclo: a história chega ao fundo e fecha-se.",
+   "significado": "Uma fase terminou de vez e não vale a pena reanimá-la. Aceita o fim e poupa a energia da luta. O pior já passou e o que vem a seguir é novo.",
+   "sombra": "Dramatizar o fim para não ter de começar outra coisa.",
+   "palavras": [
+    "fim",
+    "resolução",
+    "julgamento",
+    "libertação",
+    "recomeço"
+   ],
+   "pergunta": "Que ciclo estou a manter vivo à força?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "num": 1,
+   "nome": "Ás de Ouros",
+   "cenaMito": "Dédalo é ainda um jovem artesão em Atenas e já ninguém trabalha a pedra e a madeira como ele. As mãos sabem coisas antes de a cabeça as explicar. O dom está inteiro, ainda por usar.",
+   "numeroDiz": "O Ás é potencial puro: uma semente material com tudo lá dentro.",
+   "significado": "Chegou um talento, uma oferta ou um dinheiro que pode virar base sólida. Aceita e dá-lhe um sítio concreto. Um dom só conta quando vira prática.",
+   "sombra": "Guardar o talento na gaveta à espera do momento perfeito.",
+   "palavras": [
+    "dom",
+    "semente",
+    "oportunidade",
+    "recurso",
+    "começo"
+   ],
+   "pergunta": "Que talento meu ainda não pus a render?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "num": 2,
+   "nome": "Dois de Ouros",
+   "cenaMito": "Em Creta, Dédalo trabalha para o rei Minos e trabalha também para si. Uma mão faz o que a corte encomenda, a outra continua as suas próprias invenções. Consegue os dois, mas nunca ao mesmo tempo.",
+   "numeroDiz": "O Dois traz dualidade e decisão: duas cargas a pedir a mesma atenção.",
+   "significado": "Estás a equilibrar dois trabalhos, duas contas ou dois compromissos. Dá a cada um o seu dia em vez de os misturares. Se cair alguma coisa, escolhe qual, não deixes ao acaso.",
+   "sombra": "Chamar flexibilidade ao caos de nunca acabar nada.",
+   "palavras": [
+    "equilíbrio",
+    "malabarismo",
+    "prioridades",
+    "flexibilidade",
+    "gestão"
+   ],
+   "pergunta": "O que é que estou a segurar só por não conseguir largar?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "num": 3,
+   "nome": "Três de Ouros",
+   "cenaMito": "Minos encomenda o labirinto e Dédalo desenha-o corredor a corredor. Trabalha com pedreiros, ensina-lhes o traço e aprende com o que a obra lhe devolve. Pela primeira vez, o ofício dele é reconhecido por todo o reino.",
+   "numeroDiz": "O Três traz crescimento: o trabalho ganha corpo quando várias mãos entram nele.",
+   "significado": "O teu trabalho começa a ser visto e valorizado. Aceita ajuda e divide as tarefas por quem sabe fazê-las. Aprende-se a fazer, não a planear.",
+   "sombra": "Precisar do aplauso para acreditar que a obra presta.",
+   "palavras": [
+    "ofício",
+    "colaboração",
+    "reconhecimento",
+    "competência",
+    "obra"
+   ],
+   "pergunta": "Onde é que eu ganhava mais se pedisse ajuda?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "num": 4,
+   "nome": "Quatro de Ouros",
+   "cenaMito": "O labirinto fica pronto e Dédalo guarda o segredo do caminho só para si. Agarra-se ao cargo, à casa e ao favor do rei que o sustenta. Quanto mais tem, menos se mexe.",
+   "numeroDiz": "O Quatro traz estabilidade: as paredes que protegem também fecham.",
+   "significado": "Estás a segurar o que construíste com força a mais. Guardar é sensato, mas verifica o que estás a impedir de circular. Abre a mão o suficiente para receber outra coisa.",
+   "sombra": "Confundir segurança com controlo e ficar refém do que possuis.",
+   "palavras": [
+    "posse",
+    "segurança",
+    "apego",
+    "poupança",
+    "controlo"
+   ],
+   "pergunta": "O que é que eu agarro por medo e não por valor?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "num": 5,
+   "nome": "Cinco de Ouros",
+   "cenaMito": "Minos descobre que Dédalo ajudou a atravessar o labirinto e vira-lhe as costas. O artesão é trancado numa torre com o filho, sem oficina, sem ferramentas e sem lugar na corte. Vê a ilha lá fora e já não pertence a nada.",
+   "numeroDiz": "O Cinco traz conflito: a base cede e falta o chão.",
+   "significado": "Há uma perda material ou uma sensação de estar de fora. Pede ajuda em vez de esperares que adivinhem. A escassez costuma ser uma fase, não um destino.",
+   "sombra": "Ficar à porta por orgulho, quando a ajuda está do outro lado.",
+   "palavras": [
+    "perda",
+    "exílio",
+    "escassez",
+    "exclusão",
+    "insegurança"
+   ],
+   "pergunta": "A quem é que me custa pedir ajuda, e porquê?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "num": 6,
+   "nome": "Seis de Ouros",
+   "cenaMito": "Antes da queda, Dédalo dá a Ariadne o novelo de fio que salva Teseu do labirinto. Dá o que sabe sem cobrar nada por isso. Durante anos foi Minos quem lhe pagou a mesa e a oficina, e agora é ele quem dá.",
+   "numeroDiz": "O Seis traz harmonia e recuperação: o que estava desnivelado volta ao ponto.",
+   "significado": "Dar e receber estão em jogo. Vê se a troca é justa dos dois lados. Aceitar apoio também é parte da conta.",
+   "sombra": "Dar para criar dívida e depois cobrar em silêncio.",
+   "palavras": [
+    "partilha",
+    "generosidade",
+    "apoio",
+    "troca justa",
+    "mecenas"
+   ],
+   "pergunta": "Nesta relação, quem dá e quem recebe de verdade?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "num": 7,
+   "nome": "Sete de Ouros",
+   "cenaMito": "Na torre, Dédalo junta penas das aves que pousam no beiral e vai medindo-as. Estende-as ao sol, calcula o peso e espera pela cera certa. Ainda não voa ninguém, e ele sabe que é cedo.",
+   "numeroDiz": "O Sete traz avaliação: parar para ver se o que foi semeado está a pegar.",
+   "significado": "Faz uma pausa e olha para os resultados até agora. Alguma coisa precisa de mais tempo, outra precisa de ser mudada. Não arranques a planta para ver a raiz.",
+   "sombra": "Chamar avaliação à impaciência e desistir antes da colheita.",
+   "palavras": [
+    "paciência",
+    "avaliação",
+    "espera",
+    "investimento",
+    "revisão"
+   ],
+   "pergunta": "O que é que só precisa de mais tempo?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "num": 8,
+   "nome": "Oito de Ouros",
+   "cenaMito": "Dia após dia, Dédalo cola pena a pena e prende cada uma com linho e cera. As mãos ficam queimadas e ele repete o gesto na mesma. As asas nascem da repetição, não da inspiração.",
+   "numeroDiz": "O Oito traz movimento e maestria: a prática repetida transforma quem a faz.",
+   "significado": "Este é tempo de trabalho miúdo e constante. Faz um bocado todos os dias, mesmo pequeno. A competência vem da quantidade de vezes, não do talento.",
+   "sombra": "Trabalhar sem parar para não ter de sentir o resto da vida.",
+   "palavras": [
+    "prática",
+    "dedicação",
+    "disciplina",
+    "aprendizagem",
+    "detalhe"
+   ],
+   "pergunta": "Que gesto pequeno posso repetir hoje e amanhã?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "num": 9,
+   "nome": "Nove de Ouros",
+   "cenaMito": "As asas ficam prontas e pai e filho levantam voo sobre o mar. Dédalo consegue o que ninguém conseguiu: sai da ilha pelo ar, por mérito próprio. Mas Ícaro sobe demasiado, a cera derrete e o rapaz cai na água.",
+   "numeroDiz": "O Nove traz quase-completude: quase tudo cumprido, e o pouco que falta pesa muito.",
+   "significado": "Conquistaste autonomia e podes gozá-la. Reconhece o trabalho que te trouxe até aqui. Respeita os limites que te mantêm no ar.",
+   "sombra": "Embriagar-te com a liberdade nova e perder o sentido da altura.",
+   "palavras": [
+    "autonomia",
+    "colheita",
+    "mérito",
+    "liberdade",
+    "limite"
+   ],
+   "pergunta": "Estou a desfrutar do que já conquistei ou já corri para o próximo?"
+  },
+  {
+   "naipe": "Ouros",
+   "elemento": "Terra",
+   "num": 10,
+   "nome": "Dez de Ouros",
+   "cenaMito": "Dédalo chega à Sicília e é acolhido pelo rei Cócalo. Constrói templos, canais e obras que ficam de pé muito depois dele. Envelhece com casa, ofício e nome, e deixa uma linhagem de artesãos atrás de si.",
+   "numeroDiz": "O Dez traz fim de ciclo: a obra fica feita e passa às mãos seguintes.",
+   "significado": "Estás a construir algo que dura para além de ti. Trata das bases práticas: casa, contas, família, contratos. Pensa no que fica quando saíres da sala.",
+   "sombra": "Deixar que a estrutura mande em ti e nunca mais mudar nada.",
+   "palavras": [
+    "legado",
+    "casa",
+    "estabilidade",
+    "família",
+    "duração"
+   ],
+   "pergunta": "O que é que eu quero que fique depois de mim?"
+  }
+ ],
+ "spreads": [
+  {
+   "id": "carta-do-dia",
+   "nome": "Carta do Dia",
+   "cartas": 1,
+   "nivel": "iniciante",
+   "minutos": 5,
+   "paraQue": "Uma carta para dar tom ao dia. Serve para treinar leitura sem pressão.",
+   "quandoNao": "Não uses para decisões grandes nem para perguntas fechadas de sim ou não.",
+   "mythic": false,
+   "nota": "É a melhor forma de criar hábito. Cinco minutos de manhã chegam.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Foco do dia",
+     "descricao": "O que pede a tua atenção hoje.",
+     "x": 50,
+     "y": 50
+    }
+   ],
+   "temas": [
+    "Dia-a-dia"
+   ]
+  },
+  {
+   "id": "duas-cartas",
+   "nome": "Duas Cartas: Situação e Conselho",
+   "cartas": 2,
+   "nivel": "iniciante",
+   "minutos": 10,
+   "paraQue": "Vês o que se passa e o que podes fazer. Ideal para dúvidas pequenas do dia a dia.",
+   "quandoNao": "Não uses quando a questão tem muitas pessoas ou muitas camadas envolvidas.",
+   "mythic": false,
+   "nota": "Tem duas variantes fáceis. Prós e Contras para pesar uma escolha. Ação e Resultado para ver onde um passo te leva.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Situação",
+     "descricao": "O que está mesmo a acontecer agora.",
+     "x": 35,
+     "y": 50
+    },
+    {
+     "n": 2,
+     "titulo": "Conselho",
+     "descricao": "O passo mais útil a dar a seguir.",
+     "x": 65,
+     "y": 50
+    }
+   ],
+   "temas": [
+    "Dia-a-dia",
+    "Decisões"
+   ]
+  },
+  {
+   "id": "tres-cartas",
+   "nome": "Três Cartas",
+   "cartas": 3,
+   "nivel": "iniciante",
+   "minutos": 15,
+   "paraQue": "A tiragem mais versátil de todas. Dá uma história curta com princípio, meio e fim.",
+   "quandoNao": "Não uses quando precisas de detalhe fino sobre causas profundas.",
+   "mythic": false,
+   "nota": "Escolhe a variante antes de tirar as cartas. Passado, Presente e Futuro. Situação, Ação e Resultado. Tu, A outra pessoa e A relação. Prós, Contras e Conselho.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Primeira",
+     "descricao": "O ponto de partida da variante que escolheste.",
+     "x": 25,
+     "y": 50
+    },
+    {
+     "n": 2,
+     "titulo": "Segunda",
+     "descricao": "O centro da história, onde a energia se move.",
+     "x": 50,
+     "y": 50
+    },
+    {
+     "n": 3,
+     "titulo": "Terceira",
+     "descricao": "Para onde isto tende a ir.",
+     "x": 75,
+     "y": 50
+    }
+   ],
+   "temas": [
+    "Dia-a-dia",
+    "Panorama e destino"
+   ]
+  },
+  {
+   "id": "cruz-simples",
+   "nome": "Cruz Simples",
+   "cartas": 5,
+   "nivel": "iniciante",
+   "minutos": 20,
+   "paraQue": "Uma leitura em cruz com centro e quatro direções. Dá contexto sem complicar.",
+   "quandoNao": "Não uses para perguntas muito vagas do tipo o que me espera na vida.",
+   "mythic": false,
+   "nota": "É a ponte natural entre as três cartas e a Cruz Celta.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Presente",
+     "descricao": "O coração da situação neste momento.",
+     "x": 50,
+     "y": 50
+    },
+    {
+     "n": 2,
+     "titulo": "Desafio",
+     "descricao": "O que está a travar ou a exigir esforço.",
+     "x": 20,
+     "y": 50
+    },
+    {
+     "n": 3,
+     "titulo": "Raiz",
+     "descricao": "De onde vem isto, a causa por baixo.",
+     "x": 50,
+     "y": 82
+    },
+    {
+     "n": 4,
+     "titulo": "Futuro próximo",
+     "descricao": "O que se aproxima nas próximas semanas.",
+     "x": 80,
+     "y": 50
+    },
+    {
+     "n": 5,
+     "titulo": "Conselho",
+     "descricao": "A atitude que te serve melhor agora.",
+     "x": 50,
+     "y": 18
+    }
+   ],
+   "temas": [
+    "Dia-a-dia",
+    "Autoconhecimento"
+   ]
+  },
+  {
+   "id": "ferradura",
+   "nome": "Ferradura",
+   "cartas": 7,
+   "nivel": "intermedio",
+   "minutos": 25,
+   "paraQue": "Um arco de sete cartas que mostra o percurso de uma questão. Lê-se da esquerda para a direita.",
+   "quandoNao": "Não uses para escolher entre duas opções concretas.",
+   "mythic": false,
+   "nota": "Não está no teu livro-guia. Aparece no Mythic Tarot Study Kit (workshop de 2007) de Sharman-Burke; a versão aqui é a Ferradura clássica.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Passado",
+     "descricao": "O que trouxe a situação até aqui.",
+     "x": 12,
+     "y": 78
+    },
+    {
+     "n": 2,
+     "titulo": "Presente",
+     "descricao": "Onde a questão está agora.",
+     "x": 17,
+     "y": 49
+    },
+    {
+     "n": 3,
+     "titulo": "Influências ocultas",
+     "descricao": "O que age sem estar à vista.",
+     "x": 31,
+     "y": 28
+    },
+    {
+     "n": 4,
+     "titulo": "Obstáculo e cerne",
+     "descricao": "O nó central da questão.",
+     "x": 50,
+     "y": 20
+    },
+    {
+     "n": 5,
+     "titulo": "Influências externas",
+     "descricao": "Pessoas e circunstâncias que pesam de fora.",
+     "x": 69,
+     "y": 28
+    },
+    {
+     "n": 6,
+     "titulo": "Conselho",
+     "descricao": "A atitude mais sensata a tomar.",
+     "x": 83,
+     "y": 49
+    },
+    {
+     "n": 7,
+     "titulo": "Resultado provável",
+     "descricao": "Para onde isto caminha se nada mudar.",
+     "x": 88,
+     "y": 78
+    }
+   ],
+   "temas": [
+    "Panorama e destino",
+    "Decisões"
+   ]
+  },
+  {
+   "id": "cruz-celta",
+   "nome": "Cruz Celta",
+   "cartas": 10,
+   "nivel": "avancado",
+   "minutos": 40,
+   "paraQue": "A leitura mais completa do tarot clássico. Cobre causa, contexto, medo, ambiente e desfecho.",
+   "quandoNao": "Não uses para perguntas simples nem quando estás cansada ou agitada.",
+   "mythic": true,
+   "nota": "É a única tiragem do teu livro-guia, e vem impressa no pano preto do baralho original de 1986.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "A situação",
+     "descricao": "O centro da questão, o que se passa.",
+     "x": 30,
+     "y": 50
+    },
+    {
+     "n": 2,
+     "titulo": "O que cruza",
+     "descricao": "O obstáculo ou a força que atravessa a situação.",
+     "x": 30,
+     "y": 50,
+     "cruzada": true
+    },
+    {
+     "n": 3,
+     "titulo": "A base",
+     "descricao": "A raiz inconsciente por baixo de tudo.",
+     "x": 30,
+     "y": 76
+    },
+    {
+     "n": 4,
+     "titulo": "O passado recente",
+     "descricao": "O que está a afastar-se agora.",
+     "x": 12,
+     "y": 50
+    },
+    {
+     "n": 5,
+     "titulo": "O que está no alto",
+     "descricao": "O objetivo consciente ou o que paira sobre ti.",
+     "x": 30,
+     "y": 24
+    },
+    {
+     "n": 6,
+     "titulo": "O futuro próximo",
+     "descricao": "O que entra em cena a seguir.",
+     "x": 48,
+     "y": 50
+    },
+    {
+     "n": 7,
+     "titulo": "Tu",
+     "descricao": "Como te posicionas dentro da questão.",
+     "x": 75,
+     "y": 82
+    },
+    {
+     "n": 8,
+     "titulo": "O ambiente",
+     "descricao": "As pessoas e o meio à tua volta.",
+     "x": 75,
+     "y": 62
+    },
+    {
+     "n": 9,
+     "titulo": "Esperanças e medos",
+     "descricao": "O que desejas e o que temes ao mesmo tempo.",
+     "x": 75,
+     "y": 42
+    },
+    {
+     "n": 10,
+     "titulo": "O desfecho",
+     "descricao": "O resultado que se desenha no fim.",
+     "x": 75,
+     "y": 22
+    }
+   ],
+   "temas": [
+    "Panorama e destino",
+    "Autoconhecimento"
+   ]
+  },
+  {
+   "id": "planetaria",
+   "nome": "Tiragem Planetária",
+   "cartas": 8,
+   "nivel": "intermedio",
+   "minutos": 30,
+   "paraQue": "Uma fotografia da tua vida por áreas, através dos sete planetas clássicos. Boa para revisões de mês ou de estação.",
+   "quandoNao": "Não uses para uma pergunta única e concreta.",
+   "mythic": false,
+   "nota": "Não está no teu livro-guia. A U.S. Games atribui uma Tiragem Planetária a Sharman-Burke, mas as posições exatas nunca foram publicadas online. Esta é a reconstrução pelos sete planetas clássicos: usa-a como mapa de vida, não como sendo a dela.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Significadora",
+     "descricao": "Tu, no centro de tudo o resto.",
+     "x": 50,
+     "y": 50
+    },
+    {
+     "n": 2,
+     "titulo": "Sol",
+     "descricao": "Vitalidade, identidade e o que te dá brilho.",
+     "x": 50,
+     "y": 14
+    },
+    {
+     "n": 3,
+     "titulo": "Lua",
+     "descricao": "Emoções, lar e necessidades de segurança.",
+     "x": 77,
+     "y": 28
+    },
+    {
+     "n": 4,
+     "titulo": "Mercúrio",
+     "descricao": "Mente, estudo e comunicação.",
+     "x": 84,
+     "y": 58
+    },
+    {
+     "n": 5,
+     "titulo": "Vénus",
+     "descricao": "Amor, prazer e o que valorizas.",
+     "x": 65,
+     "y": 82
+    },
+    {
+     "n": 6,
+     "titulo": "Marte",
+     "descricao": "Ação, desejo e conflito.",
+     "x": 35,
+     "y": 82
+    },
+    {
+     "n": 7,
+     "titulo": "Júpiter",
+     "descricao": "Expansão, sorte e oportunidade.",
+     "x": 16,
+     "y": 58
+    },
+    {
+     "n": 8,
+     "titulo": "Saturno",
+     "descricao": "Limites, responsabilidade e lições.",
+     "x": 23,
+     "y": 28
+    }
+   ],
+   "temas": [
+    "Panorama e destino"
+   ]
+  },
+  {
+   "id": "roda-zodiaco",
+   "nome": "Roda do Zodíaco",
+   "cartas": 13,
+   "nivel": "avancado",
+   "minutos": 40,
+   "paraQue": "As doze casas astrológicas em círculo, mais uma carta central. Dá um retrato amplo de um ano ou de uma fase.",
+   "quandoNao": "Não uses em dias curtos nem quando queres uma resposta rápida.",
+   "mythic": false,
+   "nota": "Lê primeiro a carta central. Depois percorre as casas pela ordem, sem saltar.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Casa 1",
+     "descricao": "Como te apresentas e o teu corpo.",
+     "x": 10,
+     "y": 50
+    },
+    {
+     "n": 2,
+     "titulo": "Casa 2",
+     "descricao": "Dinheiro, recursos e autoestima.",
+     "x": 15,
+     "y": 69
+    },
+    {
+     "n": 3,
+     "titulo": "Casa 3",
+     "descricao": "Comunicação, estudos e irmãos.",
+     "x": 30,
+     "y": 83
+    },
+    {
+     "n": 4,
+     "titulo": "Casa 4",
+     "descricao": "Lar, família e raízes.",
+     "x": 50,
+     "y": 88
+    },
+    {
+     "n": 5,
+     "titulo": "Casa 5",
+     "descricao": "Criatividade, prazer e romance.",
+     "x": 70,
+     "y": 83
+    },
+    {
+     "n": 6,
+     "titulo": "Casa 6",
+     "descricao": "Rotina, trabalho diário e saúde.",
+     "x": 85,
+     "y": 69
+    },
+    {
+     "n": 7,
+     "titulo": "Casa 7",
+     "descricao": "Parcerias e relações a sério.",
+     "x": 90,
+     "y": 50
+    },
+    {
+     "n": 8,
+     "titulo": "Casa 8",
+     "descricao": "Intimidade, partilhas e transformação.",
+     "x": 85,
+     "y": 31
+    },
+    {
+     "n": 9,
+     "titulo": "Casa 9",
+     "descricao": "Crenças, viagens e sentido.",
+     "x": 70,
+     "y": 17
+    },
+    {
+     "n": 10,
+     "titulo": "Casa 10",
+     "descricao": "Carreira, estatuto e o teu lugar no mundo.",
+     "x": 50,
+     "y": 12
+    },
+    {
+     "n": 11,
+     "titulo": "Casa 11",
+     "descricao": "Amigos, grupos e planos futuros.",
+     "x": 30,
+     "y": 17
+    },
+    {
+     "n": 12,
+     "titulo": "Casa 12",
+     "descricao": "O que está escondido e o que precisa de descanso.",
+     "x": 15,
+     "y": 31
+    },
+    {
+     "n": 13,
+     "titulo": "Tema geral",
+     "descricao": "O fio que liga o ciclo todo.",
+     "x": 50,
+     "y": 50
+    }
+   ],
+   "temas": [
+    "Panorama e destino"
+   ]
+  },
+  {
+   "id": "arvore-da-vida",
+   "nome": "Árvore da Vida",
+   "cartas": 10,
+   "nivel": "avancado",
+   "minutos": 40,
+   "paraQue": "As dez sefirot da cabala como mapa da tua situação. Vai do propósito até ao corpo.",
+   "quandoNao": "Não uses sem alguma base no assunto. Sem isso vira ruído.",
+   "mythic": false,
+   "nota": "Lê de cima para baixo. O topo é intenção e a base é a vida concreta.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Kether",
+     "descricao": "O propósito por trás de tudo.",
+     "x": 50,
+     "y": 10
+    },
+    {
+     "n": 2,
+     "titulo": "Chokmah",
+     "descricao": "Sabedoria e força criativa em bruto.",
+     "x": 72,
+     "y": 24
+    },
+    {
+     "n": 3,
+     "titulo": "Binah",
+     "descricao": "Compreensão, forma e limites.",
+     "x": 28,
+     "y": 24
+    },
+    {
+     "n": 4,
+     "titulo": "Chesed",
+     "descricao": "Expansão, generosidade e abundância.",
+     "x": 72,
+     "y": 39
+    },
+    {
+     "n": 5,
+     "titulo": "Geburah",
+     "descricao": "Força, disciplina e corte do que sobra.",
+     "x": 28,
+     "y": 39
+    },
+    {
+     "n": 6,
+     "titulo": "Tiferet",
+     "descricao": "O coração, a harmonia e o equilíbrio.",
+     "x": 50,
+     "y": 54
+    },
+    {
+     "n": 7,
+     "titulo": "Netzach",
+     "descricao": "Emoções, desejo e o que te move.",
+     "x": 72,
+     "y": 68
+    },
+    {
+     "n": 8,
+     "titulo": "Hod",
+     "descricao": "Intelecto, análise e comunicação.",
+     "x": 28,
+     "y": 68
+    },
+    {
+     "n": 9,
+     "titulo": "Yesod",
+     "descricao": "Fundação, sonhos e inconsciente.",
+     "x": 50,
+     "y": 74
+    },
+    {
+     "n": 10,
+     "titulo": "Malkuth",
+     "descricao": "Corpo, dinheiro e manifestação concreta.",
+     "x": 50,
+     "y": 90
+    }
+   ],
+   "temas": [
+    "Autoconhecimento",
+    "Panorama e destino"
+   ]
+  },
+  {
+   "id": "decisao",
+   "nome": "Decisão entre Duas Opções",
+   "cartas": 5,
+   "nivel": "intermedio",
+   "minutos": 20,
+   "paraQue": "Compara dois caminhos concretos lado a lado. Mostra também o ponto cego da escolha.",
+   "quandoNao": "Não uses quando ainda não sabes quais são as opções.",
+   "mythic": false,
+   "nota": "Nomeia as duas opções em voz alta antes de tirar as cartas.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Onde estás agora",
+     "descricao": "O teu ponto de partida real.",
+     "x": 50,
+     "y": 85
+    },
+    {
+     "n": 2,
+     "titulo": "Opção A",
+     "descricao": "Para onde te leva o primeiro caminho.",
+     "x": 25,
+     "y": 55
+    },
+    {
+     "n": 3,
+     "titulo": "Opção B",
+     "descricao": "Para onde te leva o segundo caminho.",
+     "x": 75,
+     "y": 55
+    },
+    {
+     "n": 4,
+     "titulo": "O que não estás a ver",
+     "descricao": "O detalhe que te escapa nesta escolha.",
+     "x": 50,
+     "y": 55
+    },
+    {
+     "n": 5,
+     "titulo": "Conselho",
+     "descricao": "O critério que deve pesar mais na decisão.",
+     "x": 50,
+     "y": 20
+    }
+   ],
+   "temas": [
+    "Decisões"
+   ]
+  },
+  {
+   "id": "templo-de-afrodite",
+   "nome": "Templo de Afrodite",
+   "cartas": 7,
+   "nivel": "intermedio",
+   "minutos": 30,
+   "paraQue": "A tiragem de relação mais direta que existe. Duas colunas em espelho: o que cada um pensa, sente e deseja. A sétima carta fecha com o rumo da relação.",
+   "quandoNao": "Não uses se estiveres a tentar controlar o que a outra pessoa faz, nem sobre alguém com quem não tens relação nenhuma. Lê as colunas como energia da relação, não como vigilância.",
+   "mythic": false,
+   "nota": "Criada pelo tarólogo Nei Naiff. Não é do Mythic Tarot, mas encaixa bem com ele: Afrodite é a figura do Mundo, e o naipe de Copas conta Eros e Psique — a relação como caminho da alma. Lê em pares espelhados: 1 com 4, 2 com 5, 3 com 6. Variante avançada: 14 cartas, duas por casa.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Tu — mente",
+     "descricao": "O que pensas sobre a relação e sobre a outra pessoa. As tuas intenções conscientes.",
+     "x": 28,
+     "y": 18
+    },
+    {
+     "n": 2,
+     "titulo": "Tu — sentimento",
+     "descricao": "O que sentes de facto por baixo do que dizes a ti própria.",
+     "x": 28,
+     "y": 44
+    },
+    {
+     "n": 3,
+     "titulo": "Tu — desejo e ação",
+     "descricao": "A tua atração física e como te comportas na prática com essa pessoa.",
+     "x": 28,
+     "y": 70
+    },
+    {
+     "n": 4,
+     "titulo": "A outra pessoa — mente",
+     "descricao": "Como ela analisa a relação e o que pensa de ti.",
+     "x": 72,
+     "y": 18
+    },
+    {
+     "n": 5,
+     "titulo": "A outra pessoa — sentimento",
+     "descricao": "O que sente e o que anseia, para além do que demonstra.",
+     "x": 72,
+     "y": 44
+    },
+    {
+     "n": 6,
+     "titulo": "A outra pessoa — desejo e ação",
+     "descricao": "A atração e a química do lado dela, e como age contigo.",
+     "x": 72,
+     "y": 70
+    },
+    {
+     "n": 7,
+     "titulo": "O rumo da relação",
+     "descricao": "Conselho e prognóstico: para onde vai isto a partir de agora.",
+     "x": 50,
+     "y": 88
+    }
+   ],
+   "temas": [
+    "Relacionamento"
+   ]
+  },
+  {
+   "id": "relacao-sete-cartas",
+   "nome": "Tiragem da Relação",
+   "cartas": 7,
+   "nivel": "intermedio",
+   "minutos": 25,
+   "temas": [
+    "Relacionamento"
+   ],
+   "paraQue": "Vê uma relação por inteiro: o que vem de trás, onde está agora e o que se aproxima. Serve para casais, amizades e laços de família.",
+   "quandoNao": "Má ideia quando o que queres mesmo é saber o que a outra pessoa pensa de ti, porque todas as posições respondem pelo teu lado.",
+   "mythic": false,
+   "nota": "Publicada por James Ricklef no seu blogue de tarot, em 2010, como alargamento da leitura passado-presente-futuro. O original é disposto numa coluna vertical única; aqui o diagrama agrupa as cartas por fase para caberem no espaço.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "O passado",
+     "descricao": "O que vem de trás e ainda pesa nesta ligação.",
+     "x": 50,
+     "y": 14
+    },
+    {
+     "n": 2,
+     "titulo": "A tratar agora",
+     "descricao": "O assunto que exige atenção nesta fase.",
+     "x": 26,
+     "y": 38
+    },
+    {
+     "n": 3,
+     "titulo": "Ponto atual",
+     "descricao": "Onde a relação está neste momento.",
+     "x": 50,
+     "y": 38
+    },
+    {
+     "n": 4,
+     "titulo": "O outro lado",
+     "descricao": "O que precisas de entender sobre a posição da outra pessoa.",
+     "x": 74,
+     "y": 38
+    },
+    {
+     "n": 5,
+     "titulo": "No horizonte",
+     "descricao": "A questão que se aproxima e ainda não rebentou.",
+     "x": 38,
+     "y": 62
+    },
+    {
+     "n": 6,
+     "titulo": "Recursos",
+     "descricao": "As forças que já tens para lidar com o que aí vem.",
+     "x": 62,
+     "y": 62
+    },
+    {
+     "n": 7,
+     "titulo": "Conselho",
+     "descricao": "A orientação final para toda a leitura.",
+     "x": 50,
+     "y": 86
+    }
+   ]
+  },
+  {
+   "id": "espelho-da-relacao",
+   "nome": "Tiragem do Espelho",
+   "cartas": 8,
+   "nivel": "intermedio",
+   "minutos": 30,
+   "temas": [
+    "Relacionamento"
+   ],
+   "paraQue": "Põe lado a lado duas imagens da mesma relação: a que tens do outro e a que ele tem de si. Boa para desmontar mal-entendidos já instalados.",
+   "quandoNao": "Não a uses sobre alguém com quem não tens relação real, porque as posições espelhadas ficam sem material para responder.",
+   "mythic": false,
+   "nota": "Tiragem de tradição comum, sem autoria verificável: as mesmas oito posições repetem-se em vários manuais e blogues de tarot. Circula também uma versão alargada de quinze cartas com o mesmo nome; usa-se aqui a de oito, que é a mais divulgada.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "O consulente",
+     "descricao": "Quem és tu dentro desta relação.",
+     "x": 50,
+     "y": 13
+    },
+    {
+     "n": 2,
+     "titulo": "Como o vês",
+     "descricao": "A leitura que fazes da outra pessoa.",
+     "x": 30,
+     "y": 33
+    },
+    {
+     "n": 3,
+     "titulo": "Como ela se vê",
+     "descricao": "A imagem que a outra pessoa tem de si própria.",
+     "x": 70,
+     "y": 33
+    },
+    {
+     "n": 4,
+     "titulo": "O que ela é para ti",
+     "descricao": "O lugar que a outra pessoa ocupa na tua vida.",
+     "x": 30,
+     "y": 51
+    },
+    {
+     "n": 5,
+     "titulo": "O que és para ela",
+     "descricao": "O lugar que tu ocupas na vida dela.",
+     "x": 70,
+     "y": 51
+    },
+    {
+     "n": 6,
+     "titulo": "Obstáculos",
+     "descricao": "O que trava a relação, mesmo quando parece inofensivo.",
+     "x": 30,
+     "y": 69
+    },
+    {
+     "n": 7,
+     "titulo": "Forças",
+     "descricao": "O que sustenta a relação e a mantém de pé.",
+     "x": 70,
+     "y": 69
+    },
+    {
+     "n": 8,
+     "titulo": "Desfecho provável",
+     "descricao": "Para onde isto caminha se nada mudar.",
+     "x": 50,
+     "y": 87
+    }
+   ]
+  },
+  {
+   "id": "trabalho-de-sombra",
+   "nome": "Tiragem do Trabalho de Sombra",
+   "cartas": 6,
+   "nivel": "avancado",
+   "minutos": 30,
+   "temas": [
+    "Autoconhecimento"
+   ],
+   "paraQue": "Trabalha uma parte de ti que costumas negar. Termina num passo prático, em vez de ficar no diagnóstico.",
+   "quandoNao": "Evita-a em dia de crise ou de grande fragilidade, porque mexe em material que dói e pede tempo calmo a seguir.",
+   "mythic": false,
+   "nota": "Criada por Thomas, do sítio Hermit's Mirror, a partir da noção junguiana de sombra. O autor assina só com o primeiro nome, por isso a atribuição fica limitada ao próprio sítio.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "A sombra",
+     "descricao": "O que precisas de saber sobre esta parte escondida de ti.",
+     "x": 30,
+     "y": 80
+    },
+    {
+     "n": 2,
+     "titulo": "O que fica bloqueado",
+     "descricao": "A força a que esta sombra te impede de chegar.",
+     "x": 30,
+     "y": 40
+    },
+    {
+     "n": 3,
+     "titulo": "Como se manifesta",
+     "descricao": "A forma concreta como isto aparece como problema.",
+     "x": 48,
+     "y": 60
+    },
+    {
+     "n": 4,
+     "titulo": "Próximo passo",
+     "descricao": "Uma ação prática para trazer esta sombra à luz.",
+     "x": 76,
+     "y": 24
+    },
+    {
+     "n": 5,
+     "titulo": "Como abordar",
+     "descricao": "A postura mais útil para fazer este trabalho.",
+     "x": 76,
+     "y": 50
+    },
+    {
+     "n": 6,
+     "titulo": "O que vais sentir",
+     "descricao": "O que esperar na fase inicial do processo.",
+     "x": 76,
+     "y": 76
+    }
+   ]
+  },
+  {
+   "id": "arquetipos-junguianos",
+   "nome": "Tiragem dos Arquétipos Junguianos",
+   "cartas": 5,
+   "nivel": "intermedio",
+   "minutos": 20,
+   "temas": [
+    "Autoconhecimento",
+    "Decisões"
+   ],
+   "paraQue": "Ouve cinco vozes internas sobre o mesmo assunto antes de decidires. Útil quando há partes de ti a puxar para lados diferentes.",
+   "quandoNao": "Não serve para perguntas de facto nem de calendário, porque só olha para dentro e não para o mundo.",
+   "mythic": false,
+   "nota": "Desenhada por Tina Gong para a Labyrinthos Academy, sobre os arquétipos de Carl Jung. Versões quase idênticas de cinco cartas circulam noutros sítios com o nome Whole-Self, na mesma ordem de posições.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Persona",
+     "descricao": "A máscara que mostras e como os outros te leem.",
+     "x": 14,
+     "y": 50
+    },
+    {
+     "n": 2,
+     "titulo": "Sombra",
+     "descricao": "O que escondes e não queres reconhecer.",
+     "x": 32,
+     "y": 50
+    },
+    {
+     "n": 3,
+     "titulo": "Anima",
+     "descricao": "O que farias se pensasses só na tua felicidade.",
+     "x": 50,
+     "y": 50
+    },
+    {
+     "n": 4,
+     "titulo": "Animus",
+     "descricao": "O que te puxa pelo dever, pela vontade e pela ação.",
+     "x": 68,
+     "y": 50
+    },
+    {
+     "n": 5,
+     "titulo": "Self",
+     "descricao": "O que o teu centro quer de facto.",
+     "x": 86,
+     "y": 50
+    }
+   ]
+  },
+  {
+   "id": "procura-de-emprego",
+   "nome": "Tiragem da Procura de Emprego",
+   "cartas": 6,
+   "nivel": "intermedio",
+   "minutos": 25,
+   "temas": [
+    "Carreira e dinheiro"
+   ],
+   "paraQue": "Para quem está a candidatar-se a empregos e quer perceber o que está a ajudar e o que está a travar. Trabalha a atitude, as competências e o passo seguinte.",
+   "quandoNao": "Má ideia se a pergunta real for \"vou ser escolhido?\" — esta tiragem descreve a tua posição, não a decisão de quem contrata.",
+   "mythic": false,
+   "nota": "Publicada pela Labyrinthos Academy como Job Tarot Spread. A fonte apresenta as seis posições em lista, sem fixar a geometria; o desenho em duas filas de três é uma convenção nossa de apresentação.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "A minha atitude",
+     "descricao": "Como estás a abordar a procura e que expectativas já trazes.",
+     "x": 25,
+     "y": 32
+    },
+    {
+     "n": 2,
+     "titulo": "O que me bloqueia",
+     "descricao": "O maior obstáculo, interno ou externo, que tens de ultrapassar.",
+     "x": 50,
+     "y": 32
+    },
+    {
+     "n": 3,
+     "titulo": "As minhas competências",
+     "descricao": "O que sabes fazer, o que estás a usar e o que andas a esquecer.",
+     "x": 75,
+     "y": 32
+    },
+    {
+     "n": 4,
+     "titulo": "A minha arma secreta",
+     "descricao": "O que te distingue dos outros candidatos.",
+     "x": 25,
+     "y": 68
+    },
+    {
+     "n": 5,
+     "titulo": "O que preciso de saber sobre mim",
+     "descricao": "A motivação tua que tens de compreender antes de avançar.",
+     "x": 50,
+     "y": 68
+    },
+    {
+     "n": 6,
+     "titulo": "Conselho para seguir",
+     "descricao": "Onde vale a pena gastar energia a partir de agora.",
+     "x": 75,
+     "y": 68
+    }
+   ]
+  },
+  {
+   "id": "novo-emprego",
+   "nome": "Tiragem do Novo Emprego",
+   "cartas": 5,
+   "nivel": "intermedio",
+   "minutos": 20,
+   "temas": [
+    "Carreira e dinheiro",
+    "Decisões"
+   ],
+   "paraQue": "Para pesar uma proposta de emprego ou uma promoção concreta. Compara a posição atual com a oportunidade e expõe prós e contras.",
+   "quandoNao": "Não sirva se a proposta ainda não existe. Sem oferta em cima da mesa, as posições 2, 4 e 5 ficam vazias.",
+   "mythic": false,
+   "nota": "Publicada por Lou Siday no Tarot Technique como five-card new job spread, descrita pela autora como uma cruz de cinco cartas. A distribuição exata dos braços não vem detalhada na fonte; usámos a leitura mais comum.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Posição atual",
+     "descricao": "Onde estás agora na tua carreira.",
+     "x": 28,
+     "y": 50
+    },
+    {
+     "n": 2,
+     "titulo": "A nova oportunidade",
+     "descricao": "A natureza real da proposta ou promoção em causa.",
+     "x": 50,
+     "y": 50
+    },
+    {
+     "n": 3,
+     "titulo": "Resultado a longo prazo",
+     "descricao": "Para onde te leva esta mudança com o tempo.",
+     "x": 72,
+     "y": 50
+    },
+    {
+     "n": 4,
+     "titulo": "Pontos a favor",
+     "descricao": "O que ganhas se aceitares.",
+     "x": 50,
+     "y": 20
+    },
+    {
+     "n": 5,
+     "titulo": "Pontos contra",
+     "descricao": "O que custa ou o que fica pior se aceitares.",
+     "x": 50,
+     "y": 80
+    }
+   ]
+  },
+  {
+   "id": "dinheiro-e-abundancia",
+   "nome": "Tiragem do Dinheiro e da Abundância",
+   "cartas": 7,
+   "nivel": "intermedio",
+   "minutos": 30,
+   "temas": [
+    "Carreira e dinheiro",
+    "Autoconhecimento"
+   ],
+   "paraQue": "Trabalha a relação mental com o dinheiro: crenças herdadas, bloqueios e o que fazer com eles. Termina num passo prático.",
+   "quandoNao": "Evita se o problema é contabilístico e imediato, tipo uma dívida com prazo. Aqui olha-se para a cabeça, não para o extrato.",
+   "mythic": false,
+   "nota": "Publicada por Brigit Esselmont no Biddy Tarot como Money & Abundance Mindset Tarot Spread. A fonte lista as sete perguntas sem definir a disposição no pano. O tarot não substitui decisão financeira informada nem aconselhamento profissional.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "A minha mentalidade",
+     "descricao": "Como te posicionas hoje perante dinheiro e abundância.",
+     "x": 50,
+     "y": 14
+    },
+    {
+     "n": 2,
+     "titulo": "A crença que bloqueia",
+     "descricao": "A ideia limitadora que trava o teu fluxo financeiro.",
+     "x": 30,
+     "y": 36
+    },
+    {
+     "n": 3,
+     "titulo": "Onde nasceu",
+     "descricao": "De onde te veio essa crença.",
+     "x": 70,
+     "y": 36
+    },
+    {
+     "n": 4,
+     "titulo": "A verdade que aceito",
+     "descricao": "O que estás pronta para acreditar em vez disso.",
+     "x": 30,
+     "y": 58
+    },
+    {
+     "n": 5,
+     "titulo": "Alinhar a energia",
+     "descricao": "Como aproximar o teu comportamento dessa nova verdade.",
+     "x": 70,
+     "y": 58
+    },
+    {
+     "n": 6,
+     "titulo": "Passo prático",
+     "descricao": "Uma ação concreta que aumenta a tua prosperidade.",
+     "x": 35,
+     "y": 80
+    },
+    {
+     "n": 7,
+     "titulo": "O potencial",
+     "descricao": "O que se abre quando vives mesmo essa mentalidade.",
+     "x": 65,
+     "y": 80
+    }
+   ]
+  },
+  {
+   "id": "tiragem-do-dinheiro",
+   "nome": "Tiragem do Dinheiro",
+   "cartas": 5,
+   "nivel": "intermedio",
+   "minutos": 20,
+   "temas": [
+    "Carreira e dinheiro"
+   ],
+   "paraQue": "Panorama financeiro de fundo: de onde vem a tua relação com o dinheiro, o que aí vem, que oportunidades ignoras e o que fazer.",
+   "quandoNao": "Não a uses para pedir números ou datas. Não diz quanto vais receber nem quando.",
+   "mythic": false,
+   "nota": "Publicada no iFate como Money Tarot Spread, sem autoria atribuída; é uma estrutura de tradição comum em leituras financeiras. A fonte não fixa a disposição, pelo que a apresentamos em linha. O tarot não substitui decisão financeira informada nem aconselhamento profissional.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Base financeira",
+     "descricao": "O que formou a tua relação atual com o dinheiro.",
+     "x": 15,
+     "y": 50
+    },
+    {
+     "n": 2,
+     "titulo": "Futuro imediato",
+     "descricao": "O que se aproxima na tua situação a curto prazo.",
+     "x": 32,
+     "y": 50
+    },
+    {
+     "n": 3,
+     "titulo": "Oportunidades",
+     "descricao": "O que devias estar a avaliar e andas a ignorar.",
+     "x": 50,
+     "y": 50
+    },
+    {
+     "n": 4,
+     "titulo": "Ação",
+     "descricao": "Que passos transformam estas ideias em movimento.",
+     "x": 68,
+     "y": 50
+    },
+    {
+     "n": 5,
+     "titulo": "Futuro",
+     "descricao": "Para onde vai isto se assumires o comando, e de que te deves resguardar.",
+     "x": 85,
+     "y": 50
+    }
+   ]
+  },
+  {
+   "id": "quatro-estacoes",
+   "nome": "Tiragem das Quatro Estações",
+   "cartas": 5,
+   "nivel": "iniciante",
+   "minutos": 20,
+   "temas": [
+    "Panorama e destino"
+   ],
+   "paraQue": "Dá um retrato do ano em quatro tempos, com uma carta que atravessa tudo. Serve para planear por trimestres em vez de mês a mês.",
+   "quandoNao": "Má ideia para questões urgentes ou para saber o que fazer esta semana, porque o recorte é largo demais.",
+   "mythic": false,
+   "nota": "Versão publicada por Rebecca Swanner em The Pagan Grimoire, dezembro de 2025, como tiragem de Ano Novo para iniciantes. A ideia de dividir o ano pelas estações é de tradição comum e aparece em muitas escolas, pelo que a autoria não é verificável. Podes contar as estações pelos solstícios e equinócios em vez dos meses do calendário.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "O ano",
+     "descricao": "Tema, foco ou lição que atravessa os doze meses.",
+     "x": 50,
+     "y": 24
+    },
+    {
+     "n": 2,
+     "titulo": "Inverno",
+     "descricao": "O que se passa de janeiro a março.",
+     "x": 20,
+     "y": 64
+    },
+    {
+     "n": 3,
+     "titulo": "Primavera",
+     "descricao": "O que se passa de março a junho.",
+     "x": 40,
+     "y": 64
+    },
+    {
+     "n": 4,
+     "titulo": "Verão",
+     "descricao": "O que se passa de junho a setembro.",
+     "x": 60,
+     "y": 64
+    },
+    {
+     "n": 5,
+     "titulo": "Outono",
+     "descricao": "O que se passa de setembro a dezembro.",
+     "x": 80,
+     "y": 64
+    }
+   ]
+  },
+  {
+   "id": "tiragem-ano-novo",
+   "nome": "Tiragem do Ano Novo",
+   "cartas": 12,
+   "nivel": "intermedio",
+   "minutos": 45,
+   "temas": [
+    "Panorama e destino",
+    "Autoconhecimento"
+   ],
+   "paraQue": "Faz o balanço do que fica para trás e mostra o que te espera nas áreas principais da vida. É uma leitura de viragem de ciclo, para fazer uma vez por ano.",
+   "quandoNao": "Não a uses a meio de uma crise aguda, porque doze cartas dispersam a atenção quando só há uma coisa a resolver.",
+   "mythic": false,
+   "nota": "Tiragem publicada por Brigit Esselmont no Biddy Tarot, usada por ela em cada mudança de ano. As quatro cartas das áreas de vida não são fixas: a autora sugere trocá-las pelas áreas que mais te importam. Funciona igualmente bem em aniversários ou em qualquer marco pessoal.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "O que sai",
+     "descricao": "Energia que está a deixar a tua vida.",
+     "x": 20,
+     "y": 20
+    },
+    {
+     "n": 2,
+     "titulo": "Lição do ano findo",
+     "descricao": "O que aprendeste e levas contigo.",
+     "x": 40,
+     "y": 20
+    },
+    {
+     "n": 3,
+     "titulo": "Aspirações",
+     "descricao": "O que queres construir nos próximos doze meses.",
+     "x": 60,
+     "y": 20
+    },
+    {
+     "n": 4,
+     "titulo": "O que te fortalece",
+     "descricao": "A força com que podes contar este ano.",
+     "x": 80,
+     "y": 20
+    },
+    {
+     "n": 5,
+     "titulo": "O que te desafia",
+     "descricao": "O obstáculo que vais ter de enfrentar.",
+     "x": 20,
+     "y": 50
+    },
+    {
+     "n": 6,
+     "titulo": "Amor e relações",
+     "descricao": "O que esperar da tua vida afetiva.",
+     "x": 40,
+     "y": 50
+    },
+    {
+     "n": 7,
+     "titulo": "Trabalho e carreira",
+     "descricao": "O que esperar da tua vida profissional.",
+     "x": 60,
+     "y": 50
+    },
+    {
+     "n": 8,
+     "titulo": "Saúde e corpo",
+     "descricao": "O que esperar do teu bem-estar físico.",
+     "x": 80,
+     "y": 50
+    },
+    {
+     "n": 9,
+     "titulo": "Caminho interior",
+     "descricao": "O que esperar do teu crescimento pessoal e espiritual.",
+     "x": 20,
+     "y": 80
+    },
+    {
+     "n": 10,
+     "titulo": "Foco do ano",
+     "descricao": "Onde pôr a tua energia para render mais.",
+     "x": 40,
+     "y": 80
+    },
+    {
+     "n": 11,
+     "titulo": "Lição a aprender",
+     "descricao": "O que este ano te vem ensinar.",
+     "x": 60,
+     "y": 80
+    },
+    {
+     "n": 12,
+     "titulo": "Panorama geral",
+     "descricao": "O tom do ano inteiro, visto de cima.",
+     "x": 80,
+     "y": 80
+    }
+   ]
+  },
+  {
+   "id": "sim-ou-nao-contagem",
+   "nome": "Sim ou Não por Contagem",
+   "cartas": 3,
+   "nivel": "intermedio",
+   "minutos": 10,
+   "temas": [
+    "Sim ou não",
+    "Decisões"
+   ],
+   "paraQue": "Dá uma resposta fechada a uma pergunta fechada, por contagem de cartas direitas e invertidas. Serve para questões pequenas e concretas.",
+   "quandoNao": "Não a uses se ainda não leres com cartas invertidas, nem em assuntos graves de saúde, dinheiro ou justiça, onde uma palavra só não chega.",
+   "mythic": false,
+   "nota": "Método publicado por Mary K. Greer no seu blogue, em 2008, entre as variantes de tiragens de três cartas. A contagem faz-se assim. Baralha admitindo inversões e tira três cartas em linha. Cada carta direita vale um sim, cada carta invertida vale um não. A carta do meio conta a dobrar, ou seja, vale dois votos. Somas os votos: quatro a zero ou três a um dá resposta clara, dois a dois é empate. Greer diz que o empate significa que a resposta ainda não está decidida, ou que não convém saber. Sê franca contigo: a maioria das escolas desaconselha perguntas fechadas, e o melhor é reformular em aberto, do género o que preciso de saber sobre isto. Só usa este método depois de já leres cartas invertidas com à-vontade, senão a contagem é ruído.",
+   "posicoes": [
+    {
+     "n": 1,
+     "titulo": "Primeiro voto",
+     "descricao": "Direita conta um sim, invertida conta um não.",
+     "x": 25,
+     "y": 50
+    },
+    {
+     "n": 2,
+     "titulo": "Voto duplo",
+     "descricao": "Carta central, vale dois votos no mesmo sentido.",
+     "x": 50,
+     "y": 50
+    },
+    {
+     "n": 3,
+     "titulo": "Terceiro voto",
+     "descricao": "Direita conta um sim, invertida conta um não.",
+     "x": 75,
+     "y": 50
+    }
+   ]
+  }
+ ]
+}
