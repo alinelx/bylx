@@ -18,7 +18,12 @@ test("the cabinet on the homepage costs the homepage nothing", async ({ page }) 
 
   const cabinet = page.locator(".arcade-cabinet");
   await expect(cabinet).toHaveAttribute("href", "/arcade/");
-  await expect(cabinet.locator("img")).toHaveAttribute("width", "256");
+  // Two PNGs on the same 256 canvas, stacked: START lands on the screen
+  // because that is where it was drawn. No positioning code at all.
+  await expect(cabinet.locator("img")).toHaveCount(2);
+  for (const art of await cabinet.locator("img").all()) {
+    await expect(art).toHaveAttribute("width", "256");
+  }
 
   // Konva belongs to one machine; it has no business on the front page.
   expect(outside.filter((u) => u.includes("konva"))).toEqual([]);

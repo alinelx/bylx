@@ -44,35 +44,39 @@
   text-decoration: none;
 }
 
-.arcade-cabinet img {
+/* Both PNGs are drawn on the same 256×256 canvas, so stacking them at the same
+   size is all the alignment they need: START lands on the screen because that
+   is where it was drawn. */
+.arcade-art {
   width: 256px;
   height: 256px;
   image-rendering: pixelated;
 }
 
+.arcade-start-art {
+  position: absolute;
+  inset: 0;
+}
+
 @media (min-width: 720px) {
-  .arcade-cabinet img {
+  .arcade-art {
     width: 512px;
     height: 512px;
   }
 }
 
-/* Diegetic: an arcade cabinet does say PRESS START while nobody is playing.
-   It is the machine talking, not the page asking to be clicked — the line the
-   ambient-vs-attention-seeking rule in CLAUDE.md draws. */
+/* The art says START, so the words are for whoever cannot see it: this is the
+   link's accessible name, not decoration. Taken out of the flow rather than
+   display:none, which would take it out of the accessibility tree too. */
 .arcade-start {
-  display: block;
-  margin-top: 0.9rem;
-  color: var(--cyan);
-  font-family: var(--font-ui);
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.arcade-cabinet:hover .arcade-start,
-.arcade-cabinet:focus-visible .arcade-start {
-  color: var(--pink);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .arcade-cabinet:focus-visible {
@@ -121,6 +125,25 @@
   position: relative;
   margin: clamp(2rem, 6vw, 3.5rem) auto 0;
   min-height: 21rem;
+}
+
+/* The select-screen chrome sits behind the cards. The file is 88×53 — it was
+   cropped to its own art, and it is only ever shown at a whole multiple of that: ×10 from
+   900px up. Below that no multiple is both big enough to hold a 304px card and
+   small enough to fit, so the cards stand alone rather than sit on a blurred
+   backdrop — the rule that cost us the Paint window. */
+@media (min-width: 900px) {
+  .deck {
+    width: 880px;
+    min-height: 530px;
+    background: url("../assets/arcade/card-bg.png") center / 880px 530px no-repeat;
+    image-rendering: pixelated;
+    display: grid;
+    align-items: center;
+  }
+
+  .deck-cards { height: 530px; display: grid; align-items: center; }
+  .deck-card { top: auto; }
 }
 
 .deck-cards {

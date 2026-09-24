@@ -363,7 +363,12 @@
         });
       }
       function selectNode(node){ if(node) tr.nodes([node]); else tr.nodes([]); decorLayer.batchDraw(); }
-      function addStickerFromUrl(url){ const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ const st=new Konva.Image({image:img,x:60,y:60,draggable:true,name:'sticker',width:Math.min(220,img.width),height:Math.min(220,img.height)}); bindDecor(st); decorLayer.add(st); selectNode(st); decorLayer.draw(); }; }
+      function addStickerFromUrl(url){ const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ /* min() on each side independently squashed anything that was not square: a
+           300x150 sticker came out 220x150. Cap the LONG side and scale both by the
+           same factor. imageSmoothingEnabled:false because these are pixel art — the
+           canvas smooths by default, which turns a crisp sticker into mush. */
+        const fit=Math.min(1,220/Math.max(img.width,img.height));
+        const st=new Konva.Image({image:img,x:60,y:60,draggable:true,name:'sticker',width:Math.round(img.width*fit),height:Math.round(img.height*fit),imageSmoothingEnabled:false}); bindDecor(st); decorLayer.add(st); selectNode(st); decorLayer.draw(); }; }
       function addTextDecor(){
         const textValue = el.txtText.value || '';
         const colorText = el.colorText.value;
@@ -400,7 +405,7 @@
         tFill.setAttrs({...base, fill:colorText});
         decorLayer.batchDraw();
       }
-      function setFrameUrl(url){ if(!url){ if(frameNode){frameNode.destroy(); frameNode=null; frameLayer.draw();} return; } const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ if(frameNode) frameNode.destroy(); frameNode=new Konva.Image({image:img,x:0,y:0,width:CANVAS_W,height:CANVAS_H}); frameLayer.destroyChildren(); frameLayer.add(frameNode); frameLayer.draw(); } }
+      function setFrameUrl(url){ if(!url){ if(frameNode){frameNode.destroy(); frameNode=null; frameLayer.draw();} return; } const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ if(frameNode) frameNode.destroy(); frameNode=new Konva.Image({image:img,x:0,y:0,width:CANVAS_W,height:CANVAS_H,imageSmoothingEnabled:false}); frameLayer.destroyChildren(); frameLayer.add(frameNode); frameLayer.draw(); } }
 
       // ---------- Brush + history ----------
       let penEnabled = true, brushStyle='pen', brushColor='#ff3b81', brushSize=6;
