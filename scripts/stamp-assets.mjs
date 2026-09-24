@@ -36,8 +36,14 @@ const cssFiles = readdirSync(join(ROOT, "css")).filter((f) => f.endsWith(".css")
 const jsFiles = readdirSync(join(ROOT, "js")).filter((f) => f.endsWith(".js")).sort();
 
 /* The hash covers everything the stamp is meant to invalidate, entry points
-   included — stripped of any existing stamp, or the hash would chase itself. */
-const strip = (text) => text.replace(/(\.(?:css|js))\?v=[a-z0-9]+/g, "$1");
+   included — stripped of any existing stamp, or the hash would chase itself.
+   Line endings are normalised first. .gitattributes stores LF and checks out
+   CRLF on Windows, so hashing the raw bytes produced one stamp on that
+   machine and another in CI from identical content — b755f4b3 here against
+   922772a2 on Linux — and --check could never pass anywhere but the machine
+   that last ran it. The stamp is about content changing, and a carriage
+   return is not content. */
+const strip = (text) => text.replace(/\r\n/g, "\n").replace(/(\.(?:css|js))\?v=[a-z0-9]+/g, "$1");
 
 const hash = createHash("sha256");
 for (const f of [...cssFiles.map((f) => join("css", f)), ...jsFiles.map((f) => join("js", f)), "styles.css", "script.js"]) {
