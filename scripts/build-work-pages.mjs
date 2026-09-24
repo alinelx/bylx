@@ -216,10 +216,39 @@ ${pages
    file whose content is otherwise identical. Compare everything but the date. */
 const undated = (text) => text.replace(/<lastmod>[^<]*<\/lastmod>/g, "");
 
+
+/* The homepage's ItemList used to be maintained by hand, and by the seventh
+   case study it listed six. It names the same pages this script generates, so
+   it is generated too — from the same modals, in the same order. The short
+   name is the one the "More work" nav already uses.
+
+   Located by its markers, not by one regex spanning several lines: the JSON-LD
+   is indented and wrapped, and a multi-line pattern over it is the kind of
+   thing that breaks silently the next time someone reformats the file. */
+const itemList = pages
+  .map(
+    (page, i) =>
+      `            { \"@type\": \"ListItem\", \"position\": ${i + 1}, \"url\": \"${ORIGIN}/work/${page.slug}/\", \"name\": ${JSON.stringify(page.heading.split(" — ")[0])} }`
+  )
+  .join(",\n");
+
+function withItemList(html) {
+  const at = html.indexOf('"@id": "https://bylx.dev/#work"');
+  const from = at === -1 ? -1 : html.indexOf('"itemListElement": [', at);
+  const start = from === -1 ? -1 : html.indexOf("\n", from) + 1;
+  const end = start <= 0 ? -1 : html.indexOf("]", start);
+  if (end === -1) throw new Error("no ItemList in index.html — has the JSON-LD changed?");
+
+  /* Keep whatever indentation the closing bracket already sits on. */
+  const closeAt = html.lastIndexOf("\n", end) + 1;
+  return html.slice(0, start) + itemList + "\n" + html.slice(closeAt);
+}
+
 let stale = false;
 const outputs = [
   ...pages.map((page) => ({ path: join("work", page.slug, "index.html"), text: render(page, pages) })),
   { path: "sitemap.xml", text: sitemap, compare: undated },
+  { path: "index.html", text: withItemList(readFileSync(join(ROOT, "index.html"), "utf8").replace(/\r\n/g, "\n")) },
 ];
 
 for (const { path, text, compare = (t) => t } of outputs) {

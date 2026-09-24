@@ -98,12 +98,13 @@
           "@id": "https://bylx.dev/#work",
           "name": "Case studies",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "url": "https://bylx.dev/work/dark28/", "name": "dark28.pt" },
+            { "@type": "ListItem", "position": 1, "url": "https://bylx.dev/work/dark28/", "name": "Dark28" },
             { "@type": "ListItem", "position": 2, "url": "https://bylx.dev/work/bylx-dev/", "name": "bylx.dev" },
             { "@type": "ListItem", "position": 3, "url": "https://bylx.dev/work/irs-pt/", "name": "irs-pt" },
-            { "@type": "ListItem", "position": 4, "url": "https://bylx.dev/work/konochan/", "name": "konochan.pt" },
-            { "@type": "ListItem", "position": 5, "url": "https://bylx.dev/work/luparoad/", "name": "luparoad.com" },
-            { "@type": "ListItem", "position": 6, "url": "https://bylx.dev/work/workspace-automations/", "name": "Workspace Automations" }
+            { "@type": "ListItem", "position": 4, "url": "https://bylx.dev/work/respondaja/", "name": "respondaja.click" },
+            { "@type": "ListItem", "position": 5, "url": "https://bylx.dev/work/konochan/", "name": "konochan.pt" },
+            { "@type": "ListItem", "position": 6, "url": "https://bylx.dev/work/luparoad/", "name": "luparoad.com" },
+            { "@type": "ListItem", "position": 7, "url": "https://bylx.dev/work/workspace-automations/", "name": "Workspace Automations" }
           ]
         }
       ]
@@ -389,6 +390,19 @@
             </div>
           </article>
 
+          <article class="project-card" aria-labelledby="card-respondaja-title">
+            <div class="card-body">
+              <span class="card-status card-status--live">LIVE</span>
+              <h3 id="card-respondaja-title"><button type="button" class="card-trigger" data-modal-target="casestudy-respondaja-modal">respondaja.click</button></h3>
+              <p>A review-reply assistant for local businesses: paste the review, pick a tone, get three replies in ten seconds.</p>
+              <div class="card-meta">
+                <span class="card-tag">PHP</span>
+                <span class="card-tag">Anthropic API</span>
+                <span class="card-tag">Stripe</span>
+              </div>
+            </div>
+          </article>
+
           <article class="project-card" aria-labelledby="card-konochan-title">
             <div class="card-body">
               <span class="card-status card-status--shipped">SHIPPED</span>
@@ -659,6 +673,55 @@
           <div class="cs-footer-links">
             <a href="https://github.com/alinelx/irs-pt" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Code on GitHub ↗</a>
             <p class="cs-permalink"><a href="/work/irs-pt/">bylx.dev/work/irs-pt/</a></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-respondaja-modal" aria-hidden="true"
+         data-work-slug="respondaja"
+         data-work-title="respondaja.click — a review-reply assistant with a paid tier"
+         data-work-description="Case study: a micro-SaaS for local businesses — three AI-written reply options in ten seconds, a free tier with no signup at all, and a Pro licence that is a signed token instead of a user table.">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-respondaja-title">
+        <header class="modal-header">
+          <h2 id="casestudy-respondaja-title">respondaja.click — Case Study</h2>
+          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">&times;</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <ul class="cs-chips">
+            <li>PHP 7.4</li>
+            <li>Anthropic API</li>
+            <li>Stripe</li>
+            <li>HMAC</li>
+          </ul>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>A one-star review lands on a Sunday night. The right reply is not hard to write — thank them, acknowledge the problem briefly, invite them to continue in private, stay under eighty words, never admit liability. It is just that it takes twenty minutes, it comes out the same every time, and the person who runs a restaurant is not a copywriter. So why twenty minutes?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>Paste the review — Google, iFood, TripAdvisor, anywhere — choose one of three tones, and get three replies in about ten seconds. Edit and publish wherever it came from. Five a month for free with no account at all; unlimited on a Pro tier at R$&nbsp;29 a month through Stripe. Portuguese and English. The market is Brazil.</p>
+          <ul class="cs-list">
+            <li>Three options rather than one, because the useful part is choosing</li>
+            <li>The rules of the trade live in the prompt: thank, acknowledge, take it offline, under eighty words, never admit liability, never offer compensation the review did not ask for</li>
+            <li>The free tier runs in the browser with no signup screen anywhere</li>
+            <li>Pro cancels from Stripe&rsquo;s own portal — no cancellation flow to build, and none to make deliberately hard</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>No account on the free tier</strong> — what kills a tool like this is the signup screen, not the price. The free path never asks for an email, so the distance between pasting a review and having three replies is one click.</p>
+          <p><strong>The key never reaches the browser</strong> — generation happens server-side. That is also the only reason a quota can exist at all: anything counted in the browser is a suggestion, not a limit.</p>
+          <p><strong>Pro is a signed token, not a user table</strong> — after checkout the server verifies the session with Stripe and issues an HMAC-signed licence with an expiry. No accounts, no passwords, no personal data to protect, nothing to leak. The signature is compared with <code>hash_equals</code>, so a wrong one takes exactly as long to reject as a right one takes to accept.</p>
+          <p><strong>The free count is client-side on purpose, and the code says so</strong> — an abused free call costs about a tenth of a cent, so per-IP hardening was priced and postponed rather than pretended. That reasoning is a comment in the repository, not a secret.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>It is finished. The payment path runs end to end — checkout, verification, licence, renewal — and it has never taken a single payment, because I never told anyone it existed. Building was the easy half, and it is the half I am good at. The lesson is not about code: from the outside, a product nobody has heard of and a product that does not work look exactly the same.</p>
+
+          <div class="cs-footer-links">
+            <a href="https://respondaja.click" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open respondaja.click &#8599;</a>
+            <p class="cs-permalink"><a href="/work/respondaja/">bylx.dev/work/respondaja/</a></p>
           </div>
         </div>
       </section>
