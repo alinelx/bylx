@@ -535,3 +535,55 @@ test("the manual is ordered the way it is taught", async ({ page }) => {
   expect(await page.evaluate(() => document.querySelector('[data-section][aria-pressed="true"]').dataset.section))
     .toBe("spreads");
 });
+
+test("two fingers pinch and turn a sticker, around its own centre", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "the gesture only exists where fingers are the pointer");
+
+  await page.goto("/arcade/cutegal/");
+  await page.waitForLoadState("networkidle");
+
+  /* Without touch-action:none the browser claims two fingers for a page zoom
+     and the sticker never sees the gesture at all. */
+  expect(await page.evaluate(() => getComputedStyle(document.getElementById("konvaContainer")).touchAction)).toBe("none");
+
+  // A 10px handle is fine for a mouse and invisible to a finger.
+  expect(await page.evaluate(() => Konva.stages[0].findOne("Transformer").anchorSize())).toBe(22);
+
+  // Konva ends a drag when a second finger lands — which is when a pinch starts.
+  expect(await page.evaluate(() => Konva.hitOnDragEnabled)).toBe(true);
+
+  await page.locator("#tab-stickers").click();
+  await page.locator("#stickersBuiltIn .thumb").first().click();
+  await expect(page.locator("#konvaContainer canvas").first()).toBeVisible();
+
+  const read = () => page.evaluate(() => {
+    const n = Konva.stages[0].find(".sticker").at(-1);
+    const b = n.getClientRect();
+    return { scale: +n.scaleX().toFixed(3), rotation: +n.rotation().toFixed(1),
+             cx: Math.round(b.x + b.width / 2), cy: Math.round(b.y + b.height / 2) };
+  });
+
+  const before = await read();
+
+  /* Fingers 100px apart on a horizontal line, opened to 283px on a 45° one:
+     scale should land on 2.828 and rotation on 45. */
+  await page.evaluate(() => {
+    const s = Konva.stages[0];
+    const at = (x, y, id) => ({ clientX: x, clientY: y, identifier: id, target: s.container() });
+    const fire = (type, touches) => s.fire(type, { type, evt: { touches, preventDefault() {} }, target: s }, true);
+    s.findOne("Transformer").nodes([s.find(".sticker").at(-1)]);
+    fire("touchstart", [at(100, 100, 0), at(200, 100, 1)]);
+    fire("touchmove", [at(80, 80, 0), at(280, 280, 1)]);
+    fire("touchend", []);
+  });
+
+  const after = await read();
+  expect(after.scale).toBeCloseTo(before.scale * 2.828, 2);
+  expect(after.rotation).toBeCloseTo(before.rotation + 45, 1);
+
+  /* Konva turns a node around its origin, which for these is the top-left
+     corner — rotating raw would swing the sticker away on an arc instead of
+     turning it in place. The centre is the thing that must not move. */
+  expect(Math.abs(after.cx - before.cx)).toBeLessThanOrEqual(2);
+  expect(Math.abs(after.cy - before.cy)).toBeLessThanOrEqual(2);
+});

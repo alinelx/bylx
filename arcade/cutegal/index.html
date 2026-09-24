@@ -330,6 +330,11 @@
        ratio does not shrink a one-pixel stroke, it deletes it, which is the
        whole paint_frame.png note in CLAUDE.md. Shrunk, smooth is the honest one. */
     #konvaContainer canvas { image-rendering: pixelated; }
+
+    /* Without this the browser takes two fingers for itself and zooms the
+       page, so the sticker never sees the gesture at all. It also stops the
+       scroll-while-dragging that makes placing anything on a phone a fight. */
+    #konvaContainer { touch-action: none; }
     .stage-fit[data-shrunk] canvas { image-rendering: auto; }
 
     #konvaContainer {
@@ -646,7 +651,21 @@
       fitStage();
       window.addEventListener('resize', fitStage, {passive:true});
 
-      const tr = new Konva.Transformer({rotateEnabled:true, enabledAnchors:["top-left","top-right","bottom-left","bottom-right"], boundBoxFunc:(oldBox,newBox)=> (newBox.width<20||newBox.height<20)?oldBox:newBox});
+      /* A 10px handle is fine for a mouse and invisible to a finger, so on a
+         touch screen the anchors grow — and the two-finger gesture below is
+         there because even a grown handle is a poor way to rotate something. */
+      const coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+      const tr = new Konva.Transformer({
+        rotateEnabled: true,
+        enabledAnchors: ["top-left", "top-right", "bottom-left", "bottom-right"],
+        anchorSize: coarse ? 22 : 10,
+        rotateAnchorOffset: coarse ? 40 : 20,
+        boundBoxFunc: (oldBox, newBox) => (newBox.width < 20 || newBox.height < 20) ? oldBox : newBox
+      });
+
+      /* Konva stops a drag the moment a second finger lands unless this is on,
+         which is exactly when a pinch starts. */
+      Konva.hitOnDragEnabled = true;
       decorLayer.add(tr);
 
       let photoNode = null, frameNode = null, baseFit=null, currentZoom=100;
@@ -730,6 +749,93 @@
         });
       }
       function selectNode(node){ if(node) tr.nodes([node]); else tr.nodes([]); decorLayer.batchDraw(); }
+
+      /* ── Two fingers ────────────────────────────────────────────────────
+         Pinch scales and twisting rotates whatever is selected — the one
+         gesture everybody already knows, and the only comfortable way to turn
+         a sticker on a phone.
+
+         Both happen around the node's own centre. Konva rotates around a
+         node's origin, which for these is the top-left corner, so rotating
+         raw would swing the sticker away on an arc instead of turning it in
+         place. Rather than give every node an offset — which would move
+         everything already placed and change what the transformer does — the
+         centre is measured before and after and the position corrected by the
+         difference. That works whatever the offset happens to be. */
+      var gesture = null;
+
+      function twoTouches(evt) {
+        var t = evt.touches;
+        return t && t.length === 2 ? [t[0], t[1]] : null;
+      }
+
+      function spanOf(a, b) {
+        var dx = b.clientX - a.clientX, dy = b.clientY - a.clientY;
+        return { dist: Math.hypot(dx, dy), angle: Math.atan2(dy, dx) * 180 / Math.PI };
+      }
+
+      function centreOf(node) {
+        var box = node.getClientRect();
+        return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+      }
+
+      stage.on('touchstart', function (e) {
+        var pair = twoTouches(e.evt);
+        if (!pair) return;
+
+        /* Whatever is selected, or whatever the fingers landed on. A gesture
+           with nothing under it should do nothing rather than guess. */
+        var node = tr.nodes()[0];
+        if (!node && e.target && e.target.getLayer && e.target.getLayer() === decorLayer && e.target !== tr) {
+          node = e.target;
+          selectNode(node);
+        }
+        if (!node) return;
+
+        e.evt.preventDefault();
+        var span = spanOf(pair[0], pair[1]);
+        gesture = {
+          node: node,
+          dist: span.dist,
+          angle: span.angle,
+          scaleX: node.scaleX(),
+          scaleY: node.scaleY(),
+          rotation: node.rotation()
+        };
+      });
+
+      stage.on('touchmove', function (e) {
+        if (!gesture) return;
+        var pair = twoTouches(e.evt);
+        if (!pair) return;
+        e.evt.preventDefault();
+
+        var span = spanOf(pair[0], pair[1]);
+        if (!gesture.dist) return;
+
+        var node = gesture.node;
+        var before = centreOf(node);
+
+        /* One factor for both axes: a pinch that squashes a sticker is a
+           pinch nobody asked for. */
+        var k = span.dist / gesture.dist;
+        node.scaleX(gesture.scaleX * k);
+        node.scaleY(gesture.scaleY * k);
+        node.rotation(gesture.rotation + (span.angle - gesture.angle));
+
+        var after = centreOf(node);
+        node.position({ x: node.x() + (before.x - after.x), y: node.y() + (before.y - after.y) });
+
+        decorLayer.batchDraw();
+      });
+
+      stage.on('touchend touchcancel', function (e) {
+        if (!gesture) return;
+        /* Only let go once both fingers have: lifting one mid-pinch would
+           otherwise leave the second one dragging from a stale origin. */
+        if (e.evt.touches && e.evt.touches.length > 0) return;
+        gesture = null;
+      });
       function addStickerFromUrl(url, mine){ const img=new Image(); img.crossOrigin='anonymous'; img.src=url; img.onload=()=>{ /* min() on each side independently squashed anything that was not square: a
            300x150 sticker came out 220x150. Cap the LONG side and scale both by the
            same factor. Smoothing is off on the layer, not here: the canvas smooths by
@@ -869,8 +975,8 @@
          selects it. The frame and the watermark are listening:false, so they
          never turn up here at all. */
       function canStartDrawingOnTarget(target){ if(!target) return false; if(target===stage) return true; const layer = target.getLayer && target.getLayer(); return layer===photoLayer || layer===drawLayer; }
-      stage.on('mousedown touchstart', (e)=>{ if(!penEnabled) return; if(!canStartDrawingOnTarget(e.target)) return; selectNode(null); drawing=true; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='sakura'){ lastPetal=null; stampSakura(p); } else if(brushStyle==='neon'){ neonGlow=new Konva.Line({points:[p.x,p.y], stroke:brushColor, opacity:.7, strokeWidth:brushSize*3, lineCap:'round', lineJoin:'round', shadowColor:brushColor, shadowBlur:16, globalCompositeOperation:'lighter'}); neonCore=new Konva.Line({points:[p.x,p.y], stroke:'#fff', strokeWidth:Math.max(1,Math.round(brushSize*.6)), lineCap:'round', lineJoin:'round', globalCompositeOperation:'lighter'}); drawLayer.add(neonGlow); drawLayer.add(neonCore); drawLayer.draw(); } else { lineRef=new Konva.Line({points:[p.x,p.y], stroke:brushColor, strokeWidth:brushSize, lineCap:'round', lineJoin:'round', tension:.4}); if(brushStyle==='glow'){ lineRef.shadowColor(brushColor); lineRef.shadowBlur(14); lineRef.opacity(.9); lineRef.globalCompositeOperation('lighter'); } drawLayer.add(lineRef); drawLayer.draw(); } });
-      stage.on('mousemove touchmove', ()=>{ if(!drawing) return; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='sakura'){ stampSakura(p); } else if(brushStyle==='neon'){ if(neonGlow&&neonCore){ neonGlow.points(neonGlow.points().concat([p.x,p.y])); neonCore.points(neonCore.points().concat([p.x,p.y])); drawLayer.batchDraw(); } } else if(lineRef){ lineRef.points(lineRef.points().concat([p.x,p.y])); drawLayer.batchDraw(); } });
+      stage.on('mousedown touchstart', (e)=>{ if(!penEnabled) return; if(gesture) return; if(e.evt.touches && e.evt.touches.length > 1) return; if(!canStartDrawingOnTarget(e.target)) return; selectNode(null); drawing=true; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='sakura'){ lastPetal=null; stampSakura(p); } else if(brushStyle==='neon'){ neonGlow=new Konva.Line({points:[p.x,p.y], stroke:brushColor, opacity:.7, strokeWidth:brushSize*3, lineCap:'round', lineJoin:'round', shadowColor:brushColor, shadowBlur:16, globalCompositeOperation:'lighter'}); neonCore=new Konva.Line({points:[p.x,p.y], stroke:'#fff', strokeWidth:Math.max(1,Math.round(brushSize*.6)), lineCap:'round', lineJoin:'round', globalCompositeOperation:'lighter'}); drawLayer.add(neonGlow); drawLayer.add(neonCore); drawLayer.draw(); } else { lineRef=new Konva.Line({points:[p.x,p.y], stroke:brushColor, strokeWidth:brushSize, lineCap:'round', lineJoin:'round', tension:.4}); if(brushStyle==='glow'){ lineRef.shadowColor(brushColor); lineRef.shadowBlur(14); lineRef.opacity(.9); lineRef.globalCompositeOperation('lighter'); } drawLayer.add(lineRef); drawLayer.draw(); } });
+      stage.on('mousemove touchmove', (e)=>{ if(gesture) { drawing = false; return; } if(!drawing) return; const p=stage.getPointerPosition(); if(!p) return; if(brushStyle==='sakura'){ stampSakura(p); } else if(brushStyle==='neon'){ if(neonGlow&&neonCore){ neonGlow.points(neonGlow.points().concat([p.x,p.y])); neonCore.points(neonCore.points().concat([p.x,p.y])); drawLayer.batchDraw(); } } else if(lineRef){ lineRef.points(lineRef.points().concat([p.x,p.y])); drawLayer.batchDraw(); } });
       stage.on('mouseup touchend', ()=>{ if(!drawing) return; drawing=false; lineRef=null; neonGlow=null; neonCore=null; pushDrawHistory(); });
 
       // ---------- UI wiring ----------
