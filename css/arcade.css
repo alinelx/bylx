@@ -47,6 +47,15 @@
 /* Both PNGs are drawn on the same 256×256 canvas, so stacking them at the same
    size is all the alignment they need: START lands on the screen because that
    is where it was drawn. */
+/* A box with a width of its own, so pixelfit has something to measure that is
+   not derived from the very images it is about to resize. */
+.arcade-screen {
+  display: block;
+  position: relative;
+  width: min(512px, 100%);
+  margin: 0 auto;
+}
+
 .arcade-art {
   width: 256px;
   height: 256px;

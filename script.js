@@ -3,15 +3,16 @@
    Import and initialise every feature module.
    ============================================================ */
 
-import { initParallax }                             from "./js/parallax.js?v=f8d36fb6";
-import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=f8d36fb6";
-import { initModals }                               from "./js/modals.js?v=f8d36fb6";
-import { initDeeplink }                            from "./js/deeplink.js?v=f8d36fb6";
-import { initGalleryViewer }                        from "./js/gallery.js?v=f8d36fb6";
-import { initContactForm }                          from "./js/contact.js?v=f8d36fb6";
-import { initAudio }                                from "./js/audio.js?v=f8d36fb6";
-import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=f8d36fb6";
-import { initDesktop }                              from "./js/desktop.js?v=f8d36fb6";
+import { initParallax }                             from "./js/parallax.js?v=56a3ad55";
+import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=56a3ad55";
+import { initModals }                               from "./js/modals.js?v=56a3ad55";
+import { initDeeplink }                            from "./js/deeplink.js?v=56a3ad55";
+import { initGalleryViewer }                        from "./js/gallery.js?v=56a3ad55";
+import { initContactForm }                          from "./js/contact.js?v=56a3ad55";
+import { initAudio }                                from "./js/audio.js?v=56a3ad55";
+import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=56a3ad55";
+import { initPixelFit }                          from "./js/pixelfit.js?v=56a3ad55";
+import { initDesktop }                              from "./js/desktop.js?v=56a3ad55";
 
 /* Each module is independent, and a throw in one used to take every module
    after it down with it — silently, since nothing here catches. */
@@ -37,3 +38,5 @@ start("keyboardRgb", initKeyboardRgb);
 start("techPopovers", initTechPopovers);
 start("deskHint", initDeskHint);
 start("desktop", initDesktop);
+/* Last: it measures boxes, so everything that changes one has run. */
+start("pixelfit", initPixelFit);

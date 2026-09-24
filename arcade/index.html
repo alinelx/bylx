@@ -25,7 +25,7 @@
     href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="/styles.css?v=f8d36fb6" />
+  <link rel="stylesheet" href="/styles.css?v=56a3ad55" />
 </head>
 <body>
   <main class="cab">
@@ -41,14 +41,15 @@
     <!-- A list of links that happens to look like a coverflow. Every card is in
          the DOM and in order; js/arcade.js only moves an index. Adding a machine
          is one <li> here and one folder next to this file. -->
-    <div class="deck" data-deck>
+    <div class="deck" data-deck data-pixel-w="88" data-pixel-h="53" data-pixel-bg>
       <button class="deck-arrow deck-arrow--prev" type="button" data-deck-prev aria-label="Previous machine">&#9664;</button>
 
       <ul class="deck-cards">
         <li class="deck-card">
           <a href="/arcade/purikura/">
             <span class="deck-shot" aria-hidden="true" style="--shot: url(/assets/arcade/purikura-shot.png)"></span>
-            <img class="deck-logo" src="/assets/arcade/cute-gal-logo.png" alt="Cute Gal" width="128" height="64" />
+            <img class="deck-logo" src="/assets/arcade/cute-gal-logo.png" alt="Cute Gal" width="128" height="64"
+                 data-pixel-w="128" data-pixel-h="64" data-pixel-max="256" />
             <span class="deck-name">Cute Gal · purikura editor</span>
             <span class="deck-note">A photo booth in a browser: stickers, frames, outlined text, a brush with undo, and filters. Vanilla JavaScript and Konva.</span>
           </a>
@@ -78,10 +79,11 @@
   <div class="cursor" aria-hidden="true"></div>
 
   <script type="module">
-    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=f8d36fb6";
-    import { initArcade } from "/js/arcade.js?v=f8d36fb6";
+    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=56a3ad55";
+    import { initArcade } from "/js/arcade.js?v=56a3ad55";
+    import { initPixelFit } from "/js/pixelfit.js?v=56a3ad55";
 
-    for (const [name, init] of [["cursor", initCursor], ["sakura", initSakuraTrail], ["arcade", initArcade]]) {
+    for (const [name, init] of [["cursor", initCursor], ["sakura", initSakuraTrail], ["arcade", initArcade], ["pixelfit", initPixelFit]]) {
       try {
         init();
       } catch (error) {
