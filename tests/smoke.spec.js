@@ -437,3 +437,17 @@ test("the projects filter narrows the grid without stranding anything", async ({
   await bar.locator('[data-filter="all"]').click();
   await expect(cards.locator("visible=true")).toHaveCount(total);
 });
+
+test("the project count is not glued to the first row of cards", async ({ page }) => {
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+  await page.locator("#projects").scrollIntoViewIfNeeded();
+
+  // It read as a label stuck on the grid rather than a status line about it.
+  const gap = await page.evaluate(() => {
+    const count = document.querySelector(".projects-count").getBoundingClientRect();
+    const grid = document.querySelector(".projects-grid").getBoundingClientRect();
+    return grid.top - count.bottom;
+  });
+  expect(gap).toBeGreaterThanOrEqual(16);
+});

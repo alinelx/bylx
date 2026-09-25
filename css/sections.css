@@ -1406,7 +1406,10 @@
 .filter-count { opacity: 0.65; }
 
 .projects-count {
-  margin: 0.8rem 0 0;
+  /* The bottom margin is the point: without it the count sat flush on the
+     first row of cards, reading as a label glued to them rather than a
+     status line about them. Measured at 0px before this. */
+  margin: 0.8rem 0 1.6rem;
   font-family: var(--font-ui);
   font-size: 0.45rem;
   letter-spacing: 0.06em;

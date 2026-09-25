@@ -587,3 +587,44 @@ test("two fingers pinch and turn a sticker, around its own centre", async ({ pag
   expect(Math.abs(after.cx - before.cx)).toBeLessThanOrEqual(2);
   expect(Math.abs(after.cy - before.cy)).toBeLessThanOrEqual(2);
 });
+
+test("the cabinet fills the phone at a whole multiple, with START on its screen", async ({ page }) => {
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+  await page.locator(".arcade-cabinet").scrollIntoViewIfNeeded();
+
+  const seen = await page.evaluate(() => {
+    const cab = document.querySelector(".arcade-art:not(.arcade-start-art)").getBoundingClientRect();
+    const start = document.querySelector(".arcade-start-art").getBoundingClientRect();
+    const de = document.documentElement;
+    return {
+      multiple: (cab.width * devicePixelRatio) / 256,
+      width: cab.width,
+      dx: Math.abs(cab.x - start.x),
+      dy: Math.abs(cab.y - start.y),
+      dw: Math.abs(cab.width - start.width),
+      sideways: de.scrollWidth > de.clientWidth,
+      room: document.querySelector(".arcade-screen").getBoundingClientRect().width,
+    };
+  });
+
+  /* Whole DEVICE pixels per source pixel. It was stuck at x2 on a phone where
+     x3 and x4 fit, because .arcade-cabinet was an inline-block: it shrink-
+     wrapped its contents, so .arcade-screen's min(512px, 100%) resolved
+     against a box the cabinet image was itself defining, and pixelfit measured
+     that to decide how big the image should be. */
+  expect(Math.abs(seen.multiple - Math.round(seen.multiple))).toBeLessThan(0.02);
+  expect(seen.multiple).toBeGreaterThanOrEqual(2);
+  expect(seen.width).toBeLessThanOrEqual(512);
+  expect(seen.width).toBeLessThanOrEqual(seen.room + 0.6);
+
+  /* Both PNGs are drawn on the same 256 canvas, so matching size and centre is
+     the whole alignment — there is no positioning code for the START plate.
+     css/base.css sets img { display: block }, so text-align cannot centre the
+     cabinet and margin-inline has to. */
+  expect(seen.dx).toBeLessThan(0.6);
+  expect(seen.dy).toBeLessThan(0.6);
+  expect(seen.dw).toBeLessThan(0.6);
+
+  expect(seen.sideways).toBe(false);
+});

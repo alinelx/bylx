@@ -37,10 +37,18 @@
   color: var(--muted);
 }
 
+/* Block, not inline-block, and with a width of its own. As an inline-block it
+   shrink-wrapped its contents, so .arcade-screen's "min(512px, 100%)" resolved
+   against a box that the cabinet image was itself defining — and pixelfit then
+   measured that box to decide how big the image should be. The measurement
+   chased itself and settled at x2 on a phone where x3 fits. It is the trap
+   js/pixelfit.js warns about in its own comment: the parent must not be a box
+   that shrink-wraps the element being sized. */
 .arcade-cabinet {
-  display: inline-block;
+  display: block;
   position: relative;
-  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  width: min(512px, 100%);
+  margin: clamp(1.5rem, 4vw, 2.5rem) auto 0;
   text-decoration: none;
 }
 
@@ -56,15 +64,30 @@
   margin: 0 auto;
 }
 
+/* margin-inline centres it, because text-align cannot: css/base.css sets
+   img { display: block } globally, so the cabinet sat against the left edge of
+   its column while the START overlay was centred on top of it. */
 .arcade-art {
   width: 256px;
   height: 256px;
+  margin-inline: auto;
   image-rendering: pixelated;
 }
 
+/* The two PNGs are drawn on the same 256 canvas, so the overlay simply fills
+   whatever the cabinet turned out to be. Letting pixelfit size it separately
+   is how it ended up at x1 against the cabinet's x2 — half the size, pinned to
+   the top-left corner. One of them decides; the other follows. */
+/* Centred on the cabinet rather than pinned to the column. .arcade-screen is
+   the full width so pixelfit has a real box to measure; the image inside it is
+   centred by text-align, and this puts the overlay in the same place. Both are
+   drawn on the same 256 canvas, so matching size and centre is all the
+   alignment they need — there is no positioning code for the START plate. */
 .arcade-start-art {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 @media (min-width: 720px) {
