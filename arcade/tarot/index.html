@@ -327,7 +327,7 @@
        below with the file's own hash: the edge caches JSON by URL like
        everything else, and a corrected card would otherwise sit behind the
        old bytes for a week. */
-    var DECK_URL = "deck.json?v=6692b1a2";
+    var DECK_URL = "deck.json?v=376b41af";
 
     /* ── Language ───────────────────────────────────────────────────────
        The chrome is bilingual here; the card and spread texts are bilingual
@@ -533,7 +533,10 @@
       if (dominant && counts[dominant] >= Math.max(2, Math.ceil(total * 0.3))) {
         var suit = DATA.suits.filter(function (s) { return s.naipe === dominant; })[0];
         if (suit) {
-          out += (lang === "pt" ? "O naipe de " + dominant + " aparece com destaque, apontando " : "The suit of " + dominant + " stands out, pointing at ") +
+          /* dominant is the Portuguese key the data is filed under, never a
+             label: it goes through the suit record to come out readable. */
+          var suitName = tx(suit, "naipe");
+          out += (lang === "pt" ? "O naipe de " + suitName + " aparece com destaque, apontando " : "The suit of " + suitName + " stands out, pointing at ") +
             tx(suit, "esfera") + (lang === "pt" ? " como o eixo por trás do resto. " : " as the axis behind the rest. ");
         }
       }
@@ -687,7 +690,7 @@
       var aside = section === "spreads" ? "" :
         '<div class="face"><div class="mark">' +
         (section === "majors" ? esc(item.romano) : (MARKS[item.naipe] || "")) +
-        '</div><div><div class="name">' + esc(tx(item, "nome") || esc(item.naipe)) + "</div></div></div>";
+        '</div><div><div class="name">' + esc(tx(item, "nome") || tx(item, "naipe")) + "</div></div></div>";
 
       var dl = "";
       if (section === "spreads") {
@@ -705,8 +708,8 @@
           }).join("") + "</div></dd>";
         dl += tagsHTML("themes", item.temas);
       } else {
-        dl += row("god", item.deus || item.figura);
-        dl += row("element", item.elementoOuPlaneta || item.elemento, true);
+        dl += row("god", tx(item, "deus") || tx(item, "figura"));
+        dl += row("element", tx(item, "elementoOuPlaneta") || tx(item, "elemento"), true);
         dl += row("sphere", tx(item, "esfera"));
         dl += row("sign", tx(item, "sinal"), true);
         dl += row("myth", tx(item, "mito"), true);
@@ -721,7 +724,7 @@
       }
 
       return '<button type="button" class="btn btn--quiet no-print" data-close>' + esc(t(UI.goBack)) + "</button>" +
-        '<h2 style="margin:1.2rem 0 1rem">' + esc(tx(item, "nome") || esc(item.naipe)) + "</h2>" +
+        '<h2 style="margin:1.2rem 0 1rem">' + esc(tx(item, "nome") || tx(item, "naipe")) + "</h2>" +
         '<div class="detail' + (aside ? "" : " detail--wide") + '">' + aside + "<dl>" + dl + "</dl></div>" +
         (section === "spreads"
           ? '<p class="go no-print" style="margin-top:2rem"><button type="button" class="btn" data-deal="' + esc(item.id) + '">' + esc(t(UI.useIt)) + " →</button></p>"
@@ -741,9 +744,9 @@
       var items = list.map(function (item, i) {
         var sub = state.section === "spreads"
           ? item.cartas + " " + t(item.cartas > 1 ? UI.cards : UI.card1) + " · " + levelLabel(item.nivel)
-          : (item.deus || item.figura || tx(item, "esfera") || item.elemento || "");
+          : (tx(item, "deus") || tx(item, "figura") || tx(item, "esfera") || tx(item, "elemento") || "");
         return '<button type="button" class="entry" data-open="' + i + '"><b>' +
-          esc(tx(item, "nome") || esc(item.naipe)) + "</b><span>" + esc(sub) + "</span></button>";
+          esc(tx(item, "nome") || tx(item, "naipe")) + "</b><span>" + esc(sub) + "</span></button>";
       }).join("");
 
       return nav + '<div class="index">' + items + "</div>";

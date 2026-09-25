@@ -628,3 +628,46 @@ test("the cabinet fills the phone at a whole multiple, with START on its screen"
 
   expect(seen.sideways).toBe(false);
 });
+
+test("the tarot is actually in English when you ask for English", async ({ page }) => {
+  await page.goto("/arcade/tarot/");
+  await page.waitForLoadState("networkidle");
+  await page.locator('[data-lang="en"]').click();
+
+  /* Portuguese words with no English homograph. The deck is filed under its
+     Portuguese keys — a suit is "Bastões" in the data forever — so the test is
+     that none of those keys reach the page as a label. */
+  const PT = /\b(Bastões|Copas|Ouros|Espadas|Fogo|Água|Terra|Dioniso|Urano|Frixo|significado|sombra|abertura|quando|você)\b/;
+
+  const leaks = [];
+  await page.locator('[data-mode="learn"]').click();
+  for (const section of ["majors", "suits", "courts", "numbers", "spreads"]) {
+    await page.locator(`[data-section="${section}"]`).click();
+    const n = Math.min(3, await page.locator(".entry").count());
+    for (let i = 0; i < n; i++) {
+      await page.locator(".entry").nth(i).click();
+      const text = (await page.locator(".detail").textContent()).replace(/\s+/g, " ");
+      if (PT.test(text)) leaks.push(section + "[" + i + "]: " + text.slice(0, 90));
+      await page.locator("[data-close]").click();
+    }
+  }
+  expect(leaks).toEqual([]);
+
+  /* Every field has to go through tx(). Five of them were read straight off
+     the object — the god, the court figure, the planet, the element and the
+     suit — so an English reading still said Dioniso, Urano and Bastões while
+     the data around them was fully translated. */
+  await page.locator('[data-mode="read"]').click();
+  await page.locator('[data-spread="cruz-celta"]').click();
+  await page.locator("[data-go]").click();
+  await expect(page.locator(".face")).toHaveCount(10);
+
+  const reading = (await page.locator(".spread-out").textContent()).replace(/\s+/g, " ");
+  expect(PT.test(reading), "reading leaked Portuguese").toBe(false);
+  const synthesis = (await page.locator(".synthesis p").textContent()).replace(/\s+/g, " ");
+  expect(PT.test(synthesis), "synthesis leaked Portuguese").toBe(false);
+
+  // And Portuguese still works, which is the half a translation usually breaks.
+  await page.locator('[data-lang="pt"]').click();
+  expect(await page.locator(".synthesis p").textContent()).toMatch(/cartas|carta/);
+});
