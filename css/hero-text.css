@@ -8,22 +8,18 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx hero text */
 
-/* Centred at the top of the scene, over the wall — not tucked into the corner
-   (2026-09-25). In the corner it overlapped the window frame and read as one
-   more thing stuck to the diorama; centred it is the first thing on the page
-   and the desk is what you look at next. Portrait already worked this way, so
-   the two layouts now say the same thing.
-   translateX(-50%) is the centring, which means every breakpoint that used to
-   set a "left" has to stop, and the portrait block — where this box goes static
-   — has to reset the transform. */
+/* In the top-left corner, over the scene. Centring it at the top of the wall
+   and stacking the copy above the diorama were both tried on 2026-09-25 and
+   both rejected: centred it covered the window, and stacked it forced the
+   board either to shrink (which resamples every sprite) or to letterbox. The
+   corner is the layout the artboard was composed for. */
 .hero-text {
   position: absolute;
-  top: clamp(1rem, 3.4vh, 2.4rem);
-  left: 50%;
-  transform: translateX(-50%);
+  top: clamp(0.85rem, 2.3vh, 1.55rem);
+  left: clamp(0.85rem, 2.2vw, 2.5rem);
   z-index: 30;
-  width: min(42rem, 56vw);
-  padding: 0.9rem 1.1rem 1.1rem;
+  width: min(28rem, 30vw);
+  padding: 0.7rem 0.85rem 0.95rem;
   color: var(--text);
   /* Opaque, and on the surface tone rather than the page tone. The kit's panel
      was translucent and the window frame's mullions read straight through the
@@ -49,10 +45,7 @@
 }
 
 h1 {
-  /* Wide enough for two lines in the centred panel. At 22ch the headline broke
-     to three and the panel grew tall enough to cover the top of the CRT on a
-     768-tall screen. */
-  max-width: 28ch;
+  max-width: 14ch;
   margin: 0;
   font-family: var(--font-pixel);
   font-size: clamp(1.6rem, 2.6vw, 2.4rem);
@@ -63,7 +56,7 @@ h1 {
 }
 
 .hero-text p:not(.eyebrow) {
-  max-width: 34rem;
+  max-width: 27rem;
   /* The headline runs at line-height 0.96, so its descenders already sit tight
      to the baseline and 0.55rem of margin read as no gap at all. */
   margin: 1.15rem 0 0;
