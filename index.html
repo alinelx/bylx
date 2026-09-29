@@ -129,7 +129,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=0babd1ef" />
+  <link rel="stylesheet" href="styles.css?v=ffebbe2c" />
 </head>
 
 <body>
@@ -246,25 +246,12 @@
             </button>
           </div>
 
-          <div class="pixel-window screen-item">
-            <!-- The bar is focusable because the window can be moved, and a drag
-                 cannot be the only way to do it (WCAG 2.5.7): the arrows move it
-                 too, and Home puts it back. -->
-            <div class="win-bar" tabindex="0" aria-label="Move the nihon.bmp window — drag it, or use the arrow keys">
-              <p class="window-title" aria-hidden="true">nihon.bmp</p>
-              <!-- win_top_right.png draws the three buttons; the tile itself is
-                   the close control, as it always was -->
-              <button class="win-buttons pixel-window-close" type="button" aria-label="Close window"></button>
-            </div>
-
-            <div class="win-content">
-              <img src="assets/hero/japan_poster.png?v=a29fee57" class="poster" alt="" />
-              <!-- The Paint chrome is a child of the window it decorates, and its
-                   canvas area is transparent, so the poster shows through it -->
-              <img class="paint" src="assets/hero/paint_frame.png?v=bbb81744" alt="" />
-            </div>
-          </div>
-
+          <!-- The nihon.bmp Paint window stood here until 2026-09-25. It covered
+               a little over half the CRT and buried the icon grid behind it, so
+               the screen read as clutter rather than as a desktop. What went with
+               it: the drag (pointer and keyboard, WCAG 2.5.7), the close tile, and
+               the window's share of cinema mode. japan_poster.png still ships —
+               the gallery shows it. -->
 
           <div class="toolbar-strip screen-item">
             <button class="start-btn" type="button" aria-label="Open Start menu" aria-haspopup="menu" aria-expanded="false">
@@ -274,7 +261,11 @@
           </div>
 
           <div class="asset layer monitor">
-            <img class="monitor-img" src="assets/hero/monitor_frame.png?v=4600d74c" alt="" />
+            <!-- The lavender variant: the bezel was #f7f2ff, the brightest and
+                 highest-contrast object on the page, and it out-shouted the copy
+                 card sitting next to it. monitor_frame.png is the original and
+                 stays; this one remaps its two light colours. -->
+            <img class="monitor-img" src="assets/hero/monitor_frame_lavender.png?v=e8c816d0" alt="" />
             <!-- Colado ao monitor, como no kit: filho da moldura, por isso
                  nunca pode deslizar para fora do bisel -->
             <img class="bylx-logo-sticker" src="assets/logo/bylx_logo_semdev.png?v=3d70cfcd" alt="" />
@@ -291,7 +282,7 @@
       <div class="hero-text">
         <p class="eyebrow">bylx · Front-end developer</p>
         <h1 id="hero-title">Where the best cities share a desk.</h1>
-        <p>I build web things that make you feel something. Pixel art, vanilla code, optional shortcuts through AI and tech debug.</p>
+        <p>I build web things that make you feel something. Pixel art, vanilla code, and AI-assisted workflows.</p>
         <a href="#projects">See the work</a>
       </div>
 
@@ -1135,6 +1126,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=0babd1ef"></script>
+  <script type="module" src="script.js?v=ffebbe2c"></script>
 </body>
 </html>

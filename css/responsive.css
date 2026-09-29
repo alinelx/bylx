@@ -14,38 +14,71 @@
   }
 
   .hero-text {
-    top: clamp(0.8rem, 2.5vw, 1.2rem);
-    left: clamp(0.8rem, 2.5vw, 1.2rem);
-    width: min(16rem, calc(100% - 1.6rem));
+    top: clamp(0.8rem, 2.5vw, 1.4rem);
+    width: min(44rem, 76vw);
   }
 
   .eyebrow {
     max-width: 29ch;
     /* Floor at 0.5rem: the old 0.32rem rendered Press Start 2P at ~5px */
-    font-size: clamp(0.5rem, 0.95vw, 0.6rem);
+    font-size: var(--fs-label-lg);
   }
 
   h1 {
-    max-width: 13ch;
+    /* 13ch was sized for the 16rem column this panel used to be in the corner;
+       in the centred panel it forced a third line and the panel then covered
+       the top of the CRT. */
+    max-width: 28ch;
     /* Never larger than the desktop headline (2.4rem) — this once peaked at
        2.8rem on a smaller screen */
     font-size: clamp(1.4rem, 2.6vw, 2.2rem);
   }
 
   .hero-text p:not(.eyebrow) {
-    max-width: 16rem;
-    font-size: clamp(0.72rem, 1.9vw, 0.9rem);
+    max-width: 34rem;
+    font-size: clamp(0.85rem, 1.3vw, 1rem);
   }
 
   .hero-text a {
     padding: 0.52rem 0.74rem;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
   }
 }
 
 @media (max-width: 1180px) {
   .hero-text {
-    width: min(14rem, 23vw);
+    width: min(40rem, 84vw);
+  }
+}
+
+/* The panel has to clear the top of the CRT, and the CRT's position is set by
+   the artboard's HEIGHT: the board is anchored to the bottom of the scene and
+   the monitor starts at 35% of it, so on a short viewport the desk rides up to
+   meet a panel that is still sized for a tall one. Measured across ten common
+   sizes before and after; the worst case was 1280x720, where the panel used to
+   overlap the CRT by 73px and now clears it by 11.
+
+   Height, not width: 1366x768 and 1152x864 are the same width class and only
+   one of them was in trouble. */
+@media (max-height: 1000px) {
+  .hero-text {
+    top: clamp(0.5rem, 1.6vh, 1rem);
+    padding: 0.65rem 0.9rem 0.8rem;
+  }
+
+  h1 {
+    font-size: clamp(1.3rem, 1.95vw, 1.85rem);
+  }
+
+  .hero-text p:not(.eyebrow) {
+    margin-top: 0.8rem;
+    font-size: clamp(0.88rem, 1vw, 0.98rem);
+    line-height: 1.32;
+  }
+
+  .hero-text a {
+    margin-top: 0.9rem;
+    padding: 0.5rem 0.75rem;
   }
 }
 
@@ -99,7 +132,7 @@
   }
 
   .eyebrow {
-    font-size: 0.5rem;
+    font-size: var(--fs-label);
   }
 
   h1 {
@@ -109,7 +142,7 @@
 
   .hero-text p:not(.eyebrow) {
     max-width: 14rem;
-    font-size: 0.7rem;
+    font-size: var(--fs-body);
   }
 
   .about-side {
@@ -145,17 +178,12 @@
   /* Hits are image-mapped in % over their sprite, so on a small player or a
      small scene they fall under the 24×24 minimum (WCAG 2.2). A transparent
      ::before grows the touch zone while the visible hover border stays on the
-     art. Both hosts are positioned, but the bar holding the window buttons
-     clips, which would eat the grown zone — so let it escape.
-     Measured at 375px: select 49×18, the window close 24×8 and the volume keys
-     30×13 fail. The dial (59×59) already passes, so it is left alone. */
-  .pixel-window-close,
-  .win-bar {
-    overflow: visible;
-  }
+     art.
+     Measured at 375px: select 49×18 and the volume keys 30×13 fail. The dial
+     (59×59) already passes, so it is left alone. */
 
   /* The START button is 174×14.5 at 393px — wide enough, far too short.
-     The strip clips, so let this one escape it like .pixel-window-close. */
+     The strip clips, so let it escape. */
   .toolbar-strip {
     overflow: visible;
   }
@@ -170,8 +198,7 @@
     position: relative;
   }
 
-  .mp3-select::before,
-  .pixel-window-close::before {
+  .mp3-select::before {
     content: "";
     position: absolute;
     inset: -8px;
@@ -237,6 +264,9 @@
   .hero-text {
     position: static;
     order: -1;
+    /* The desktop centres with translateX(-50%); in this column the margin
+       does it, and leaving the transform on drags the panel off-screen left. */
+    transform: none;
     margin: clamp(0.8rem, 2.5vw, 1.2rem);
   }
 
@@ -345,8 +375,7 @@
   .mp3-player,
   .mp3-hit-label,
   .keyboard-glow,
-  .screen-item,
-  .paint {
+  .screen-item {
     transition: none;
   }
 

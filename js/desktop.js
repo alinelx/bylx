@@ -6,140 +6,18 @@
  |_.__/   \__, | |_| /_/\_\
           |___/
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
-/* ᑲყᥣx desktop — monitor power, pixel-window close, start menu, fullscreen */
+/* ᑲყᥣx desktop — monitor power, start menu, fullscreen */
 
-import { screenRect, clampToRect } from "./utils.js?v=0babd1ef";
+import { screenRect, clampToRect } from "./utils.js?v=ffebbe2c";
 
 export function initDesktop() {
   const scene = document.getElementById("hero-scene");
 
-  /* ----- pixel window close (the X tile of nihon.bmp) ----- */
-  const winClose    = document.querySelector(".pixel-window-close");
-  const pixelWindow = document.querySelector(".pixel-window");
-
-  if (winClose && pixelWindow) {
-    winClose.addEventListener("click", () => {
-      pixelWindow.classList.add("is-closed");
-    });
-  }
-
   /* O rectângulo do ecrã dentro da prancheta (.win-bg: 38%/42%, 24%x31%).
-     Serve a dois donos: limita para onde a janela pode ser arrastada, e
-     dá ao cinema a escala a que a prancheta preenche a moldura. */
+     Dava a dois donos: limitava para onde a janela do Paint podia ser
+     arrastada, e dá ao cinema a escala a que a prancheta preenche a moldura.
+     A janela saiu a 2026-09-25; o cinema continua a precisar dele. */
   const SCREEN = { left: 38, top: 42, width: 24, height: 31 };
-
-  /* ----- the window moves, because a window moves -----
-
-     It is positioned in artboard percentages, so the drag is measured in them
-     too: divide the pointer delta by the offset parent's width and the result
-     is in the right units on both surfaces, including cinema mode, where the
-     same node sits in a board about five times the size. Nobody has to know
-     the scale.
-
-     Sideways it stays on the desktop. Downwards it may slide under the
-     monitor's own bezel — which is exactly what a window does when you push it
-     off the bottom of a screen — but never so far that the bar you grabbed it
-     by has gone with it. */
-  const winBar = document.querySelector(".win-bar");
-
-  if (winBar && pixelWindow) {
-    const clamp = (value, low, high) => Math.min(Math.max(value, low), Math.max(low, high));
-
-    /* Read, never assumed: the resting position lives in the CSS, and a copy
-       of it here would be one more number to keep in step by hand. */
-    function measure() {
-      const parent = pixelWindow.offsetParent?.getBoundingClientRect();
-      const box = pixelWindow.getBoundingClientRect();
-      if (!parent?.width || !box.width) return null;
-      return {
-        parent,
-        left: ((box.x - parent.x) / parent.width) * 100,
-        top: ((box.y - parent.y) / parent.height) * 100,
-        width: (box.width / parent.width) * 100,
-        height: (box.height / parent.height) * 100,
-      };
-    }
-
-    let home = null;
-    let at = null;
-    let from = null;
-
-    function place(left, top) {
-      const now = measure();
-      if (!now) return;
-
-      /* The whole window, not just the bar: nothing clips these layers, so a
-         window pushed past the bottom of the screen is simply drawn on the
-         desk. It may still slide under the taskbar, which paints after it. */
-      at = {
-        left: clamp(left, SCREEN.left, SCREEN.left + SCREEN.width - now.width),
-        top: clamp(top, SCREEN.top, SCREEN.top + SCREEN.height - now.height),
-      };
-      pixelWindow.style.left = `${at.left}%`;
-      pixelWindow.style.top = `${at.top}%`;
-    }
-
-    function start() {
-      const now = measure();
-      if (!now) return null;
-      if (!home) home = { left: now.left, top: now.top };
-      at = at ?? { left: now.left, top: now.top };
-      return now;
-    }
-
-    winBar.addEventListener("pointerdown", (event) => {
-      /* The three-button tile is inside this bar and it closes the window. */
-      if (event.target.closest(".pixel-window-close")) return;
-
-      const now = start();
-      if (!now) return;
-
-      from = { x: event.clientX, y: event.clientY, left: at.left, top: at.top, parent: now.parent };
-      winBar.setPointerCapture(event.pointerId);
-      pixelWindow.classList.add("is-dragging");
-      /* No preventDefault: it suppresses the compatibility mouse events, and
-         the pixel cursor is drawn from mousemove/mousedown — the arrow froze
-         mid-drag and never took its pressed state. Selection and scrolling
-         are already handled by user-select and touch-action on the bar. */
-    });
-
-    winBar.addEventListener("pointermove", (event) => {
-      if (!from) return;
-      place(
-        from.left + ((event.clientX - from.x) / from.parent.width) * 100,
-        from.top + ((event.clientY - from.y) / from.parent.height) * 100
-      );
-    });
-
-    const drop = () => {
-      from = null;
-      pixelWindow.classList.remove("is-dragging");
-    };
-    winBar.addEventListener("pointerup", drop);
-    winBar.addEventListener("pointercancel", drop);
-
-    /* A drag is not the only way in (WCAG 2.5.7): the bar takes focus and the
-       arrows move the window, Shift for a bigger step, Home to put it back. */
-    winBar.addEventListener("keydown", (event) => {
-      const step = event.shiftKey ? 4 : 1;
-      const by = {
-        ArrowLeft: [-step, 0],
-        ArrowRight: [step, 0],
-        ArrowUp: [0, -step],
-        ArrowDown: [0, step],
-      }[event.key];
-
-      if (!start()) return;
-
-      if (by) {
-        event.preventDefault();
-        place(at.left + by[0], at.top + by[1]);
-      } else if (event.key === "Home") {
-        event.preventDefault();
-        place(home.left, home.top);
-      }
-    });
-  }
 
   /* ----- monitor power ----- */
   const powerBtn     = document.querySelector(".monitor-power");
@@ -295,19 +173,19 @@ export function initDesktop() {
   let hintTimer;
   let lastFocus = null;
 
-  /* O cinema mode mostra o ECRÃ do monitor — wallpaper, ícones, a janela e a
-     barra — e não uma fotografia do wallpaper.
+  /* O cinema mode mostra o ECRÃ do monitor — wallpaper, ícones e barra — e
+     não uma fotografia do wallpaper.
 
      Os itens do ecrã estão posicionados em % da prancheta, por isso basta
      recriar a prancheta dentro da moldura do cinema, à escala em que o
      rectângulo do ecrã (.win-bg: 38%/42%, 24%x31%) a preenche por completo.
      A matemática é a mesma nas duas direcções: largura = 100%/0.24 e o
      desvio = -38%/0.24. */
-  const CINEMA_ITEMS = [".win-bg", ".desktop-icons", ".pixel-window", ".toolbar-strip"];
+  const CINEMA_ITEMS = [".win-bg", ".desktop-icons", ".toolbar-strip"];
 
   /* Os itens do ecrã são EMPRESTADOS ao cinema, não copiados: assim os ícones
-     abrem os balões, o X fecha o Paint e o START abre o menu, porque são os
-     mesmos nós com os mesmos listeners. Guardamos onde cada um estava para os
+     abrem os balões e o START abre o menu, porque são os mesmos nós com os
+     mesmos listeners. Guardamos onde cada um estava para os
      devolver exactamente à mesma posição na ordem de pintura. */
   let borrowed = [];
   let cinemaResize = null;

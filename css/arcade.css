@@ -26,8 +26,11 @@
 
 .arcade-heading {
   margin: 0.4rem 0 0;
-  font-family: var(--font-display, var(--font-ui));
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  /* Was var(--font-display, var(--font-ui)) — and --font-display has never
+     existed, so this H2 alone rendered in Press Start 2P while every other
+     heading used Pixelify Sans. One heading face, and this is it. */
+  font-family: var(--font-pixel);
+  font-size: var(--fs-h2);
   line-height: 1.15;
 }
 
@@ -124,8 +127,8 @@
 }
 
 .cab-crumbs {
-  font-family: var(--font-ui);
-  font-size: 0.5rem;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-caption);
   letter-spacing: 0.1em;
   color: var(--muted);
 }
@@ -139,7 +142,9 @@
 
 .cab-head h1 {
   margin: 0;
-  font-family: var(--font-display, var(--font-ui));
+  /* Not var(--font-display, var(--font-ui)): --font-display does not exist,
+     so this fell through to Press Start 2P. One heading face across the site. */
+  font-family: var(--font-pixel);
   font-size: clamp(1.8rem, 5vw, 3rem);
 }
 
@@ -288,7 +293,7 @@
   background: var(--cyan);
   color: var(--bg);
   font-family: var(--font-ui);
-  font-size: 0.7rem;
+  font-size: var(--fs-label);
   line-height: 1;
   cursor: none;
 }
@@ -307,7 +312,7 @@
   margin: 1.4rem 0 0;
   text-align: center;
   font-family: var(--font-ui);
-  font-size: 0.5rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.12em;
   color: var(--muted);
 }
@@ -317,7 +322,7 @@
   margin-top: 2.5rem;
   color: var(--cyan);
   font-family: var(--font-ui);
-  font-size: 0.55rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.08em;
 }
 

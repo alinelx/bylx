@@ -184,15 +184,6 @@
   filter: blur(14px);
 }
 
-/* Pixel-window close tile */
-.pixel-window-close:hover { filter: brightness(1.18); }
-.pixel-window-close:active { filter: brightness(0.9); }
-
-.pixel-window-close:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(89, 243, 255, 0.9);
-}
-
 /* Monitor power button */
 .monitor-power:hover { background: rgba(89, 243, 255, 0.18); }
 
@@ -201,19 +192,34 @@
   box-shadow: 0 0 0 2px rgba(89, 243, 255, 0.9);
 }
 
-/* Monitor "off" — screen content dims to near-black */
-.scene.screen-off .screen-item,
-.scene.screen-off .paint {
-  filter: brightness(0.04);
+/* Monitor "off" — the screen goes to the palette's surface dark, not to black.
+
+   This used to be filter: brightness(0.04) on each screen item, which crushes
+   whatever colour was there toward #000 and cannot land on a chosen colour at
+   all. A fill can: .win-bg is positioned at exactly 38%/42%, 24%x31% of the
+   artboard — the screen rectangle — so the same four numbers cover it, and a
+   single box replaces a filter on every item inside the CRT.
+
+   z-index 9 puts it over the screen items (8) and under the monitor bezel
+   (10), so the frame, the power button and the sticker stay lit. */
+.scene::after {
+  content: "";
+  position: absolute;
+  z-index: 9;
+  left: 38%;
+  top: 42%;
+  width: 24%;
+  height: 31%;
+  /* --bylx-bg-ink, the same surface the cards and the hero panel use — not
+     --bg. The page tone is dark enough to read as #000 on a bright monitor,
+     which is the thing being avoided here. */
+  background: var(--bylx-bg-ink);
+  opacity: 0;
+  transition: opacity 280ms steps(3, end);
 }
 
-.scene.screen-off .win-bg {
-  filter: brightness(0.05) saturate(0);
-}
-
-.screen-item,
-.paint {
-  transition: filter 280ms steps(3, end);
+.scene.screen-off::after {
+  opacity: 1;
 }
 
 @keyframes instax-sheet {
@@ -264,18 +270,6 @@
 }
 
 
-
-@keyframes title-tick {
-  from { color: var(--bylx-bg); }
-  to   { color: var(--bylx-bg-ink); }
-}
-
-
-
-@keyframes poster-shimmer {
-  0%, 90%, 100% { filter: none; }
-  92%           { filter: brightness(1.18) hue-rotate(8deg); }
-}
 
 /* O ciclo de cor em repouso está desligado (2026-09-22): era a única coisa a
    piscar na mesa. O brilho fica parado no seu tom até alguém escrever — aí

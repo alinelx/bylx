@@ -75,9 +75,20 @@
      re-invented a clamp() in every component. This is the crossing of the
      two: named AND fluid. Min values are the kit's mobile-safe floors, max
      values are the kit's original rem sizes. */
-  --fs-eyebrow: clamp(0.55rem, 0.9vw, 0.7rem);
-  --fs-caption: clamp(0.72rem, 1vw, 0.85rem);
-  --fs-body:    clamp(0.88rem, 1.1vw, 1.05rem);
+  --fs-eyebrow: clamp(0.75rem, 0.9vw, 0.8125rem);
+  --fs-caption: clamp(0.8125rem, 1vw, 0.875rem);
+  --fs-body:    clamp(1rem, 1.15vw, 1.125rem);
+
+  /* ---------- Label scale ----------
+     Press Start 2P is a label face, not a text face: every glyph fills its em
+     box, so at one font-size it reads about 1.5x the width and weight of
+     Pixelify Sans. That is exactly why it kept being set at 7-9px — small
+     enough to fit its box, too small to read. A sweep on 2026-09-25 found 33
+     declarations under 12px and all 33 were this face.
+     These are the only two sizes it is allowed at, and 12px is the floor.
+     Anything that is a sentence rather than a label belongs in --font-pixel. */
+  --fs-label:    0.75rem;    /* 12px — LIVE, All, Next.js, a CV link */
+  --fs-label-lg: 0.8125rem;  /* 13px — eyebrows and section kickers */
   --fs-body-lg: clamp(0.95rem, 1.25vw, 1.2rem);
   --fs-h3:      clamp(1.15rem, 2vw, 1.6rem);
   --fs-h2:      clamp(1.5rem, 3.4vw, 2.4rem);
@@ -107,9 +118,18 @@
   --stroke-1: 2px;
   --stroke-2: 4px;
   --stroke-3: 7px;
-  --shadow-chunk-sm: 4px 4px 0 var(--bylx-pink);
-  --shadow-chunk-md: 7px 7px 0 var(--bylx-pink);
-  --shadow-chunk-lg: 9px 9px 0 var(--bylx-pink);
+  /* ---------- Chunk shadow ----------
+     The hard offset shadow was pink, and it is on almost every box on the
+     site: cards, panels, buttons, the lightbox, the CV links. Paired with the
+     cyan borders it put both brand colours on every element, which left
+     nothing for a call to action to be louder than (2026-09-25).
+     The shadow is now purple — it is a shadow, and purple is already the
+     scene's own colour — and pink is reserved for CTA fills and focus rings.
+     This one token is the lever: set it back to var(--bylx-pink) to undo. */
+  --shadow-chunk: var(--bylx-purple);
+  --shadow-chunk-sm: 4px 4px 0 var(--shadow-chunk);
+  --shadow-chunk-md: 7px 7px 0 var(--shadow-chunk);
+  --shadow-chunk-lg: 9px 9px 0 var(--shadow-chunk);
   --shadow-chunk-cyan: 6px 6px 0 var(--bylx-cyan);
   --glow-cyan: 0 0 0 3px rgba(89, 243, 255, 0.9);
 

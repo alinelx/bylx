@@ -8,36 +8,51 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */ 
 /* ᑲყᥣx hero text */
 
+/* Centred at the top of the scene, over the wall — not tucked into the corner
+   (2026-09-25). In the corner it overlapped the window frame and read as one
+   more thing stuck to the diorama; centred it is the first thing on the page
+   and the desk is what you look at next. Portrait already worked this way, so
+   the two layouts now say the same thing.
+   translateX(-50%) is the centring, which means every breakpoint that used to
+   set a "left" has to stop, and the portrait block — where this box goes static
+   — has to reset the transform. */
 .hero-text {
   position: absolute;
-  top: clamp(0.85rem, 2.3vh, 1.55rem);
-  left: clamp(0.85rem, 2.2vw, 2.5rem);
+  top: clamp(1rem, 3.4vh, 2.4rem);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 30;
-  width: min(28rem, 30vw);
-  padding: 0.7rem 0.85rem 0.95rem;
+  width: min(42rem, 56vw);
+  padding: 0.9rem 1.1rem 1.1rem;
   color: var(--text);
-  /* The kit's dark panel: the old 70% purple let the window frame's mullions
-     run straight through the headline */
-  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  /* Opaque, and on the surface tone rather than the page tone. The kit's panel
+     was translucent and the window frame's mullions read straight through the
+     headline; 78% cut most of it and still left the wall's pattern crawling
+     under the text. --bg then made it read as a hole in the scene, so it uses
+     the same --bylx-bg-ink as every project card.
+     No text-shadow: it existed to hold the type up against whatever showed
+     through a translucent panel, and on an opaque one its 10px dark glow only
+     put a soft halo around pixel glyphs. */
+  background: var(--bylx-bg-ink);
   border: 7px solid var(--cyan);
-  box-shadow: 7px 7px 0 var(--pink);
-  text-shadow:
-    1px 1px 0 rgba(9, 5, 27, 0.88),
-    0 0 10px rgba(9, 5, 27, 0.7);
+  box-shadow: 7px 7px 0 var(--shadow-chunk);
 }
 
 .eyebrow {
   margin: 0 0 0.55rem;
   color: var(--cyan);
   font-family: var(--font-ui);
-  font-size: 0.7rem;
+  font-size: var(--fs-label-lg);
   line-height: 1.55;
   letter-spacing: 0;
   text-transform: uppercase;
 }
 
 h1 {
-  max-width: 14ch;
+  /* Wide enough for two lines in the centred panel. At 22ch the headline broke
+     to three and the panel grew tall enough to cover the top of the CRT on a
+     768-tall screen. */
+  max-width: 28ch;
   margin: 0;
   font-family: var(--font-pixel);
   font-size: clamp(1.6rem, 2.6vw, 2.4rem);
@@ -48,17 +63,23 @@ h1 {
 }
 
 .hero-text p:not(.eyebrow) {
-  max-width: 27rem;
-  margin: 0.55rem 0 0;
+  max-width: 34rem;
+  /* The headline runs at line-height 0.96, so its descenders already sit tight
+     to the baseline and 0.55rem of margin read as no gap at all. */
+  margin: 1.15rem 0 0;
   color: var(--text);
   font-family: var(--font-pixel);
-  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-  line-height: 1.16;
+  font-size: var(--fs-body-lg);
+  /* Body leading, not headline leading: this wraps to three lines at 30vw. */
+  line-height: var(--lh-prose);
 }
 
 .hero-text a {
   display: inline-block;
-  margin-top: 1.1rem;
+  margin-top: 1.3rem;
+  /* The label is inset by its own padding, so the button box starts one
+     padding-width left of the paragraph to put the two texts on one edge. */
+  margin-left: -0.8rem;
   padding: 0.55rem 0.8rem;
   color: var(--bg);
   background: var(--pink);

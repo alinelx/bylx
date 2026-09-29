@@ -45,7 +45,6 @@
 .layer,
 .bg,
 .icon,
-.poster,
 .toolbar {
   user-select: none;
   pointer-events: none;
@@ -222,6 +221,12 @@
    stay the site's — see DESIGN.md. */
 .window-frame {
   z-index: 5;
+  /* Pulled back off the foreground (2026-09-25): near-black mullions against
+     70%-alpha near-white panes made the wall the highest-contrast surface in
+     the scene, competing with the desk it is supposed to sit behind. Opacity
+     rather than a filter — it blends both ends toward the purple wall, and
+     it costs nothing. */
+  opacity: 0.82;
   left: 4%;
   width: 93.5%;
   height: auto;
@@ -423,168 +428,6 @@
   font-size: var(--fs-caption);
   line-height: var(--lh-body);
   color: #444;
-}
-
-/* The window frame used to be nine background tiles in a 5x3 grid. Seven of
-   them drew nothing but a white bevel and a one-pixel edge — and because the
-   tiles are square, the bevel was as wide as it was tall: eight pixels down
-   each side of a window only a hundred and ten wide. A seventh of the window
-   was padding, and the Paint chrome inside could not reach its own edges.
-
-   A border does that job in one line and at the width a border should be. The
-   one tile kept is win_top_right.png, because it draws the three buttons and
-   is the close control; nothing in CSS would redraw those three glyphs as
-   well. */
-.pixel-window {
-  --tile: clamp(8px, 0.72vw, 16px);
-  --edge: clamp(1px, 0.1vw, 2px);
-  --float-x: 2px;
-  --float-y: 3px;
-  --float-rotate: 0.35deg;
-  --float-duration: 5.2s;
-  position: absolute;
-  z-index: 8;
-  left: 46.5%;
-  top: 44%;
-  width: 10%;
-  /* 26%, not 30%: the desktop runs from 42% to the taskbar at 70.5%, and a
-     30% window starting at 44% ended at 74% — past the bottom of the CRT.
-     That is why the sprite's colour palette always looked cut off, and why
-     dragging it down walked it out onto the desk. */
-  height: 26%;
-  display: grid;
-  grid-template-rows: var(--tile) 1fr;
-  border: var(--edge) solid var(--bg);
-  background-color: var(--cyan);
-  pointer-events: none;
-  /* The desktop is there first and the window opens onto it, the way a
-     machine that has just finished booting does. */
-  animation: window-open 220ms steps(4, end) 1100ms both;
-}
-
-@keyframes window-open {
-  from {
-    opacity: 0;
-    clip-path: inset(0 0 100% 0);
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-.win-bar {
-  display: flex;
-  align-items: stretch;
-  overflow: hidden;
-  border-bottom: var(--edge) solid var(--bg);
-  background-color: var(--cyan);
-  /* The window it belongs to is inert; this strip is the handle that moves it,
-     so it takes the pointer — and takes it whole, because a browser that is
-     busy selecting text or panning is not dragging a window. */
-  pointer-events: auto;
-  touch-action: none;
-  user-select: none;
-}
-
-.win-bar:focus-visible {
-  outline: var(--edge) solid var(--pink);
-  outline-offset: calc(var(--edge) * -1);
-}
-
-.window-title {
-  flex: 1;
-  min-width: 0;
-  align-self: center;
-  margin: 0;
-  padding-left: clamp(2px, 0.16vw, 4px);
-  overflow: hidden;
-  color: var(--bg);
-  font-family: var(--font-ui);
-  font-size: clamp(0.22rem, 0.26vw, 0.38rem);
-  line-height: 1;
-  text-overflow: clip;
-  white-space: nowrap;
-  -webkit-font-smoothing: none;
-}
-
-/* The three buttons keep the tile's own proportions instead of being stretched
-   to whatever three grid columns happened to measure. */
-.win-buttons {
-  flex: 0 0 auto;
-  aspect-ratio: 192 / 64;
-  align-self: stretch;
-  background-image: url("../assets/hero/win_top_right.png?v=f3d76f99");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-
-/* The X drawn in win_top_right.png is the close control. It is positioned
-   because responsive.css grows its touch target with a ::before, and the .win
-   tile that used to provide the containing block is gone. */
-.pixel-window-close {
-  position: relative;
-  padding: 0;
-  border: 0;
-  background-color: transparent;
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: none;
-  pointer-events: auto;
-}
-
-.pixel-window.is-closed {
-  display: none;
-}
-
-.win-content {
-  position: relative;
-  overflow: hidden;
-  background: var(--text);
-}
-
-/* Fills the drawn canvas edge to edge. It used to be placed by padding and
-   left an L of bare window background down the right and along the bottom.
-   The numbers are the sprite's own canvas hole, measured at x 64..311,
-   y 19..283 of 320, in the coordinates of a sprite drawn at 133.333%. */
-.poster {
-  position: absolute;
-  left: 26.667%;
-  top: 5.94%;
-  width: 71.7%; /* stops at sprite x=236, leaving the chrome a right edge */
-  height: 82.5%;
-  object-fit: cover;
-  object-position: center top;
-}
-
-/* Paint rides the window because it IS in the window now. It used to be a
-   sibling of .pixel-window with its own artboard percentages, kept in step by
-   hand and by matching float timings — two boxes agreeing by coincidence.
-
-   The sprite is 320x320 and the window is tall and narrow, so something has to
-   give. What gives is the right quarter: measured on the art, the menu ends at
-   x=196 and the colour palette at x=237 of 320, so cropping at 240 loses only
-   empty canvas and a border the window's own frame already draws. */
-.paint {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 133.333%; /* 320 / 240: the kept part of the sprite fills the window */
-  max-width: none; /* base.css caps every img at 100%, which undid the crop */
-  height: 100%;
-  z-index: 2;
-  mix-blend-mode: multiply;
-  /* The one sprite in the scene that is not allowed to be pixelated, and the
-     only one that is heavily DOWNSCALED: 320px of art in about 95px of window,
-     0.296x. image-rendering: pixelated is nearest-neighbour, which at that
-     ratio does not shrink a one-pixel stroke — it deletes it. Measured side by
-     side: pixelated rendered the menu as "...ed Edit View Ima... Hel", with
-     whole letters gone; smooth rendering keeps "File Edit View Image Options
-     Help" readable. Soft and legible beats crisp and broken.
-
-     The real fix is upstream: export the frame at the size it is shown, around
-     96px, and this line can go back to pixelated. */
-  image-rendering: auto;
 }
 
 .toolbar-strip {

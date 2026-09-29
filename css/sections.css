@@ -25,7 +25,7 @@
 
 .projects-header .eyebrow {
   margin-bottom: 0.4rem;
-  font-size: 0.7rem;
+  font-size: var(--fs-label-lg);
 }
 
 .projects-header h2 {
@@ -49,7 +49,7 @@
   display: flex;
   flex-direction: column;
   border: 4px solid var(--cyan);
-  box-shadow: 6px 6px 0 var(--pink);
+  box-shadow: 6px 6px 0 var(--shadow-chunk);
   background: var(--bylx-bg-ink);
   transition: transform 80ms steps(2, end), box-shadow 80ms steps(2, end);
 }
@@ -62,7 +62,7 @@
 
 .project-card:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0 var(--pink);
+  box-shadow: 8px 8px 0 var(--shadow-chunk);
 }
 
 .card-body {
@@ -89,19 +89,19 @@
 
 .card-status {
   font-family: var(--font-ui);
-  font-size: 0.55rem;
+  font-size: var(--fs-label);
   color: var(--muted);
   line-height: 1.8;
 }
 
 .card-status--live    { color: var(--cyan); }
-.card-status--shipped { color: var(--pink); }
-.card-status--client  { color: var(--pink); }
+.card-status--shipped { color: var(--muted); }
+.card-status--client  { color: var(--muted); }
 .card-status--internal { color: var(--muted); }
 
 .card-tag {
   font-family: var(--font-ui);
-  font-size: 0.5rem;
+  font-size: var(--fs-label);
   padding: 4px 6px;
   background: var(--bg);
   border: 2px solid currentColor;
@@ -146,7 +146,7 @@
   font-size: clamp(1.5rem, 3vw, 1.8rem);
   font-weight: 600;
   line-height: 1;
-  color: var(--pink);
+  color: var(--text);
 }
 
 .card-body p {
@@ -184,15 +184,15 @@
   background: rgba(93, 63, 211, 0.1);
   border: 2px solid var(--purple);
   font-family: var(--font-ui);
-  font-size: 0.5rem;
+  font-size: var(--fs-label);
   line-height: 1.4;
   white-space: nowrap;
 }
 
 .cs-heading {
   margin: 0.9rem 0 0.3rem;
-  font-family: var(--font-ui);
-  font-size: 0.62rem;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-body-lg);
   color: var(--purple);
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -209,7 +209,7 @@
 
 .case-study-body code {
   font-family: var(--font-ui);
-  font-size: 0.48rem;
+  font-size: var(--fs-label);
   color: var(--purple);
   background: rgba(93, 63, 211, 0.12);
   padding: 0.15em 0.45em;
@@ -245,7 +245,7 @@
   padding: 0.55rem 0.85rem;
   border: 3px solid var(--bg);
   font-family: var(--font-ui);
-  font-size: 0.55rem;
+  font-size: var(--fs-label);
   line-height: 1.5;
   letter-spacing: 0.04em;
   text-decoration: none;
@@ -316,7 +316,7 @@
   color: var(--bg);
   background: var(--text);
   border: 4px solid var(--cyan);
-  box-shadow: 8px 8px 0 var(--pink);
+  box-shadow: 8px 8px 0 var(--shadow-chunk);
   font-family: var(--font-pixel);
 }
 
@@ -367,7 +367,7 @@
   overflow: hidden;
   background: var(--bg);
   border: 3px solid var(--bg);
-  box-shadow: 3px 3px 0 var(--pink);
+  box-shadow: 3px 3px 0 var(--shadow-chunk);
 }
 
 .gallery-cell.is-tall { grid-row: span 2; }
@@ -388,8 +388,8 @@
   padding: 4px 6px;
   color: var(--text);
   background: rgba(9, 5, 27, 0.78);
-  font-family: var(--font-ui);
-  font-size: 0.45rem;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-caption);
   text-transform: uppercase;
   -webkit-font-smoothing: none;
 }
@@ -450,7 +450,7 @@
      hover/focus */
   color: #4a4a4a;
   font-family: var(--font-ui);
-  font-size: 0.5rem;
+  font-size: var(--fs-label);
   text-transform: uppercase;
   -webkit-font-smoothing: none;
 }
@@ -470,7 +470,9 @@
   align-items: center;
   justify-content: center;
   padding: 4vmin;
-  background: #000;
+  /* Not #000: the page's own dark. A cinema that is blacker than the site
+     reads as a hole punched through it rather than as the room going dark. */
+  background: var(--bg);
 }
 
 .fullscreen-mode[hidden] { display: none; }
@@ -530,7 +532,7 @@
   border: 3px solid var(--bg);
   box-shadow: var(--shadow-chunk-sm);
   font-family: var(--font-ui);
-  font-size: 0.7rem;
+  font-size: var(--fs-label);
   line-height: 1.55;
   -webkit-font-smoothing: none;
 }
@@ -547,7 +549,7 @@
     bottom: 8px;
     left: 8px;
     padding: 7px 9px;
-    font-size: 0.42rem;
+    font-size: var(--fs-label);
     line-height: 1.5;
     text-align: center;
   }
@@ -566,7 +568,7 @@
   color: var(--bg);
   border: 2px solid var(--bg);
   font-family: inherit;
-  font-size: 0.7rem;
+  font-size: var(--fs-label);
 }
 
 /* One-off discovery nudge — the hover policy is deliberately neutral, so
@@ -585,7 +587,7 @@
   border: 3px solid var(--bg);
   box-shadow: var(--shadow-chunk-sm);
   font-family: var(--font-ui);
-  font-size: 0.7rem;
+  font-size: var(--fs-label);
   line-height: 1.55;
   -webkit-font-smoothing: none;
   pointer-events: none;
@@ -694,7 +696,7 @@
   color: var(--cyan);
   border-left: 4px solid var(--pink);
   font-family: var(--font-ui);
-  font-size: 0.55rem;
+  font-size: var(--fs-label);
   text-transform: uppercase;
   -webkit-font-smoothing: none;
 }
@@ -768,7 +770,10 @@
   justify-content: space-between;
   gap: 6px;
   color: var(--muted);
-  /* 0.5rem floor: the old 0.32rem bottomed out at ~5px on the mobile player */
+  /* Exempt from the 12px label floor (2026-09-25): this is the fake LCD inside
+     mp3_player.png, not a label — the readout has to fit a strip of painted
+     screen about 8px tall. 0.5rem is the floor because the old 0.32rem
+     bottomed out at ~5px on the mobile player. */
   font-size: clamp(0.5rem, 0.85vw, 0.52rem);
   line-height: 1;
   text-transform: uppercase;
@@ -804,7 +809,7 @@
   background: var(--bg);
   color: var(--cyan);
   border: 2px solid var(--cyan);
-  font-size: 0.55rem;
+  font-size: var(--fs-label);
   white-space: nowrap;
   opacity: 0;
   transition: opacity 120ms steps(2, end);
@@ -878,6 +883,9 @@
   background: var(--bylx-bg-ink);
   box-shadow: inset 0 0 0 1px var(--bylx-cyan-ink);
   color: var(--cyan);
+  /* Exempt from the 12px label floor for the same reason as .mp3-lcd-meta:
+     this glyph stands in for a key the sprite never drew, and it has to sit
+     inside that key. See the volume-button note in CLAUDE.md. */
   font-size: clamp(0.35rem, 0.9vw, 0.5rem);
   line-height: 1;
   pointer-events: none;
@@ -974,12 +982,12 @@
 .about-gif {
   width: 100%;
   border: 3px solid var(--purple);
-  box-shadow: 5px 5px 0 var(--pink);
+  box-shadow: 5px 5px 0 var(--shadow-chunk);
 }
 
 .about-stack .eyebrow {
   margin-bottom: 0.9rem;
-  font-size: 0.5rem;
+  font-size: var(--fs-label);
 }
 
 .about-icons {
@@ -1021,7 +1029,7 @@
 .footer-brand {
   margin: 0;
   font-family: var(--font-ui);
-  font-size: 0.6rem;
+  font-size: var(--fs-label);
   color: var(--pink);
   letter-spacing: 0.04em;
   flex-shrink: 0;
@@ -1038,7 +1046,7 @@
 
 .footer-links a {
   font-family: var(--font-ui);
-  font-size: 0.5rem;
+  font-size: var(--fs-label);
   color: var(--muted);
   text-decoration: none;
   letter-spacing: 0.04em;
@@ -1061,8 +1069,8 @@
 .footer-copy {
   margin: 0;
   width: 100%;
-  font-family: var(--font-ui);
-  font-size: 0.4rem;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-caption);
   /* 0.35 composited to 2.48:1 on the footer's near-black */
   color: rgba(216, 208, 255, 0.7);
   letter-spacing: 0.04em;
@@ -1101,7 +1109,7 @@
   background: var(--cyan);
   border: 2px solid var(--bg);
   font-family: var(--font-ui);
-  font-size: 0.5rem;
+  font-size: var(--fs-label);
   line-height: 1;
   opacity: 0;
   transition: opacity 120ms steps(2, end);
@@ -1143,13 +1151,13 @@
   object-fit: contain;
   image-rendering: pixelated;
   border: 4px solid var(--cyan);
-  box-shadow: 8px 8px 0 var(--pink);
+  box-shadow: 8px 8px 0 var(--shadow-chunk);
   background: var(--bylx-bg-ink);
 }
 
 .lightbox-caption {
-  font-family: var(--font-ui);
-  font-size: 0.6rem;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-caption);
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -1161,7 +1169,7 @@
   color: var(--bg);
   background: var(--cyan);
   border: 3px solid var(--bg);
-  box-shadow: 4px 4px 0 var(--pink);
+  box-shadow: 4px 4px 0 var(--shadow-chunk);
   font-family: var(--font-pixel);
   font-size: 1.4rem;
   line-height: 1;
@@ -1243,7 +1251,7 @@
   border: 3px solid var(--cyan);
   box-shadow: 5px 5px 0 rgba(89, 243, 255, 0.28);
   font-family: var(--font-ui);
-  font-size: 0.55rem;
+  font-size: var(--fs-label);
   line-height: 1.4;
   letter-spacing: 0.04em;
   text-align: center;
@@ -1266,13 +1274,13 @@
 .about-link--primary {
   color: var(--bg);
   background: var(--cyan);
-  box-shadow: 5px 5px 0 var(--pink);
+  box-shadow: 5px 5px 0 var(--shadow-chunk);
 }
 
 .about-link:hover,
 .about-link:focus-visible {
   transform: translate(-2px, -2px);
-  box-shadow: 7px 7px 0 var(--pink);
+  box-shadow: 7px 7px 0 var(--shadow-chunk);
 }
 
 .about-link:focus-visible {
@@ -1282,7 +1290,7 @@
 
 .about-link:active {
   transform: translate(1px, 1px);
-  box-shadow: 3px 3px 0 var(--pink);
+  box-shadow: 3px 3px 0 var(--shadow-chunk);
 }
 
 .about-badges-label {
@@ -1303,8 +1311,8 @@
   color: var(--muted);
   background: var(--bylx-bg-ink);
   border: 2px solid var(--purple);
-  font-family: var(--font-ui);
-  font-size: 0.48rem;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-caption);
   line-height: 1.6;
 }
 
@@ -1387,7 +1395,7 @@
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-ui);
-  font-size: 0.5rem;
+  font-size: var(--fs-label);
   line-height: 1.6;
   letter-spacing: 0;
   cursor: none;
@@ -1411,7 +1419,7 @@
      status line about them. Measured at 0px before this. */
   margin: 0.8rem 0 1.6rem;
   font-family: var(--font-ui);
-  font-size: 0.45rem;
+  font-size: var(--fs-label);
   letter-spacing: 0.06em;
   color: var(--muted);
 }
