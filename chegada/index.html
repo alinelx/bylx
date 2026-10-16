@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Chegada Leve · orientação para brasileiros em Portugal</title>
+  <meta name="description" content="Orientação prática para brasileiros nos primeiros passos em Portugal: NIF, NISS, número de utente, banco, casa e Porta 65. Por videochamada e WhatsApp, a partir de 35 €." />
+  <link rel="canonical" href="https://bylx.dev/chegada/" />
+  <meta property="og:title" content="Chegada Leve · orientação para brasileiros em Portugal" />
+  <meta property="og:description" content="Orientação prática para brasileiros nos primeiros passos em Portugal: NIF, NISS, número de utente, banco, casa e Porta 65. Por videochamada e WhatsApp, a partir de 35 €." />
+  <meta property="og:url" content="https://bylx.dev/chegada/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="theme-color" content="#1E4FB5" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap" />
+  <style>
+/* Layout: uma coluna estreita como um guia de bolso; carimbos de documentos portugueses como fio condutor */
+:root{
+  --bg:#F4F6FA; --surface:#FFFFFF; --ink:#13213D; --muted:#56627A;
+  --line:#D9DFEA; --cobalt:#1E4FB5; --cobalt-soft:#E3EAF8; --sun:#E9A800; --sun-ink:#5A4100;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1526; --surface:#162038; --ink:#E9EEF8; --muted:#A3AEC6; --line:#28345244;
+  --cobalt:#8EB0FF; --cobalt-soft:#1D2B4D; --sun:#F2BE3A; --sun-ink:#2A1F00; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1526; --surface:#162038; --ink:#E9EEF8; --muted:#A3AEC6; --line:#28345244;
+  --cobalt:#8EB0FF; --cobalt-soft:#1D2B4D; --sun:#F2BE3A; --sun-ink:#2A1F00; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:720px;margin:0 auto;padding-block:40px 64px;display:grid;gap:56px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.3rem,7vw,3.6rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.7rem;font-weight:700}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}
+.hero{display:grid;gap:18px}
+.hero p.lede{font-size:1.15rem;color:var(--muted);max-width:58ch}
+.stamps{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.stamp{font-family:var(--mono);font-size:.82rem;border:1.5px dashed var(--cobalt);color:var(--cobalt);
+  padding:4px 10px;border-radius:4px;transform:rotate(var(--r,0deg))}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--cobalt);color:var(--bg);font-weight:700;
+  text-decoration:none;padding:12px 20px;border-radius:999px;width:fit-content;border:0;font:inherit;font-weight:700;cursor:pointer}
+.cta:focus-visible,.copy:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+section{display:grid;gap:20px}
+.who{display:grid;gap:12px;border-left:4px solid var(--sun);padding-left:18px}
+.who p{max-width:62ch}
+.packs{display:grid;gap:16px}
+.pack{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;gap:12px}
+.pack header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.price{font-family:var(--display);font-weight:800;font-size:1.6rem;font-variant-numeric:tabular-nums}
+.price small{font-family:var(--body);font-weight:400;font-size:.85rem;color:var(--muted)}
+.pack .meta{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.pack ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.pack.featured{border:2px solid var(--cobalt)}
+.tag{background:var(--sun);color:var(--sun-ink);font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase}
+.check{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.check div{background:var(--cobalt-soft);border-radius:10px;padding:12px 14px;display:grid;gap:2px}
+.check b{font-family:var(--mono);font-size:.9rem;color:var(--cobalt)}
+.check span{font-size:.92rem;color:var(--muted)}
+.limits{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:10px;font-size:.95rem}
+.limits ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.contact{display:grid;gap:14px}
+.contact-box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:12px}
+.contact-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.contact-row code{font-family:var(--mono);font-size:1rem;user-select:all;word-break:break-all}
+.copy{background:transparent;border:1.5px solid var(--cobalt);color:var(--cobalt);border-radius:999px;padding:6px 14px;font:inherit;font-size:.9rem;cursor:pointer}
+.msg{font-size:.92rem;color:var(--muted);background:var(--bg);border-radius:8px;padding:12px;white-space:pre-wrap}
+footer{font-size:.85rem;color:var(--muted)}
+footer a{color:var(--cobalt)}
+@media (prefers-reduced-motion:no-preference){.stamp{transition:transform .2s}.stamp:hover{transform:rotate(0) scale(1.05)}}
+</style>
+  <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">Orientação para brasileiros em Portugal</span>
+    <h1>Chegou agora? A burocracia não precisa ser solitária.</h1>
+    <p class="lede">Sou a Aline, carioca com dupla nacionalidade, morando na Grande Lisboa. Já passei por cada fila, formulário e portal que você está prestes a enfrentar. Te ajudo a organizar os primeiros passos, em português do Brasil, por videochamada e WhatsApp.</p>
+    <div class="stamps" aria-hidden="true">
+      <span class="stamp" style="--r:-3deg">NIF</span>
+      <span class="stamp" style="--r:2deg">NISS</span>
+      <span class="stamp" style="--r:-1deg">Nº de Utente</span>
+      <span class="stamp" style="--r:3deg">IBAN PT50</span>
+      <span class="stamp" style="--r:-2deg">Porta 65</span>
+    </div>
+    <a class="cta" href="#contato">Quero conversar</a>
+  </header>
+
+  <section class="who">
+    <span class="eyebrow">Por que comigo</span>
+    <p>Não sou agência. Sou alguém que fez o caminho sozinha e aprendeu na prática: conta no banco, Segurança Social, centro de saúde, procura de casa, candidatura ao Porta 65 Jovem, abertura de atividade nas Finanças. Explico de um jeito simples, mostro onde clicar e te digo o que levar a cada lugar.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">Pacotes</span>
+    <h2>Escolha o tamanho da ajuda</h2>
+    <div class="packs">
+      <article class="pack">
+        <header><h3>Conversa de orientação</h3><span class="price">35 €</span></header>
+        <span class="meta">60 min · videochamada</span>
+        <ul>
+          <li>Tira-dúvidas sobre a sua situação concreta</li>
+          <li>Ordem certa dos primeiros documentos</li>
+          <li>Resumo por escrito com os próximos passos e links oficiais</li>
+        </ul>
+      </article>
+      <article class="pack featured">
+        <header><h3>Kit Primeiro Mês</h3><span class="tag">Mais pedido</span></header>
+        <span class="price">89 € <small>pacote</small></span>
+        <span class="meta">2 sessões · 15 dias de apoio por WhatsApp</span>
+        <ul>
+          <li>Checklist personalizada dos primeiros 30 dias</li>
+          <li>Passo a passo de NIF, NISS, número de utente e conta bancária</li>
+          <li>Como marcar atendimentos e o que levar a cada um</li>
+          <li>Abertura de atividade nas Finanças, se você for trabalhar por conta própria</li>
+        </ul>
+      </article>
+      <article class="pack">
+        <header><h3>Casa sem dor de cabeça</h3><span class="price">149 €</span></header>
+        <span class="meta">3 sessões · 30 dias de apoio por WhatsApp</span>
+        <ul>
+          <li>Onde procurar arrendamento e como reconhecer anúncios falsos</li>
+          <li>Documentos que os senhorios costumam pedir e como prepará-los</li>
+          <li>Candidatura ao Porta 65 Jovem, passo a passo no portal</li>
+          <li>Organização do orçamento: caução, rendas adiantadas e contas da casa</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">O que costuma entrar no primeiro mês</span>
+    <div class="check">
+      <div><b>NIF</b><span>Número fiscal, pedido nas Finanças</span></div>
+      <div><b>NISS</b><span>Número da Segurança Social</span></div>
+      <div><b>Nº de Utente</b><span>Inscrição no centro de saúde</span></div>
+      <div><b>IBAN PT50</b><span>Conta num banco português</span></div>
+      <div><b>Morada</b><span>Comprovativo de residência</span></div>
+      <div><b>Atividade</b><span>Recibos verdes, se for o caso</span></div>
+    </div>
+  </section>
+
+  <section class="limits">
+    <h3>O que este serviço não é</h3>
+    <ul>
+      <li>Não é consultoria jurídica nem fiscal, e não trato de vistos ou processos de residência.</li>
+      <li>Não represento você perante nenhuma entidade nem redijo contratos.</li>
+      <li>Quando a sua dúvida precisa de advogado, solicitador ou contabilista, eu te digo isso logo e indico onde procurar.</li>
+    </ul>
+  </section>
+
+  <section class="contact" id="contato">
+    <span class="eyebrow">Contato</span>
+    <h2>Me manda uma mensagem</h2>
+    <div class="contact-box">
+      <a class="cta" href="https://wa.me/351925813541?text=Oi%2C%20Aline%21%20Vi%20a%20sua%20p%C3%A1gina%20Chegada%20Leve.%20Cheguei/vou%20chegar%20em%20%5Bm%C3%AAs%5D%20e%20tenho%20interesse%20no%20pacote%20%5Bnome%5D.%20A%20minha%20maior%20d%C3%BAvida%20%C3%A9%20%5B...%5D." target="_blank" rel="noopener">Abrir conversa no WhatsApp</a>
+      <div class="contact-row"><span>WhatsApp:</span><code id="wa">+351 925 813 541</code><button class="copy" data-target="wa" type="button">Copiar número</button></div>
+      <p class="msg" id="tpl">Oi, Aline! Vi a sua página Chegada Leve. Cheguei/vou chegar em [mês] e tenho interesse no pacote [nome]. A minha maior dúvida é [...].</p>
+      <div class="contact-row"><button class="copy" data-target="tpl" type="button">Copiar mensagem pronta</button><span id="status" role="status" aria-live="polite"></span></div>
+    </div>
+  </section>
+
+  <footer>Atendimento por videochamada para todo Portugal. Pagamento por MB Way ou transferência, com recibo. · Página de <a href="https://bylx.dev/">bylx.dev</a></footer>
+</main>
+<script>
+document.querySelectorAll('.copy').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const el=document.getElementById(btn.dataset.target);
+    const status=document.getElementById('status');
+    try{await navigator.clipboard.writeText(el.textContent.trim());status.textContent='Copiado.';}
+    catch(e){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);status.textContent='Texto selecionado. Use Ctrl+C para copiar.';}
+  });
+});
+</script>
+</body>
+</html>
