@@ -72,6 +72,9 @@ section{display:grid;gap:20px}
 .contact-row code{font-family:var(--mono);font-size:1rem;user-select:all;word-break:break-all}
 .copy{background:transparent;border:1.5px solid var(--cobalt);color:var(--cobalt);border-radius:999px;padding:6px 14px;font:inherit;font-size:.9rem;cursor:pointer}
 .msg{font-size:.92rem;color:var(--muted);background:var(--bg);border-radius:8px;padding:12px;white-space:pre-wrap}
+.pay{display:inline-flex;justify-content:center;background:var(--sun);color:var(--sun-ink);font-weight:700;text-decoration:none;padding:10px 16px;border-radius:999px;width:fit-content}
+.pay:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+.paynote{font-size:.9rem;color:var(--muted)}
 footer{font-size:.85rem;color:var(--muted)}
 footer a{color:var(--cobalt)}
 @media (prefers-reduced-motion:no-preference){.stamp{transition:transform .2s}.stamp:hover{transform:rotate(0) scale(1.05)}}
@@ -104,17 +107,19 @@ footer a{color:var(--cobalt)}
     <h2>Escolha o tamanho da ajuda</h2>
     <div class="packs">
       <article class="pack">
-        <header><h3>Conversa de orientação</h3><span class="price">35 €</span></header>
+        <header><h3>Conversa de orientação</h3><span class="price">35 € <small>ou R$ 197</small></span></header>
         <span class="meta">60 min · videochamada</span>
         <ul>
           <li>Tira-dúvidas sobre a sua situação concreta</li>
           <li>Ordem certa dos primeiros documentos</li>
           <li>Resumo por escrito com os próximos passos e links oficiais</li>
         </ul>
+              <a class="pay" href="https://mpago.la/2sQ4qwR" target="_blank" rel="noopener">Pagar R$ 197 no cartão (até 12x)</a>
+        <span class="paynote">Prefere Pix ou MB Way? Fale comigo no WhatsApp.</span>
       </article>
       <article class="pack featured">
         <header><h3>Kit Primeiro Mês</h3><span class="tag">Mais pedido</span></header>
-        <span class="price">89 € <small>pacote</small></span>
+        <span class="price">89 € <small>ou R$ 497 em até 12x</small></span>
         <span class="meta">2 sessões · 15 dias de apoio por WhatsApp</span>
         <ul>
           <li>Checklist personalizada dos primeiros 30 dias</li>
@@ -124,7 +129,7 @@ footer a{color:var(--cobalt)}
         </ul>
       </article>
       <article class="pack">
-        <header><h3>Casa sem dor de cabeça</h3><span class="price">149 €</span></header>
+        <header><h3>Casa sem dor de cabeça</h3><span class="price">149 € <small>ou R$ 797 em até 12x</small></span></header>
         <span class="meta">3 sessões · 30 dias de apoio por WhatsApp</span>
         <ul>
           <li>Onde procurar arrendamento e como reconhecer anúncios falsos</li>
@@ -134,6 +139,7 @@ footer a{color:var(--cobalt)}
         </ul>
       </article>
     </div>
+    <p class="paynote">Os pacotes maiores começam com uma conversa rápida no WhatsApp para confirmar que servem para o seu caso. Depois envio o link de pagamento.</p>
   </section>
 
   <section>
@@ -168,7 +174,7 @@ footer a{color:var(--cobalt)}
     </div>
   </section>
 
-  <footer>Atendimento por videochamada para todo Portugal. Pagamento por MB Way ou transferência, com recibo. · Página de <a href="https://bylx.dev/">bylx.dev</a></footer>
+  <footer>Atendimento por videochamada para todo Portugal. Em Portugal: MB Way ou transferência. No Brasil: Pix ou cartão em até 12x pelo Mercado Pago. Sempre com recibo. · Página de <a href="https://bylx.dev/">bylx.dev</a></footer>
 </main>
 <script>
 document.querySelectorAll('.copy').forEach(btn=>{
