@@ -80,14 +80,15 @@
   color-scheme: dark;
   --surface: #9319c8;               /* fundo da página = fundo da cena (scene.json backgroundColor) */
   --surface-2: #5c05a6;             /* painéis e cartões */
-  --ink: var(--bylx-bg);            /* texto e contorno sobre preenchimentos claros — igual nos dois temas */
+  --ink: var(--bylx-bg);            /* contornos — igual nos dois temas */
+  --on-fill: #5c05a6;               /* texto sobre preenchimentos: o extremo escuro da rampa (roxo sobre rosa) */
   --fg: var(--bylx-text);           /* texto sobre a superfície */
   --fg-2: #f7f2ff;                  /* sobre #9319c8 só o #f7f2ff passa 4.5:1 (5.9:1); #ffbedd dava 4.25 */
   --fg-fill: var(--bylx-text);      /* superfície clara com texto --ink (folhas, chips) — igual nos dois temas */
   --link: #f7f2ff;
   --line: #ffbedd;                  /* bordas: 4.25:1 sobre #9319c8 (o mínimo para não-texto é 3:1) */
-  --accent-2-fill: var(--bylx-cyan);/* preenchimento secundário (texto --ink) */
-  --accent-fill: var(--bylx-pink);  /* preenchimento de CTA (texto --ink) */
+  --accent-2-fill: #ffbedd;         /* preenchimento secundário; --on-fill 6.7:1 */
+  --accent-fill: #fe7ee2;           /* CTA; --on-fill 4.6:1 */
   --accent-fg: #f7f2ff;
   --accent-line: #ffbedd;
   --focus: #f7f2ff;                 /* anel de foco */
@@ -155,10 +156,10 @@
      scene's own colour — and pink is reserved for CTA fills and focus rings.
      This one token is the lever: set it back to var(--bylx-pink) to undo. */
   --shadow-chunk: #5c05a6;
-  --shadow-chunk-sm: 4px 4px 0 var(--shadow-chunk);
-  --shadow-chunk-md: 7px 7px 0 var(--shadow-chunk);
-  --shadow-chunk-lg: 9px 9px 0 var(--shadow-chunk);
-  --shadow-chunk-cyan: 6px 6px 0 var(--line);
+  --shadow-chunk-sm: 2px 2px 0 var(--shadow-chunk);
+  --shadow-chunk-md: 4px 4px 0 var(--shadow-chunk);
+  --shadow-chunk-lg: 4px 4px 0 var(--shadow-chunk);
+  --shadow-chunk-cyan: 3px 3px 0 var(--line);
   --glow-cyan: 0 0 0 3px var(--line);
 
   --ease-step-2: steps(2, end);
@@ -174,17 +175,44 @@
    Contraste medido sobre #f7f2ff: --fg 18.2:1, --fg-2 #04468d 8.4:1,
    --link #04468d 8.4:1, --line #0a7194 5.0:1 (só bordas), --focus 8.4:1; texto --ink sobre os
    preenchimentos #02dbc4 11.4:1 e #18c1cd 9.1:1. */
-@media (prefers-color-scheme: light) {
-  :root {
+/* Light: pelo interruptor AM/PM (data-theme no <html>) ou, sem escolha
+   guardada, pelo sistema. */
+:root[data-theme="light"] {
     color-scheme: light;
     --surface: #02dbc4;  /* fundo da página = borda da parede no light (#5c5c5c invertido) */
     --surface-2: #f7f2ff;
     --fg: #09051b;
-    --fg-2: #04468d;
-    --link: #04468d;  /* #0a7194 dava 4.4:1 sobre o fundo tingido do About */
+    --fg-2: #09051b;
+    --link: #09051b;
     --line: #0a7194;
-    --accent-2-fill: #18c1cd;
-    --accent-fill: #02dbc4;
+    --on-fill: #04468d;   /* extremo escuro da rampa light */
+    --accent-2-fill: #b3fed6;  /* --on-fill 8:1 */
+    --accent-fill: #02dbc4;    /* --on-fill 5.3:1 */
+    --accent-fg: #04468d;
+    --accent-line: #04468d;
+    --focus: #04468d;
+    --focus-alt: #04468d;
+    --accent-3-fg: #04468d;
+    --accent-3-fill: #04468d;
+    --shadow-chunk: #0a7194;
+    --danger: #04468d;
+    --bylx-cyan-deep: #04468d;
+    --bylx-paper: #f7f2ff;
+    --bylx-overlay: #f7f2ff;
+    --bylx-overlay-strong: #f7f2ff;
+  }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --surface: #02dbc4;  /* fundo da página = borda da parede no light (#5c5c5c invertido) */
+    --surface-2: #f7f2ff;
+    --fg: #09051b;
+    --fg-2: #09051b;
+    --link: #09051b;
+    --line: #0a7194;
+    --on-fill: #04468d;   /* extremo escuro da rampa light */
+    --accent-2-fill: #b3fed6;  /* --on-fill 8:1 */
+    --accent-fill: #02dbc4;    /* --on-fill 5.3:1 */
     --accent-fg: #04468d;
     --accent-line: #04468d;
     --focus: #04468d;

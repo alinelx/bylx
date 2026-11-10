@@ -41,9 +41,9 @@ img {
   left: 0;
   z-index: 999;
   padding: 0.7rem 1rem;
-  color: var(--ink);
+  color: var(--on-fill);
   background: var(--accent-2-fill);
-  border: 3px solid var(--ink);
+  border: 2px solid var(--ink);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   text-decoration: none;

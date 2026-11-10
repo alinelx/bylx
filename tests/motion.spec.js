@@ -8,6 +8,7 @@ import { test, expect } from "@playwright/test";
 async function scene(page) {
   await page.goto("/");
   await page.waitForFunction(() => document.querySelector("#hero-scene canvas")?.width > 0);
+  await page.waitForFunction(() => document.querySelector("#hero-scene")?.dataset.sceneReady === "1");
   return page.locator("#hero-scene canvas");
 }
 
@@ -33,8 +34,15 @@ for (const scheme of ["dark", "light"]) {
   });
 }
 
-test("the scene does not move on its own", async ({ page }) => {
+test("the scene opens with one stepped intro and then settles", async ({ page }) => {
   await scene(page);
+  await expect(page.locator("#hero-scene")).toHaveAttribute("data-scene-ready", "1", { timeout: 4000 });
+});
+
+test("with reduced motion the scene does not move on its own", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await scene(page);
+  await expect(page.locator("#hero-scene")).toHaveAttribute("data-scene-ready", "1");
   const grab = () => page.evaluate(() => document.querySelector("#hero-scene canvas").toDataURL());
   const a = await grab();
   await page.waitForTimeout(1500);

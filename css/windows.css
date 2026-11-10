@@ -14,40 +14,58 @@
   --surface: #09051b;
   --surface-2: #5c05a6;
   --fg: #f7f2ff;            /* 18.2:1 */
-  --fg-2: #ffbedd;          /* 13.5:1 */
-  --link: #fe7ee2;          /* 8.6:1 */
+  --fg-2: #f7f2ff;          /* texto pequeno também em branco, como no painel do hero */
+  --link: #f7f2ff;          /* links distinguem-se pelo sublinhado, não pela cor */
   --line: #ee5afc;
-  --accent-fg: #fe7ee2;
-  --accent-3-fg: #fe7ee2;
+  --accent-fg: #f7f2ff;
+  --accent-3-fg: #f7f2ff;
   --focus: #ffbedd;
   --shadow-chunk: #5c05a6;
-  --win-title: #ee5afc;     /* barra de título; texto --ink 6.7:1 */
+  --win-title: #fe7ee2;     /* barra de título; texto --on-fill (roxo) 4.6:1 */
 }
 
-@media (prefers-color-scheme: light) {
-  .os-window,
-  .os-tip,
-  .modal-window,
-  .work-sheet {
+/* Light: pelo interruptor AM/PM (data-theme no <html>) ou, sem escolha
+   guardada, pelo sistema. */
+:root[data-theme="light"] .os-window,
+:root[data-theme="light"] .os-tip,
+:root[data-theme="light"] .modal-window,
+:root[data-theme="light"] .work-sheet {
     --surface: #f7f2ff;
     --surface-2: #b3fed6;
     --fg: #09051b;
-    --fg-2: #04468d;        /* 8.4:1 */
-    --link: #04468d;
+    --fg-2: #09051b;
+    --link: #09051b;
     --line: #0a7194;
-    --accent-fg: #04468d;
-    --accent-3-fg: #04468d;
+    --accent-fg: #09051b;
+    --accent-3-fg: #09051b;
     --focus: #04468d;
     --shadow-chunk: #04468d;
-    --win-title: #18c1cd;   /* texto --ink 9.1:1 */
+    --win-title: #b3fed6;   /* texto --on-fill (azul) 8:1 */
+  }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .os-window,
+:root:not([data-theme="dark"]) .os-tip,
+:root:not([data-theme="dark"]) .modal-window,
+:root:not([data-theme="dark"]) .work-sheet {
+    --surface: #f7f2ff;
+    --surface-2: #b3fed6;
+    --fg: #09051b;
+    --fg-2: #09051b;
+    --link: #09051b;
+    --line: #0a7194;
+    --accent-fg: #09051b;
+    --accent-3-fg: #09051b;
+    --focus: #04468d;
+    --shadow-chunk: #04468d;
+    --win-title: #b3fed6;   /* texto --on-fill (azul) 8:1 */
   }
 }
 
 .os-window {
   color: var(--fg);
   background: var(--surface);
-  border: 4px solid var(--ink);
-  box-shadow: 8px 8px 0 var(--shadow-chunk);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--shadow-chunk);
 }
 
 .os-titlebar {
@@ -56,9 +74,9 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 6px 6px 6px 12px;
-  color: var(--ink);
+  color: var(--on-fill);
   background: var(--win-title);
-  border-bottom: 4px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
   font-family: var(--font-ui);
   font-size: var(--fs-label-lg);
   line-height: 1;
@@ -78,9 +96,9 @@
   width: 30px;
   height: 26px;
   padding: 0;
-  color: var(--ink);
+  color: var(--on-fill);
   background: var(--fg-fill);
-  border: 3px solid var(--ink);
+  border: 2px solid var(--ink);
   cursor: pointer;
 }
 
@@ -158,8 +176,8 @@
   padding: 0;
   color: var(--fg);
   background: var(--surface);
-  border: 4px solid var(--ink);
-  box-shadow: 4px 4px 0 var(--shadow-chunk);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--shadow-chunk);
 }
 .os-tip p { margin: 0; padding: var(--win-pad-sm); }
 .os-tip .os-btn { pointer-events: auto; }
@@ -169,12 +187,12 @@
 .work-sheet {
   color: var(--fg);
   background: var(--surface);
-  border: 4px solid var(--ink);
-  box-shadow: 8px 8px 0 var(--shadow-chunk);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--shadow-chunk);
 }
 .modal-header {
   background: var(--win-title);
-  border-bottom: 4px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
 }
 .modal-close { font-size: 0; }
 .case-study-body p,
@@ -226,7 +244,8 @@
 @media (max-width: 900px), ((orientation: portrait) and (max-width: 1200px)) {
   .hero-text {
     width: auto;
-    margin: var(--gutter) var(--gutter) calc(var(--gutter) / 2);
+    /* em cima, espaço para o interruptor AM/PM fixo no canto */
+    margin: calc(var(--win-pad-sm) * 2 + 1.75rem) var(--gutter) calc(var(--gutter) / 2);
   }
   .desk-hint.os-tip {
     width: calc(100% - 2 * var(--gutter));
@@ -239,8 +258,8 @@
    secção e o mesmo espaço entre o título e o conteúdo. */
 .arcade-inner { text-align: left; }
 .arcade-lede { margin: 0.75rem 0 0; }
-.arcade-cabinet { margin: 0; }
-.arcade .arcade-cabinet { margin-top: 3rem; }
+/* O texto do Arcade fica à esquerda; só a máquina vai ao centro */
+.arcade .arcade-cabinet { margin: 3rem auto 0; }
 
 #projects-title,
 .arcade-heading,
@@ -252,3 +271,204 @@
 }
 .projects-header { margin-bottom: 3rem; }
 .about-heading { margin-bottom: 3rem; }
+
+/* ---------- Acabamento (revisão de 2026-11-10) ----------
+   Uma só coisa com sombra deslocada por nível: a janela. Dentro dela, os
+   cartões e os botões secundários ficam chapados — a sombra passa a ser a
+   resposta ao gesto, não decoração em cada caixa. */
+
+/* Cartões de projecto: sem sombra parada; o hover ganha-a */
+.project-card { box-shadow: none; }
+.project-card:hover { box-shadow: 2px 2px 0 var(--line); }
+
+/* About: um único botão cheio (Get in touch); os outros são contorno */
+.about-link,
+.about-link--primary {
+  color: var(--link);
+  background: transparent;
+  box-shadow: none;
+}
+.about-cta {
+  color: var(--on-fill);
+  background: var(--accent-fill);
+  box-shadow: 2px 2px 0 var(--line);
+}
+.about-link:hover,
+.about-link:focus-visible {
+  box-shadow: 2px 2px 0 var(--line);
+}
+.about-link:active { box-shadow: none; }
+
+/* Texto corrido do About com a mesma entrelinha da prosa dos estudos de caso */
+.about-text p { line-height: var(--lh-prose); font-size: var(--fs-body); } /* era 0.85rem no mínimo: corpo nunca abaixo de 1rem */
+
+/* Subtítulos das credenciais: o mesmo espaço antes e depois em todos */
+.about-badges-label { margin: 2.5rem 0 1rem; }
+
+/* O rodapé assenta no fundo da página: sem linha, alinhado à coluna das janelas */
+.site-footer { border-top: 0; background: transparent; }
+.arcade-lede { font-size: var(--fs-body); line-height: var(--lh-prose); }
+
+/* Títulos das janelas: maiúsculas e preto (#09051b) nos dois temas — sobre o
+   rosa #fe7ee2 dá 8.7:1, sobre o verde-água #b3fed6 17.2:1 */
+.os-title,
+.modal-header h2,
+.work-sheet .modal-header h1 {
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* Janelas do tamanho do conteúdo, não da página (até à coluna de 1100px) */
+.projects-inner.os-window,
+.arcade-inner.os-window,
+.about-inner.os-window {
+  width: fit-content;
+  max-width: min(1100px, 100%);
+}
+.os-window.is-maximized { width: auto; max-width: none; }
+
+/* ---------- As paredes do hero continuam pelo site ----------
+   script.js põe em --wall-l/--wall-r as paredes já pintadas no tema e a
+   posição/escala que têm no hero; aqui repetem-se na vertical atrás das
+   janelas. No fundo do <html>; o pixelated não passa ao <body>. */
+html {
+  background-color: var(--wall-fill, var(--surface));
+  background-image: var(--wall-l, none), var(--wall-r, none);
+  background-repeat: repeat-y;
+  background-size: var(--wall-w, 0) auto;
+  /* Encostadas às bordas do navegador; o meio é a cor lisa de dentro da
+     parede (--wall-fill), por isso as duas emendam no fundo */
+  background-position: left top, right top;
+  image-rendering: pixelated;
+}
+/* image-rendering herda: o resto do site volta ao normal */
+body {
+  background: transparent;
+  image-rendering: auto;
+}
+
+/* ---------- Interruptor AM / PM ----------
+   Fixo no canto, como o relógio da barra de tarefas. A metade acesa é o modo
+   actual; o botão inteiro troca. */
+.time-toggle {
+  position: fixed;
+  top: var(--win-pad-sm);
+  right: var(--win-pad-sm);
+  z-index: 60;
+  display: inline-flex;
+  padding: 0;
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  background: var(--fg-fill);
+  font-family: var(--font-ui);
+  font-size: var(--fs-label);
+  line-height: 1;
+  cursor: pointer;
+}
+.time-toggle span {
+  padding: 6px 9px;
+  color: var(--ink);
+}
+.time-toggle[data-mode="light"] .time-am,
+.time-toggle[data-mode="dark"] .time-pm {
+  color: var(--on-fill);
+  background: var(--win-title, var(--accent-fill));
+}
+.time-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+/* O nome da janela nunca quebra linha: encolhe com reticências se faltar espaço */
+.os-title,
+.modal-header h2,
+.work-sheet .modal-header h1 {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.os-titlebar > .os-title,
+.modal-header > h2 { flex: 1 1 auto; }
+.os-controls,
+.modal-header > .modal-close { flex: none; }
+
+/* LCD do leitor de MP3: ecrã sempre escuro, texto sempre claro (no light o
+   --link é preto e o texto sumia no ecrã #09051b) */
+.mp3-lcd { color: var(--fg-fill); }
+
+/* O hero deixa ver o fundo da página abaixo da mesa */
+.hero-scene,
+#hero-scene { background: transparent; }
+
+/* Texto fora das janelas (rodapé) assenta na cor de dentro da parede:
+   dark #fe7ee2 → roxo #5c05a6 (4.6:1); light #0a7194 → #f7f2ff (5:1) */
+.site-footer { --fg: #5c05a6; --fg-2: #5c05a6; --link: #5c05a6; --accent-fg: #5c05a6; }
+:root[data-theme="light"] .site-footer { --fg: #f7f2ff; --fg-2: #f7f2ff; --link: #f7f2ff; --accent-fg: #f7f2ff; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .site-footer { --fg: #f7f2ff; --fg-2: #f7f2ff; --link: #f7f2ff; --accent-fg: #f7f2ff; }
+}
+.footer-copy { opacity: 1; }
+
+/* A frase entre a mesa e a primeira janela: uma linha só, numa caixa da cor
+   das janelas — por baixo passa a parede pontilhada, e nenhuma cor de texto
+   tem contraste com as duas cores dela ao mesmo tempo. Alinhada à esquerda
+   da coluna das janelas. */
+.desk-bridge {
+  /* Dentro do hero, logo abaixo da mesa (--scene-bottom vem de script.js) */
+  position: absolute;
+  z-index: 2;
+  top: calc(var(--scene-bottom, 80svh) + clamp(1rem, 3vh, 2rem));
+  left: max(var(--gutter), calc((100% - 1100px) / 2));
+  width: fit-content;
+  max-width: calc(100% - 2 * var(--gutter));
+  margin: 0;
+  padding: 0.35em 0.6em;
+  color: #f7f2ff;
+  background: #09051b;
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  font-family: var(--font-pixel);
+  font-size: var(--bridge-fs);
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+:root[data-theme="light"] .desk-bridge { color: #09051b; background: #f7f2ff; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .desk-bridge { color: #09051b; background: #f7f2ff; }
+}
+
+/* O hero acaba logo a seguir à frase: a cena tem sempre a altura do ecrã
+   (a escala não depende do hero), e o hero só tem a altura de mesa + frase,
+   por isso a primeira janela vem colada a seguir */
+:root { --bridge-fs: clamp(1.1rem, 4.2vw, 2.4rem); }
+#hero-scene { inset: 0 0 auto 0; height: 100svh; }
+.hero-scene {
+  height: auto;
+  min-height: 0;
+  /* mesa + espaço + a caixa da frase (1.1 de linha + 0.7em de padding + 4px de borda) */
+  height: calc(var(--scene-bottom, 80svh) + clamp(1rem, 3vh, 2rem) + var(--bridge-fs) * 1.8 + 4px);
+}
+.hero-scene + .projects,
+#projects { padding-top: clamp(0.75rem, 1.5vw, 1.25rem); }
+
+/* Telemóvel: a frase vem no fluxo, depois da cena, ainda dentro do hero */
+@media (max-width: 900px), ((orientation: portrait) and (max-width: 1200px)) {
+  .desk-bridge {
+    position: static;
+    margin: calc(var(--gutter) / 2) var(--gutter) 0;
+  }
+  .hero-scene { min-height: 0; height: auto; }
+  #hero-scene { inset: auto; height: min(78svh, 100vw * 1.05); }
+}
+
+/* ---------- Fundo dos pop-ups: as mesmas paredes do site ----------
+   Contacto, galeria, case studies: o véu atrás da janela é a parede em
+   gradiente encostada às bordas, emendada pela cor de dentro (--wall-fill). */
+.modal-backdrop {
+  background-color: var(--wall-fill, var(--surface));
+  background-image: var(--wall-l, none), var(--wall-r, none);
+  background-repeat: repeat-y;
+  background-size: var(--wall-w, 0) auto;
+  background-position: left top, right top;
+  image-rendering: pixelated;
+}
+.modal-window { image-rendering: auto; }

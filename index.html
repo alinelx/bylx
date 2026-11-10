@@ -30,6 +30,8 @@
   <meta name="theme-color" content="#09051b" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#f7f2ff" media="(prefers-color-scheme: light)" />
   <meta name="color-scheme" content="dark light" />
+  <!-- AM/PM: aplica a escolha guardada antes da primeira pintura (js/theme.js) -->
+  <script>try{var t=localStorage.getItem("bylx:theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
   <link rel="canonical" href="https://bylx.dev/" />
 
   <!-- One graph, three jobs: say who she is (entity), say the site is hers,
@@ -131,7 +133,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=95426145" />
+  <link rel="stylesheet" href="styles.css?v=8d96f237" />
 </head>
 
 <body>
@@ -148,7 +150,11 @@
            níveis de cinza, ampliada por inteiros e pintada no tema do sistema.
            Os botões abaixo são os mesmos de sempre, com os mesmos listeners —
            o motor só os coloca por cima do objecto que representam. -->
-      <div class="scene-stage" id="hero-scene" data-scene-src="assets/scene/sprites.json?v=d4c3979a">
+      <button class="time-toggle" type="button" aria-pressed="false" aria-label="Switch to AM (light mode)">
+        <span class="time-am" aria-hidden="true">AM</span><span class="time-pm" aria-hidden="true">PM</span>
+      </button>
+
+      <div class="scene-stage" id="hero-scene" data-scene-src="assets/scene/sprites.json?v=1385fdde">
         <button class="scene-btn hotspot hotspot-cocktail" type="button" aria-label="Open: two cities" data-modal-target="cities-modal" data-layer="cocktail"></button>
         <button class="scene-btn hotspot hotspot-sushi" type="button" aria-label="Open: how this desk was drawn" data-modal-target="craft-modal" data-layer="sushi"></button>
         <button class="scene-btn hotspot hotspot-instax instax" type="button" aria-label="Open image gallery" data-modal-target="gallery-modal" data-layer="instax"></button>
@@ -170,6 +176,10 @@
 
         <button class="scene-btn monitor-power" type="button" aria-label="Turn monitor off" aria-pressed="false" data-rect="385,288,11,11"></button>
       </div>
+
+      <!-- Logo abaixo da mesa, ainda dentro do hero: o motor da cena escreve em
+           --scene-bottom onde a mesa acaba -->
+      <p class="desk-bridge">Things I've built at this desk.</p>
 
       <div class="hero-text os-window" data-window>
         <div class="os-titlebar">
@@ -975,7 +985,7 @@
       <p class="mp3-status" data-mp3-status hidden></p>
 
       <div class="mp3-frame">
-        <img class="mp3-img" src="assets/hero/mp3_player.png?v=254517dc" alt="" />
+        <img class="mp3-img" src="assets/hero/mp3_player.png?v=254517dc" alt="" data-themed />
 
         <div class="mp3-lcd">
           <div class="mp3-lcd-marquee">
@@ -1019,6 +1029,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=95426145"></script>
+  <script type="module" src="script.js?v=8d96f237"></script>
 </body>
 </html>

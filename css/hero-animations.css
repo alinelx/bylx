@@ -347,7 +347,7 @@
 }
 
 @keyframes title-tick {
-  from { color: var(--ink); }
+  from { color: var(--on-fill); }
   to   { color: var(--surface-2); }
 }
 

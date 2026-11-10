@@ -237,10 +237,10 @@
 .deck-card > a {
   display: block;
   padding: 1rem 1rem 1.2rem;
-  border: 3px solid var(--ink);
+  border: 2px solid var(--ink);
   background: var(--paper);
-  box-shadow: 6px 6px 0 var(--shadow-chunk);
-  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--shadow-chunk);
+  color: var(--on-fill);
   text-decoration: none;
 }
 
@@ -278,7 +278,7 @@
   margin-top: 0.5rem;
   font-size: 0.85rem;
   line-height: 1.5;
-  color: var(--ink);
+  color: var(--on-fill);
 }
 
 /* The arrows exist only when there is somewhere to go. js/arcade.js removes
@@ -289,9 +289,9 @@
   top: 45%;
   z-index: 4;
   padding: 0.5rem 0.7rem;
-  border: 3px solid var(--ink);
+  border: 2px solid var(--ink);
   background: var(--accent-2-fill);
-  color: var(--ink);
+  color: var(--on-fill);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   line-height: 1;

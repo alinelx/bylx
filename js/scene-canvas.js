@@ -13,9 +13,10 @@
    leitor de ecrã não sabem que o desenho mudou de técnica.
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 
-import { prefersReducedMotion } from "./utils.js?v=95426145";
+import { prefersReducedMotion } from "./utils.js?v=8d96f237";
 
-const OUTLINE = "#59f3ff"; // --bylx-cyan: o contorno de "seleccionado" dos jogos
+/* O contorno de "seleccionado" dos jogos: ciano no dark, rosa no light */
+const OUTLINE = { dark: "#59f3ff", light: "#ff5dbb" };
 
 function b64(s) {
   const bin = atob(s), out = new Uint8Array(bin.length);
@@ -92,11 +93,11 @@ function flip(src, how) {
 }
 
 /* Contorno de 1px por fora da arte: o "está seleccionado" de um menu de jogo. */
-function outline(s, rgba) {
+function outline(s, rgba, colour = OUTLINE.dark) {
   const c = document.createElement("canvas");
   c.width = s.w + 2; c.height = s.h + 2;
   const ctx = c.getContext("2d"), img = ctx.createImageData(c.width, c.height);
-  const [r, g, b] = parseHex(OUTLINE);
+  const [r, g, b] = parseHex(colour);
   const on = (x, y) => x >= 0 && y >= 0 && x < s.w && y < s.h && rgba[(y * s.w + x) * 4 + 3] > 0;
   for (let y = -1; y <= s.h; y++) for (let x = -1; x <= s.w; x++) {
     if (on(x, y)) continue;
@@ -114,9 +115,15 @@ function outline(s, rgba) {
    hotspots — false para não criar botões a partir do scene.json (o site usa anchors).
    focus    — [x, y, w, h] da grade que tem de caber num ecrã estreito: em vez de
               encolher a cena inteira até 1×, amplia até esta caixa caber e corta o resto.
+   onScene  — chamada depois de cada pintura/medida com { u, ox, layer(name), image(name) }:
+              u = 1 pixel da grade em px CSS. O site usa-a para continuar as paredes.
+   intro    — [[prefixos], …]: na abertura, cada grupo de camadas sobe para o lugar
+              em degraus de pixel, um grupo atrás do outro (um só momento coreografado).
+   blink    — [{ rect: [x,y,w,h], levels: [i, j], ms }]: um ponto que alterna entre
+              dois níveis da rampa do tema (o LED do monitor). Sem reduced-motion.
    cropTop  — quantos pixels de céu (topo da grade) se podem cortar para ganhar escala.
    theme    — "dark" | "light" | "grey"; sem tema, segue o sistema e acompanha a troca. */
-export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json", onOpen, theme, anchors = [], hotspots = true, focus = null, cropTop = 0 } = {}) {
+export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json", onOpen, theme, anchors = [], hotspots = true, focus = null, cropTop = 0, onScene, intro = null, blink = [] } = {}) {
   const data = await (await fetch(src)).json();
   const [BW, BH] = data.base;
   const reduced = prefersReducedMotion();
@@ -171,13 +178,23 @@ export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json"
   };
   repaint();
 
+  const notify = () => onScene?.({
+    u: state.k / (state.dpr || 1), ox: state.ox, oy: state.oy, base: data.base, theme: themeName,
+    layer: n => data.layers.find(l => l.name === n), image: n => images[n],
+  });
+  const outlineCache = {};
+  const outlineFor = n => {
+    const colour = OUTLINE[family()] ?? OUTLINE.dark, key = n + colour;
+    return outlineCache[key] ??= outline(data.sprites[n], toRGBA(data.sprites[n], data.sprites, null), colour);
+  };
+
   const state = { k: 1, cw: BW, ch: BH, ox: 0, oy: 0, px: 0, py: 0, hover: null, frame: 0, playing: null };
 
   /* Hotspots */
   const hot = hotspots ? data.layers.filter(l => l.hotspot) : [];
   for (const l of hot) {
     const s = data.sprites[l.name];
-    outlines[l.name] = outline(s, toRGBA(s, data.sprites, null));
+    outlines[l.name] = true;
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = `scene-hotspot hotspot-${l.name}`;
@@ -201,7 +218,7 @@ export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json"
     const l = a.layer && byName[a.layer];
     if (l) {
       const s = data.sprites[l.name];
-      outlines[l.name] ??= outline(s, toRGBA(s, data.sprites, null));
+      outlines[l.name] = true;
       a.rect = [l.x, l.y, s.w, s.h];
       const on = () => { state.hover = l.name; draw(); };
       const off = () => { if (state.hover === l.name) { state.hover = null; draw(); } };
@@ -262,8 +279,27 @@ export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json"
       Object.assign(a.el.style, { left: `${(state.ox + x) * u}px`, top: `${(state.oy + y) * u}px`, width: `${w * u}px`, height: `${h * u}px` });
     }
     root.style.setProperty("--scene-unit", `${u}px`);
+    notify();
     draw();
   }
+
+  /* ---- Abertura: os grupos sobem 8px em 4 degraus, 110ms entre grupos ---- */
+  const groupOf = n => intro ? intro.findIndex(g => g.some(p => n.startsWith(p))) : -1;
+  const t0 = performance.now();
+  const INTRO_STEP = 70, INTRO_STEPS = 4, INTRO_GAP = 110, INTRO_RISE = 8;
+  const introEnd = intro && !reduced ? (intro.length - 1) * INTRO_GAP + INTRO_STEP * INTRO_STEPS : 0;
+  const introOffset = n => {
+    if (!introEnd) return 0;
+    const g = groupOf(n); if (g < 0) return 0;
+    const t = performance.now() - t0 - g * INTRO_GAP;
+    if (t < 0) return null; // ainda não entrou
+    const step = Math.min(INTRO_STEPS, Math.floor(t / INTRO_STEP));
+    return Math.round(INTRO_RISE * (1 - step / INTRO_STEPS));
+  };
+  const ramp = () => {
+    const t = data.themes?.[themeName];
+    return t ? [...new Set(Object.values(t))].sort((a, b) => lum(a) - lum(b)) : [];
+  };
 
   function draw() {
     ctx.imageSmoothingEnabled = false;
@@ -271,19 +307,47 @@ export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json"
     /* backgroundColor = { tema: cor }: o fundo é o mesmo do site (tokens.css --surface) */
     const bgMap = data.backgroundInvert?.includes(themeName) ? invertedMap() : mapColour;
     ctx.fillStyle = data.backgroundColor?.[themeName] ?? (bgMap ? bgMap(data.background) : data.background);
-    ctx.fillRect(0, 0, state.cw, state.ch);
+    /* O fundo só vai até ao fim da mesa: daí para baixo o canvas fica
+       transparente e vê-se o fundo da página (as paredes que continuam) */
+    ctx.clearRect(0, 0, state.cw, state.ch);
+    ctx.fillRect(0, 0, state.cw, Math.min(state.ch, state.oy + BH));
     for (const l of data.layers) {
       if (l.themes && !l.themes.includes(themeName) && !l.themes.includes(family())) continue; // camada só de alguns temas
       const d = l.parallax ? l.parallax : 0;
-      const x = state.ox + l.x + Math.round(state.px * d), y = state.oy + l.y + Math.round(state.py * d);
+      const rise = introOffset(l.name);
+      if (rise === null) continue;
+      const x = state.ox + l.x + Math.round(state.px * d), y = state.oy + l.y + Math.round(state.py * d) + rise;
       if (l.frames && state.playing === l.name) {
         ctx.drawImage(images[l.frames.names[state.frame]], state.ox + l.frames.x, state.oy + l.frames.y);
         continue;
       }
-      if (state.hover === l.name && outlines[l.name]) ctx.drawImage(outlines[l.name], x - 1, y - 1);
+      if (state.hover === l.name && outlines[l.name]) ctx.drawImage(outlineFor(l.name), x - 1, y - 1);
       ctx.drawImage(images[l.name], x, y);
     }
+    /* LEDs: alternam entre dois níveis da rampa do tema */
+    if (blink.length && !reduced) {
+      const r = ramp(), now = performance.now();
+      for (const b of blink) {
+        const on = Math.floor(now / b.ms) % 2 === 0;
+        ctx.fillStyle = r[on ? b.levels[0] : b.levels[1]] ?? "#fff";
+        ctx.fillRect(state.ox + b.rect[0], state.oy + b.rect[1], b.rect[2], b.rect[3]);
+      }
+    }
   }
+
+  /* Um só ciclo de animação: corre a abertura até ao fim e depois só redesenha
+     quando um LED muda de estado */
+  if (!reduced && (introEnd || blink.length)) {
+    let lastTick = -1;
+    const tick = () => {
+      const t = performance.now() - t0;
+      const ledTick = blink.length ? Math.floor(performance.now() / Math.min(...blink.map(b => b.ms))) : 0;
+      if (t <= introEnd + INTRO_STEP || ledTick !== lastTick) { lastTick = ledTick; draw(); }
+      if (t > introEnd + INTRO_STEP && !root.dataset.sceneReady) root.dataset.sceneReady = "1";
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  } else root.dataset.sceneReady = "1";
 
   /* Paralaxe: só o fundo (como no site), e em passos de pixel inteiro da grade */
   if (!reduced) {
@@ -297,7 +361,7 @@ export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json"
     });
   }
 
-  if (!theme) scheme.addEventListener("change", () => { themeName = scheme.matches ? "light" : "dark"; mapColour = themeMap(themeName); root.dataset.sceneTheme = themeName; repaint(); draw(); });
+  if (!theme) scheme.addEventListener("change", () => { themeName = scheme.matches ? "light" : "dark"; mapColour = themeMap(themeName); root.dataset.sceneTheme = themeName; repaint(); draw(); notify(); });
   root.dataset.sceneTheme = themeName;
 
   new ResizeObserver(layout).observe(root);
@@ -308,7 +372,7 @@ export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json"
     get scale() { return state.k; },
     /* mapColour(hex) → hex: a mesma cena noutra luz (dia/noite, tema claro) */
     setPalette(fn) { themeName = null; mapColour = fn; repaint(); draw(); },
-    setTheme(name) { themeName = name; mapColour = themeMap(name); repaint(); draw(); },
+    setTheme(name) { themeName = name; root.dataset.sceneTheme = name; mapColour = themeMap(name); repaint(); draw(); notify(); },
     /* setLevels("reduce8") liga o teste de 8 níveis; setLevels(null) volta aos 31. */
     setLevels(name) { reduce = name ? data.themes?.[name] ?? null : null; mapColour = themeMap(themeName); repaint(); draw(); },
     /* Troca o desenho de um sprite sem recarregar: para comparar versões */
@@ -316,7 +380,7 @@ export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json"
       data.sprites[name] = sprite;
       const img = paint(sprite, toRGBA(sprite, data.sprites, mapColour)), how = flipFor(name);
       images[name] = how ? flip(img, how) : img;
-      if (outlines[name]) outlines[name] = outline(sprite, toRGBA(sprite, data.sprites, null));
+      for (const key of Object.keys(outlineCache)) if (key.startsWith(name + "#")) delete outlineCache[key];
       draw();
     },
     redraw: draw,

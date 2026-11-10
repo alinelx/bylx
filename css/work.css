@@ -47,10 +47,10 @@
 
 .work-sheet {
   width: min(720px, 100%);
-  color: var(--ink);
+  color: var(--on-fill);
   background: var(--fg-fill);
-  border: var(--stroke-4, 4px) solid var(--line);
-  box-shadow: 8px 8px 0 var(--shadow-chunk);
+  border: 2px solid var(--line);
+  box-shadow: 4px 4px 0 var(--shadow-chunk);
   font-family: var(--font-pixel);
 }
 
@@ -58,7 +58,7 @@
    going somewhere, so the control is a link home. */
 .work-back {
   padding: 0.15rem 0.5rem;
-  color: var(--ink);
+  color: var(--on-fill);
   background: var(--accent-fill);
   border: 2px solid var(--ink);
   font-family: var(--font-ui);
@@ -123,7 +123,7 @@
 }
 
 .work-more a:hover,
-.work-more a:focus-visible { color: var(--ink); background: var(--accent-2-fill); }
+.work-more a:focus-visible { color: var(--on-fill); background: var(--accent-2-fill); }
 
 .work-more a:focus-visible {
   outline: 3px solid var(--focus);
@@ -143,12 +143,12 @@
   align-self: center;
   font-size: 0.78rem;
   line-height: 1.5;
-  color: var(--ink);
+  color: var(--on-fill);
 }
 
 .cs-permalink a {
   color: inherit;
-  text-decoration-color: var(--ink);
+  text-decoration-color: var(--on-fill);
   text-underline-offset: 3px;
 }
 
@@ -196,7 +196,7 @@
    that one would undo the whole no-transform fix in a different way. */
 .cs-shot {
   margin: 1.4rem 0 0;
-  border: 3px solid var(--line);
+  border: 2px solid var(--line);
   background: var(--surface-2);
   line-height: 0;
 }

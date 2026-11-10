@@ -30,8 +30,8 @@
      through a translucent panel, and on an opaque one its 10px dark glow only
      put a soft halo around pixel glyphs. */
   background: var(--surface-2);
-  border: 7px solid var(--line);
-  box-shadow: 7px 7px 0 var(--shadow-chunk);
+  border: 2px solid var(--line);
+  box-shadow: 4px 4px 0 var(--shadow-chunk);
 }
 
 .eyebrow {
@@ -74,7 +74,7 @@ h1 {
      padding-width left of the paragraph to put the two texts on one edge. */
   margin-left: 0; /* era -0.8rem: alinhava o texto, mas colava o botão à borda da janela */
   padding: 0.55rem 0.8rem;
-  color: var(--ink);
+  color: var(--on-fill);
   background: var(--accent-fill);
   border: 2px solid var(--line);
   box-shadow: none;
@@ -91,5 +91,5 @@ h1 {
 .hero-text a:hover,
 .hero-text a:focus-visible {
   transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--line);
+  box-shadow: 2px 2px 0 var(--line);
 }
