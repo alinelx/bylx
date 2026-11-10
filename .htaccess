@@ -74,8 +74,9 @@ ErrorDocument 404 /404.html
 #
 # FilesMatch tests the basename, so the exception is by name rather than by
 # path. Any future data file the site actually serves needs adding here, or
-# it will disappear the same way.
-<FilesMatch "^(?!deck\.json$).*\.(md|json|mjs|spec\.js|lock)$">
+# it will disappear the same way. sprites.json is the hero scene (2026-11-10):
+# js/scene-canvas.js fetches it, and the 403 left the hero empty on its first deploy.
+<FilesMatch "^(?!(deck|sprites)\.json$).*\.(md|json|mjs|spec\.js|lock)$">
   Require all denied
 </FilesMatch>
 
