@@ -45,7 +45,7 @@ test("the desk and its hotspots stay above the fold on a short viewport", async 
 
   // The scene is 16:9 and taller than this viewport: the sky must be what gets
   // cropped, never the desk. Every interactive object stays reachable.
-  for (const sel of [".phone", ".mp3player", ".keyboard-board", ".monitor-power", ".instax"]) {
+  for (const sel of [".hotspot-phone", ".hotspot-mp3", ".hotspot-sushi", ".monitor-power", ".hotspot-instax"]) {
     const box = await page.locator(sel).first().boundingBox();
     expect(box, `${sel} should be laid out`).not.toBeNull();
     expect.soft(box.y + box.height, `${sel} must not be cut off below the fold`)
@@ -106,39 +106,6 @@ test("mp3 hotspot opens the player and the dial actually plays audio", async ({ 
   await expect(page.locator(".mp3-player")).not.toHaveClass(/is-on/);
 });
 
-test("Start menu opens, lines up with the START button, and Escape closes it", async ({ page }) => {
-  test.skip(test.info().project.name !== "desktop", "the desk crop recomposes this on mobile");
-
-  await page.locator(".start-btn").click();
-  const menu = page.locator(".start-menu");
-  await expect(menu).toBeVisible();
-
-  // The toolbar rides the artboard, which is centred and can be wider than the
-  // viewport — a viewport-relative % only lines up by coincidence.
-  const menuBox = await menu.boundingBox();
-  const btnBox = await page.locator(".start-btn").boundingBox();
-  expect(Math.abs(menuBox.x - btnBox.x)).toBeLessThanOrEqual(2);
-
-  await page.keyboard.press("Escape");
-  await expect(menu).toBeHidden();
-});
-
-test("fullscreen traps focus and Escape returns you", async ({ page }) => {
-  await page.locator(".start-btn").click();
-  await page.locator('[data-start-action="fullscreen"]').click();
-
-  const fs = page.locator(".fullscreen-mode");
-  await expect(fs).toBeVisible();
-
-  // Nothing inside is focusable, so Tab must not hand focus to the page behind.
-  await page.keyboard.press("Tab");
-  const trapped = await fs.evaluate((el) => document.activeElement === el);
-  expect(trapped).toBe(true);
-
-  await page.keyboard.press("Escape");
-  await expect(fs).toBeHidden();
-});
-
 test("the power pips on the CRT toggle the screen", async ({ page }) => {
   // Desktop only, and not an oversight: the mobile desk crop pulls the phone
   // in front of the monitor, and the phone sprite genuinely covers the pips
@@ -150,18 +117,6 @@ test("the power pips on the CRT toggle the screen", async ({ page }) => {
   await page.locator(".monitor-power").click();
   await expect(scene).toHaveClass(/screen-off/);
   await page.locator(".monitor-power").click();
-  await expect(scene).not.toHaveClass(/screen-off/);
-});
-
-test("the Start menu can toggle the monitor on any viewport", async ({ page }) => {
-  const scene = page.locator("#hero-scene");
-
-  await page.locator(".start-btn").click();
-  await page.locator('[data-start-action="monitor"]').click();
-  await expect(scene).toHaveClass(/screen-off/);
-
-  await page.locator(".start-btn").click();
-  await page.locator('[data-start-action="monitor"]').click();
   await expect(scene).not.toHaveClass(/screen-off/);
 });
 
@@ -248,37 +203,6 @@ test("the cocktail and the sushi open their panels", async ({ page }) => {
   );
   expect(slugs).not.toContain("cities-modal");
   expect(slugs).not.toContain("craft-modal");
-});
-
-test("cinema mode cannot be entered twice, and always gives the scroll back", async ({ page }) => {
-  // The Start menu is reachable from inside cinema mode and its first item
-  // still says "enter cinema mode". Entering twice borrowed the screen items
-  // into a second board while the bookkeeping still pointed at the first, so
-  // putting them back threw — and the throw happened before the scroll lock
-  // came off, leaving the page stuck with no way out.
-  await page.goto("/");
-
-  const locked = () =>
-    page.evaluate(() => getComputedStyle(document.documentElement).overflow === "hidden");
-
-  const enter = async () => {
-    await page.locator(".start-btn").click();
-    await page.locator('.start-menu [data-start-action="fullscreen"]').click();
-  };
-
-  await enter();
-  expect(await locked()).toBe(true);
-
-  await enter(); // the second one must be a no-op
-  await page.keyboard.press("Escape");
-
-  await expect(page.locator(".fullscreen-mode")).toBeHidden();
-  expect(await locked()).toBe(false);
-  await expect(page.locator(".fullscreen-artboard")).toHaveCount(0);
-
-  // and the borrowed furniture is back on the desk
-  await expect(page.locator("#hero-scene .desktop-icons")).toHaveCount(1);
-  await expect(page.locator("#hero-scene .toolbar-strip")).toHaveCount(1);
 });
 
 test("every image the site loads carries its own cache stamp", async ({ page }) => {

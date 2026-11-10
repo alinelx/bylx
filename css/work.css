@@ -47,9 +47,9 @@
 
 .work-sheet {
   width: min(720px, 100%);
-  color: var(--bg);
-  background: var(--text);
-  border: var(--stroke-4, 4px) solid var(--cyan);
+  color: var(--ink);
+  background: var(--fg-fill);
+  border: var(--stroke-4, 4px) solid var(--line);
   box-shadow: 8px 8px 0 var(--shadow-chunk);
   font-family: var(--font-pixel);
 }
@@ -58,9 +58,9 @@
    going somewhere, so the control is a link home. */
 .work-back {
   padding: 0.15rem 0.5rem;
-  color: var(--bg);
-  background: var(--pink);
-  border: 2px solid var(--bg);
+  color: var(--ink);
+  background: var(--accent-fill);
+  border: 2px solid var(--ink);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   line-height: 1.6;
@@ -69,10 +69,10 @@
 }
 
 .work-back:hover,
-.work-back:focus-visible { background: var(--cyan); }
+.work-back:focus-visible { background: var(--accent-2-fill); }
 
 .work-back:focus-visible {
-  outline: 3px solid var(--cyan);
+  outline: 3px solid var(--line);
   outline-offset: 2px;
 }
 
@@ -87,13 +87,13 @@
 .work-crumbs {
   width: min(720px, 100%);
   margin: 0;
-  color: var(--muted);
+  color: var(--fg-2);
   font-family: var(--font-pixel);
   font-size: var(--fs-caption);
   line-height: 1.8;
 }
 
-.work-crumbs a { color: var(--cyan); }
+.work-crumbs a { color: var(--link); }
 
 .work-more {
   width: min(720px, 100%);
@@ -105,7 +105,7 @@
 
 .work-more-label {
   margin: 0;
-  color: var(--muted);
+  color: var(--fg-2);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   text-transform: uppercase;
@@ -113,9 +113,9 @@
 
 .work-more a {
   padding: 4px 7px;
-  color: var(--cyan);
-  background: rgba(98, 230, 255, 0.08);
-  border: 2px solid var(--cyan);
+  color: var(--link);
+  background: transparent;
+  border: 2px solid var(--line);
   font-family: var(--font-pixel);
   font-size: var(--fs-caption);
   line-height: 1.4;
@@ -123,10 +123,10 @@
 }
 
 .work-more a:hover,
-.work-more a:focus-visible { color: var(--bg); background: var(--cyan); }
+.work-more a:focus-visible { color: var(--ink); background: var(--accent-2-fill); }
 
 .work-more a:focus-visible {
-  outline: 3px solid var(--pink);
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
 
@@ -143,12 +143,12 @@
   align-self: center;
   font-size: 0.78rem;
   line-height: 1.5;
-  color: rgba(9, 5, 27, 0.55);
+  color: var(--ink);
 }
 
 .cs-permalink a {
   color: inherit;
-  text-decoration-color: rgba(9, 5, 27, 0.3);
+  text-decoration-color: var(--ink);
   text-underline-offset: 3px;
 }
 
@@ -177,7 +177,7 @@
 }
 
 .site-footer .footer-brand a:hover,
-.site-footer .footer-brand a:focus-visible { color: var(--cyan); }
+.site-footer .footer-brand a:focus-visible { color: var(--link); }
 
 
 /* ── The shot ──────────────────────────────────────────────────────────
@@ -196,8 +196,8 @@
    that one would undo the whole no-transform fix in a different way. */
 .cs-shot {
   margin: 1.4rem 0 0;
-  border: 3px solid var(--cyan);
-  background: var(--bylx-bg-ink);
+  border: 3px solid var(--line);
+  background: var(--surface-2);
   line-height: 0;
 }
 

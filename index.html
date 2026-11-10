@@ -27,7 +27,9 @@
   <meta property="og:image:alt" content="A pixel-art desk scene: a CRT monitor, keyboard, instant camera and mp3 player, with Rio and Lisbon skylines through the window." />
   <meta property="og:site_name" content="bylx.dev" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#09051b" />
+  <meta name="theme-color" content="#09051b" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f7f2ff" media="(prefers-color-scheme: light)" />
+  <meta name="color-scheme" content="dark light" />
   <link rel="canonical" href="https://bylx.dev/" />
 
   <!-- One graph, three jobs: say who she is (entity), say the site is hers,
@@ -129,7 +131,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=0d26ba3c" />
+  <link rel="stylesheet" href="styles.css?v=95426145" />
 </head>
 
 <body>
@@ -142,200 +144,72 @@
            Hiding the wrapper kept them in the tab order while erasing them from
            the accessibility tree. The decorative parts carry alt="" or
            aria-hidden of their own. -->
-      <div class="hero-artboard">
-        <div class="scene" id="hero-scene">
+      <!-- A cena é um <canvas> (js/scene-canvas.js): grade 640×390 desenhada em
+           níveis de cinza, ampliada por inteiros e pintada no tema do sistema.
+           Os botões abaixo são os mesmos de sempre, com os mesmos listeners —
+           o motor só os coloca por cima do objecto que representam. -->
+      <div class="scene-stage" id="hero-scene" data-scene-src="assets/scene/sprites.json?v=d4c3979a">
+        <button class="scene-btn hotspot hotspot-cocktail" type="button" aria-label="Open: two cities" data-modal-target="cities-modal" data-layer="cocktail"></button>
+        <button class="scene-btn hotspot hotspot-sushi" type="button" aria-label="Open: how this desk was drawn" data-modal-target="craft-modal" data-layer="sushi"></button>
+        <button class="scene-btn hotspot hotspot-instax instax" type="button" aria-label="Open image gallery" data-modal-target="gallery-modal" data-layer="instax"></button>
+        <button class="scene-btn hotspot hotspot-phone phone" type="button" aria-label="Open contact form" data-modal-target="contact-modal" data-layer="phone"></button>
+        <button class="scene-btn hotspot hotspot-mp3 mp3player" type="button" aria-label="Open music player" data-layer="mp3player"></button>
 
-          <img class="asset layer bg-skyline-left flippedY" src="assets/hero/gradient.png?v=7c773948" alt="" />
-          <img class="asset layer bg-skyline-right flippedY" src="assets/hero/gradient.png?v=7c773948" alt="" />
+        <!-- O rectângulo do ecrã do CRT: utils.screenRect() mede-o para centrar os balões dos ícones -->
+        <div class="win-bg screen-rect" aria-hidden="true" data-rect="248,172,144,106"></div>
+        <div class="screen-cover" aria-hidden="true" data-rect="248,172,144,106"></div>
 
-          <img class="asset layer morro morro-left flippedX" src="assets/hero/morro.png?v=be7fedc6" alt="" />
-          <img class="asset layer morro morro-right" src="assets/hero/morro.png?v=be7fedc6" alt="" />
+        <button class="scene-btn icon-btn" type="button" data-tech="html" aria-label="HTML" data-layer="icon-html"></button>
+        <button class="scene-btn icon-btn" type="button" data-tech="css" aria-label="CSS" data-layer="icon-css"></button>
+        <button class="scene-btn icon-btn" type="button" data-tech="js" aria-label="JavaScript" data-layer="icon-js"></button>
+        <button class="scene-btn icon-btn" type="button" data-tech="ts" aria-label="TypeScript" data-layer="icon-ts"></button>
+        <button class="scene-btn icon-btn" type="button" data-tech="react" aria-label="React" data-layer="icon-react"></button>
+        <button class="scene-btn icon-btn" type="button" data-tech="node" aria-label="Node.js" data-layer="icon-node"></button>
+        <button class="scene-btn icon-btn" type="button" data-tech="figma" aria-label="Figma" data-layer="icon-figma"></button>
+        <button class="scene-btn icon-btn" type="button" data-tech="wp" aria-label="WordPress" data-layer="icon-wp"></button>
 
-          <img class="asset layer skyline cristo" src="assets/hero/cristo_redentor.png?v=cf608c55" alt="" />
-          <img class="asset layer skyline pao-de-acucar" src="assets/hero/pao_de_acucar.png?v=9f0fa165" alt="" />
-          <img class="asset layer skyline ponte" src="assets/hero/ponte_25abril.png?v=25d7bc45" alt="" />
-          <img class="asset layer skyline torre-belem" src="assets/hero/torre_belem.png?v=e56e7d68" alt="" />
+        <button class="scene-btn monitor-power" type="button" aria-label="Turn monitor off" aria-pressed="false" data-rect="385,288,11,11"></button>
+      </div>
 
-          <img class="asset layer bg-wall-left rotateleft" src="assets/hero/gradient.png?v=7c773948" alt="" />
-          <img class="asset layer bg-wall-right rotateright" src="assets/hero/gradient.png?v=7c773948" alt="" />
-
-          <img class="asset layer window-frame" src="assets/hero/window_frame.png?v=f3ff7334" alt="" />
-
-          <img class="asset layer table" src="assets/hero/table.png?v=8b5448fc" alt="" />
-
-          <button
-            class="asset layer desk-object hotspot hotspot-cocktail cocktail"
-            type="button"
-            aria-label="Open: two cities"
-            data-modal-target="cities-modal"
-          >
-            <span class="hotspot-visual">
-              <img src="assets/hero/cocktail.png?v=5c5759c4" alt="" />
-            </span>
-          </button>
-
-          <button
-            class="asset layer desk-object hotspot hotspot-sushi sushi"
-            type="button"
-            aria-label="Open: how this desk was drawn"
-            data-modal-target="craft-modal"
-          >
-            <span class="hotspot-visual">
-              <img src="assets/hero/sushi.png?v=23f41f66" alt="" />
-            </span>
-          </button>
-
-          <button
-            class="asset layer desk-object hotspot hotspot-instax instax"
-            type="button"
-            aria-label="Open image gallery"
-            data-modal-target="gallery-modal"
-          >
-            <span class="hotspot-visual instax-sprite" aria-hidden="true"></span>
-          </button>
-
-          <button
-            class="asset layer desk-object hotspot hotspot-phone phone"
-            type="button"
-            aria-label="Open contact form"
-            data-modal-target="contact-modal"
-          >
-            <span class="hotspot-visual">
-              <img src="assets/hero/phone.png?v=3d7f8ead" alt="" />
-            </span>
-          </button>
-
-          <button
-            class="asset layer desk-object hotspot hotspot-mp3 mp3player"
-            type="button"
-            aria-label="Open music player"
-          >
-            <span class="hotspot-visual">
-              <img src="assets/hero/mp3_player.png?v=254517dc" alt="" />
-            </span>
-          </button>
-
-          <img class="asset layer mouse desk-object" src="assets/hero/mouse.png?v=100f8ee1" alt="" />
-
-          <img class="asset layer win-bg screen-item" src="assets/hero/win_background.png?v=720965ac" alt="" />
-
-          <div class="desktop-icons screen-item">
-            <button class="icon-btn" type="button" data-tech="html" aria-label="HTML">
-              <img class="icon" src="assets/hero/html_icon.png?v=84c4ce08" alt="" />
-            </button>
-            <button class="icon-btn" type="button" data-tech="css" aria-label="CSS">
-              <img class="icon" src="assets/hero/css_icon.png?v=338cbcee" alt="" />
-            </button>
-            <button class="icon-btn" type="button" data-tech="js" aria-label="JavaScript">
-              <img class="icon" src="assets/hero/javascript_icon.png?v=6a68cb3e" alt="" />
-            </button>
-            <button class="icon-btn" type="button" data-tech="figma" aria-label="Figma">
-              <img class="icon" src="assets/hero/figma_icon.png?v=27030627" alt="" />
-            </button>
-            <button class="icon-btn" type="button" data-tech="wp" aria-label="WordPress">
-              <img class="icon" src="assets/hero/wordpress_icon.png?v=f79d63a4" alt="" />
-            </button>
-            <button class="icon-btn" type="button" data-tech="react" aria-label="React">
-              <img class="icon" src="assets/hero/react_icon.png?v=fc37dc0f" alt="" />
-            </button>
-            <button class="icon-btn" type="button" data-tech="node" aria-label="Node.js">
-              <img class="icon" src="assets/hero/node_icon.png?v=49500239" alt="" />
-            </button>
-            <button class="icon-btn" type="button" data-tech="ts" aria-label="TypeScript">
-              <img class="icon" src="assets/hero/typescript_icon.png?v=14784b64" alt="" />
-            </button>
+      <div class="hero-text os-window" data-window>
+        <div class="os-titlebar">
+          <span class="os-title" aria-hidden="true">bylx · front-end developer</span>
+          <div class="os-controls">
+            <button class="os-btn os-min" type="button" aria-label="Minimize intro" aria-expanded="true" aria-controls="hero-window-body"></button>
+            <button class="os-btn os-close" type="button" aria-label="Close intro" aria-controls="hero-window-body"></button>
           </div>
-
-          <!-- The nihon.bmp Paint window stood here until 2026-09-25. It covered
-               a little over half the CRT and buried the icon grid behind it, so
-               the screen read as clutter rather than as a desktop. What went with
-               it: the drag (pointer and keyboard, WCAG 2.5.7), the close tile, and
-               the window's share of cinema mode. japan_poster.png still ships —
-               the gallery shows it. -->
-
-          <div class="toolbar-strip screen-item">
-            <button class="start-btn" type="button" aria-label="Open Start menu" aria-haspopup="menu" aria-expanded="false">
-              <img class="toolbar toolbar-start" src="assets/hero/toolbar.png?v=82d5a121" alt="" />
-            </button>
-            <span class="toolbar toolbar-fill" aria-hidden="true"></span>
-          </div>
-
-          <div class="asset layer monitor">
-            <!-- The lavender variant: the bezel was #f7f2ff, the brightest and
-                 highest-contrast object on the page, and it out-shouted the copy
-                 card sitting next to it. monitor_frame.png is the original and
-                 stays; this one remaps its two light colours. -->
-            <img class="monitor-img" src="assets/hero/monitor_frame_lavender.png?v=e8c816d0" alt="" />
-            <!-- Colado ao monitor, como no kit: filho da moldura, por isso
-                 nunca pode deslizar para fora do bisel -->
-            <img class="bylx-logo-sticker" src="assets/logo/bylx_logo_semdev.png?v=3d70cfcd" alt="" />
-            <button class="monitor-power" type="button" aria-label="Turn monitor off" aria-pressed="false"></button>
-          </div>
-
-          <div class="asset layer keyboard keyboard-glow" aria-hidden="true"></div>
-          <img class="asset layer keyboard keyboard-board desk-object" src="assets/hero/keyboard_board.png?v=d9923d23" alt="" />
-          <img class="asset layer keyboard keyboard-keys desk-object" src="assets/hero/keyboard_keys.png?v=931a3077" alt="" />
-
+        </div>
+        <div class="os-body" id="hero-window-body">
+          <h1 id="hero-title">Where the best cities share a desk.</h1>
+          <p>I build web things that make you feel something. Pixel art, vanilla code, and AI-assisted workflows.</p>
+          <a href="#projects">See the work</a>
         </div>
       </div>
 
-      <div class="hero-text">
-        <p class="eyebrow">bylx · Front-end developer</p>
-        <h1 id="hero-title">Where the best cities share a desk.</h1>
-        <p>I build web things that make you feel something. Pixel art, vanilla code, and AI-assisted workflows.</p>
-        <a href="#projects">See the work</a>
-      </div>
-
-      <div class="start-menu" role="menu" aria-label="Start menu" hidden>
-        <p class="start-menu-title">Start</p>
-        <!-- role="none": a list between role="menu" and its menuitems orphans
-             them in the accessibility tree -->
-        <ul role="none">
-          <li role="none">
-            <button type="button" role="menuitem" data-start-action="fullscreen">
-              Fullscreen monitor
-              <span class="meta">enter cinema mode</span>
-            </button>
-          </li>
-          <li role="none">
-            <button type="button" role="menuitem" data-start-action="music">
-              Play music
-              <span class="meta">opens MP3 player</span>
-            </button>
-          </li>
-          <li role="none">
-            <button type="button" role="menuitem" data-start-action="monitor">
-              <span class="label">Turn monitor off</span>
-              <span class="meta">toggles power</span>
-            </button>
-          </li>
-          <li role="none">
-            <button type="button" role="menuitem" data-start-action="contact" data-modal-target="contact-modal">
-              Send a message
-              <span class="meta">contact aline</span>
-            </button>
-          </li>
-        </ul>
-      </div>
-
-      <p class="desk-hint" role="status" hidden>Try clicking the desk — the objects work.</p>
-
-      <div class="fullscreen-mode" role="dialog" aria-modal="true" aria-label="Fullscreen monitor" tabindex="-1" hidden>
-        <div class="fullscreen-screen">
-          <!-- Two ways out, and the one that is shown is the one the visitor
-               has: a phone has no Esc key, and was being told to press it. -->
-          <p class="fullscreen-hint" hidden>
-            <span class="hint-keys">Press <kbd>F11</kbd> or <kbd>Esc</kbd> to return</span>
-            <span class="hint-tap">Tap outside the screen to return</span>
-          </p>
+      <div class="desk-hint os-tip" role="status" hidden>
+        <div class="os-titlebar">
+          <span class="os-title" aria-hidden="true">tip.txt</span>
+          <div class="os-controls">
+            <button class="os-btn os-close" type="button" aria-label="Close tip"></button>
+          </div>
         </div>
+        <p>Try clicking the desk — the objects work.</p>
       </div>
+
     </section>
 
     <section class="projects" id="projects" aria-labelledby="projects-title">
-      <div class="projects-inner">
+      <div class="projects-inner os-window" data-window>
+        <div class="os-titlebar">
+          <span class="os-title" aria-hidden="true">Projects</span>
+          <div class="os-controls">
+            <button class="os-btn os-min" type="button" aria-label="Minimize Projects" aria-expanded="true" aria-controls="projects-window-body"></button>
+            <button class="os-btn os-max" type="button" aria-label="Maximize Projects" aria-pressed="false"></button>
+            <button class="os-btn os-close" type="button" aria-label="Close Projects" aria-controls="projects-window-body"></button>
+          </div>
+        </div>
+        <div class="os-body" id="projects-window-body">
         <div class="projects-header">
-          <p class="eyebrow">xp</p>
           <h2 id="projects-title">Projects</h2>
         </div>
 
@@ -433,6 +307,7 @@
           </article>
         </div>
       </div>
+      </div>
     </section>
 
     <!-- The cabinet is an illustration with a real control on it, not a frame
@@ -440,8 +315,16 @@
          The machines themselves live behind /arcade/, so nothing they need —
          Konva included — is loaded on this page. -->
     <section class="arcade" id="arcade" aria-labelledby="arcade-title">
-      <div class="arcade-inner">
-        <p class="eyebrow">arcade</p>
+      <div class="arcade-inner os-window" data-window>
+        <div class="os-titlebar">
+          <span class="os-title" aria-hidden="true">Arcade</span>
+          <div class="os-controls">
+            <button class="os-btn os-min" type="button" aria-label="Minimize Arcade" aria-expanded="true" aria-controls="arcade-window-body"></button>
+            <button class="os-btn os-max" type="button" aria-label="Maximize Arcade" aria-pressed="false"></button>
+            <button class="os-btn os-close" type="button" aria-label="Close Arcade" aria-controls="arcade-window-body"></button>
+          </div>
+        </div>
+        <div class="os-body" id="arcade-window-body">
         <h2 id="arcade-title" class="arcade-heading">Some of it you can play.</h2>
         <p class="arcade-lede">Not everything I build is a case study. A few are small machines that just run in a browser, and they live in here.</p>
 
@@ -454,11 +337,20 @@
           <span class="arcade-start">Enter the arcade</span>
         </a>
       </div>
+      </div>
     </section>
 
     <section class="about" id="about" aria-labelledby="about-title">
-      <div class="about-inner">
-        <p class="eyebrow">profile</p>
+      <div class="about-inner os-window" data-window>
+        <div class="os-titlebar">
+          <span class="os-title" aria-hidden="true">About</span>
+          <div class="os-controls">
+            <button class="os-btn os-min" type="button" aria-label="Minimize About" aria-expanded="true" aria-controls="about-window-body"></button>
+            <button class="os-btn os-max" type="button" aria-label="Maximize About" aria-pressed="false"></button>
+            <button class="os-btn os-close" type="button" aria-label="Close About" aria-controls="about-window-body"></button>
+          </div>
+        </div>
+        <div class="os-body" id="about-window-body">
         <h2 id="about-title" class="about-heading">The desk has a story.</h2>
         <div class="about-layout">
           <div class="about-text">
@@ -531,6 +423,7 @@
           </div>
         </div>
       </div>
+      </div>
     </section>
 
     <div class="modal pixel-modal" id="casestudy-dark28-modal" aria-hidden="true"
@@ -542,7 +435,7 @@
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-dark28-title">
         <header class="modal-header">
           <h2 id="casestudy-dark28-title">Dark28 — Case Study</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close case study">×</button>
         </header>
 
         <div class="modal-body case-study-body">
@@ -599,7 +492,7 @@
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-bylx-title">
         <header class="modal-header">
           <h2 id="casestudy-bylx-title">bylx.dev — Case Study</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close case study">×</button>
         </header>
 
         <div class="modal-body case-study-body">
@@ -655,7 +548,7 @@
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-irspt-title">
         <header class="modal-header">
           <h2 id="casestudy-irspt-title">irs-pt — Case Study</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close case study">×</button>
         </header>
 
         <div class="modal-body case-study-body">
@@ -710,7 +603,7 @@
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-respondaja-title">
         <header class="modal-header">
           <h2 id="casestudy-respondaja-title">respondaja.click — Case Study</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">&times;</button>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close case study">&times;</button>
         </header>
 
         <div class="modal-body case-study-body">
@@ -764,7 +657,7 @@
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-konochan-title">
         <header class="modal-header">
           <h2 id="casestudy-konochan-title">konochan.pt — Case Study</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close case study">×</button>
         </header>
 
         <div class="modal-body case-study-body">
@@ -818,7 +711,7 @@
       <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-lupa-title">
         <header class="modal-header">
           <h2 id="casestudy-lupa-title">luparoad.com — Case Study</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close case study">×</button>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close case study">×</button>
         </header>
 
         <div class="modal-body case-study-body">
@@ -869,7 +762,7 @@
       <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="cities-title">
         <header class="modal-header">
           <h2 id="cities-title">Two cities</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close">&times;</button>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close">&times;</button>
         </header>
 
         <div class="modal-body case-study-body">
@@ -893,7 +786,7 @@
       <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="craft-title">
         <header class="modal-header">
           <h2 id="craft-title">How this desk was drawn</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close">&times;</button>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close">&times;</button>
         </header>
 
         <div class="modal-body case-study-body">
@@ -920,7 +813,7 @@
       <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
         <header class="modal-header">
           <h2 id="gallery-title">Gallery</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close gallery">×</button>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close gallery">×</button>
         </header>
 
         <div class="modal-body">
@@ -1046,7 +939,7 @@
       <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="contact-title">
         <header class="modal-header">
           <h2 id="contact-title">Contact</h2>
-          <button class="modal-close" type="button" data-close-modal aria-label="Close contact form">×</button>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close contact form">×</button>
         </header>
 
         <form class="modal-body contact-form" id="contact-form" action="contact.php" method="post">
@@ -1126,6 +1019,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=0d26ba3c"></script>
+  <script type="module" src="script.js?v=95426145"></script>
 </body>
 </html>

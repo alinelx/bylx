@@ -9,9 +9,10 @@
     "og": "node scripts/make-og-image.mjs",
     "cv": "node scripts/build-cv.mjs",
     "stamp": "node scripts/stamp-assets.mjs",
-    "predeploy": "node scripts/stamp-assets.mjs --check && node scripts/build-work-pages.mjs --check",
+    "predeploy": "node scripts/build-sprites.mjs --check && node scripts/stamp-assets.mjs --check && node scripts/build-work-pages.mjs --check",
     "work": "node scripts/build-work-pages.mjs",
-    "build": "node scripts/stamp-assets.mjs && node scripts/build-work-pages.mjs"
+    "build": "node scripts/build-sprites.mjs && node scripts/stamp-assets.mjs && node scripts/build-work-pages.mjs",
+    "sprites": "node scripts/build-sprites.mjs"
   },
   "repository": {
     "type": "git",

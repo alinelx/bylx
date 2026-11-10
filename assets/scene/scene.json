@@ -1,0 +1,227 @@
+{
+ "base": [
+  640,
+  390
+ ],
+ "background": "#5c5c5c",
+ "layers": [
+  {
+   "name": "bg-wall-left",
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "invert": [
+    "light"
+   ]
+  },
+  {
+   "name": "bg-wall-right",
+   "x": 360,
+   "y": 0,
+   "z": 1,
+   "invert": [
+    "light"
+   ]
+  },
+  {
+   "name": "table",
+   "x": 0,
+   "y": 262,
+   "z": 2
+  },
+  {
+   "name": "bg-skyline-left",
+   "x": 166,
+   "y": 61,
+   "z": 3
+  },
+  {
+   "name": "bg-skyline-right",
+   "x": 323,
+   "y": 61,
+   "z": 4
+  },
+  {
+   "name": "morro-right",
+   "x": 320,
+   "y": 99,
+   "z": 5,
+   "invert": [
+    "light"
+   ]
+  },
+  {
+   "name": "morro-left",
+   "x": 160,
+   "y": 109,
+   "z": 6,
+   "invert": [
+    "light"
+   ]
+  },
+  {
+   "name": "ponte",
+   "x": 324,
+   "y": 118,
+   "z": 7,
+   "invert": [
+    "light"
+   ]
+  },
+  {
+   "name": "torre-belem",
+   "x": 379,
+   "y": 170,
+   "z": 8,
+   "invert": [
+    "light"
+   ]
+  },
+  {
+   "name": "pao-de-acucar",
+   "x": 159,
+   "y": 152,
+   "z": 9,
+   "invert": [
+    "light"
+   ]
+  },
+  {
+   "name": "cristo",
+   "x": 243,
+   "y": 109,
+   "z": 10
+  },
+  {
+   "name": "window-frame",
+   "x": 0,
+   "y": 0,
+   "z": 11
+  },
+  {
+   "name": "instax",
+   "x": 440,
+   "y": 248,
+   "z": 12,
+   "hotspot": {
+    "label": "Open image gallery",
+    "modal": "gallery-modal"
+   }
+  },
+  {
+   "name": "mouse",
+   "x": 437,
+   "y": 333,
+   "z": 13
+  },
+  {
+   "name": "phone",
+   "x": 524,
+   "y": 324,
+   "z": 14,
+   "hotspot": {
+    "label": "Open contact form",
+    "modal": "contact-modal"
+   }
+  },
+  {
+   "name": "cocktail",
+   "x": 180,
+   "y": 263,
+   "z": 15,
+   "hotspot": {
+    "label": "Open: two cities",
+    "modal": "cities-modal"
+   }
+  },
+  {
+   "name": "sushi",
+   "x": 72,
+   "y": 324,
+   "z": 16,
+   "hotspot": {
+    "label": "Open: how this desk was drawn",
+    "modal": "craft-modal"
+   }
+  },
+  {
+   "name": "mp3player",
+   "x": 152,
+   "y": 349,
+   "z": 17,
+   "hotspot": {
+    "label": "Open music player"
+   }
+  },
+  {
+   "name": "win-bg",
+   "x": 247,
+   "y": 172,
+   "z": 18
+  },
+  {
+   "name": "monitor",
+   "x": 226,
+   "y": 146,
+   "z": 19
+  },
+  {
+   "name": "keyboard",
+   "x": 231,
+   "y": 328,
+   "z": 20
+  },
+  {
+   "name": "icon-html",
+   "x": 254,
+   "y": 182,
+   "z": 21
+  },
+  {
+   "name": "icon-css",
+   "x": 271,
+   "y": 182,
+   "z": 22
+  },
+  {
+   "name": "icon-js",
+   "x": 254,
+   "y": 199,
+   "z": 23
+  },
+  {
+   "name": "icon-ts",
+   "x": 271,
+   "y": 199,
+   "z": 24
+  },
+  {
+   "name": "icon-react",
+   "x": 254,
+   "y": 216,
+   "z": 25
+  },
+  {
+   "name": "icon-node",
+   "x": 271,
+   "y": 216,
+   "z": 26
+  },
+  {
+   "name": "icon-figma",
+   "x": 254,
+   "y": 233,
+   "z": 27
+  },
+  {
+   "name": "icon-wp",
+   "x": 271,
+   "y": 233,
+   "z": 28
+  }
+ ],
+ "backgroundColor": {
+  "dark": "#9319c8",
+  "light": "#02dbc4"
+ }
+}

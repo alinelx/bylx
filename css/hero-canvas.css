@@ -1,0 +1,80 @@
+/* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
+/* ᑲყᥣx hero canvas — a cena em <canvas> (js/scene-canvas.js)
+
+   A cena é uma grade de 640×390 pintada num canvas e ampliada por inteiros
+   em pixels de DISPOSITIVO; o que sobra do ecrã é fundo da cena, nunca
+   esticamento. Os botões são os da página de sempre: o motor só lhes escreve
+   left/top/width/height em linha, por cima do objecto que representam.
+
+   `all: unset` com o id: as regras antigas de posição (.phone, .instax,
+   .win-bg, .monitor-power em hero-positions.css) continuam no ficheiro para
+   as páginas que ainda as usam e não podem empurrar estes botões. */
+
+#hero-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+#hero-scene .scene-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  image-rendering: pixelated;
+}
+
+#hero-scene .scene-hotspots {
+  position: absolute;
+  inset: 0;
+}
+
+#hero-scene .scene-anchor {
+  all: unset;
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+#hero-scene .scene-anchor:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Medido por utils.screenRect(), não clicável */
+#hero-scene .screen-rect {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Monitor desligado: o ecrã apaga, a moldura e o botão ficam acesos */
+#hero-scene .screen-cover {
+  pointer-events: none;
+  cursor: default;
+  background: var(--surface);
+  opacity: 0;
+  transition: opacity 280ms steps(3, end);
+}
+
+#hero-scene.screen-off .screen-cover {
+  opacity: 1;
+}
+
+/* Telemóvel: o painel de texto em cima, a cena em baixo com altura própria
+   (a secção deixa de ter 100svh nesta largura — ver responsive.css) */
+@media (max-width: 900px), (orientation: portrait) and (max-width: 1200px) {
+  #hero-scene {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: min(78svh, 100vw * 1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #hero-scene .screen-cover {
+    transition: none;
+  }
+}

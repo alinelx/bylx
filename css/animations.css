@@ -80,12 +80,12 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bylx-bg-ink);
+  background: var(--surface-2);
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--bylx-purple);
-  border: 2px solid var(--bylx-bg-ink);
+  border: 2px solid var(--surface-2);
 }
 
 ::-webkit-scrollbar-thumb:hover {

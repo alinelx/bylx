@@ -1,0 +1,254 @@
+/* ✧･ﾟ: *✧･ﾟ:*✧･ﾟ: *✧･ﾟ:*
+/* ᑲყᥣx windows — cada secção é uma janela de programa
+
+   A página é o fundo da cena (#9319c8 / #02dbc4); as secções são janelas por
+   cima dele, com barra de título, minimizar, maximizar e fechar. É DENTRO da
+   janela que o tema se lê: fundo #09051b no dark, #f7f2ff no light — por isso
+   os papéis de cor (--fg, --link, --line…) são redefinidos aqui para o fundo
+   da janela, e o contraste mede-se contra ele. Só as 7 cores de cada tema. */
+
+.os-window,
+.os-tip,
+.modal-window,
+.work-sheet {
+  --surface: #09051b;
+  --surface-2: #5c05a6;
+  --fg: #f7f2ff;            /* 18.2:1 */
+  --fg-2: #ffbedd;          /* 13.5:1 */
+  --link: #fe7ee2;          /* 8.6:1 */
+  --line: #ee5afc;
+  --accent-fg: #fe7ee2;
+  --accent-3-fg: #fe7ee2;
+  --focus: #ffbedd;
+  --shadow-chunk: #5c05a6;
+  --win-title: #ee5afc;     /* barra de título; texto --ink 6.7:1 */
+}
+
+@media (prefers-color-scheme: light) {
+  .os-window,
+  .os-tip,
+  .modal-window,
+  .work-sheet {
+    --surface: #f7f2ff;
+    --surface-2: #b3fed6;
+    --fg: #09051b;
+    --fg-2: #04468d;        /* 8.4:1 */
+    --link: #04468d;
+    --line: #0a7194;
+    --accent-fg: #04468d;
+    --accent-3-fg: #04468d;
+    --focus: #04468d;
+    --shadow-chunk: #04468d;
+    --win-title: #18c1cd;   /* texto --ink 9.1:1 */
+  }
+}
+
+.os-window {
+  color: var(--fg);
+  background: var(--surface);
+  border: 4px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--shadow-chunk);
+}
+
+.os-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 6px 6px 6px 12px;
+  color: var(--ink);
+  background: var(--win-title);
+  border-bottom: 4px solid var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--fs-label-lg);
+  line-height: 1;
+  -webkit-font-smoothing: none;
+  user-select: none;
+}
+
+.os-controls {
+  display: flex;
+  gap: 6px;
+}
+
+/* Botões desenhados a pixel: o glifo é um fundo em grelha, não uma letra,
+   para não depender da fonte nem do tamanho do texto */
+.os-btn {
+  position: relative;
+  width: 30px;
+  height: 26px;
+  padding: 0;
+  color: var(--ink);
+  background: var(--fg-fill);
+  border: 3px solid var(--ink);
+  cursor: pointer;
+}
+
+.os-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background: var(--ink);
+}
+
+/* minimizar: traço em baixo */
+.os-min::before { width: 12px; height: 3px; top: auto; bottom: 5px; }
+
+/* maximizar: caixa com a aresta de cima grossa */
+.os-max::before {
+  width: 12px;
+  height: 11px;
+  background: transparent;
+  border: 2px solid var(--ink);
+  border-top-width: 4px;
+}
+
+/* fechar: dois traços cruzados */
+.os-close::before,
+.os-close::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 14px;
+  height: 3px;
+  background: var(--ink);
+  transform: rotate(45deg);
+}
+.os-close::after { transform: rotate(-45deg); }
+
+.os-btn:hover { background: var(--accent-fill); }
+.os-btn:active { transform: translate(1px, 1px); }
+.os-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.os-body {
+  padding: var(--win-pad);
+}
+
+/* Minimizada ou fechada: só a barra de título fica */
+.os-window.is-minimized .os-body,
+.os-window.is-closed .os-body { display: none; }
+
+/* Fechada: a barra fica em tracejado e o título diz como voltar */
+.os-window.is-closed { box-shadow: none; }
+.os-window.is-closed .os-titlebar { background: var(--fg-fill); }
+
+/* Maximizada: ocupa a largura toda do ecrã */
+.os-window.is-maximized { max-width: none; }
+
+/* As secções passam a ser só a mesa onde a janela assenta */
+.projects,
+.arcade,
+.about {
+  background: transparent;
+}
+
+/* ---------- Tudo o que é caixa no site é a mesma janela ----------
+   O painel do hero, a dica, os modais e as páginas /work/ usam a mesma barra
+   de título, a mesma borda de 4px em --ink, a mesma sombra e o mesmo fundo do
+   tema. Uma só receita em vez de quatro. */
+
+/* Painel do hero: o eyebrow passou a ser o título da janela */
+.hero-text.os-window { padding: 0; }
+.hero-text .os-body { padding: var(--win-pad-sm); }
+
+/* A dica do hero: janelinha com um botão de fechar */
+.os-tip {
+  padding: 0;
+  color: var(--fg);
+  background: var(--surface);
+  border: 4px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--shadow-chunk);
+}
+.os-tip p { margin: 0; padding: var(--win-pad-sm); }
+.os-tip .os-btn { pointer-events: auto; }
+
+/* Modais e páginas /work/: fundo do tema, texto do tema */
+.modal-window,
+.work-sheet {
+  color: var(--fg);
+  background: var(--surface);
+  border: 4px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--shadow-chunk);
+}
+.modal-header {
+  background: var(--win-title);
+  border-bottom: 4px solid var(--ink);
+}
+.modal-close { font-size: 0; }
+.case-study-body p,
+.cs-list li { color: var(--fg); }
+.cs-permalink a { color: var(--link); text-decoration-color: var(--link); }
+.gallery-cell,
+.contact-form input,
+.contact-form textarea { border-color: var(--line); }
+.cs-footer-links { border-top-color: var(--line); }
+
+@media (prefers-reduced-motion: reduce) {
+  .os-btn:active { transform: none; }
+}
+
+/* O título de um modal é o nome da janela: mesma letra e tamanho da barra das
+   secções (continua a ser o <h2> do diálogo para leitores de ecrã) */
+.modal-header h2,
+.work-sheet .modal-header h1,
+.work-sheet .modal-header h2 {
+  font-family: var(--font-ui);
+  font-size: var(--fs-label-lg);
+  line-height: 1.3;
+  -webkit-font-smoothing: none;
+}
+
+/* ---------- Medidas: uma grelha só ----------
+   Duas almofadas (janela grande / janela pequena), uma barra de título com a
+   mesma altura em todo o lado, e um único espaço entre janelas. */
+:root {
+  --gutter: clamp(1.5rem, 5vw, 4rem);      /* margem lateral da página */
+  --win-gap: clamp(3rem, 7vw, 6rem);       /* espaço entre janelas, e entre o hero e a 1.ª */
+  --win-pad: clamp(1.25rem, 4vw, 3rem);    /* dentro das janelas das secções */
+  --win-pad-sm: 1rem;                      /* dentro do hero, da dica e dos modais */
+}
+
+/* As secções só dão o espaço: em cima de cada janela, e no fim da última */
+.projects,
+.arcade,
+.about {
+  padding: var(--win-gap) var(--gutter) 0;
+}
+.about { padding-bottom: var(--win-gap); }
+
+/* Modais: a mesma barra e a mesma almofada das janelas pequenas */
+.modal-header { padding: 6px 6px 6px 12px; }
+.modal-body { padding: var(--win-pad-sm); }
+
+/* Telemóvel: o painel do hero fica na mesma coluna das janelas de baixo */
+@media (max-width: 900px), ((orientation: portrait) and (max-width: 1200px)) {
+  .hero-text {
+    width: auto;
+    margin: var(--gutter) var(--gutter) calc(var(--gutter) / 2);
+  }
+  .desk-hint.os-tip {
+    width: calc(100% - 2 * var(--gutter));
+    max-width: none;
+  }
+}
+
+/* ---------- Dentro das janelas: a mesma composição em todas ----------
+   Tudo alinhado à esquerda (o Arcade era a única centrada), o mesmo título de
+   secção e o mesmo espaço entre o título e o conteúdo. */
+.arcade-inner { text-align: left; }
+.arcade-lede { margin: 0.75rem 0 0; }
+.arcade-cabinet { margin: 0; }
+.arcade .arcade-cabinet { margin-top: 3rem; }
+
+#projects-title,
+.arcade-heading,
+.about-heading {
+  margin: 0;
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+.projects-header { margin-bottom: 3rem; }
+.about-heading { margin-bottom: 3rem; }

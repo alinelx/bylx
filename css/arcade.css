@@ -25,7 +25,7 @@
 }
 
 .arcade-heading {
-  margin: 0.4rem 0 0;
+  margin: 0;
   /* Was var(--font-display, var(--font-ui)) — and --font-display has never
      existed, so this H2 alone rendered in Press Start 2P while every other
      heading used Pixelify Sans. One heading face, and this is it. */
@@ -37,7 +37,7 @@
 .arcade-lede {
   max-width: 46ch;
   margin: 0.9rem auto 0;
-  color: var(--muted);
+  color: var(--fg-2);
 }
 
 /* Block, not inline-block, and with a width of its own. As an inline-block it
@@ -115,7 +115,7 @@
 }
 
 .arcade-cabinet:focus-visible {
-  outline: 3px solid var(--cyan);
+  outline: 3px solid var(--line);
   outline-offset: 6px;
 }
 
@@ -130,10 +130,10 @@
   font-family: var(--font-pixel);
   font-size: var(--fs-caption);
   letter-spacing: 0.1em;
-  color: var(--muted);
+  color: var(--fg-2);
 }
 
-.cab-crumbs a { color: var(--cyan); }
+.cab-crumbs a { color: var(--link); }
 
 .cab-head {
   margin: 2.5rem 0 0;
@@ -151,7 +151,7 @@
 .cab-head p {
   margin: 0.7rem auto 0;
   max-width: 44ch;
-  color: var(--muted);
+  color: var(--fg-2);
 }
 
 /* The deck is a real list of real links. The coverflow is only how it looks:
@@ -237,10 +237,10 @@
 .deck-card > a {
   display: block;
   padding: 1rem 1rem 1.2rem;
-  border: 3px solid var(--bg);
+  border: 3px solid var(--ink);
   background: var(--paper);
-  box-shadow: 6px 6px 0 var(--purple);
-  color: var(--bg);
+  box-shadow: 6px 6px 0 var(--shadow-chunk);
+  color: var(--ink);
   text-decoration: none;
 }
 
@@ -278,7 +278,7 @@
   margin-top: 0.5rem;
   font-size: 0.85rem;
   line-height: 1.5;
-  color: rgba(9, 5, 27, 0.62);
+  color: var(--ink);
 }
 
 /* The arrows exist only when there is somewhere to go. js/arcade.js removes
@@ -289,9 +289,9 @@
   top: 45%;
   z-index: 4;
   padding: 0.5rem 0.7rem;
-  border: 3px solid var(--bg);
-  background: var(--cyan);
-  color: var(--bg);
+  border: 3px solid var(--ink);
+  background: var(--accent-2-fill);
+  color: var(--ink);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   line-height: 1;
@@ -301,10 +301,10 @@
 .deck-arrow--prev { left: 0; }
 .deck-arrow--next { right: 0; }
 
-.deck-arrow:hover { background: var(--pink); }
+.deck-arrow:hover { background: var(--accent-fill); }
 
 .deck-arrow:focus-visible {
-  outline: 3px solid var(--pink);
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -314,13 +314,13 @@
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   letter-spacing: 0.12em;
-  color: var(--muted);
+  color: var(--fg-2);
 }
 
 .cab-back {
   display: inline-block;
   margin-top: 2.5rem;
-  color: var(--cyan);
+  color: var(--link);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   letter-spacing: 0.08em;

@@ -55,7 +55,7 @@
   user-select: none;
   transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
   opacity: 0;
-  filter: drop-shadow(0 0 4px rgba(255, 93, 187, 0.45));
+  filter: drop-shadow(0 0 4px var(--accent-line));
   animation-name: sakura-bit;
   animation-timing-function: cubic-bezier(0.2, 0.55, 0.4, 1);
   animation-fill-mode: forwards;
@@ -74,7 +74,7 @@
       translate(calc(-50% + var(--dx, 0px) * 0.18), calc(-50% + var(--dy, 0px) * 0.18))
       scale(0.5)
       rotate(calc(var(--spin, 120deg) * 0.18));
-    filter: drop-shadow(0 0 6px rgba(89, 243, 255, 0.55));
+    filter: drop-shadow(0 0 6px var(--line));
   }
   100% {
     opacity: 0;
@@ -82,6 +82,6 @@
       translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px)))
       scale(0.3)
       rotate(var(--spin, 120deg));
-    filter: drop-shadow(0 0 2px rgba(255, 93, 187, 0.15));
+    filter: drop-shadow(0 0 2px var(--accent-line));
   }
 }

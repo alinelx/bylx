@@ -63,7 +63,7 @@
 }
 .hotspot:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(89, 243, 255, 0.9);
+  box-shadow: 0 0 0 3px var(--line);
 }
 
 /* The float makes every hotspot a moving click target. Steady it the moment
@@ -129,11 +129,11 @@
 }
 
 .cocktail:hover {
-  filter: brightness(1.14) drop-shadow(0 0 6px var(--pink));
+  filter: brightness(1.14) drop-shadow(0 0 6px var(--accent-line));
 }
 
 .sushi:hover {
-  filter: brightness(1.14) drop-shadow(0 0 6px var(--cyan));
+  filter: brightness(1.14) drop-shadow(0 0 6px var(--line));
 }
 
 .keyboard-keys:hover {
@@ -185,11 +185,11 @@
 }
 
 /* Monitor power button */
-.monitor-power:hover { background: rgba(89, 243, 255, 0.18); }
+.monitor-power:hover { background: transparent; }
 
 .monitor-power:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(89, 243, 255, 0.9);
+  box-shadow: 0 0 0 2px var(--line);
 }
 
 /* Monitor "off" — the screen goes to the palette's surface dark, not to black.
@@ -213,7 +213,7 @@
   /* --bylx-bg-ink, the same surface the cards and the hero panel use — not
      --bg. The page tone is dark enough to read as #000 on a bright monitor,
      which is the thing being avoided here. */
-  background: var(--bylx-bg-ink);
+  background: var(--surface-2);
   opacity: 0;
   transition: opacity 280ms steps(3, end);
 }
@@ -347,13 +347,13 @@
 }
 
 @keyframes title-tick {
-  from { color: var(--bg); }
-  to   { color: #1d1640; }
+  from { color: var(--ink); }
+  to   { color: var(--surface-2); }
 }
 
 @keyframes window-content-pulse {
-  0%, 100% { background: var(--text); }
-  50%       { background: #fff8ff; }
+  0%, 100% { background: var(--fg-fill); }
+  50%       { background: var(--fg-fill); }
 }
 
 @keyframes toolbar-pulse {

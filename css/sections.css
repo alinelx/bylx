@@ -9,9 +9,10 @@
 /* ᑲყᥣx sections */
 
 .projects {
-  border-top: 4px solid var(--pink);
+  /* Sem linha: o fundo da cena é o fundo do site, a mesa continua para os projectos */
+  border-top: 0;
   padding: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 5vw, 4rem);
-  background: var(--bg);
+  background: var(--surface);
 }
 
 .projects-inner {
@@ -48,9 +49,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 4px solid var(--cyan);
+  border: 4px solid var(--line);
   box-shadow: 6px 6px 0 var(--shadow-chunk);
-  background: var(--bylx-bg-ink);
+  background: var(--surface-2);
   transition: transform 80ms steps(2, end), box-shadow 80ms steps(2, end);
 }
 
@@ -90,25 +91,25 @@
 .card-status {
   font-family: var(--font-ui);
   font-size: var(--fs-label);
-  color: var(--muted);
+  color: var(--fg-2);
   line-height: 1.8;
 }
 
-.card-status--live    { color: var(--cyan); }
-.card-status--shipped { color: var(--muted); }
-.card-status--client  { color: var(--muted); }
-.card-status--internal { color: var(--muted); }
+.card-status--live    { color: var(--link); }
+.card-status--shipped { color: var(--fg-2); }
+.card-status--client  { color: var(--fg-2); }
+.card-status--internal { color: var(--fg-2); }
 
 .card-tag {
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   padding: 4px 6px;
-  background: var(--bg);
+  background: var(--surface);
   border: 2px solid currentColor;
   white-space: nowrap;
   letter-spacing: 0;
   flex-shrink: 0;
-  color: var(--cyan);
+  color: var(--link);
 }
 
 /* The card used to be wrapped in a bare <a> with no href: not focusable, not
@@ -137,7 +138,7 @@
 }
 
 .project-card:has(.card-trigger:focus-visible) {
-  outline: 3px solid var(--cyan);
+  outline: 3px solid var(--line);
   outline-offset: 3px;
 }
 
@@ -146,13 +147,13 @@
   font-size: clamp(1.5rem, 3vw, 1.8rem);
   font-weight: 600;
   line-height: 1;
-  color: var(--text);
+  color: var(--fg);
 }
 
 .card-body p {
   margin: 0;
   font-size: clamp(0.92rem, 1.4vw, 1rem);
-  color: var(--muted);
+  color: var(--fg-2);
   line-height: 1.18;
 }
 
@@ -175,14 +176,14 @@
   margin: 0 0 1rem;
   padding: 0 0 1rem;
   list-style: none;
-  border-bottom: 2px solid rgba(9, 5, 27, 0.15);
+  border-bottom: 2px solid var(--ink);
 }
 
 .cs-chips li {
   padding: 4px 7px;
-  color: var(--purple);
-  background: rgba(93, 63, 211, 0.1);
-  border: 2px solid var(--purple);
+  color: var(--accent-3-fg);
+  background: transparent;
+  border: 2px solid var(--shadow-chunk);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   line-height: 1.4;
@@ -193,7 +194,7 @@
   margin: 0.9rem 0 0.3rem;
   font-family: var(--font-pixel);
   font-size: var(--fs-body-lg);
-  color: var(--purple);
+  color: var(--accent-3-fg);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -201,7 +202,7 @@
 .case-study-body p {
   margin: 0;
   font-size: clamp(0.8rem, 1.4vw, 0.88rem);
-  color: var(--bg);
+  color: var(--ink);
   line-height: 1.7;
 }
 
@@ -210,8 +211,8 @@
 .case-study-body code {
   font-family: var(--font-ui);
   font-size: var(--fs-label);
-  color: var(--purple);
-  background: rgba(93, 63, 211, 0.12);
+  color: var(--accent-3-fg);
+  background: transparent;
   padding: 0.15em 0.45em;
 }
 
@@ -225,7 +226,7 @@
 
 .cs-list li {
   font-size: clamp(0.78rem, 1.4vw, 0.86rem);
-  color: var(--bg);
+  color: var(--ink);
   line-height: 1.6;
 }
 
@@ -234,7 +235,7 @@
   gap: 0.75rem;
   margin-top: 1.25rem;
   padding-top: 1rem;
-  border-top: 2px solid rgba(9, 5, 27, 0.15);
+  border-top: 2px solid var(--ink);
   flex-wrap: wrap;
 }
 
@@ -243,7 +244,7 @@
 .cs-button {
   display: inline-block;
   padding: 0.55rem 0.85rem;
-  border: 3px solid var(--bg);
+  border: 3px solid var(--ink);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   line-height: 1.5;
@@ -254,33 +255,33 @@
 }
 
 .cs-button--primary {
-  color: var(--bg);
-  background: var(--pink);
-  box-shadow: 5px 5px 0 var(--purple);
+  color: var(--ink);
+  background: var(--accent-fill);
+  box-shadow: 5px 5px 0 var(--shadow-chunk);
 }
 
 .cs-button--ghost {
-  color: var(--purple);
+  color: var(--accent-3-fg);
   background: transparent;
-  border-color: var(--purple);
-  box-shadow: 5px 5px 0 rgba(93, 63, 211, 0.35);
+  border-color: var(--shadow-chunk);
+  box-shadow: 5px 5px 0 var(--shadow-chunk);
 }
 
 .cs-button:hover,
 .cs-button:focus-visible {
   transform: translate(-2px, -2px);
-  box-shadow: 7px 7px 0 var(--purple);
+  box-shadow: 7px 7px 0 var(--shadow-chunk);
   outline: none;
 }
 
 .cs-button:focus-visible {
-  outline: 3px solid var(--purple);
+  outline: 3px solid var(--shadow-chunk);
   outline-offset: 3px;
 }
 
 .cs-button:active {
   transform: translate(1px, 1px);
-  box-shadow: 3px 3px 0 var(--purple);
+  box-shadow: 3px 3px 0 var(--shadow-chunk);
 }
 
 .modal {
@@ -302,7 +303,7 @@
 .modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(9, 5, 27, 0.76);
+  background: var(--surface);
 }
 
 .modal-window {
@@ -313,9 +314,9 @@
   max-height: min(680px, calc(100svh - 2rem));
   overflow: auto;
   transform: translate(-50%, -50%);
-  color: var(--bg);
-  background: var(--text);
-  border: 4px solid var(--cyan);
+  color: var(--ink);
+  background: var(--fg-fill);
+  border: 4px solid var(--line);
   box-shadow: 8px 8px 0 var(--shadow-chunk);
   font-family: var(--font-pixel);
 }
@@ -326,9 +327,9 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.55rem 0.7rem;
-  color: var(--bg);
-  background: var(--cyan);
-  border-bottom: 4px solid var(--bg);
+  color: var(--ink);
+  background: var(--accent-2-fill);
+  border-bottom: 4px solid var(--ink);
 }
 
 .modal-header h2 {
@@ -339,9 +340,9 @@
 
 .modal-close {
   padding: 0.15rem 0.5rem;
-  border: 2px solid var(--bg);
-  background: var(--pink);
-  color: var(--bg);
+  border: 2px solid var(--ink);
+  background: var(--accent-fill);
+  color: var(--ink);
   font: inherit;
   line-height: 1;
 }
@@ -365,8 +366,8 @@
   position: relative;
   margin: 0;
   overflow: hidden;
-  background: var(--bg);
-  border: 3px solid var(--bg);
+  background: var(--surface);
+  border: 3px solid var(--ink);
   box-shadow: 3px 3px 0 var(--shadow-chunk);
 }
 
@@ -386,8 +387,8 @@
   right: 0;
   bottom: 0;
   padding: 4px 6px;
-  color: var(--text);
-  background: rgba(9, 5, 27, 0.78);
+  color: var(--fg);
+  background: var(--surface);
   font-family: var(--font-pixel);
   font-size: var(--fs-caption);
   text-transform: uppercase;
@@ -401,9 +402,9 @@
   left: clamp(2rem, 38%, 50%);
   z-index: 76;
   width: min(280px, 30vw);
-  color: var(--bg);
+  color: var(--ink);
   background: var(--paper);
-  border: var(--stroke-2) solid var(--cyan);
+  border: var(--stroke-2) solid var(--line);
   box-shadow: var(--shadow-chunk-md);
   font-family: var(--font-pixel);
   animation: start-pop-in 140ms steps(2, end);
@@ -414,9 +415,9 @@
 .start-menu-title {
   margin: 0;
   padding: 8px 12px;
-  background: var(--cyan);
-  border-bottom: 3px solid var(--bg);
-  color: var(--bg);
+  background: var(--accent-2-fill);
+  border-bottom: 3px solid var(--ink);
+  color: var(--ink);
   font: 500 1rem/1 var(--font-pixel);
 }
 
@@ -431,7 +432,7 @@
   padding: 8px 14px;
   border: 0;
   background: transparent;
-  color: var(--bg);
+  color: var(--ink);
   font: 500 1rem/1.1 var(--font-pixel);
   text-align: left;
   cursor: none;
@@ -440,7 +441,7 @@
 .start-menu li button:hover,
 .start-menu li button:focus-visible {
   outline: none;
-  background: var(--cyan);
+  background: var(--accent-2-fill);
 }
 
 .start-menu li button .meta {
@@ -448,7 +449,7 @@
   margin-top: 4px;
   /* #666 dropped to 4.29:1 once the row's background swaps to cyan on
      hover/focus */
-  color: #4a4a4a;
+  color: var(--ink);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   text-transform: uppercase;
@@ -472,7 +473,7 @@
   padding: 4vmin;
   /* Not #000: the page's own dark. A cinema that is blacker than the site
      reads as a hole punched through it rather than as the room going dark. */
-  background: var(--bg);
+  background: var(--surface);
 }
 
 .fullscreen-mode[hidden] { display: none; }
@@ -515,10 +516,10 @@
   width: min(96vw, calc(96vh * 384 / 279));
   aspect-ratio: 384 / 279;
   overflow: hidden;
-  background: var(--bg);
+  background: var(--surface);
   image-rendering: pixelated;
-  border: 6px solid var(--bg);
-  box-shadow: 0 0 0 14px var(--bylx-bg-ink), 0 0 80px rgba(89, 243, 255, 0.18);
+  border: 6px solid var(--ink);
+  box-shadow: 0 0 0 14px var(--surface-2);
 }
 
 .fullscreen-hint {
@@ -527,9 +528,9 @@
   right: 18px;
   margin: 0;
   padding: 10px 14px;
-  color: var(--bg);
+  color: var(--ink);
   background: var(--paper);
-  border: 3px solid var(--bg);
+  border: 3px solid var(--ink);
   box-shadow: var(--shadow-chunk-sm);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
@@ -564,9 +565,9 @@
   display: inline-block;
   margin: 0 2px;
   padding: 4px 8px;
-  background: var(--cyan);
-  color: var(--bg);
-  border: 2px solid var(--bg);
+  background: var(--accent-2-fill);
+  color: var(--ink);
+  border: 2px solid var(--ink);
   font-family: inherit;
   font-size: var(--fs-label);
 }
@@ -582,9 +583,9 @@
   z-index: 40;
   margin: 0;
   padding: 10px 14px;
-  color: var(--bg);
+  color: var(--ink);
   background: var(--paper);
-  border: 3px solid var(--bg);
+  border: 3px solid var(--ink);
   box-shadow: var(--shadow-chunk-sm);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
@@ -603,17 +604,17 @@
 .contact-form textarea {
   width: 100%;
   padding: 0.5rem;
-  border: 3px solid var(--bg);
-  background: #fff8ff;
-  color: var(--bg);
+  border: 3px solid var(--ink);
+  background: var(--fg-fill);
+  color: var(--ink);
   font: inherit;
 }
 
 .contact-form button {
   padding: 0.45rem 0.65rem;
-  border: 3px solid var(--bg);
-  background: var(--pink);
-  color: var(--bg);
+  border: 3px solid var(--ink);
+  background: var(--accent-fill);
+  color: var(--ink);
   font: inherit;
   text-transform: uppercase;
 }
@@ -639,7 +640,7 @@
   font-size: 0.85em;
 }
 
-.form-status[data-state="sending"] { color: var(--purple); }
+.form-status[data-state="sending"] { color: var(--accent-3-fg); }
 .form-status[data-state="success"] { color: var(--bylx-cyan-deep); }
 .form-status[data-state="error"]   { color: var(--danger); }
 
@@ -680,10 +681,10 @@
   width: 30px;
   height: 30px;
   padding: 0;
-  background: var(--pink);
-  color: var(--bg);
-  border: 3px solid var(--bg);
-  box-shadow: 3px 3px 0 var(--cyan);
+  background: var(--accent-fill);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--line);
   font: 600 18px var(--font-pixel);
   line-height: 1;
   cursor: none;
@@ -693,8 +694,8 @@
   margin: 0 0 6px;
   padding: 6px 8px;
   background: var(--bylx-overlay-strong);
-  color: var(--cyan);
-  border-left: 4px solid var(--pink);
+  color: var(--link);
+  border-left: 4px solid var(--accent-line);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   text-transform: uppercase;
@@ -706,7 +707,7 @@
 .mp3-frame {
   position: relative;
   aspect-ratio: 320 / 128;
-  filter: drop-shadow(6px 6px 0 var(--bg));
+  filter: drop-shadow(6px 6px 0 var(--ink));
 }
 
 .mp3-img {
@@ -736,9 +737,9 @@
      player's *width*, which put 5px of padding inside a 23px-tall screen */
   padding: 1px 3%;
   overflow: hidden;
-  background: #1c1d6a;
-  color: var(--cyan);
-  border: 1px solid rgba(9, 5, 27, 0.6);
+  background: var(--ink);
+  color: var(--link);
+  border: 1px solid var(--ink);
   font-family: var(--font-ui);
   -webkit-font-smoothing: none;
   pointer-events: none;
@@ -751,7 +752,7 @@
   font-size: clamp(0.5rem, 1.3vw, 0.78rem);
   line-height: 1;
   text-transform: uppercase;
-  filter: drop-shadow(0 0 4px rgba(89, 243, 255, 0.6));
+  filter: drop-shadow(0 0 4px var(--line));
 }
 
 /* Corre sempre, como no kit: um LCD destes nunca para, toque ou não toque.
@@ -769,7 +770,7 @@
   display: flex;
   justify-content: space-between;
   gap: 6px;
-  color: var(--muted);
+  color: var(--fg-2);
   /* Exempt from the 12px label floor (2026-09-25): this is the fake LCD inside
      mp3_player.png, not a label — the readout has to fit a strip of painted
      screen about 8px tall. 0.5rem is the floor because the old 0.32rem
@@ -794,11 +795,11 @@
 .mp3-hit:hover,
 .mp3-hit:focus-visible {
   outline: none;
-  border-color: rgba(89, 243, 255, 0.9);
-  background: rgba(89, 243, 255, 0.12);
+  border-color: var(--line);
+  background: transparent;
 }
 
-.mp3-hit:active { background: rgba(255, 93, 187, 0.22); }
+.mp3-hit:active { background: var(--accent-line); }
 
 .mp3-hit-label {
   position: absolute;
@@ -806,9 +807,9 @@
   left: 50%;
   transform: translate(-50%, -4px);
   padding: 4px 6px;
-  background: var(--bg);
-  color: var(--cyan);
-  border: 2px solid var(--cyan);
+  background: var(--surface);
+  color: var(--link);
+  border: 2px solid var(--line);
   font-size: var(--fs-label);
   white-space: nowrap;
   opacity: 0;
@@ -836,7 +837,7 @@
 .mp3-play:hover,
 .mp3-play:focus-visible {
   border: 0;
-  background: rgba(89, 243, 255, 0.16);
+  background: transparent;
 }
 
 /* Mudar de música — o botão que sai do topo do corpo, x 46-54 y 12-24 no
@@ -880,9 +881,9 @@
   inset: 11% 8% 48% 8%;
   display: grid;
   place-items: center;
-  background: var(--bylx-bg-ink);
+  background: var(--surface-2);
   box-shadow: inset 0 0 0 1px var(--bylx-cyan-ink);
-  color: var(--cyan);
+  color: var(--link);
   /* Exempt from the 12px label floor for the same reason as .mp3-lcd-meta:
      this glyph stands in for a key the sprite never drew, and it has to sit
      inside that key. See the volume-button note in CLAUDE.md. */
@@ -898,7 +899,7 @@
 .mp3-voldown:focus-visible::after,
 .mp3-volup:hover::after,
 .mp3-volup:focus-visible::after {
-  box-shadow: inset 0 0 0 1px var(--cyan);
+  box-shadow: inset 0 0 0 1px var(--line);
   background: var(--bylx-purple-ink);
 }
 
@@ -909,9 +910,9 @@
 }
 
 .about {
-  border-top: 4px solid var(--cyan);
+  border-top: 0;
   padding: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 5vw, 4rem);
-  background: color-mix(in srgb, var(--bg) 92%, var(--purple) 8%);
+  background: var(--surface);
 }
 
 .about-inner {
@@ -946,19 +947,19 @@
 .about-text p {
   margin: 0;
   font-size: clamp(0.85rem, 1.45vw, 1rem);
-  color: var(--muted);
+  color: var(--fg-2);
   line-height: 1.75;
 }
 
 .about-cta:hover,
 .about-cta:focus-visible {
   transform: translate(-2px, -2px);
-  box-shadow: 7px 7px 0 var(--cyan);
+  box-shadow: 7px 7px 0 var(--line);
   outline: none;
 }
 
 .about-cta:focus-visible {
-  outline: 3px solid var(--cyan);
+  outline: 3px solid var(--line);
   outline-offset: 3px;
 }
 
@@ -981,7 +982,7 @@
 
 .about-gif {
   width: 100%;
-  border: 3px solid var(--purple);
+  border: 3px solid var(--shadow-chunk);
   box-shadow: 5px 5px 0 var(--shadow-chunk);
 }
 
@@ -1002,7 +1003,7 @@
   object-fit: contain;
   opacity: 0.88;
   transition: opacity 0.08s steps(2, end), transform 0.08s steps(2, end);
-  background-color: var(--text);
+  background-color: var(--fg-fill);
   padding: 7px;
 }
 
@@ -1012,9 +1013,9 @@
 }
 
 .site-footer {
-  border-top: 2px solid rgba(93, 63, 211, 0.4);
+  border-top: 2px solid var(--shadow-chunk);
   padding: clamp(1.25rem, 3vw, 2rem) clamp(1.5rem, 5vw, 4rem);
-  background: var(--bg);
+  background: var(--surface);
 }
 
 .footer-inner {
@@ -1030,7 +1031,7 @@
   margin: 0;
   font-family: var(--font-ui);
   font-size: var(--fs-label);
-  color: var(--pink);
+  color: var(--accent-fg);
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
@@ -1047,21 +1048,21 @@
 .footer-links a {
   font-family: var(--font-ui);
   font-size: var(--fs-label);
-  color: var(--muted);
+  color: var(--fg-2);
   text-decoration: none;
   letter-spacing: 0.04em;
   transition: color 0.1s steps(2, end);
 }
 
 .footer-links a:hover {
-  color: var(--cyan);
+  color: var(--link);
 }
 
 /* The colour swap alone was a 1.09:1 difference between focused and not —
    invisible as a focus indicator. */
 .footer-links a:focus-visible {
-  color: var(--cyan);
-  outline: 2px solid var(--cyan);
+  color: var(--link);
+  outline: 2px solid var(--line);
   outline-offset: 3px;
   text-decoration: underline;
 }
@@ -1072,7 +1073,8 @@
   font-family: var(--font-pixel);
   font-size: var(--fs-caption);
   /* 0.35 composited to 2.48:1 on the footer's near-black */
-  color: rgba(216, 208, 255, 0.7);
+  color: var(--fg-2);
+  opacity: 0.85;
   letter-spacing: 0.04em;
 }
 
@@ -1095,7 +1097,7 @@
 .gallery-open:focus-visible img { transform: scale(1.04); }
 
 .gallery-open:focus-visible {
-  outline: 3px solid var(--cyan);
+  outline: 3px solid var(--line);
   outline-offset: -3px;
 }
 
@@ -1105,9 +1107,9 @@
   top: 4px;
   right: 4px;
   padding: 2px 5px;
-  color: var(--bg);
-  background: var(--cyan);
-  border: 2px solid var(--bg);
+  color: var(--ink);
+  background: var(--accent-2-fill);
+  border: 2px solid var(--ink);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   line-height: 1;
@@ -1127,7 +1129,7 @@
   justify-content: center;
   gap: clamp(0.5rem, 2vw, 1.5rem);
   padding: clamp(1rem, 4vw, 3rem);
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  background: var(--surface);
 }
 
 .lightbox[hidden] { display: none; }
@@ -1150,15 +1152,15 @@
   height: min(70vh, 62vw);
   object-fit: contain;
   image-rendering: pixelated;
-  border: 4px solid var(--cyan);
+  border: 4px solid var(--line);
   box-shadow: 8px 8px 0 var(--shadow-chunk);
-  background: var(--bylx-bg-ink);
+  background: var(--surface-2);
 }
 
 .lightbox-caption {
   font-family: var(--font-pixel);
   font-size: var(--fs-caption);
-  color: var(--muted);
+  color: var(--fg-2);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -1166,9 +1168,9 @@
 .lightbox-nav,
 .lightbox-close {
   padding: 0.35rem 0.7rem;
-  color: var(--bg);
-  background: var(--cyan);
-  border: 3px solid var(--bg);
+  color: var(--ink);
+  background: var(--accent-2-fill);
+  border: 3px solid var(--ink);
   box-shadow: 4px 4px 0 var(--shadow-chunk);
   font-family: var(--font-pixel);
   font-size: 1.4rem;
@@ -1177,11 +1179,11 @@
 }
 
 .lightbox-nav:hover,
-.lightbox-close:hover { background: var(--pink); }
+.lightbox-close:hover { background: var(--accent-fill); }
 
 .lightbox-nav:focus-visible,
 .lightbox-close:focus-visible {
-  outline: 3px solid var(--text);
+  outline: 3px solid var(--focus-alt);
   outline-offset: 2px;
 }
 
@@ -1208,17 +1210,17 @@
 .about-availability {
   margin: 1.4rem 0 0;
   padding: 0.7rem 0.85rem;
-  color: var(--text);
-  background: rgba(98, 230, 255, 0.06);
-  border-left: var(--stroke-4, 4px) solid var(--cyan);
+  color: var(--fg);
+  background: transparent;
+  border-left: var(--stroke-4, 4px) solid var(--line);
   font-size: clamp(0.85rem, 1.4vw, 0.95rem);
   line-height: 1.6;
 }
 
-.about-availability strong { color: var(--cyan); }
+.about-availability strong { color: var(--link); }
 
 .about-availability a {
-  color: var(--pink);
+  color: var(--accent-fg);
   text-underline-offset: 3px;
 }
 
@@ -1246,10 +1248,10 @@
   min-height: 2.9rem;
   margin: 0;
   padding: 0.7rem 0.9rem;
-  color: var(--cyan);
+  color: var(--link);
   background: transparent;
-  border: 3px solid var(--cyan);
-  box-shadow: 5px 5px 0 rgba(89, 243, 255, 0.28);
+  border: 3px solid var(--line);
+  box-shadow: 5px 5px 0 var(--line);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   line-height: 1.4;
@@ -1264,16 +1266,16 @@
    DEPOIS dela, senão a regra partilhada é que ganha e o botão fica sem o
    rosa. */
 .about-cta {
-  color: var(--bg);
-  background: var(--pink);
-  border-color: var(--cyan);
-  box-shadow: 5px 5px 0 var(--cyan);
+  color: var(--ink);
+  background: var(--accent-fill);
+  border-color: var(--line);
+  box-shadow: 5px 5px 0 var(--line);
   cursor: pointer;
 }
 
 .about-link--primary {
-  color: var(--bg);
-  background: var(--cyan);
+  color: var(--ink);
+  background: var(--accent-2-fill);
   box-shadow: 5px 5px 0 var(--shadow-chunk);
 }
 
@@ -1284,7 +1286,7 @@
 }
 
 .about-link:focus-visible {
-  outline: 3px solid var(--text);
+  outline: 3px solid var(--focus-alt);
   outline-offset: 3px;
 }
 
@@ -1308,9 +1310,9 @@
 
 .about-badges li {
   padding: 5px 8px;
-  color: var(--muted);
-  background: var(--bylx-bg-ink);
-  border: 2px solid var(--purple);
+  color: var(--fg-2);
+  background: var(--surface-2);
+  border: 2px solid var(--shadow-chunk);
   font-family: var(--font-pixel);
   font-size: var(--fs-caption);
   line-height: 1.6;
@@ -1326,52 +1328,52 @@
    verificáveis — uma etiqueta que ninguém pode confirmar não vale nada. */
 .about-badges--linked li {
   padding: 0;
-  border-color: var(--cyan);
+  border-color: var(--line);
 }
 
 .about-badges--linked a {
   display: block;
   padding: 5px 8px;
-  color: var(--cyan);
+  color: var(--link);
   text-decoration: none;
   transition: background 80ms steps(2, end);
 }
 
 .about-badges--linked a:hover,
 .about-badges--linked a:focus-visible {
-  color: var(--bg);
-  background: var(--cyan);
+  color: var(--ink);
+  background: var(--accent-2-fill);
   outline: none;
 }
 
 .about-badges--linked a:focus-visible {
-  outline: 3px solid var(--text);
+  outline: 3px solid var(--focus-alt);
   outline-offset: 2px;
 }
 
 /* Uma credencial com prova pública liga-se a ela, como os badges */
 .about-badges li.is-linked {
   padding: 0;
-  border-color: var(--cyan);
+  border-color: var(--line);
 }
 
 .about-badges li.is-linked a {
   display: block;
   padding: 5px 8px;
-  color: var(--cyan);
+  color: var(--link);
   text-decoration: none;
   transition: background 80ms steps(2, end);
 }
 
 .about-badges li.is-linked a:hover,
 .about-badges li.is-linked a:focus-visible {
-  color: var(--bg);
-  background: var(--cyan);
+  color: var(--ink);
+  background: var(--accent-2-fill);
   outline: none;
 }
 
 .about-badges li.is-linked a:focus-visible {
-  outline: 3px solid var(--text);
+  outline: 3px solid var(--focus-alt);
   outline-offset: 2px;
 }
 
@@ -1390,10 +1392,10 @@
 .filter-btn {
   appearance: none;
   padding: 7px 10px;
-  border: 2px solid var(--cyan);
+  border: 2px solid var(--line);
   border-radius: 0;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--surface);
+  color: var(--fg);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   line-height: 1.6;
@@ -1401,15 +1403,15 @@
   cursor: none;
 }
 
-.filter-btn:hover { border-color: var(--pink); }
+.filter-btn:hover { border-color: var(--accent-line); }
 
 .filter-btn[aria-pressed="true"] {
-  background: var(--cyan);
-  border-color: var(--cyan);
-  color: var(--bg);
+  background: var(--accent-2-fill);
+  border-color: var(--line);
+  color: var(--ink);
 }
 
-.filter-btn:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+.filter-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
 .filter-count { opacity: 0.65; }
 
@@ -1421,7 +1423,7 @@
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   letter-spacing: 0.06em;
-  color: var(--muted);
+  color: var(--fg-2);
 }
 
 /* Three across, stated rather than inferred. auto-fill happened to give

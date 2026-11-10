@@ -17,7 +17,7 @@
   min-height: min(516px, 100svh);
   overflow: hidden;
   isolation: isolate;
-  background: var(--purple);
+  background: var(--surface); /* o mesmo fundo da cena e do site — no telemóvel aparece à volta do painel */
 }
 
 /* Anchored to the bottom only: when the viewport is shorter than the 16:9
@@ -427,7 +427,7 @@
   font-family: var(--font-pixel);
   font-size: var(--fs-caption);
   line-height: var(--lh-body);
-  color: #444;
+  color: var(--ink);
 }
 
 .toolbar-strip {
@@ -494,8 +494,8 @@
   background: linear-gradient(
     to bottom,
     transparent 0 50%,
-    #dccfff 50% 56.25%,
-    #9a86ce 56.25% 100%
+    var(--fg-fill) 50% 56.25%,
+    var(--fg-2) 56.25% 100%
   );
 }
 
@@ -511,7 +511,7 @@
   image-rendering: pixelated;
   pointer-events: none;
   transform: rotate(-6deg);
-  filter: drop-shadow(2px 2px 0 rgba(9, 5, 27, 0.4));
+  filter: drop-shadow(2px 2px 0 var(--ink));
 }
 
 .monitor {

@@ -23,26 +23,28 @@
   /* Both of these are read on the paper surfaces (.form-status sits on the
      modal's #f7f2ff). The brand cyan and pink themselves land at 2.17:1 and
      2.65:1 there — these are their legible counterparts, 5.34:1 and 6.74:1. */
-  --danger: #a81049;
-  --bylx-cyan-deep: #106f7a;
-
+  /* Desde 2026-11-10 o site usa SÓ as 7 cores da cena de cada tema.
+     Dark (dark-7):  #09051b · #5c05a6 · #9319c8 · #ee5afc · #fe7ee2 · #ffbedd · #f7f2ff
+     Light (light-contraste-7): #09051b · #04468d · #0a7194 · #18c1cd · #02dbc4 · #b3fed6 · #f7f2ff
+     Os nomes bylx-* ficam (há código que os lê), mas apontam para essas cores:
+     o ciano #59f3ff, o rosa #ff5dbb, #1d1640, #d8d0ff e #fff8ff saíram. */
+  --danger: #5c05a6;           /* sobre papel #f7f2ff: 9.3:1 */
+  --bylx-cyan-deep: #5c05a6;
   --bylx-bg: #09051b;
-  --bylx-bg-ink: #1d1640;
-  --bylx-pink: #ff5dbb;
-  --bylx-cyan: #59f3ff;
-  --bylx-purple: #5d3fd3;
+  --bylx-bg-ink: #5c05a6;
+  --bylx-pink: #fe7ee2;
+  --bylx-cyan: #ee5afc;
+  --bylx-purple: #5c05a6;
   --bylx-text: #f7f2ff;
-  --bylx-muted: #d8d0ff;
-  --bylx-paper: #fff8ff;
-
-  --bylx-pink-ink: #c33a8e;
-  --bylx-pink-glow: rgba(255, 93, 187, 0.42);
-  --bylx-cyan-ink: #2bb8c8;
-  --bylx-cyan-glow: rgba(89, 243, 255, 0.42);
-  --bylx-purple-ink: #2a1c84;
-  --bylx-overlay: rgba(9, 5, 27, 0.78);
-  --bylx-overlay-strong: rgba(9, 5, 27, 0.88);
-
+  --bylx-muted: #ffbedd;
+  --bylx-paper: #f7f2ff;
+  --bylx-pink-ink: #9319c8;
+  --bylx-pink-glow: #fe7ee2;
+  --bylx-cyan-ink: #9319c8;
+  --bylx-cyan-glow: #ee5afc;
+  --bylx-purple-ink: #5c05a6;
+  --bylx-overlay: #09051b;
+  --bylx-overlay-strong: #09051b;
   --bg: var(--bylx-bg);
   --pink: var(--bylx-pink);
   --cyan: var(--bylx-cyan);
@@ -66,6 +68,32 @@
   --border-ink: var(--bylx-bg);
   --link: var(--bylx-cyan);
 
+
+  /* ---------- Papéis de cor (2026-11-10) ----------
+     A cena passou a ter dois temas (dark: roxo → rosa; light: azul → ciano →
+     verde-água) e o site acompanha o sistema. Os componentes já não pedem
+     "cyan" ou "bg": pedem o PAPEL — texto, linha, preenchimento, superfície —
+     e cada tema decide a cor. Isto existe porque --bg era ao mesmo tempo o
+     fundo da página (11 usos) e a tinta do texto sobre botões claros (30):
+     num tema claro um dos dois tinha de mudar e o outro não.
+     Valores do dark = os de sempre; os do light saem de light-contraste-7. */
+  color-scheme: dark;
+  --surface: #9319c8;               /* fundo da página = fundo da cena (scene.json backgroundColor) */
+  --surface-2: #5c05a6;             /* painéis e cartões */
+  --ink: var(--bylx-bg);            /* texto e contorno sobre preenchimentos claros — igual nos dois temas */
+  --fg: var(--bylx-text);           /* texto sobre a superfície */
+  --fg-2: #f7f2ff;                  /* sobre #9319c8 só o #f7f2ff passa 4.5:1 (5.9:1); #ffbedd dava 4.25 */
+  --fg-fill: var(--bylx-text);      /* superfície clara com texto --ink (folhas, chips) — igual nos dois temas */
+  --link: #f7f2ff;
+  --line: #ffbedd;                  /* bordas: 4.25:1 sobre #9319c8 (o mínimo para não-texto é 3:1) */
+  --accent-2-fill: var(--bylx-cyan);/* preenchimento secundário (texto --ink) */
+  --accent-fill: var(--bylx-pink);  /* preenchimento de CTA (texto --ink) */
+  --accent-fg: #f7f2ff;
+  --accent-line: #ffbedd;
+  --focus: #f7f2ff;                 /* anel de foco */
+  --focus-alt: var(--bylx-text);
+  --accent-3-fg: #f7f2ff;
+  --accent-3-fill: var(--bylx-purple);
   --font-pixel: "Pixelify Sans", system-ui, sans-serif;
   --font-ui: "Press Start 2P", monospace;
   --font-mono: "Press Start 2P", ui-monospace, monospace;
@@ -126,12 +154,12 @@
      The shadow is now purple — it is a shadow, and purple is already the
      scene's own colour — and pink is reserved for CTA fills and focus rings.
      This one token is the lever: set it back to var(--bylx-pink) to undo. */
-  --shadow-chunk: var(--bylx-purple);
+  --shadow-chunk: #5c05a6;
   --shadow-chunk-sm: 4px 4px 0 var(--shadow-chunk);
   --shadow-chunk-md: 7px 7px 0 var(--shadow-chunk);
   --shadow-chunk-lg: 9px 9px 0 var(--shadow-chunk);
-  --shadow-chunk-cyan: 6px 6px 0 var(--bylx-cyan);
-  --glow-cyan: 0 0 0 3px rgba(89, 243, 255, 0.9);
+  --shadow-chunk-cyan: 6px 6px 0 var(--line);
+  --glow-cyan: 0 0 0 3px var(--line);
 
   --ease-step-2: steps(2, end);
   --ease-step-3: steps(3, end);
@@ -139,4 +167,35 @@
   --dur-flicker: 2.8s;
   --dur-float: 8s;
   --dur-pulse: 4.8s;
+}
+
+/* ---------- Light (light-contraste-7 da cena) ----------
+   #f7f2ff · #b3fed6 · #02dbc4 · #18c1cd · #0a7194 · #04468d · #09051b.
+   Contraste medido sobre #f7f2ff: --fg 18.2:1, --fg-2 #04468d 8.4:1,
+   --link #04468d 8.4:1, --line #0a7194 5.0:1 (só bordas), --focus 8.4:1; texto --ink sobre os
+   preenchimentos #02dbc4 11.4:1 e #18c1cd 9.1:1. */
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --surface: #02dbc4;  /* fundo da página = borda da parede no light (#5c5c5c invertido) */
+    --surface-2: #f7f2ff;
+    --fg: #09051b;
+    --fg-2: #04468d;
+    --link: #04468d;  /* #0a7194 dava 4.4:1 sobre o fundo tingido do About */
+    --line: #0a7194;
+    --accent-2-fill: #18c1cd;
+    --accent-fill: #02dbc4;
+    --accent-fg: #04468d;
+    --accent-line: #04468d;
+    --focus: #04468d;
+    --focus-alt: #04468d;
+    --accent-3-fg: #04468d;
+    --accent-3-fill: #04468d;
+    --shadow-chunk: #0a7194;
+    --danger: #04468d;
+    --bylx-cyan-deep: #04468d;
+    --bylx-paper: #f7f2ff;
+    --bylx-overlay: #f7f2ff;
+    --bylx-overlay-strong: #f7f2ff;
+  }
 }

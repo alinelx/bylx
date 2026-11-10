@@ -22,8 +22,8 @@ body {
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--surface);
+  color: var(--fg);
   font-family: var(--font-pixel);
 }
 
@@ -41,9 +41,9 @@ img {
   left: 0;
   z-index: 999;
   padding: 0.7rem 1rem;
-  color: var(--bg);
-  background: var(--cyan);
-  border: 3px solid var(--bg);
+  color: var(--ink);
+  background: var(--accent-2-fill);
+  border: 3px solid var(--ink);
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   text-decoration: none;
@@ -53,6 +53,14 @@ img {
 
 .skip-link:focus-visible {
   transform: translateY(0);
-  outline: 3px solid var(--pink);
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
+}
+
+/* Só as 7 cores do tema: botões de imagem e o cartão do arcade herdavam a cor
+   do user agent (#fff/#000, #9e9eff/#0000ee) — invisível, mas fora da paleta. */
+button,
+a.arcade-cabinet,
+a.cs-button:not(.cs-button--primary) {
+  color: inherit;
 }
