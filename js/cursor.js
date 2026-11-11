@@ -19,7 +19,7 @@ export function initCursor() {
   let pending = null;
   let scheduled = false;
 
-  window.addEventListener("mousemove", (event) => {
+  window.addEventListener("pointermove", (event) => {
     pending = event;
     if (scheduled) return;
     scheduled = true;
@@ -39,8 +39,8 @@ export function initCursor() {
     if (event.target.closest("a, button")) cursor.classList.remove("hover");
   });
 
-  window.addEventListener("mousedown", () => cursor.classList.add("click"));
-  window.addEventListener("mouseup",   () => cursor.classList.remove("click"));
+  window.addEventListener("pointerdown", () => cursor.classList.add("click"));
+  window.addEventListener("pointerup",   () => cursor.classList.remove("click"));
 }
 
 export function initSakuraTrail() {
@@ -121,7 +121,7 @@ export function initSakuraTrail() {
     setTimeout(remove, duration + 250);
   }
 
-  window.addEventListener("mousemove", (event) => {
+  window.addEventListener("pointermove", (event) => {
     const now = performance.now();
     if (now - lastTrail < TRAIL_INTERVAL) return;
     lastTrail = now;

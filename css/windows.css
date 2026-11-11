@@ -546,11 +546,11 @@ body {
 @media (pointer: fine) {
   .is-draggable { user-select: none; }
 }
-/* a janela que se arrasta passa por cima das outras (as das secções são
-   static: ganham position relative só enquanto andam) */
-.is-dragging { z-index: 50; }
-.projects-inner.is-dragging,
-.os-window.is-dragging:not(.hero-text) { position: relative; }
+/* Uma janela que já foi arrastada fica com o z-index que o JS lhe deu (por
+   cima das outras); as das secções são static e precisam de position para
+   ele valer */
+.projects-inner.is-moved,
+.os-window.is-moved:not(.hero-text) { position: relative; }
 
 /* "See the work": no dark, texto quase-preto em vez de roxo sobre o rosa */
 :root:not([data-theme="light"]) .hero-text a:not(.hero-link-ghost) { color: #09051b; }
@@ -568,4 +568,13 @@ body {
     left: max(var(--gutter), calc((var(--scene-ox, 42) - 84) * var(--scene-u, 1) * 1px));
     top: max(var(--win-pad-sm), calc((var(--scene-oy, 0) + 74) * var(--scene-u, 1) * 1px));
   }
+}
+
+/* ---------- O hero deixa as janelas sair ----------
+   Sem overflow hidden nem isolation: a janela do hero pode ser levada para
+   baixo da mesa (a página cresce com ela) e disputa a frente com as outras.
+   Quem continua cortado é o palco da cena, à altura da mesa + frase. */
+@media not ((max-width: 900px) or ((orientation: portrait) and (max-width: 1200px))) {
+  .hero-scene { overflow: visible; isolation: auto; }
+  #hero-scene { clip-path: inset(0 0 max(0px, calc(100svh - var(--scene-bottom, 100svh))) 0); }
 }

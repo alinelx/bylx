@@ -50,54 +50,73 @@ export function initWindows() {
 
 /* ---------- Arrastar as janelas pela barra de título ----------
    Só com rato/caneta (pointer: fine): no toque a barra continua a deixar rolar
-   a página. A janela anda com a propriedade `translate`, que se soma ao
-   transform que já tenha (os modais centram-se com transform). A barra nunca
-   sai do ecrã. Maximizar (ou fechar um modal) devolve a janela ao lugar. */
+   a página. A barra nunca sai do ecrã. A janela agarrada passa para a frente
+   das outras e fica lá.
+   - Janelas no fluxo (as das secções): o vertical anda com margin-top, por isso
+     a página cresce ou encolhe com o espaço que as janelas ocupam; o
+     horizontal anda com `translate`.
+   - Janelas posicionadas (hero, dica, modais): andam só com `translate`; as do
+     hero, por serem absolutas sem corte, também alargam a página se descerem.
+   Maximizar (ou fechar um modal) devolve a janela ao lugar. */
+let topZ = 40;
+const reset = (win) => {
+  win.style.translate = "";
+  if (win.dataset.baseMt !== undefined) win.style.marginTop = "";
+  delete win.dataset.dx; delete win.dataset.dy;
+};
+
 function initDrag() {
   const fine = matchMedia("(pointer: fine)");
-  const handles = document.querySelectorAll(".os-titlebar, .modal-header");
-  for (const bar of handles) {
+  const cursor = () => document.querySelector(".cursor");
+  for (const bar of document.querySelectorAll(".os-titlebar, .modal-header")) {
     const win = bar.closest("[data-window], .os-window, .os-tip, .modal-window");
     if (!win) continue;
     bar.classList.add("is-draggable");
-    bar.addEventListener("pointerenter", () => { if (fine.matches) document.querySelector(".cursor")?.classList.add("hover"); });
-    bar.addEventListener("pointerleave", () => { if (!start) document.querySelector(".cursor")?.classList.remove("hover"); });
+    bar.addEventListener("pointerenter", () => { if (fine.matches) cursor()?.classList.add("hover"); });
+    bar.addEventListener("pointerleave", () => { if (!start) cursor()?.classList.remove("hover"); });
     let start = null;
     bar.addEventListener("pointerdown", (e) => {
       if (!fine.matches || e.button !== 0) return;
       if (e.target.closest("button, a, input, select, textarea")) return;
       if (win.classList.contains("is-maximized")) return;
-      const [dx, dy] = (win.style.translate || "0px 0px").split(" ").map(parseFloat);
-      start = { x: e.clientX, y: e.clientY, dx: dx || 0, dy: dy || 0, bar: bar.getBoundingClientRect() };
+      const pos = getComputedStyle(win).position;
+      const flow = pos === "static" || pos === "relative";
+      if (flow && win.dataset.baseMt === undefined) win.dataset.baseMt = parseFloat(getComputedStyle(win).marginTop) || 0;
+      start = { x: e.clientX, y: e.clientY, dx: +win.dataset.dx || 0, dy: +win.dataset.dy || 0, flow, bar: bar.getBoundingClientRect() };
+      win.classList.add("is-dragging", "is-moved");
+      win.style.zIndex = String(++topZ);
       bar.setPointerCapture(e.pointerId);
-      win.classList.add("is-dragging");
-      document.querySelector(".cursor")?.classList.add("dragging");
+      cursor()?.classList.add("dragging");
       e.preventDefault();
     });
     bar.addEventListener("pointermove", (e) => {
       if (!start) return;
       let mx = e.clientX - start.x, my = e.clientY - start.y;
-      /* a barra fica sempre pelo menos 40px dentro do ecrã */
       const b = start.bar, m = 40;
       mx = Math.min(Math.max(mx, m - b.right), innerWidth - m - b.left);
       my = Math.min(Math.max(my, -b.top), innerHeight - b.bottom);
-      win.style.translate = `${Math.round(start.dx + mx)}px ${Math.round(start.dy + my)}px`;
+      const dx = Math.round(start.dx + mx), dy = Math.round(start.dy + my);
+      win.dataset.dx = dx; win.dataset.dy = dy;
+      if (start.flow) {
+        win.style.translate = `${dx}px 0px`;
+        win.style.marginTop = `${+win.dataset.baseMt + dy}px`;
+      } else {
+        win.style.translate = `${dx}px ${dy}px`;
+      }
     });
     const end = () => {
       if (!start) return;
       start = null;
       win.classList.remove("is-dragging");
-      document.querySelector(".cursor")?.classList.remove("dragging");
+      cursor()?.classList.remove("dragging");
     };
     bar.addEventListener("pointerup", end);
     bar.addEventListener("pointercancel", end);
   }
-  /* maximizar devolve a janela ao lugar */
   for (const max of document.querySelectorAll(".os-max")) {
-    max.addEventListener("click", () => { const w = max.closest("[data-window]"); if (w) w.style.translate = ""; });
+    max.addEventListener("click", () => { const w = max.closest("[data-window]"); if (w) reset(w); });
   }
-  /* um modal fechado volta a abrir no centro */
   for (const close of document.querySelectorAll("[data-close-modal]")) {
-    close.addEventListener("click", () => { const w = close.closest(".modal")?.querySelector(".modal-window"); if (w) w.style.translate = ""; });
+    close.addEventListener("click", () => { const w = close.closest(".modal")?.querySelector(".modal-window"); if (w) reset(w); });
   }
 }
