@@ -486,6 +486,12 @@
 /* Mostrar a peça inteira: recortar uma prancha ou um cartaz esconde
    justamente aquilo que se quer ver. */
 .proj-shot img { height: 100%; object-fit: contain; background: var(--shot-bg, rgba(255,255,255,0.05)); }
+
+/* Um e-mail inteiro não cabe numa miniatura 4:3 sem ficar ilegível. Estas
+   mostram o topo, que é a parte que se reconhece, e abrem por inteiro. */
+.proj-shots--tall { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.proj-shots--tall .gallery-open { aspect-ratio: 3 / 7; }
+.proj-shots--tall img { object-fit: cover; object-position: top; }
 .proj-shots:has(.proj-shot:only-child) .proj-shot img { height: auto; max-height: 420px; object-fit: contain; }
 
 .gallery-grid {
