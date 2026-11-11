@@ -46,6 +46,7 @@ export function initWindows() {
   }
 
   initDrag();
+  initLayout();
 }
 
 /* ---------- Arrastar as janelas pela barra de título ----------
@@ -58,7 +59,7 @@ export function initWindows() {
    - Janelas posicionadas (hero, dica, modais): andam só com `translate`; as do
      hero, por serem absolutas sem corte, também alargam a página se descerem.
    Maximizar (ou fechar um modal) devolve a janela ao lugar. */
-let topZ = 40;
+let topZ = 43;
 const reset = (win) => {
   win.style.translate = "";
   if (win.dataset.baseMt !== undefined) win.style.marginTop = "";
@@ -119,4 +120,57 @@ function initDrag() {
   for (const close of document.querySelectorAll("[data-close-modal]")) {
     close.addEventListener("click", () => { const w = close.closest(".modal")?.querySelector(".modal-window"); if (w) reset(w); });
   }
+}
+
+/* ---------- Arrumação inicial (ecrã largo) ----------
+   Em vez de empilhadas, as três janelas das secções abrem sobrepostas como
+   numa secretária: Projects à esquerda, Arcade à direita um pouco abaixo do
+   topo de Projects, About por cima das duas mais abaixo. Medidas tiradas da
+   arrumação que a Aline fez a 1920px. Abaixo de 1760px ficam empilhadas: mais
+   estreito, a Arcade tapava o título do terceiro projecto.
+   Usa o mesmo mecanismo do arrastar (margin-top + translate), por isso a
+   página encolhe com elas e continuam a poder ser arrastadas. Depois de a
+   pessoa mexer numa janela, um resize já não a arruma de novo. */
+const LAYOUT = { min: 1760, left: 113 / 1920, right: 127 / 1920, arcadeTop: 120, aboutTop: 435, aboutLeft: 178 };
+let touched = false;
+
+function place(win, x, y) {
+  /* x, y: canto superior esquerdo pretendido, em px da página */
+  win.style.translate = ""; win.style.marginTop = "";
+  const r = win.getBoundingClientRect();
+  const base = parseFloat(getComputedStyle(win).marginTop) || 0;
+  win.dataset.baseMt = base;
+  const dx = Math.round(x - r.left), dy = Math.round(y - (r.top + scrollY));
+  win.dataset.dx = dx; win.dataset.dy = dy;
+  win.style.translate = `${dx}px 0px`;
+  win.style.marginTop = `${base + dy}px`;
+  win.classList.add("is-moved");
+}
+
+function initLayout() {
+  const proj = document.querySelector(".projects-inner");
+  const arcade = document.querySelector(".arcade-inner");
+  const about = document.querySelector(".about-inner");
+  if (!proj || !arcade || !about) return;
+  const apply = () => {
+    if (touched) return;
+    for (const w of [proj, arcade, about]) { w.style.translate = ""; w.style.marginTop = ""; w.style.zIndex = ""; w.classList.remove("is-moved"); delete w.dataset.dx; delete w.dataset.dy; delete w.dataset.baseMt; }
+    const W = document.documentElement.clientWidth;
+    if (W < LAYOUT.min) return;
+    const left = Math.round(W * LAYOUT.left);
+    const p = proj.getBoundingClientRect();
+    const top = p.top + scrollY;
+    place(proj, left, top);
+    /* as de baixo medem-se depois de Projects estar no sítio */
+    const aw = arcade.getBoundingClientRect().width;
+    place(arcade, W - Math.round(W * LAYOUT.right) - aw, top + LAYOUT.arcadeTop);
+    place(about, left + LAYOUT.aboutLeft, top + LAYOUT.aboutTop);
+    proj.style.zIndex = "41"; arcade.style.zIndex = "42"; about.style.zIndex = "43";
+  };
+  apply();
+  /* as fontes mudam alturas: arrumar outra vez quando chegam */
+  document.fonts?.ready.then(apply);
+  let t = 0;
+  addEventListener("resize", () => { clearTimeout(t); t = setTimeout(apply, 150); });
+  document.addEventListener("pointerdown", (e) => { if (e.target.closest(".is-draggable")) touched = true; });
 }
