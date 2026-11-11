@@ -13,7 +13,7 @@
    as escolhas seguem a pessoa por todo o site. O markup é criado aqui, para
    não haver uma cópia por página. */
 
-import { currentLang, setLang } from "./i18n.js?v=a7301cec";
+import { currentLang, setLang } from "./i18n.js?v=9c22e86b";
 
 const SIZES = [90, 100, 112.5, 125, 137.5];
 const root = document.documentElement;

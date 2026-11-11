@@ -25,8 +25,11 @@ export function initGalleryViewer() {
     index = (next + openers.length) % openers.length;
 
     const opener = openers[index];
+    const thumb = opener.querySelector("img");
     img.src = opener.dataset.full;
-    img.alt = opener.querySelector("img")?.alt ?? "";
+    img.alt = thumb?.alt ?? "";
+    /* No visor a peça é ampliada: a pixel art pede nearest-neighbour. */
+    img.classList.toggle("is-pixel", thumb?.classList.contains("is-pixel") ?? false);
     caption.textContent = opener.dataset.caption ?? "";
   }
 

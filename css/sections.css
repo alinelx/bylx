@@ -355,6 +355,18 @@
   font-size: 0.95rem;
 }
 
+.gallery-head {
+  margin: 1.1rem 0 0.5rem;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted, var(--fg));
+  max-width: none;
+}
+
+.gallery-head:first-of-type { margin-top: 0.4rem; }
+
 .gallery-grid {
   display: grid;
   gap: 0.6rem;
@@ -378,8 +390,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  image-rendering: pixelated;
+  image-rendering: auto;
 }
+
+/* As miniaturas aparecem sempre reduzidas: suavizar é o que lê melhor.
+   No visor, só a pixel art volta a nearest-neighbour, porque aí é ampliada. */
+.lightbox-img { image-rendering: auto; }
+.lightbox-img.is-pixel { image-rendering: pixelated; }
 
 .gallery-cell figcaption {
   position: absolute;
