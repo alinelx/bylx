@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Micareta da Aline — consola de convidados (demo)</title>
+<style>
+:root{
+  --space:#05061a; --nav:#0b1240; --neb:#2b3a95; --neb2:#5b2a8f;
+  --fogo:#ff7a00; --fogo2:#ffb020; --brasa:#ff3d00;
+  --am:#ffd21e; --ouro:#ffb800; --verde:#ffd21e; --mag:#ff7a00; --cy:#ffd21e; --roxo:#0b1240;
+  --card:rgba(255,255,255,.055); --line:rgba(255,210,30,.22); --txt:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;color:var(--txt);line-height:1.5;
+  background:
+    radial-gradient(700px 420px at 18% 8%, rgba(43,58,149,.75), transparent 62%),
+    radial-gradient(800px 500px at 84% 22%, rgba(91,42,143,.6), transparent 62%),
+    radial-gradient(900px 600px at 50% 72%, rgba(24,32,105,.7), transparent 66%),
+    radial-gradient(500px 380px at 10% 88%, rgba(43,58,149,.5), transparent 60%),
+    var(--space);
+  background-attachment:fixed;padding-bottom:70px;position:relative;
+}
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+#sky i{position:absolute;background:#fff;border-radius:50%}
+/* labaredas laterais, como no flyer */
+.fire{position:fixed;top:0;bottom:0;width:150px;z-index:0;pointer-events:none;opacity:.85;
+  filter:blur(1px) saturate(1.3)}
+.fire.l{left:0;background:
+  radial-gradient(120px 300px at 10% 18%, rgba(255,61,0,.85), transparent 70%),
+  radial-gradient(150px 380px at 0% 46%, rgba(255,122,0,.8), transparent 72%),
+  radial-gradient(110px 260px at 14% 76%, rgba(255,176,32,.7), transparent 70%)}
+.fire.r{right:0;background:
+  radial-gradient(120px 320px at 90% 12%, rgba(255,61,0,.85), transparent 70%),
+  radial-gradient(150px 400px at 100% 42%, rgba(255,122,0,.8), transparent 72%),
+  radial-gradient(110px 280px at 86% 74%, rgba(255,176,32,.7), transparent 70%)}
+.wrap,.adminbar{position:relative;z-index:2}
+@media(max-width:820px){.fire{width:70px;opacity:.55}}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+header{text-align:center;padding:36px 0 6px}
+.kick{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+h1{font-size:clamp(2.4rem,10.5vw,4.4rem);line-height:.88;text-transform:uppercase;font-weight:900;
+  letter-spacing:.01em;margin:.12em 0;
+  background:linear-gradient(180deg,#ffffff 0%,#e8ecff 22%,#9aa6c8 46%,#ffffff 56%,#c3ccdf 74%,#7c86a6 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 0 rgba(0,0,0,.85)) drop-shadow(0 0 22px rgba(160,190,255,.55))}
+h1 small{display:block;font-size:.3em;letter-spacing:.1em;-webkit-text-fill-color:transparent}
+.kick{color:#c9cfe8}
+.sub{font-size:.95rem;color:rgba(255,255,255,.85)}
+.sub s{opacity:.55}
+.wordwall{margin-top:10px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;
+  font-size:clamp(.78rem,2.6vw,1rem);color:#fff;text-shadow:0 0 14px rgba(255,122,0,.8), 0 2px 0 #000}
+.stars{color:var(--am);letter-spacing:.2em}
+
+.hero{margin:20px 0 6px;background:rgba(0,0,0,.72);border:3px solid var(--am);padding:16px;text-align:center;
+  box-shadow:0 0 34px rgba(255,122,0,.55), inset 0 0 22px rgba(255,176,32,.12)}
+.hero .d{font-size:clamp(1.4rem,5.6vw,2.1rem);font-weight:900;text-transform:uppercase;color:var(--am);line-height:1.05;
+  text-shadow:0 0 18px rgba(255,184,0,.7)}
+.hero .h{color:#fff;text-transform:uppercase;letter-spacing:.16em;font-size:.85rem;margin-top:4px}
+.hero .l{font-size:.85rem;color:rgba(255,255,255,.8);margin-top:8px}
+
+.count{display:flex;gap:8px;justify-content:center;margin:18px 0 0;flex-wrap:wrap}
+.count div{background:rgba(0,0,0,.45);border:1px solid var(--line);border-radius:10px;padding:8px 14px;min-width:92px;text-align:center}
+.count b{display:block;font-size:1.7rem;line-height:1;color:var(--am)}
+.count small{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+
+section{margin:26px 0 0;background:linear-gradient(180deg,rgba(11,18,64,.62),rgba(5,6,26,.72));
+  border:1px solid var(--line);border-radius:14px;padding:18px 16px;box-shadow:0 0 26px rgba(0,0,0,.45)}
+h2{font-size:1.15rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5em;color:var(--am);
+  text-shadow:0 0 14px rgba(255,184,0,.45)}
+h2 .n{display:inline-block;background:linear-gradient(180deg,var(--fogo2),var(--brasa));color:#fff;width:1.5em;height:1.5em;line-height:1.5em;
+  text-align:center;border-radius:50%;font-size:.78em;margin-right:.45em}
+h3{font-size:.95rem;text-transform:uppercase;letter-spacing:.05em;margin:16px 0 6px;color:#fff}
+p{margin:.45em 0}
+ul{margin:.4em 0 .4em 1.1em}
+li{margin:.25em 0}
+.small{font-size:.83rem;color:rgba(255,255,255,.75)}
+.note{background:rgba(255,184,0,.13);border-left:4px solid var(--am);padding:10px 12px;border-radius:0 8px 8px 0;font-size:.87rem;margin-top:10px}
+.warn{background:rgba(255,61,0,.16);border-left:4px solid var(--brasa)}
+
+.bar{height:24px;background:rgba(0,0,0,.55);border:2px solid var(--am);border-radius:99px;overflow:hidden;position:relative;margin-top:8px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--brasa),var(--fogo),var(--am));transition:width .5s}
+.fill.hot{background:linear-gradient(90deg,#ff3d00,#ff0000)}
+.bar span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:.78rem;text-shadow:0 1px 3px #000}
+.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.76rem;font-weight:bold;background:var(--brasa);color:#fff}
+.badge.ok{background:linear-gradient(90deg,var(--am),var(--fogo2));color:#2a1500}
+.badge.n{background:rgba(255,255,255,.15);color:#fff}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:10px}
+.pcard{background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:12px;padding:12px}
+.pcard b{color:var(--am);font-size:1.4rem}
+.kpi{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.kpi b{display:block;font-size:1.6rem;color:var(--am);line-height:1.1}
+.kpi small{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.7)}
+
+.perks{list-style:none;margin:10px 0 0}
+.perks li{display:flex;gap:10px;align-items:flex-start;padding:10px 8px;border-bottom:1px dashed rgba(255,255,255,.14)}
+.perks input{margin-top:4px;width:18px;height:18px;accent-color:var(--fogo);flex:0 0 auto}
+.perks .t{flex:1}
+.perks .t small{display:block;color:rgba(255,255,255,.62);font-size:.76rem}
+.perks .px{font-weight:bold;color:var(--am);white-space:nowrap;font-size:.82rem}
+.perks li.full{opacity:.45}
+.tot{margin-top:12px;background:#000;border:2px solid var(--am);border-radius:10px;padding:12px;text-align:center;font-weight:bold}
+.tot b{color:var(--am);font-size:1.5rem}
+
+.gifts{list-style:none;margin:6px 0 0}
+.gifts li{display:flex;gap:10px;padding:8px 6px;border-bottom:1px dashed rgba(255,255,255,.13);align-items:flex-start}
+.gifts .t{flex:1}
+.gifts .t small{display:block;color:rgba(255,255,255,.6);font-size:.76rem}
+.gifts .eur{color:var(--am);font-weight:bold;font-size:.8rem;white-space:nowrap}
+.gifts li.taken{opacity:.42}
+.gifts li.taken .t{text-decoration:line-through}
+
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+a.btn,button.btn{cursor:pointer;border:none;font:inherit;font-weight:bold;text-decoration:none;
+  padding:12px 16px;border-radius:99px;font-size:.9rem;display:inline-block}
+.btn.p{background:linear-gradient(180deg,var(--am),var(--ouro));color:#2a1500}
+.btn.g{background:linear-gradient(180deg,var(--fogo2),var(--brasa));color:#fff}
+.btn.s{background:transparent;color:#fff;border:2px solid var(--line)}
+.btn.d{background:#c01800;color:#fff}
+textarea,input[type=text],input[type=number],select{width:100%;background:rgba(0,0,0,.5);color:#fff;
+  border:1px solid var(--line);border-radius:8px;padding:9px;font-family:inherit;font-size:.88rem}
+textarea{min-height:120px;resize:vertical;margin-top:8px}
+label.f{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.65);margin:8px 0 3px}
+
+.tbl{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:10px}
+.tbl th{background:#000;color:var(--am);text-align:left;padding:7px 6px;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;position:sticky;top:0}
+.tbl td{padding:6px;border-bottom:1px solid rgba(255,255,255,.1);vertical-align:top}
+.tbl tr.pago{background:rgba(255,184,0,.12)}
+.tbl tr.espera{background:rgba(255,138,0,.1)}
+.tbl tr.recusou{opacity:.45}
+.tbl input,.tbl select{padding:4px;font-size:.8rem}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.chip{display:inline-block;background:rgba(255,255,255,.14);border-radius:99px;padding:1px 8px;font-size:.7rem;margin:1px 2px 0 0}
+
+.adminbar{position:sticky;top:0;z-index:50;background:#000;border-bottom:3px solid var(--fogo);
+  padding:8px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.8rem}
+.adminbar b{color:var(--am);letter-spacing:.1em}
+.hide{display:none!important}
+footer{text-align:center;margin-top:28px;font-size:.75rem;color:rgba(255,255,255,.5);line-height:1.7}
+.tabs{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.tabs button{cursor:pointer;font:inherit;font-size:.8rem;padding:7px 12px;border-radius:99px;border:1px solid var(--line);
+  background:rgba(0,0,0,.4);color:#fff}
+.tabs button.on{background:var(--am);color:#2a1500;border-color:var(--am);font-weight:bold}
+.demobar{background:#1b1030;border-bottom:3px solid var(--am);padding:10px 14px;
+  display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;font-size:.8rem;line-height:1.6}
+.demobar b{color:var(--am);letter-spacing:.14em;flex-shrink:0}
+.demobar span{color:rgba(255,255,255,.82);max-width:70ch}
+.demobar a{color:var(--am);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div class="demobar">
+  <b>DEMO</b>
+  <span>Esta é a consola que usei para gerir um churrasco de uma centena de pessoas. Os convidados aqui são inventados e os dados de pagamento são fictícios — o estado vive no link, não num servidor.</span>
+  <a href="/work/guest-ops/">Ler o caso de estudo &rarr;</a>
+</div>
+
+<div id="sky"></div><div class="fire l"></div><div class="fire r"></div>
+
+<div class="adminbar hide" id="adminbar">
+  <b>MODO ANFITRIÃ</b>
+  <button class="btn s" style="padding:6px 12px" onclick="save()">Guardar</button>
+  <button class="btn g" style="padding:6px 12px" onclick="copyLink(0)">Link convidados</button>
+  <button class="btn p" style="padding:6px 12px" onclick="copyLink(1)">Link VIP</button>
+  <button class="btn s" style="padding:6px 12px" onclick="exportJSON()">Backup</button>
+  <button class="btn s" style="padding:6px 12px" onclick="importJSON()">Repor backup</button>
+  <button class="btn d" style="padding:6px 12px" onclick="setMode('convidado')">Ver como convidado</button>
+  <span id="savedmsg" class="small"></span>
+</div>
+
+<div class="wrap">
+
+<header>
+  <div class="kick">Toda a gente cabe — desde que diga que vem</div>
+  <h1>Micareta<small>da Aline</small></h1>
+  <img src="assets/churras/micareta-da-aline.png" alt="Flyer da Micareta da Aline">
+  <div class="wordwall">Música · Comida · Amizade · Verão · Portugal · Piscina</div>
+</header>
+
+<div class="hero">
+  <div class="d" id="heroData">Sábado · 29 de agosto de 2026</div>
+  <div class="h" id="heroHora">Das 11h00 até a noite acabar</div>
+  <div class="l">Grande Lisboa · <b>morada exata só para quem confirmar</b></div>
+</div>
+
+<div class="count">
+  <div><b id="d1">–</b><small>dias p/ confirmar</small></div>
+  <div><b id="d2">–</b><small>dias p/ churrasco</small></div>
+  <div><b id="dVagas">–</b><small>vagas restantes</small></div>
+</div>
+
+<section>
+  <h2><span class="n">1</span>Estado da micareta</h2>
+  <div class="grid">
+    <div class="kpi"><b id="kPagos">0</b><small>pessoas pagas</small></div>
+    <div class="kpi"><b id="kConf">0</b><small>confirmadas s/ pagar</small></div>
+    <div class="kpi"><b id="kCap">0</b><small>lotação máxima</small></div>
+    <div class="kpi"><b id="kEspera">0</b><small>lista de espera</small></div>
+  </div>
+  <h3>Meta da piscina</h3>
+  <div class="bar"><div class="fill" id="fPool"></div><span id="tPool">0 / 20</span></div>
+  <p class="small" id="poolTxt" style="margin-top:8px"></p>
+  <h3>Lotação da casa</h3>
+  <div class="bar"><div class="fill" id="fCap"></div><span id="tCap">0 / 0</span></div>
+  <p class="small" id="capTxt" style="margin-top:8px"></p>
+</section>
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section>
+  <h2><span class="n">2</span>Como funciona</h2>
+  <ul>
+    <li><b><span id="precoTxt">10</span> € por pessoa</b> — carne, carvão, acompanhamentos e a <b>1ª rodada por conta da casa</b>.</li>
+    <li>Depois da 1ª rodada é <b>cada um com a sua bebida</b>. Água e gelo são da casa.</li>
+    <li><b>Podes trazer par ou amigo/a</b>, desde que confirme e pague até <b id="prazoTxt">21/08</b>. Manda-me o nome de cada pessoa.</li>
+    <li><b>Sem dinheiro?</b> Traz um item da lista da casa nova (secção 5) em vez de pagar.</li>
+    <li>Vagas <b>por ordem de pagamento</b>. Quando encher, entra-se para lista de espera.</li>
+    <li>Não estou a lucrar: o que sobrar volta para a mesa ou para a casa.</li>
+  </ul>
+</section>
+
+<!-- ============ PREMIUM ============ -->
+<section>
+  <h2><span class="n">3</span>Modo Premium</h2>
+  <p><b>Pagas mais do que os <span id="precoTxt2">10</span> €? Entras em modo premium e tens acesso a tudo.</b>
+     A partir de <b><span id="minPrem">5</span> € extra</b> desbloqueias a lista toda de uma vez — não é por regalia, é tudo.</p>
+  <div class="grid" style="margin-bottom:6px">
+    <div><label class="f">Quanto queres dar a mais? (€)</label><input type="number" id="fExtra" value="0" min="0" step="1"></div>
+    <div style="display:flex;align-items:flex-end"><div id="premStatus" class="badge n" style="padding:8px 14px">modo normal</div></div>
+  </div>
+  <p class="small">Dá o que quiseres a partir de <span id="minPrem2">5</span> €. Marca em baixo as regalias que tencionas usar, para eu conseguir organizar o dia (as de vagas limitadas são por ordem de pagamento).</p>
+  <ul class="perks" id="perkList"></ul>
+  <div class="tot">Total a pagar: <b id="perkTot">10 €</b> <span class="small" id="perkBreak"></span></div>
+  <p class="small" style="margin-top:8px">Todo o extra vai para o fundo da piscina e para o que faltar comprar. Zero fica para mim.</p>
+</section>
+
+<!-- ============ PAGAMENTO ============ -->
+<section>
+  <h2><span class="n">4</span>Pagamento</h2>
+  <div class="grid">
+    <div class="pcard"><b id="p1">10 €</b><br>base, por pessoa<br><span class="small">comida + carvão + 1ª rodada</span></div>
+    <div class="pcard"><b>+5 € ou mais</b><br>modo premium<br><span class="small">desbloqueia todas as regalias</span></div>
+    <div class="pcard"><b>0 €</b><br>com prenda da lista<br><span class="small">secção 5</span></div>
+  </div>
+  <p style="margin-top:14px"><b>MB Way:</b> <span class="chip" id="mbway">912 000 000</span> &nbsp; <b>IBAN:</b> <span class="chip" id="iban">PT50 0000 0000 0000 0000 0000 0</span></p>
+  <p class="small">Na descrição escreve <b>o teu nome + nº de pessoas</b> (ex.: "Ana +1"). Se pagaste regalias, diz quais.</p>
+</section>
+
+<!-- ============ LISTA DA CASA ============ -->
+<section>
+  <h2><span class="n">5</span>Lista da casa nova</h2>
+  <p class="small">Mudei há pouco e faltam coisas. Quem preferir dar prenda em vez de pagar, é aqui. O que já está riscado, alguém prometeu.</p>
+  <div id="giftList"></div>
+</section>
+
+<!-- ============ DORMIDA ============ -->
+<section>
+  <h2><span class="n">6</span>Dormida</h2>
+  <p>Há <b id="camasTxt">3</b> lugares de dormida (colchão/sofá, não é hotel). Regras, porque a casa é pequena:</p>
+  <ul>
+    <li>Não tens carro <b>e</b> vives a mais de <b>35 km</b> daqui; <b>ou</b></li>
+    <li>Não tens carro e o <b>último transporte</b> para tua casa sai antes das 22h; <b>ou</b></li>
+    <li>Provas que o <b>Uber/Bolt à hora de saída fica acima de 25 €</b> (screenshot da estimativa serve).</li>
+  </ul>
+  <p class="small">Quem conduz não bebe, e quem bebeu não conduz — nesse caso arranja-se sempre um canto, regra ou não regra.</p>
+  <h3>Vê se te aplicas</h3>
+  <div class="grid">
+    <div><label class="f">Tens carro?</label><select id="dCarro"><option value="0">Não</option><option value="1">Sim</option></select></div>
+    <div><label class="f">Distância a casa (km)</label><input type="number" id="dKm" value="10" min="0"></div>
+    <div><label class="f">Último transporte antes das 22h?</label><select id="dTrans"><option value="0">Não</option><option value="1">Sim</option></select></div>
+    <div><label class="f">Estimativa do Uber (€)</label><input type="number" id="dUber" value="0" min="0"></div>
+  </div>
+  <p id="dRes" class="note" style="margin-top:12px"></p>
+</section>
+
+<!-- ============ CONVIDADOS (VIP) ============ -->
+<section id="secVip">
+  <h2><span class="n">7</span>Quem vai</h2>
+  <div id="vipLocked">
+    <p>Esta secção é uma <b>regalia premium</b>: ver quem foi convidado e quem já confirmou.</p>
+    <p class="small">Pede o link VIP à Aline depois de destravares a regalia.</p>
+  </div>
+  <div id="vipOpen" class="hide"></div>
+</section>
+
+<!-- ============ CONFIRMAR ============ -->
+<section>
+  <h2><span class="n">8</span>Confirmar presença</h2>
+  <div class="grid">
+    <div><label class="f">O teu nome</label><input type="text" id="fNome" placeholder="Ana Silva"></div>
+    <div><label class="f">Quantas pessoas (contigo)</label><input type="number" id="fPax" value="1" min="1" max="6"></div>
+    <div><label class="f">Restrições alimentares</label><input type="text" id="fRestr" placeholder="sem porco / vegetariano / nenhuma"></div>
+    <div><label class="f">O que levas para beber</label><input type="text" id="fBeb" placeholder="vinho verde"></div>
+    <div><label class="f">Como vens?</label><select id="fComo">
+      <option value="">— escolhe —</option>
+      <option value="carro">De carro (meu)</option>
+      <option value="transportes">Transportes públicos</option>
+      <option value="uber">Uber / Bolt / táxi</option>
+      <option value="pe">A pé / bicicleta / trotinete</option>
+      <option value="boleia">Preciso de boleia</option>
+    </select></div>
+    <div><label class="f">De onde vens?</label><input type="text" id="fOnde" placeholder="Oeiras, Sintra, Cacém..."></div>
+  </div>
+  <div id="boxCarro" class="hide">
+    <div class="note" style="margin-top:4px">
+      <b>Vens de carro — podes dar boleia a alguém?</b>
+      <div class="grid" style="margin-top:6px">
+        <div><label class="f">Dás boleia?</label><select id="fBoleia">
+          <option value="0">Não, obrigada</option>
+          <option value="ida">Sim, só à ida</option>
+          <option value="volta">Sim, só à volta</option>
+          <option value="ambas">Sim, ida e volta</option>
+        </select></div>
+        <div><label class="f">Para quantas pessoas?</label><input type="number" id="fLugares" value="0" min="0" max="6"></div>
+        <div><label class="f">Por onde passas / de onde sais</label><input type="text" id="fRota" placeholder="saio da Amadora Este, passo por Benfica"></div>
+      </div>
+    </div>
+  </div>
+  <div id="boxBoleia" class="hide">
+    <div class="note" style="margin-top:4px">🚗 Vou tentar emparelhar-te com alguém que venha da tua zona. Diz-me a que horas contavas chegar e sair, na mensagem.</div>
+  </div>
+  <textarea id="msg" readonly></textarea>
+  <div class="btns">
+    <a class="btn g" id="wa" href="#" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+    <button class="btn s" onclick="copyMsg()">Copiar mensagem</button>
+  </div>
+  <p class="small" style="margin-top:8px">Só ficas na lista quando o pagamento (ou a prenda combinada) estiver feito. Prazo: <b id="prazoTxt2">21/08</b>.</p>
+</section>
+
+<!-- ============ REGRAS ============ -->
+<section>
+  <h2><span class="n">9</span>Combinado de convivência</h2>
+  <ul>
+    <li>É um prédio: <b>música no pátio até às 23h</b>, depois passa para dentro e mais baixo.</li>
+    <li>Traz <b>toalha</b> (se houver piscina) e, se puderes, <b>copo reutilizável</b>.</li>
+    <li>Fumar só no pátio, guimbas no cinzeiro.</li>
+    <li>Quem der uma mão a grelhar ou a arrumar tem lugar cativo no meu coração (e na próxima).</li>
+    <li>Chega quando quiseres entre as 11h e a noite — é open house, não é cerimónia.</li>
+  </ul>
+</section>
+
+<!-- ================= PAINEL ADMIN ================= -->
+<div id="adminPanel" class="hide">
+
+<section>
+  <h2>⚙️ Definições</h2>
+  <div class="grid">
+    <div><label class="f">Data (texto)</label><input type="text" id="aData"></div>
+    <div><label class="f">Hora (texto)</label><input type="text" id="aHora"></div>
+    <div><label class="f">Prazo (AAAA-MM-DD)</label><input type="text" id="aPrazo"></div>
+    <div><label class="f">Dia do evento (AAAA-MM-DD)</label><input type="text" id="aEvento"></div>
+    <div><label class="f">Preço base (€)</label><input type="number" id="aPreco" step="0.5"></div>
+    <div><label class="f">Extra mínimo p/ premium (€)</label><input type="number" id="aPerk" step="0.5"></div>
+    <div><label class="f">Meta piscina (pessoas)</label><input type="number" id="aMeta"></div>
+    <div><label class="f">Lotação máxima</label><input type="number" id="aCap"></div>
+    <div><label class="f">Custo por pessoa (€)</label><input type="number" id="aCusto" step="0.01"></div>
+    <div><label class="f">Custo da piscina (€)</label><input type="number" id="aPiscina"></div>
+    <div><label class="f">Camas/colchões</label><input type="number" id="aCamas"></div>
+    <div><label class="f">MB Way</label><input type="text" id="aMb"></div>
+    <div><label class="f">IBAN</label><input type="text" id="aIban"></div>
+  </div>
+</section>
+
+<section>
+  <h2>📊 Painel financeiro</h2>
+  <div class="grid">
+    <div class="kpi"><b id="mRec">0 €</b><small>recebido total</small></div>
+    <div class="kpi"><b id="mBase">0 €</b><small>base (10 €)</small></div>
+    <div class="kpi"><b id="mPrem">0 €</b><small>regalias premium</small></div>
+    <div class="kpi"><b id="mCusto">0 €</b><small>custo estimado</small></div>
+    <div class="kpi"><b id="mSaldo">0 €</b><small>saldo</small></div>
+    <div class="kpi"><b id="mPisc">–</b><small>piscina paga?</small></div>
+    <div class="kpi"><b id="mPrem2">0</b><small>pessoas em premium</small></div>
+    <div class="kpi"><b id="mCarros">0</b><small>carros a chegar</small></div>
+    <div class="kpi"><b id="mLug">0</b><small>lugares de boleia oferecidos</small></div>
+    <div class="kpi"><b id="mPede">0</b><small>pedem boleia</small></div>
+    <div class="kpi"><b id="mDorme">0</b><small>pedem dormida</small></div>
+  </div>
+  <div id="boleiaMatch"></div>
+  <p class="small" id="finTxt" style="margin-top:10px"></p>
+</section>
+
+<section>
+  <h2>👥 Convidados</h2>
+  <div class="btns">
+    <button class="btn p" onclick="addGuest()">+ Adicionar convidado</button>
+    <button class="btn s" onclick="bulkAdd()">+ Colar vários nomes</button>
+  </div>
+  <div class="tabs" id="filtros">
+    <button data-f="todos" class="on">Todos</button>
+    <button data-f="pago">Pagos</button>
+    <button data-f="confirmado">Confirmados</button>
+    <button data-f="convidado">Convidados</button>
+    <button data-f="espera">Lista de espera</button>
+    <button data-f="recusou">Não vêm</button>
+  </div>
+  <div class="scroll"><table class="tbl" id="tblG">
+    <thead><tr>
+      <th>Nome</th><th>Estado</th><th>Pax</th><th>€ pago</th><th>€ extra</th><th>Vem de</th><th>De onde</th>
+      <th>Dá boleia</th><th>Lug.</th><th>Regalias</th><th>Dormida</th><th>Prenda</th><th>Restrições</th><th>Por</th><th></th>
+    </tr></thead><tbody></tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>🎁 Editar regalias premium</h2>
+  <div id="adminPerks"></div>
+  <button class="btn p" onclick="addPerk()">+ Nova regalia</button>
+</section>
+
+<section>
+  <h2>🏠 Editar lista da casa</h2>
+  <div id="adminGifts"></div>
+  <button class="btn p" onclick="addGift()">+ Novo item</button>
+</section>
+
+<section>
+  <h2>🛒 Compras a fazer</h2>
+  <p class="small">Recalculado para o número de pessoas <b>pagas</b>. Detalhe completo e preços na planilha.</p>
+  <div id="compras"></div>
+</section>
+
+</div><!-- fim admin -->
+
+<footer>
+  <b style="color:var(--am)">Ela se mudou! Venha comemorar e acredite nos seus sonhos.</b><br>
+  Micareta da Aline · 29/08/2026 · lotação limitada · morada só para confirmados<br>
+  convidadas especiais: quem chegar primeiro · trio elétrico = coluna Bluetooth
+</footer>
+</div>
+
+<script>
+/* ============================ ESTADO ============================ */
+var DEFAULT = {
+  data:"Sábado · 28 de agosto de 2027", hora:"Das 11h00 até a noite acabar",
+  prazo:"2027-08-20", evento:"2027-08-28",
+  preco:10, perkPreco:5, premMin:5, meta:20, cap:25, custoPessoa:11.08, piscina:125, camas:3,
+  mbway:"912 000 000", iban:"PT50 0000 0000 0000 0000 0000 0",
+  perks:[
+    {id:"boleia", n:"Boleia ida/volta até à estação ou paragem", d:"Vou buscar-te e levo-te de volta — combina a hora comigo", lim:4, usados:0},
+    {id:"lista",  n:"Lista aberta: ver quem foi convidado e quem já confirmou", d:"Desbloqueia o link VIP com a lista de pessoas", lim:0, usados:0},
+    {id:"caixa",  n:"Caixa misteriosa 🎁", d:"Uma caixa. Com uma coisa dentro. Pode ser óptima, pode ser terrível", lim:6, usados:0},
+    {id:"dj",     n:"DJ por 3 músicas", d:"Três músicas tuas no trio elétrico, sem direito a reclamação alheia", lim:8, usados:0},
+    {id:"piscina1",n:"Inaugurar a piscina (1ª braçada)", d:"Só se a piscina for desbloqueada. Reembolso se não houver", lim:1, usados:0},
+    {id:"chef",   n:"Prato do chef", d:"Escolhes uma peça de carne que eu compro só para ti", lim:4, usados:0},
+    {id:"fila",   n:"Fura-fila do grelhador", d:"És servido/a primeiro em todas as fornadas", lim:6, usados:0},
+    {id:"cadeira",n:"Cadeira reservada com o teu nome", d:"Não ficas de pé o dia todo. Escrito à mão, com carinho duvidoso", lim:5, usados:0},
+    {id:"ressaca",n:"Kit de saída", d:"Água, fruta e pão para o caminho. O verdadeiro luxo", lim:10, usados:0},
+    {id:"late",   n:"Late night: podes ficar depois da 1h", d:"Sem dormida, mas sem ser posto/a na rua", lim:8, usados:0},
+    {id:"patrono",n:"Patrono da Micareta", d:"Nome no flyer do ano que vem + direito a vetar 1 música", lim:5, usados:0},
+    {id:"maisum", n:"Trazer +1 fora da quota", d:"Se ainda houver vaga na lotação", lim:3, usados:0}
+  ],
+  gifts:[
+    {c:"Estrela", n:"Piscina montável para o pátio", d:"prenda coletiva — se alguém oferecer, há piscina mesmo sem os 20", p:"100–150 €", by:""},
+    {c:"Cozinha", n:"Serviço de pratos (6 ou 12 peças)", d:"", p:"15–30 €", by:""},
+    {c:"Cozinha", n:"Copos", d:"", p:"8–15 €", by:""},
+    {c:"Cozinha", n:"Talheres (conjunto)", d:"", p:"12–25 €", by:""},
+    {c:"Cozinha", n:"Tachos / panelas", d:"", p:"20–45 €", by:""},
+    {c:"Cozinha", n:"Frigideira antiaderente", d:"", p:"12–25 €", by:""},
+    {c:"Cozinha", n:"Facas de cozinha + tábua", d:"", p:"15–25 €", by:""},
+    {c:"Cozinha", n:"Escorredor de louça", d:"", p:"10–18 €", by:""},
+    {c:"Eletro",  n:"Máquina de lavar roupa", d:"prenda coletiva ou contribuição", p:"200–300 €", by:""},
+    {c:"Eletro",  n:"Micro-ondas", d:"prenda coletiva", p:"60–90 €", by:""},
+    {c:"Eletro",  n:"Ferro de engomar + tábua", d:"", p:"25–45 €", by:""},
+    {c:"Casa",    n:"Vassoura + esfregona e balde", d:"", p:"15–25 €", by:""},
+    {c:"Casa",    n:"Estendal de roupa", d:"", p:"12–25 €", by:""},
+    {c:"Casa",    n:"Ventoinha", d:"", p:"20–40 €", by:""},
+    {c:"Casa",    n:"Cortinas / estore + varão", d:"", p:"15–35 €", by:""},
+    {c:"Casa",    n:"Cabides e organizadores", d:"", p:"8–15 €", by:""},
+    {c:"Casa",    n:"Extensão elétrica / tomada tripla", d:"", p:"8–15 €", by:""},
+    {c:"Cama e banho", n:"Jogo de lençóis", d:"", p:"15–30 €", by:""},
+    {c:"Cama e banho", n:"Edredão / colcha", d:"", p:"25–45 €", by:""},
+    {c:"Cama e banho", n:"Toalhas de banho", d:"", p:"12–25 €", by:""},
+    {c:"Cama e banho", n:"Cortina de duche + tapete", d:"", p:"10–20 €", by:""},
+    {c:"No dia",  n:"Geleira / cooler", d:"fica para a casa", p:"15–25 €", by:""},
+    {c:"No dia",  n:"Banquinhos ou cadeiras dobráveis", d:"", p:"10–20 €", by:""},
+    {c:"No dia",  n:"Mesa dobrável para o pátio", d:"", p:"25–40 €", by:""},
+    {c:"No dia",  n:"Coluna Bluetooth", d:"o nosso trio elétrico", p:"25–50 €", by:""},
+    {c:"No dia",  n:"Luzes de festa para o pátio", d:"", p:"10–20 €", by:""}
+  ],
+  guests:[
+    {nome:"Marta R.",   estado:"pago",      pax:2, pagou:20, extra:5,  como:"whatsapp", onde:"Lisboa",   boleia:"ofereco", lugares:3, perks:["dj"],          dormida:false, prenda:"",                       restr:"vegetariana",     por:""},
+    {nome:"Inês C.",    estado:"pago",      pax:1, pagou:10, extra:0,  como:"whatsapp", onde:"Sintra",   boleia:"preciso", lugares:0, perks:[],              dormida:true,  prenda:"",                       restr:"",                por:""},
+    {nome:"Tiago M.",   estado:"pago",      pax:1, pagou:15, extra:5,  como:"instagram",onde:"Almada",   boleia:"",        lugares:0, perks:["fila"],        dormida:false, prenda:"",                       restr:"",                por:""},
+    {nome:"Sofia L.",   estado:"pago",      pax:2, pagou:20, extra:0,  como:"whatsapp", onde:"Oeiras",   boleia:"ofereco", lugares:2, perks:[],              dormida:false, prenda:"",                       restr:"sem glúten",      por:""},
+    {nome:"Bruno A.",   estado:"confirmado",pax:1, pagou:0,  extra:0,  como:"whatsapp", onde:"Amadora",  boleia:"",        lugares:0, perks:[],              dormida:false, prenda:"",                       restr:"",                por:""},
+    {nome:"Carolina P.",estado:"confirmado",pax:1, pagou:0,  extra:0,  como:"instagram",onde:"Lisboa",   boleia:"preciso", lugares:0, perks:[],              dormida:false, prenda:"",                       restr:"",                por:""},
+    {nome:"Rita F.",    estado:"pago",      pax:1, pagou:0,  extra:0,  como:"whatsapp", onde:"Setúbal",  boleia:"",        lugares:0, perks:[],              dormida:true,  prenda:"Serviço de pratos (6 ou 12 peças)", restr:"",     por:""},
+    {nome:"Hugo S.",    estado:"convidado", pax:1, pagou:0,  extra:0,  como:"instagram",onde:"Porto",    boleia:"",        lugares:0, perks:[],              dormida:false, prenda:"",                       restr:"",                por:""},
+    {nome:"Daniela V.", estado:"convidado", pax:2, pagou:0,  extra:0,  como:"whatsapp", onde:"Lisboa",   boleia:"",        lugares:0, perks:[],              dormida:false, prenda:"",                       restr:"",                por:""},
+    {nome:"André N.",   estado:"espera",    pax:1, pagou:0,  extra:0,  como:"whatsapp", onde:"Cascais",  boleia:"",        lugares:0, perks:[],              dormida:false, prenda:"",                       restr:"",                por:""},
+    {nome:"Joana T.",   estado:"recusou",   pax:1, pagou:0,  extra:0,  como:"instagram",onde:"Braga",    boleia:"",        lugares:0, perks:[],              dormida:false, prenda:"",                       restr:"",                por:"fora nesse fim de semana"},
+    {nome:"Pedro G.",   estado:"recusou",   pax:1, pagou:0,  extra:0,  como:"whatsapp", onde:"Lisboa",   boleia:"",        lugares:0, perks:[],              dormida:false, prenda:"",                       restr:"",                por:"a trabalhar ao sábado"}
+  ]
+};
+
+var S = null, MODE = "convidado", VIP = false;
+
+/* ---- URL state ---- */
+function enc(o){ return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/=+$/,''); }
+function dec(s){ try{ return JSON.parse(decodeURIComponent(escape(atob(s)))); }catch(e){ return null; } }
+
+function loadState(){
+  var h = location.hash.slice(1);
+  var params = {};
+  h.split('&').forEach(function(kv){ var i=kv.indexOf('='); if(i>0) params[kv.slice(0,i)]=kv.slice(i+1); else if(kv) params[kv]='1'; });
+  VIP = params.vip === '1';
+  MODE = (params.admin === '1') ? 'admin' : 'convidado';
+  var st = params.d ? dec(params.d) : null;
+  S = st ? merge(DEFAULT, st) : JSON.parse(JSON.stringify(DEFAULT));
+}
+function merge(base, over){
+  var o = JSON.parse(JSON.stringify(base));
+  for(var k in over){ o[k] = over[k]; }
+  return o;
+}
+function diffState(){
+  var out={};
+  for(var k in S){
+    if(JSON.stringify(S[k]) !== JSON.stringify(DEFAULT[k])) out[k]=S[k];
+  }
+  return out;
+}
+function stateHash(vip){
+  return '#d=' + enc(diffState()) + (vip ? '&vip=1' : '');
+}
+function save(){
+  location.hash = stateHash(false) + (MODE==='admin' ? '&admin=1' : '');
+  msg('Guardado no link — copia o link do browser ou usa "Backup".');
+  render();
+}
+function copyLink(vip){
+  var url = location.origin + location.pathname + stateHash(!!vip);
+  navigator.clipboard && navigator.clipboard.writeText(url);
+  msg(vip ? 'Link VIP copiado (mostra a lista de quem vai).' : 'Link para convidados copiado.');
+}
+function msg(t){ var e=document.getElementById('savedmsg'); e.textContent=t; setTimeout(function(){e.textContent='';},4000); }
+function exportJSON(){
+  var blob = new Blob([JSON.stringify(S,null,1)],{type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='micareta-backup.json'; a.click();
+}
+function importJSON(){
+  var i=document.createElement('input'); i.type='file'; i.accept='.json';
+  i.onchange=function(){ var f=i.files[0], r=new FileReader();
+    r.onload=function(){ try{ S=merge(DEFAULT,JSON.parse(r.result)); save(); }catch(e){ alert('Ficheiro inválido'); } };
+    r.readAsText(f); };
+  i.click();
+}
+function setMode(m){
+  MODE=m;
+  location.hash = stateHash(m==='admin') + (m==='admin' ? '&admin=1':'');
+  render();
+}
+
+/* ---- cálculos ---- */
+function paxPagos(){ return S.guests.filter(g=>g.estado==='pago').reduce((a,g)=>a+(+g.pax||1),0); }
+function paxConf(){ return S.guests.filter(g=>g.estado==='confirmado').reduce((a,g)=>a+(+g.pax||1),0); }
+function paxEspera(){ return S.guests.filter(g=>g.estado==='espera').reduce((a,g)=>a+(+g.pax||1),0); }
+function recebido(){ return S.guests.reduce((a,g)=>a+(+g.pagou||0),0); }
+function recebidoPrem(){ return S.guests.reduce((a,g)=>a+(+g.extra||0),0); }
+function nPremium(){ return S.guests.filter(g=>(+g.extra||0)>=S.premMin).length; }
+function perkUsage(id){ return S.guests.filter(g=>(g.perks||[]).indexOf(id)>=0).length; }
+function dias(iso){ var t=new Date(iso+'T00:00:00'), h=new Date(); h.setHours(0,0,0,0);
+  return Math.max(0, Math.round((t-h)/86400000)); }
+
+/* ---- render ---- */
+function render(){
+  document.getElementById('adminbar').classList.toggle('hide', MODE!=='admin');
+  document.getElementById('adminPanel').classList.toggle('hide', MODE!=='admin');
+
+  document.getElementById('heroData').textContent = S.data;
+  document.getElementById('heroHora').textContent = S.hora;
+  document.getElementById('d1').textContent = dias(S.prazo);
+  document.getElementById('d2').textContent = dias(S.evento);
+  document.getElementById('precoTxt').textContent = S.preco;
+  document.getElementById('precoTxt2').textContent = S.preco;
+  document.getElementById('minPrem').textContent = S.premMin;
+  document.getElementById('minPrem2').textContent = S.premMin;
+  document.getElementById('p1').textContent = S.preco+' €';
+  var pz = S.prazo.split('-').reverse().slice(0,2).join('/');
+  document.getElementById('prazoTxt').textContent = pz;
+  document.getElementById('prazoTxt2').textContent = pz;
+  document.getElementById('mbway').textContent = S.mbway;
+  document.getElementById('iban').textContent = S.iban;
+  document.getElementById('camasTxt').textContent = S.camas;
+
+  var pg = paxPagos(), cf = paxConf(), es = paxEspera();
+  document.getElementById('kPagos').textContent = pg;
+  document.getElementById('kConf').textContent = cf;
+  document.getElementById('kCap').textContent = S.cap;
+  document.getElementById('kEspera').textContent = es;
+  document.getElementById('dVagas').textContent = Math.max(0, S.cap - pg - cf);
+
+  var fp = document.getElementById('fPool');
+  fp.style.width = Math.min(100, pg/S.meta*100)+'%';
+  document.getElementById('tPool').textContent = pg+' / '+S.meta+' pagos';
+  document.getElementById('poolTxt').textContent = pg>=S.meta
+    ? '🏊 PISCINA DESBLOQUEADA — meta atingida.'
+    : 'Faltam '+(S.meta-pg)+' pessoas pagas até '+pz+' para haver piscina. O dinheiro das regalias premium também vai para o fundo.';
+
+  var ocup = pg+cf, fc = document.getElementById('fCap');
+  fc.style.width = Math.min(100, ocup/S.cap*100)+'%';
+  fc.classList.toggle('hot', ocup >= S.cap*0.85);
+  document.getElementById('tCap').textContent = ocup+' / '+S.cap+' lugares';
+  document.getElementById('capTxt').textContent = ocup>=S.cap
+    ? 'Lotação esgotada — novas inscrições entram para lista de espera.'
+    : 'Ainda há '+(S.cap-ocup)+' lugares. A casa são ~37 m² interiores + 26,5 m² de pátio: acima disto deixa de ser festa e passa a ser metro à hora de ponta.';
+
+  renderPerks(); renderGifts(); renderVip(); toggleTransporte(); montaMsg(); calcDormida();
+  if(MODE==='admin') renderAdmin();
+}
+
+function renderPerks(){
+  var ul = document.getElementById('perkList'); ul.innerHTML='';
+  S.perks.forEach(function(p){
+    var used = perkUsage(p.id), full = p.lim>0 && used>=p.lim;
+    var li = document.createElement('li');
+    li.dataset.full = full ? '1' : '0';
+    if(full) li.className='full';
+    li.innerHTML = '<input type="checkbox" data-p="'+p.id+'"'+(full?' disabled':'')+'>'+
+      '<span class="t"><b>'+p.n+'</b><small>'+p.d+(p.lim>0?' · '+Math.max(0,p.lim-used)+' de '+p.lim+' vagas':'')+'</small></span>'+
+      '<span class="px">incluído</span>';
+    ul.appendChild(li);
+  });
+  ul.querySelectorAll('input').forEach(function(c){ c.addEventListener('change', perkCalc); });
+  perkCalc();
+}
+function perkCalc(){
+  var extra = +document.getElementById('fExtra').value || 0;
+  var pax = +document.getElementById('fPax').value || 1;
+  var premium = extra >= S.premMin;
+  var st = document.getElementById('premStatus');
+  st.textContent = premium ? '⭐ PREMIUM ATIVO — tens acesso a tudo' : (extra>0 ? 'faltam '+(S.premMin-extra)+' € para o premium' : 'modo normal');
+  st.className = 'badge ' + (premium ? 'ok' : (extra>0 ? '' : 'n'));
+  document.querySelectorAll('#perkList input').forEach(function(c){
+    var li = c.closest('li'), cheio = li.dataset.full === '1';
+    c.disabled = !premium || cheio;
+    if(!premium) c.checked = false;
+    li.classList.toggle('full', !premium || cheio);
+  });
+  var tot = S.preco*pax + extra;
+  document.getElementById('perkTot').textContent = tot.toFixed(0)+' €';
+  document.getElementById('perkBreak').textContent = '('+S.preco+' € × '+pax+' pessoa(s)'+(extra?' + '+extra+' € extra':'')+')';
+  montaMsg();
+}
+
+function renderGifts(){
+  var box = document.getElementById('giftList'); box.innerHTML='';
+  var cats = [];
+  S.gifts.forEach(g=>{ if(cats.indexOf(g.c)<0) cats.push(g.c); });
+  cats.forEach(function(c){
+    var h = document.createElement('h3'); h.textContent = c; box.appendChild(h);
+    var ul = document.createElement('ul'); ul.className='gifts';
+    S.gifts.filter(g=>g.c===c).forEach(function(g){
+      var li=document.createElement('li');
+      if(g.by) li.className='taken';
+      li.innerHTML='<span class="t"><b>'+g.n+'</b>'+(g.d?'<small>'+g.d+'</small>':'')+
+        (g.by?'<small>✔ prometido por '+g.by+'</small>':'')+'</span><span class="eur">'+g.p+'</span>';
+      ul.appendChild(li);
+    });
+    box.appendChild(ul);
+  });
+}
+
+function renderVip(){
+  var open = VIP || MODE==='admin';
+  document.getElementById('vipLocked').classList.toggle('hide', open);
+  document.getElementById('vipOpen').classList.toggle('hide', !open);
+  if(!open) return;
+  var g = S.guests;
+  var by = {pago:[],confirmado:[],convidado:[],espera:[],recusou:[]};
+  g.forEach(x=>{ (by[x.estado]||by.convidado).push(x); });
+  var lbl = {pago:'💸 Já pagou',confirmado:'✋ Confirmou (falta pagar)',convidado:'📨 Convidado',espera:'⏳ Lista de espera',recusou:'🚫 Não vem'};
+  var h='';
+  ['pago','confirmado','convidado','espera','recusou'].forEach(function(k){
+    if(!by[k].length) return;
+    h += '<h3>'+lbl[k]+' ('+by[k].reduce((a,x)=>a+(+x.pax||1),0)+')</h3><p>';
+    h += by[k].map(x=>'<span class="chip">'+x.nome+(x.pax>1?' +'+(x.pax-1):'')+'</span>').join(' ');
+    h += '</p>';
+  });
+  document.getElementById('vipOpen').innerHTML = h || '<p class="small">Ainda não há ninguém na lista.</p>';
+}
+
+/* ---- dormida ---- */
+['dCarro','dKm','dTrans','dUber'].forEach(function(id){
+  document.addEventListener('DOMContentLoaded',function(){});
+});
+function toggleTransporte(){
+  var v = document.getElementById('fComo').value;
+  document.getElementById('boxCarro').classList.toggle('hide', v!=='carro');
+  document.getElementById('boxBoleia').classList.toggle('hide', v!=='boleia');
+  if(v==='carro') document.getElementById('dCarro').value='1';
+  if(v==='transportes'||v==='uber'||v==='pe'||v==='boleia') document.getElementById('dCarro').value='0';
+  calcDormida();
+}
+function calcDormida(){
+  var carro = document.getElementById('dCarro').value==='1';
+  var km = +document.getElementById('dKm').value||0;
+  var trans = document.getElementById('dTrans').value==='1';
+  var uber = +document.getElementById('dUber').value||0;
+  var e = document.getElementById('dRes');
+  var ok = (!carro && (km>35 || trans)) || uber>25;
+  e.className = 'note' + (ok?'':' warn');
+  e.innerHTML = ok
+    ? '✅ <b>Elegível para dormida</b> — diz-me na confirmação e reservo um dos '+S.camas+' lugares (por ordem de pedido).'
+    : '❌ <b>Não elegível</b> — '+(carro?'tens carro':'estás a menos de 35 km, com transporte disponível e Uber abaixo de 25 €')+'. Podes na mesma ficar até tarde com a regalia "late night".';
+  montaMsg();
+}
+
+/* ---- mensagem WhatsApp ---- */
+function montaMsg(){
+  var nome = document.getElementById('fNome').value || '';
+  var pax = +document.getElementById('fPax').value || 1;
+  var restr = document.getElementById('fRestr').value || '';
+  var beb = document.getElementById('fBeb').value || '';
+  var perks = [];
+  document.querySelectorAll('#perkList input:checked').forEach(function(c){
+    var p = S.perks.filter(x=>x.id===c.dataset.p)[0]; if(p) perks.push(p.n);
+  });
+  var extra = +document.getElementById('fExtra').value || 0;
+  var total = S.preco*pax + extra;
+  var como = document.getElementById('fComo');
+  var comoTxt = como.selectedIndex>0 ? como.options[como.selectedIndex].text : '(por dizer)';
+  var onde = document.getElementById('fOnde').value || '';
+  var bol = document.getElementById('fBoleia'), lug = +document.getElementById('fLugares').value||0;
+  var rota = document.getElementById('fRota').value || '';
+  var linhaBoleia = '';
+  if(como.value==='carro'){
+    linhaBoleia = '\n• Dou boleia: ' + (bol.value==='0' ? 'não' : bol.options[bol.selectedIndex].text.replace('Sim, ','') + ' · ' + lug + ' lugar(es)' + (rota? ' · '+rota : ''));
+  } else if(como.value==='boleia'){
+    linhaBoleia = '\n• Preciso de boleia — horas a que consigo chegar/sair: ';
+  }
+  var carro = document.getElementById('dCarro').value==='1';
+  var km = +document.getElementById('dKm').value||0;
+  var trans = document.getElementById('dTrans').value==='1';
+  var uber = +document.getElementById('dUber').value||0;
+  var dorme = (!carro && (km>35||trans)) || uber>25;
+
+  var t = 'MICARETA DA ALINE — confirmo presença 🔥\n'+
+    '• Nome: '+nome+'\n'+
+    '• Pessoas (comigo): '+pax+'\n'+
+    '• Modo premium: '+(extra>=S.premMin ? 'SIM (+'+extra+' €) — regalias que quero usar: '+(perks.length?perks.join('; '):'depois digo') : 'não')+'\n'+
+    '• Total a pagar: '+total+' € (MB Way '+S.mbway+')\n'+
+    '• Como venho: '+comoTxt+(onde?' — de '+onde:'')+linhaBoleia+'\n'+
+    '• Dormida: '+(dorme?'sim, sou elegível ('+(carro?'':'sem carro, ')+km+' km'+(uber>25?', Uber '+uber+' €':'')+')':'não')+'\n'+
+    '• Bebida que levo: '+beb+'\n'+
+    '• Restrições alimentares: '+restr;
+  document.getElementById('msg').value = t;
+  document.getElementById('wa').href = 'https://wa.me/351'+S.mbway.replace(/\D/g,'')+'?text='+encodeURIComponent(t);
+}
+function copyMsg(){
+  var m=document.getElementById('msg'); m.select(); m.setSelectionRange(0,99999);
+  navigator.clipboard && navigator.clipboard.writeText(m.value);
+}
+
+/* ============================ ADMIN ============================ */
+var FILTRO='todos';
+function renderAdmin(){
+  var f = {aData:'data',aHora:'hora',aPrazo:'prazo',aEvento:'evento',aPreco:'preco',aPerk:'premMin',
+           aMeta:'meta',aCap:'cap',aCusto:'custoPessoa',aPiscina:'piscina',aCamas:'camas',aMb:'mbway',aIban:'iban'};
+  for(var id in f){ var el=document.getElementById(id); if(el && document.activeElement!==el) el.value = S[f[id]]; }
+
+  var base = paxPagos()*S.preco, prem = recebidoPrem(), rec = recebido();
+  var custo = paxPagos()*S.custoPessoa;
+  document.getElementById('mRec').textContent = rec.toFixed(0)+' €';
+  document.getElementById('mBase').textContent = base.toFixed(0)+' €';
+  document.getElementById('mPrem').textContent = prem.toFixed(0)+' €';
+  document.getElementById('mCusto').textContent = custo.toFixed(0)+' €';
+  var saldo = rec - custo;
+  document.getElementById('mSaldo').textContent = saldo.toFixed(0)+' €';
+  document.getElementById('mPisc').textContent = saldo>=S.piscina ? 'SIM ✅' : 'faltam '+Math.max(0,S.piscina-saldo).toFixed(0)+' €';
+  document.getElementById('mPrem2').textContent = nPremium();
+  var carros = S.guests.filter(g=>g.como==='carro');
+  var lug = carros.reduce((a,g)=>a+(+g.lugares||0),0);
+  var pede = S.guests.filter(g=>g.como==='boleia');
+  document.getElementById('mCarros').textContent = carros.length;
+  document.getElementById('mLug').textContent = lug;
+  document.getElementById('mPede').textContent = pede.length;
+  document.getElementById('mDorme').textContent = S.guests.filter(g=>g.dormida).length;
+  var bh = '';
+  if(pede.length || lug){
+    bh = '<h3>Emparelhar boleias</h3><p class="small">'+
+      (lug>=pede.length ? '✅ Há lugares que chegam ('+lug+' para '+pede.length+' pedidos).' :
+       '⚠️ Faltam '+(pede.length-lug)+' lugares — avisa quem precisa para vir de transportes ou considerar dormida.')+'</p>';
+    bh += '<p><b>Oferecem:</b> '+(carros.filter(g=>g.lugares>0).map(g=>'<span class="chip">'+g.nome+' · '+g.lugares+' lug. · '+(g.onde||'?')+' · '+(g.boleia||'?')+'</span>').join(' ')||'ninguém')+'</p>';
+    bh += '<p><b>Pedem:</b> '+(pede.map(g=>'<span class="chip">'+g.nome+' · '+(g.onde||'?')+'</span>').join(' ')||'ninguém')+'</p>';
+  }
+  document.getElementById('boleiaMatch').innerHTML = bh;
+  document.getElementById('finTxt').textContent =
+    'Custo por pessoa a '+S.custoPessoa.toFixed(2)+' € (vem da planilha). Recebido inclui base + regalias. '+
+    'Para a piscina ('+S.piscina+' €) precisas de um saldo positivo desse valor — as regalias premium são o motor disso.';
+
+  var tb = document.querySelector('#tblG tbody'); tb.innerHTML='';
+  S.guests.forEach(function(g,i){
+    if(FILTRO!=='todos' && g.estado!==FILTRO) return;
+    var tr=document.createElement('tr'); tr.className=g.estado;
+    tr.innerHTML =
+      '<td><input type="text" value="'+esc(g.nome)+'" onchange="upd('+i+',\'nome\',this.value)"></td>'+
+      '<td><select onchange="upd('+i+',\'estado\',this.value)">'+
+        ['convidado','confirmado','pago','espera','recusou'].map(s=>'<option'+(g.estado===s?' selected':'')+'>'+s+'</option>').join('')+
+      '</select></td>'+
+      '<td><input type="number" style="width:52px" value="'+(g.pax||1)+'" onchange="upd('+i+',\'pax\',+this.value)"></td>'+
+      '<td><input type="number" style="width:64px" value="'+(g.pagou||0)+'" onchange="upd('+i+',\'pagou\',+this.value)"></td>'+
+      '<td><input type="number" style="width:58px" value="'+(g.extra||0)+'" onchange="upd('+i+',\'extra\',+this.value)"></td>'+
+      '<td><select onchange="upd('+i+',\'como\',this.value)">'+
+        [['','—'],['carro','carro'],['transportes','transportes'],['uber','uber'],['pe','a pé'],['boleia','precisa boleia']]
+          .map(o=>'<option value="'+o[0]+'"'+(g.como===o[0]?' selected':'')+'>'+o[1]+'</option>').join('')+
+      '</select></td>'+
+      '<td><input type="text" style="width:96px" value="'+esc(g.onde||'')+'" onchange="upd('+i+',\'onde\',this.value)"></td>'+
+      '<td><select onchange="upd('+i+',\'boleia\',this.value)">'+
+        [['','—'],['ida','ida'],['volta','volta'],['ambas','ida+volta']]
+          .map(o=>'<option value="'+o[0]+'"'+(g.boleia===o[0]?' selected':'')+'>'+o[1]+'</option>').join('')+
+      '</select></td>'+
+      '<td><input type="number" style="width:46px" value="'+(g.lugares||0)+'" onchange="upd('+i+',\'lugares\',+this.value)"></td>'+
+      '<td>'+perkPicker(i,g)+'</td>'+
+      '<td><input type="checkbox"'+(g.dormida?' checked':'')+' onchange="upd('+i+',\'dormida\',this.checked)"></td>'+
+      '<td><input type="text" style="width:110px" value="'+esc(g.prenda||'')+'" onchange="upd('+i+',\'prenda\',this.value)"></td>'+
+      '<td><input type="text" style="width:110px" value="'+esc(g.restr||'')+'" onchange="upd('+i+',\'restr\',this.value)"></td>'+
+      '<td><input type="text" style="width:100px" value="'+esc(g.por||'')+'" onchange="upd('+i+',\'por\',this.value)"></td>'+
+      '<td><button class="btn d" style="padding:4px 9px;font-size:.75rem" onclick="delGuest('+i+')">×</button></td>';
+    tb.appendChild(tr);
+  });
+
+  var ap=document.getElementById('adminPerks'); ap.innerHTML='';
+  S.perks.forEach(function(p,i){
+    var d=document.createElement('div'); d.style.cssText='display:flex;gap:6px;margin:5px 0;flex-wrap:wrap';
+    d.innerHTML='<input type="text" style="flex:2;min-width:180px" value="'+esc(p.n)+'" onchange="updPerk('+i+',\'n\',this.value)">'+
+      '<input type="text" style="flex:3;min-width:180px" value="'+esc(p.d)+'" onchange="updPerk('+i+',\'d\',this.value)">'+
+      '<input type="number" style="width:70px" value="'+p.lim+'" title="0 = sem limite" onchange="updPerk('+i+',\'lim\',+this.value)">'+
+      '<button class="btn d" style="padding:5px 10px" onclick="delPerk('+i+')">×</button>';
+    ap.appendChild(d);
+  });
+
+  var ag=document.getElementById('adminGifts'); ag.innerHTML='';
+  S.gifts.forEach(function(g,i){
+    var d=document.createElement('div'); d.style.cssText='display:flex;gap:6px;margin:5px 0;flex-wrap:wrap';
+    d.innerHTML='<input type="text" style="width:110px" value="'+esc(g.c)+'" onchange="updGift('+i+',\'c\',this.value)">'+
+      '<input type="text" style="flex:2;min-width:160px" value="'+esc(g.n)+'" onchange="updGift('+i+',\'n\',this.value)">'+
+      '<input type="text" style="width:90px" value="'+esc(g.p)+'" onchange="updGift('+i+',\'p\',this.value)">'+
+      '<input type="text" style="width:130px" placeholder="prometido por" value="'+esc(g.by||'')+'" onchange="updGift('+i+',\'by\',this.value)">'+
+      '<button class="btn d" style="padding:5px 10px" onclick="delGift('+i+')">×</button>';
+    ag.appendChild(d);
+  });
+
+  renderCompras();
+}
+function esc(s){ return String(s==null?'':s).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function perkPicker(i,g){
+  var sel = (g.perks||[]);
+  return '<select multiple size="2" style="width:150px" onchange="updPerks('+i+',this)">'+
+    S.perks.map(p=>'<option value="'+p.id+'"'+(sel.indexOf(p.id)>=0?' selected':'')+'>'+p.n.slice(0,26)+'</option>').join('')+
+    '</select>';
+}
+function upd(i,k,v){ S.guests[i][k]=v; if(k==='estado'&&v==='pago'&&!S.guests[i].pagou){ S.guests[i].pagou = S.preco*(S.guests[i].pax||1) + (+S.guests[i].extra||0); } save(); }
+function updPerks(i,sel){ S.guests[i].perks = Array.from(sel.selectedOptions).map(o=>o.value); save(); }
+function updPerk(i,k,v){ S.perks[i][k]=v; save(); }
+function updGift(i,k,v){ S.gifts[i][k]=v; save(); }
+function delGuest(i){ if(confirm('Remover '+S.guests[i].nome+'?')){ S.guests.splice(i,1); save(); } }
+function delPerk(i){ S.perks.splice(i,1); save(); }
+function delGift(i){ S.gifts.splice(i,1); save(); }
+function addGuest(){ var n=prompt('Nome:'); if(!n) return;
+  S.guests.push({nome:n,estado:'convidado',pax:1,pagou:0,extra:0,como:'',onde:'',boleia:'',lugares:0,perks:[],dormida:false,prenda:'',restr:'',por:''}); save(); }
+function bulkAdd(){ var t=prompt('Cola os nomes, um por linha:'); if(!t) return;
+  t.split(/[\n,;]+/).map(s=>s.trim()).filter(Boolean).forEach(function(n){
+    S.guests.push({nome:n,estado:'convidado',pax:1,pagou:0,extra:0,como:'',onde:'',boleia:'',lugares:0,perks:[],dormida:false,prenda:'',restr:'',por:''}); });
+  save(); }
+function addPerk(){ var n=prompt('Nome da regalia:'); if(!n) return;
+  S.perks.push({id:'p'+Date.now(),n:n,d:'',lim:0,usados:0}); save(); }
+function addGift(){ var n=prompt('Item:'); if(!n) return;
+  S.gifts.push({c:'Casa',n:n,d:'',p:'',by:''}); save(); }
+
+/* compras proporcionais */
+var COMPRAS = [
+  ["Carne (total)", 0.485, "kg"], ["Pão", 0.5, "un"], ["Carvão", 0.35, "kg"],
+  ["Gelo", 0.7, "kg"], ["Cerveja lata 0,5L (1ª rodada)", 0.8, "un"],
+  ["Refrigerante", 0.4, "L"], ["Água", 0.5, "L"], ["Sacos do lixo", 0.15, "un"]
+];
+function renderCompras(){
+  var n = paxPagos() || 0;
+  var h = '<div class="grid">';
+  COMPRAS.forEach(function(c){
+    h += '<div class="kpi"><b>'+(c[1]*n).toFixed(1)+' '+c[2]+'</b><small>'+c[0]+'</small></div>';
+  });
+  h += '</div>';
+  document.getElementById('compras').innerHTML = h;
+}
+
+/* ---- bindings ---- */
+document.getElementById('filtros').addEventListener('click', function(e){
+  if(e.target.tagName!=='BUTTON') return;
+  FILTRO = e.target.dataset.f;
+  this.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b===e.target));
+  renderAdmin();
+});
+['aData','aHora','aPrazo','aEvento','aPreco','aPerk','aMeta','aCap','aCusto','aPiscina','aCamas','aMb','aIban']
+ .forEach(function(id){
+   var map={aData:'data',aHora:'hora',aPrazo:'prazo',aEvento:'evento',aPreco:'preco',aPerk:'premMin',
+            aMeta:'meta',aCap:'cap',aCusto:'custoPessoa',aPiscina:'piscina',aCamas:'camas',aMb:'mbway',aIban:'iban'};
+   document.getElementById(id).addEventListener('change', function(){
+     var v = this.type==='number' ? +this.value : this.value;
+     S[map[id]] = v; save();
+   });
+ });
+['fNome','fPax','fRestr','fBeb','fExtra','fOnde','fLugares','fRota'].forEach(function(id){
+  document.getElementById(id).addEventListener('input', function(){ perkCalc(); montaMsg(); });
+});
+document.getElementById('fComo').addEventListener('change', function(){ toggleTransporte(); montaMsg(); });
+document.getElementById('fBoleia').addEventListener('change', montaMsg);
+['dCarro','dKm','dTrans','dUber'].forEach(function(id){
+  document.getElementById(id).addEventListener('input', calcDormida);
+  document.getElementById(id).addEventListener('change', calcDormida);
+});
+window.addEventListener('hashchange', function(){ /* campo de estrelas do fundo */
+(function(){
+  var seed=11; function r(){seed=(seed*1103515245+12345)%2147483648;return seed/2147483648;}
+  var h='';
+  for(var i=0;i<190;i++){
+    var sz=(r()*2.2+.5).toFixed(1);
+    h+='<i style="left:'+(r()*100).toFixed(2)+'%;top:'+(r()*100).toFixed(2)+'%;width:'+sz+'px;height:'+sz+
+       'px;opacity:'+(.25+r()*.7).toFixed(2)+';box-shadow:0 0 '+(2+r()*5).toFixed(1)+'px #fff"></i>';
+  }
+  document.getElementById('sky').innerHTML=h;
+})();
+
+loadState(); render(); });
+
+/* campo de estrelas do fundo */
+(function(){
+  var seed=11; function r(){seed=(seed*1103515245+12345)%2147483648;return seed/2147483648;}
+  var h='';
+  for(var i=0;i<190;i++){
+    var sz=(r()*2.2+.5).toFixed(1);
+    h+='<i style="left:'+(r()*100).toFixed(2)+'%;top:'+(r()*100).toFixed(2)+'%;width:'+sz+'px;height:'+sz+
+       'px;opacity:'+(.25+r()*.7).toFixed(2)+';box-shadow:0 0 '+(2+r()*5).toFixed(1)+'px #fff"></i>';
+  }
+  document.getElementById('sky').innerHTML=h;
+})();
+
+loadState(); render();
+</script>
+</body>
+</html>
