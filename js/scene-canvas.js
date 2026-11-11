@@ -13,7 +13,7 @@
    leitor de ecrã não sabem que o desenho mudou de técnica.
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 
-import { prefersReducedMotion } from "./utils.js?v=8d96f237";
+import { prefersReducedMotion } from "./utils.js?v=98146a22";
 
 /* O contorno de "seleccionado" dos jogos: ciano no dark, rosa no light */
 const OUTLINE = { dark: "#59f3ff", light: "#ff5dbb" };
@@ -325,11 +325,12 @@ export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json"
       ctx.drawImage(images[l.name], x, y);
     }
     /* LEDs: alternam entre dois níveis da rampa do tema */
-    if (blink.length && !reduced) {
-      const r = ramp(), now = performance.now();
+    const r = blink.length && !reduced ? ramp() : [];
+    if (r.length) {
+      const now = performance.now();
       for (const b of blink) {
         const on = Math.floor(now / b.ms) % 2 === 0;
-        ctx.fillStyle = r[on ? b.levels[0] : b.levels[1]] ?? "#fff";
+        ctx.fillStyle = r[on ? b.levels[0] : b.levels[1]] ?? r[r.length - 1];
         ctx.fillRect(state.ox + b.rect[0], state.oy + b.rect[1], b.rect[2], b.rect[3]);
       }
     }

@@ -31,7 +31,7 @@
   <meta name="theme-color" content="#f7f2ff" media="(prefers-color-scheme: light)" />
   <meta name="color-scheme" content="dark light" />
   <!-- AM/PM: aplica a escolha guardada antes da primeira pintura (js/theme.js) -->
-  <script>try{var t=localStorage.getItem("bylx:theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+  <script>try{var t=localStorage.getItem("bylx:theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;if(localStorage.getItem("bylx:3bit")==="1")document.documentElement.dataset.bit="3"}catch(e){}</script>
   <link rel="canonical" href="https://bylx.dev/" />
 
   <!-- One graph, three jobs: say who she is (entity), say the site is hers,
@@ -133,11 +133,21 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=8d96f237" />
+  <link rel="stylesheet" href="styles.css?v=98146a22" />
 </head>
 
 <body>
   <a class="skip-link" href="#projects">Skip to projects</a>
+  <!-- Os modos ficam fora do hero: o hero isola o z-index, e estes botões
+       têm de ficar por cima de tudo, até dos fechar das janelas -->
+  <div class="mode-switches">
+    <button class="time-toggle" type="button" aria-pressed="false" aria-label="Switch to AM (light mode)">
+      <span class="time-am" aria-hidden="true">AM</span><span class="time-pm" aria-hidden="true">PM</span>
+    </button>
+    <button class="bit-toggle" type="button" aria-pressed="false" aria-label="3-bit mode: show everything in grayscale">3BIT</button>
+  </div>
+  <!-- Marca d'água: o logo no tamanho original, fixo ao rolar -->
+  <img class="watermark" src="assets/bylx-watermark.png?v=2803278b" width="55" height="51" alt="" aria-hidden="true" decoding="async" />
 
   <main>
     <section class="hero hero-scene" id="hero" aria-labelledby="hero-title">
@@ -150,11 +160,8 @@
            níveis de cinza, ampliada por inteiros e pintada no tema do sistema.
            Os botões abaixo são os mesmos de sempre, com os mesmos listeners —
            o motor só os coloca por cima do objecto que representam. -->
-      <button class="time-toggle" type="button" aria-pressed="false" aria-label="Switch to AM (light mode)">
-        <span class="time-am" aria-hidden="true">AM</span><span class="time-pm" aria-hidden="true">PM</span>
-      </button>
 
-      <div class="scene-stage" id="hero-scene" data-scene-src="assets/scene/sprites.json?v=1385fdde">
+      <div class="scene-stage" id="hero-scene" data-scene-src="assets/scene/sprites.json?v=2eb65f7a">
         <button class="scene-btn hotspot hotspot-cocktail" type="button" aria-label="Open: two cities" data-modal-target="cities-modal" data-layer="cocktail"></button>
         <button class="scene-btn hotspot hotspot-sushi" type="button" aria-label="Open: how this desk was drawn" data-modal-target="craft-modal" data-layer="sushi"></button>
         <button class="scene-btn hotspot hotspot-instax instax" type="button" aria-label="Open image gallery" data-modal-target="gallery-modal" data-layer="instax"></button>
@@ -193,6 +200,7 @@
           <h1 id="hero-title">Where the best cities share a desk.</h1>
           <p>I build web things that make you feel something. Pixel art, vanilla code, and AI-assisted workflows.</p>
           <a href="#projects">See the work</a>
+          <a class="hero-link-ghost" href="https://www.linkedin.com/in/alinelx" target="_blank" rel="me noopener noreferrer">LinkedIn</a>
         </div>
       </div>
 
@@ -1021,6 +1029,7 @@
       <ul class="footer-links" aria-label="Social links">
         <li><a href="https://instagram.com/bylx.dev" target="_blank" rel="noopener noreferrer">Instagram</a></li>
         <li><a href="https://github.com/alinelx" target="_blank" rel="me noopener noreferrer">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/alinelx" target="_blank" rel="me noopener noreferrer">LinkedIn</a></li>
       </ul>
       <p class="footer-copy">© 2026 Aline Lopes Xavier · Built with vanilla HTML, CSS & JS.</p>
     </div>
@@ -1029,6 +1038,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=8d96f237"></script>
+  <script type="module" src="script.js?v=98146a22"></script>
 </body>
 </html>

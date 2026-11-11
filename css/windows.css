@@ -245,7 +245,7 @@
   .hero-text {
     width: auto;
     /* em cima, espaço para o interruptor AM/PM fixo no canto */
-    margin: calc(var(--win-pad-sm) * 2 + 1.75rem) var(--gutter) calc(var(--gutter) / 2);
+    margin: calc(var(--win-pad-sm) * 2 + 3.9rem) var(--gutter) calc(var(--gutter) / 2); /* AM/PM + 3BIT */
   }
   .desk-hint.os-tip {
     width: calc(100% - 2 * var(--gutter));
@@ -472,3 +472,87 @@ body {
   image-rendering: pixelated;
 }
 .modal-window { image-rendering: auto; }
+
+/* ---------- Modos (AM/PM e 3BIT) por cima de tudo ----------
+   Fora do hero (que isola o z-index): acima das janelas, dos modais e dos
+   fechar; só o cursor desenhado fica mais alto. */
+.mode-switches {
+  position: fixed;
+  top: var(--win-pad-sm);
+  right: var(--win-pad-sm);
+  z-index: 9990;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+.mode-switches .time-toggle { position: static; z-index: auto; }
+.bit-toggle {
+  padding: 6px 9px;
+  color: var(--ink);
+  background: var(--fg-fill);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--fs-label);
+  line-height: 1;
+  cursor: pointer;
+}
+.bit-toggle[aria-pressed="true"] {
+  color: var(--on-fill);
+  background: var(--win-title, var(--accent-fill));
+}
+.bit-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+/* 3BIT: o site inteiro em tons de cinza. Na raiz o filtro não prende os
+   elementos fixos; a cena pinta-se nos cinzas de referência (script.js). */
+:root[data-bit="3"] { filter: grayscale(1); }
+
+/* ---------- Marca d'água ----------
+   O logo no tamanho original, cores intactas, fixo no canto ao rolar.
+   Não recebe cliques: nunca tapa um botão. */
+.watermark {
+  position: fixed;
+  right: var(--win-pad-sm);
+  bottom: var(--win-pad-sm);
+  z-index: 9980;
+  width: 55px;
+  height: 51px;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---------- Tags dos projectos: letra mais leve ----------
+   A Press Start 2P é pesada em corpo pequeno; as tags passam à Pixelify Sans
+   regular, no mesmo tamanho. */
+.card-tag {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+  font-size: max(var(--fs-label), 0.85rem);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- LinkedIn no hero: botão secundário, sem enchimento ---------- */
+.hero-text a.hero-link-ghost {
+  margin-left: 0.5rem;
+  color: inherit;
+  background: transparent;
+}
+
+/* ---------- Janelas arrastáveis ---------- */
+@media (pointer: fine) {
+  .is-draggable { cursor: grab; user-select: none; }
+  .is-dragging .is-draggable { cursor: grabbing; }
+}
+/* a janela que se arrasta passa por cima das outras (as das secções são
+   static: ganham position relative só enquanto andam) */
+.is-dragging { z-index: 50; }
+.projects-inner.is-dragging,
+.os-window.is-dragging:not(.hero-text) { position: relative; }
+
+/* "See the work": no dark, texto quase-preto em vez de roxo sobre o rosa */
+:root:not([data-theme="light"]) .hero-text a:not(.hero-link-ghost) { color: #09051b; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .hero-text a:not(.hero-link-ghost) { color: var(--on-fill); }
+}

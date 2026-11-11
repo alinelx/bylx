@@ -40,3 +40,25 @@ export function initThemeToggle(onChange) {
 
   render();
 }
+
+/* ---------- 3BIT ----------
+   Ver o site nos cinzas de referência: a cena volta aos sprites em cinza e o
+   resto passa por um filtro grayscale na raiz (windows.css). Grava em
+   localStorage; o <head> aplica antes da primeira pintura. */
+const BIT_KEY = "bylx:3bit";
+export const bitMode = () => document.documentElement.dataset.bit === "3";
+
+export function initBitToggle(onChange) {
+  const btn = document.querySelector(".bit-toggle");
+  if (!btn) return;
+  const render = () => btn.setAttribute("aria-pressed", String(bitMode()));
+  btn.addEventListener("click", () => {
+    const on = !bitMode();
+    if (on) document.documentElement.dataset.bit = "3";
+    else delete document.documentElement.dataset.bit;
+    try { localStorage.setItem(BIT_KEY, on ? "1" : "0"); } catch { /* modo privado */ }
+    render();
+    onChange?.(on);
+  });
+  render();
+}
