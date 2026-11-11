@@ -541,9 +541,10 @@ body {
 }
 
 /* ---------- Janelas arrastáveis ---------- */
+/* O cursor do sistema está escondido (base.css): quem muda é o desenhado —
+   mão aberta por cima da barra, mão fechada enquanto arrasta (cursor.css) */
 @media (pointer: fine) {
-  .is-draggable { cursor: grab; user-select: none; }
-  .is-dragging .is-draggable { cursor: grabbing; }
+  .is-draggable { user-select: none; }
 }
 /* a janela que se arrasta passa por cima das outras (as das secções são
    static: ganham position relative só enquanto andam) */
@@ -555,4 +556,16 @@ body {
 :root:not([data-theme="light"]) .hero-text a:not(.hero-link-ghost) { color: #09051b; }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) .hero-text a:not(.hero-link-ghost) { color: var(--on-fill); }
+}
+
+/* ---------- Onde a janela do hero começa ----------
+   Presa à cena, não ao canto do ecrã: à esquerda da moldura da janela da
+   cena (84 px de grade antes dela) e à altura do topo dos vitrais (y 74).
+   Nunca sai pela esquerda do ecrã. Só em ecrã largo; no telemóvel fica no
+   fluxo (regra de cima). */
+@media not ((max-width: 900px) or ((orientation: portrait) and (max-width: 1200px))) {
+  .hero-text {
+    left: max(var(--gutter), calc((var(--scene-ox, 42) - 84) * var(--scene-u, 1) * 1px));
+    top: max(var(--win-pad-sm), calc((var(--scene-oy, 0) + 74) * var(--scene-u, 1) * 1px));
+  }
 }

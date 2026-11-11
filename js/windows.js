@@ -60,6 +60,8 @@ function initDrag() {
     const win = bar.closest("[data-window], .os-window, .os-tip, .modal-window");
     if (!win) continue;
     bar.classList.add("is-draggable");
+    bar.addEventListener("pointerenter", () => { if (fine.matches) document.querySelector(".cursor")?.classList.add("hover"); });
+    bar.addEventListener("pointerleave", () => { if (!start) document.querySelector(".cursor")?.classList.remove("hover"); });
     let start = null;
     bar.addEventListener("pointerdown", (e) => {
       if (!fine.matches || e.button !== 0) return;
@@ -69,6 +71,7 @@ function initDrag() {
       start = { x: e.clientX, y: e.clientY, dx: dx || 0, dy: dy || 0, bar: bar.getBoundingClientRect() };
       bar.setPointerCapture(e.pointerId);
       win.classList.add("is-dragging");
+      document.querySelector(".cursor")?.classList.add("dragging");
       e.preventDefault();
     });
     bar.addEventListener("pointermove", (e) => {
@@ -80,7 +83,12 @@ function initDrag() {
       my = Math.min(Math.max(my, -b.top), innerHeight - b.bottom);
       win.style.translate = `${Math.round(start.dx + mx)}px ${Math.round(start.dy + my)}px`;
     });
-    const end = () => { if (start) { start = null; win.classList.remove("is-dragging"); } };
+    const end = () => {
+      if (!start) return;
+      start = null;
+      win.classList.remove("is-dragging");
+      document.querySelector(".cursor")?.classList.remove("dragging");
+    };
     bar.addEventListener("pointerup", end);
     bar.addEventListener("pointercancel", end);
   }

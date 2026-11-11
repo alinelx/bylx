@@ -3,21 +3,21 @@
    Import and initialise every feature module.
    ============================================================ */
 
-import { initParallax }                             from "./js/parallax.js?v=98146a22";
-import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=98146a22";
-import { initModals }                               from "./js/modals.js?v=98146a22";
-import { initDeeplink }                            from "./js/deeplink.js?v=98146a22";
-import { initGalleryViewer }                        from "./js/gallery.js?v=98146a22";
-import { initContactForm }                          from "./js/contact.js?v=98146a22";
-import { initAudio }                                from "./js/audio.js?v=98146a22";
-import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=98146a22";
-import { initPixelFit }                          from "./js/pixelfit.js?v=98146a22";
-import { initDesktop }                              from "./js/desktop.js?v=98146a22";
-import { initProjectsFilter } from "./js/projects-filter.js?v=98146a22";
-import { initSceneCanvas }                          from "./js/scene-canvas.js?v=98146a22";
-import { initWindows }                              from "./js/windows.js?v=98146a22";
-import { initThemeToggle, currentTheme, initBitToggle, bitMode } from "./js/theme.js?v=98146a22";
-import { themeImages }                              from "./js/themed-img.js?v=98146a22";
+import { initParallax }                             from "./js/parallax.js?v=e8041261";
+import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=e8041261";
+import { initModals }                               from "./js/modals.js?v=e8041261";
+import { initDeeplink }                            from "./js/deeplink.js?v=e8041261";
+import { initGalleryViewer }                        from "./js/gallery.js?v=e8041261";
+import { initContactForm }                          from "./js/contact.js?v=e8041261";
+import { initAudio }                                from "./js/audio.js?v=e8041261";
+import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=e8041261";
+import { initPixelFit }                          from "./js/pixelfit.js?v=e8041261";
+import { initDesktop }                              from "./js/desktop.js?v=e8041261";
+import { initProjectsFilter } from "./js/projects-filter.js?v=e8041261";
+import { initSceneCanvas }                          from "./js/scene-canvas.js?v=e8041261";
+import { initWindows }                              from "./js/windows.js?v=e8041261";
+import { initThemeToggle, currentTheme, initBitToggle, bitMode } from "./js/theme.js?v=e8041261";
+import { themeImages }                              from "./js/themed-img.js?v=e8041261";
 
 /* Each module is independent, and a throw in one used to take every module
    after it down with it — silently, since nothing here catches. */
@@ -58,6 +58,12 @@ start("scene", () => {
   const onScene = ({ u, ox, oy, base, layer, image }) => {
     /* Onde a mesa acaba, em px do topo do hero: a frase de baixo assenta aí */
     document.querySelector(".hero-scene")?.style.setProperty("--scene-bottom", `${(oy + base[1]) * u}px`);
+    /* Origem e escala da cena, para o CSS pôr a janela do hero num ponto da
+       cena (e não num canto do ecrã) */
+    const hs = document.querySelector(".hero-scene")?.style;
+    hs?.setProperty("--scene-ox", String(ox));
+    hs?.setProperty("--scene-oy", String(oy));
+    hs?.setProperty("--scene-u", String(u));
     const parts = ["bg-wall-left", "bg-wall-right"].map((n) => ({ l: layer(n), img: image(n) }));
     if (parts.some((p) => !p.l || !p.img)) return;
     const urls = parts.map((p) => p.img.toDataURL());
