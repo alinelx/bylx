@@ -3,22 +3,24 @@
    Import and initialise every feature module.
    ============================================================ */
 
-import { initParallax }                             from "./js/parallax.js?v=72788ead";
-import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=72788ead";
-import { initModals }                               from "./js/modals.js?v=72788ead";
-import { initDeeplink }                            from "./js/deeplink.js?v=72788ead";
-import { initGalleryViewer }                        from "./js/gallery.js?v=72788ead";
-import { initContactForm }                          from "./js/contact.js?v=72788ead";
-import { initAudio }                                from "./js/audio.js?v=72788ead";
-import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=72788ead";
-import { initPixelFit }                          from "./js/pixelfit.js?v=72788ead";
-import { initDesktop }                              from "./js/desktop.js?v=72788ead";
-import { initProjectsFilter } from "./js/projects-filter.js?v=72788ead";
-import { initSceneCanvas }                          from "./js/scene-canvas.js?v=72788ead";
-import { initSettings }                             from "./js/settings.js?v=72788ead";
-import { initWindows }                              from "./js/windows.js?v=72788ead";
-import { initThemeToggle, currentTheme, initBitToggle, bitMode } from "./js/theme.js?v=72788ead";
-import { themeImages }                              from "./js/themed-img.js?v=72788ead";
+import { initParallax }                             from "./js/parallax.js?v=a7301cec";
+import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=a7301cec";
+import { initModals }                               from "./js/modals.js?v=a7301cec";
+import { initDeeplink }                            from "./js/deeplink.js?v=a7301cec";
+import { initGalleryViewer }                        from "./js/gallery.js?v=a7301cec";
+import { initContactForm }                          from "./js/contact.js?v=a7301cec";
+import { initFeedbackForm }                        from "./js/feedback.js?v=a7301cec";
+import { initAudio }                                from "./js/audio.js?v=a7301cec";
+import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=a7301cec";
+import { initPixelFit }                          from "./js/pixelfit.js?v=a7301cec";
+import { initDesktop }                              from "./js/desktop.js?v=a7301cec";
+import { initProjectsFilter } from "./js/projects-filter.js?v=a7301cec";
+import { initSceneCanvas }                          from "./js/scene-canvas.js?v=a7301cec";
+import { initI18n }                                 from "./js/i18n.js?v=a7301cec";
+import { initSettings }                             from "./js/settings.js?v=a7301cec";
+import { initWindows }                              from "./js/windows.js?v=a7301cec";
+import { initThemeToggle, currentTheme, initBitToggle, bitMode } from "./js/theme.js?v=a7301cec";
+import { themeImages }                              from "./js/themed-img.js?v=a7301cec";
 
 /* Each module is independent, and a throw in one used to take every module
    after it down with it — silently, since nothing here catches. */
@@ -44,6 +46,8 @@ start("scene", () => {
   themeImages(currentTheme());
   /* O interruptor não espera pela cena: o resto do site troca na mesma */
   let sceneApi = null;
+  /* traduzir primeiro: o observador apanha tudo o que os módulos escreverem depois */
+  try { initI18n(); } catch (e) { console.error("[bylx] i18n failed to start", e); document.documentElement.classList.add("i18n-ready"); }
   /* a engrenagem cria os botões AM/PM e 3BIT antes de lhes ligarmos o comportamento */
   try { initSettings(); } catch (e) { console.error("[bylx] settings failed to start", e); }
   /* 3BIT: a cena pinta-se nos cinzas de referência (sem mapa de tema) */
@@ -108,6 +112,7 @@ start("modals", initModals);
 start("deeplink", initDeeplink);
 start("gallery", initGalleryViewer);
 start("contact", initContactForm);
+start("feedback", initFeedbackForm);
 start("audio", initAudio);
 start("mouseFlee", initMouseFlee);
 start("keyboardRgb", initKeyboardRgb);

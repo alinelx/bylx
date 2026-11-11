@@ -12,9 +12,10 @@
    owes the visitor is the cursor, because base.css hides the native one for
    the whole document. Importing the real module keeps one implementation. */
 
-import { initCursor, initSakuraTrail } from "./cursor.js?v=72788ead";
-import { initSettings } from "./settings.js?v=72788ead";
-import { initThemeToggle, initBitToggle } from "./theme.js?v=72788ead";
+import { initCursor, initSakuraTrail } from "./cursor.js?v=a7301cec";
+import { initI18n } from "./i18n.js?v=a7301cec";
+import { initSettings } from "./settings.js?v=a7301cec";
+import { initThemeToggle, initBitToggle } from "./theme.js?v=a7301cec";
 
 function start(name, init) {
   try {
@@ -25,6 +26,7 @@ function start(name, init) {
 }
 
 /* A engrenagem (AM/PM, 3BIT, letra, movimento, cursor) segue para todas as páginas */
+start("i18n", initI18n);
 start("settings", () => { initSettings(); initThemeToggle(); initBitToggle(); });
 start("cursor", initCursor);
 start("sakura", initSakuraTrail);

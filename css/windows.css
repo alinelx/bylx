@@ -625,3 +625,49 @@ body {
 :root[data-cursor="native"] :is(a, button, [role="button"], label, summary, select, .is-draggable) { cursor: pointer !important; }
 :root[data-cursor="native"] :is(input, textarea) { cursor: text !important; }
 :root[data-cursor="native"] :is(.cursor, .sakura-cursor) { display: none !important; }
+
+/* ---------- Língua ----------
+   Em PT o corpo só aparece traduzido (o <head> tem um tecto de 2 s para
+   nunca ficar em branco). O interruptor PT/EN é igual ao AM/PM. */
+html[data-lang="pt"]:not(.i18n-ready) body { visibility: hidden; }
+.lang-toggle[data-lang="pt"] .lang-pt,
+.lang-toggle[data-lang="en"] .lang-en {
+  background: var(--accent-fill);
+  color: var(--on-fill);
+}
+
+/* ---------- Feedback ---------- */
+.footer-feedback {
+  padding: 0;
+  color: inherit;
+  background: none;
+  border: 0;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.footer-feedback:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.feedback-intro { margin-bottom: 1rem; }
+.fb-q {
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.8rem 0.8rem;
+  border: 2px solid var(--line);
+}
+.fb-q legend { padding: 0 0.4rem; font-family: var(--font-pixel); font-weight: 700; }
+.fb-q label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.18rem 0;
+  cursor: pointer;
+}
+.fb-q input { accent-color: var(--accent-fill); }
+#feedback-form .field em { font-style: normal; opacity: 0.75; }
+
+/* O rodapé ganhou dois itens (Ko-fi e feedback): a lista quebra linha em vez
+   de empurrar a página para o lado. */
+.footer-links {
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+}

@@ -21,17 +21,17 @@
   <meta property="og:url" content="https://bylx.dev/" />
   <meta property="og:type" content="website" />
   <!-- Absolute URL: relative paths are not resolved by most link unfurlers -->
-  <meta property="og:image" content="https://bylx.dev/og-image.png" />
+  <meta property="og:image" content="https://bylx.dev/og-image.png?v=91af586c" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="A pixel-art desk scene: a CRT monitor, keyboard, instant camera and mp3 player, with Rio and Lisbon skylines through the window." />
+  <meta property="og:image:alt" content="A pixel-art desk at night: a CRT monitor, keyboard, instant camera and mp3 player, with the Rio and Lisbon skylines through the window." />
   <meta property="og:site_name" content="bylx.dev" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#09051b" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#f7f2ff" media="(prefers-color-scheme: light)" />
   <meta name="color-scheme" content="dark light" />
   <!-- AM/PM: aplica a escolha guardada antes da primeira pintura (js/theme.js) -->
-  <script>try{var d=document.documentElement,l=localStorage,t=l.getItem("bylx:theme");if(t==="light"||t==="dark")d.dataset.theme=t;if(l.getItem("bylx:3bit")==="1")d.dataset.bit="3";var f=l.getItem("bylx:fs");if(f)d.style.fontSize=f+"%";if(l.getItem("bylx:motion")==="reduce")d.dataset.motion="reduce";if(l.getItem("bylx:cursor")==="native")d.dataset.cursor="native"}catch(e){}</script>
+  <script>try{var d=document.documentElement,l=localStorage,t=l.getItem("bylx:theme");if(t==="light"||t==="dark")d.dataset.theme=t;if(l.getItem("bylx:3bit")==="1")d.dataset.bit="3";var f=l.getItem("bylx:fs");if(f)d.style.fontSize=f+"%";if(l.getItem("bylx:motion")==="reduce")d.dataset.motion="reduce";if(l.getItem("bylx:cursor")==="native")d.dataset.cursor="native";var g=l.getItem("bylx:lang");d.dataset.lang=(g==="pt"||g==="en")?g:((navigator.language||"").toLowerCase().indexOf("pt")===0?"pt":"en");if(d.dataset.lang==="pt")setTimeout(function(){d.classList.add("i18n-ready")},2000)}catch(e){document.documentElement.dataset.lang="en";document.documentElement.classList.add("i18n-ready")}</script>
   <link rel="canonical" href="https://bylx.dev/" />
 
   <!-- One graph, three jobs: say who she is (entity), say the site is hers,
@@ -49,7 +49,7 @@
           "description": "Creative technologist in Lisbon — product, UI and front-end, working between design and code. Open to hybrid or remote work.",
           "url": "https://bylx.dev/",
           "email": "geral@bylx.dev",
-          "image": "https://bylx.dev/og-image.png",
+          "image": "https://bylx.dev/og-image.png?v=91af586c",
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Lisbon",
@@ -107,7 +107,10 @@
             { "@type": "ListItem", "position": 3, "url": "https://bylx.dev/work/irs-pt/", "name": "irs-pt" },
             { "@type": "ListItem", "position": 4, "url": "https://bylx.dev/work/respondaja/", "name": "respondaja.click" },
             { "@type": "ListItem", "position": 5, "url": "https://bylx.dev/work/konochan/", "name": "konochan.pt" },
-            { "@type": "ListItem", "position": 6, "url": "https://bylx.dev/work/luparoad/", "name": "luparoad.com" }
+            { "@type": "ListItem", "position": 6, "url": "https://bylx.dev/work/luparoad/", "name": "luparoad.com" },
+            { "@type": "ListItem", "position": 7, "url": "https://bylx.dev/work/sentinela/", "name": "sentinela" },
+            { "@type": "ListItem", "position": 8, "url": "https://bylx.dev/work/rapariga/", "name": "Rapariga Social Club" },
+            { "@type": "ListItem", "position": 9, "url": "https://bylx.dev/work/guest-ops/", "name": "Guest ops" }
           ]
         }
       ]
@@ -133,7 +136,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=72788ead" />
+  <link rel="stylesheet" href="styles.css?v=a7301cec" />
 </head>
 
 <body>
@@ -182,7 +185,7 @@
 
       <div class="hero-text os-window" data-window>
         <div class="os-titlebar">
-          <span class="os-title" aria-hidden="true">bylx · creative technologist</span>
+          <span class="os-title" aria-hidden="true">bylx · creative tech</span>
           <div class="os-controls">
             <button class="os-btn os-min" type="button" aria-label="Minimize intro" aria-expanded="true" aria-controls="hero-window-body"></button>
             <button class="os-btn os-close" type="button" aria-label="Close intro" aria-controls="hero-window-body"></button>
@@ -312,6 +315,45 @@
                 <span class="card-tag">WordPress</span>
                 <span class="card-tag">UX</span>
                 <span class="card-tag">Branding</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-kind="tool" aria-labelledby="card-sentinela-title">
+            <div class="card-body">
+              <span class="card-status card-status--live">OPEN SOURCE</span>
+              <h3 id="card-sentinela-title"><button type="button" class="card-trigger" data-modal-target="casestudy-sentinela-modal">sentinela</button></h3>
+              <p>A watchman for the law an app depends on: it reads the official pages on a schedule and opens an issue when the text moves.</p>
+              <div class="card-meta">
+                <span class="card-tag">GitHub Actions</span>
+                <span class="card-tag">Python</span>
+                <span class="card-tag">Diffing</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-kind="product design" aria-labelledby="card-rapariga-title">
+            <div class="card-body">
+              <span class="card-status card-status--internal">NOT SHIPPED</span>
+              <h3 id="card-rapariga-title"><button type="button" class="card-trigger" data-modal-target="casestudy-rapariga-modal">Rapariga Social Club</button></h3>
+              <p>An invite-only marketplace for women, designed down to the last token — and stopped at the go/no-go, because the validation turned out not to exist.</p>
+              <div class="card-meta">
+                <span class="card-tag">Product</span>
+                <span class="card-tag">Design system</span>
+                <span class="card-tag">Research</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-kind="tool" aria-labelledby="card-guestops-title">
+            <div class="card-body">
+              <span class="card-status card-status--internal">INTERNAL TOOL</span>
+              <h3 id="card-guestops-title"><button type="button" class="card-trigger" data-modal-target="casestudy-guestops-modal">Guest ops</button></h3>
+              <p>A hundred invitations across two channels, a shared cost and a kitchen to fill — run as a pipeline instead of a group chat.</p>
+              <div class="card-meta">
+                <span class="card-tag">Operations</span>
+                <span class="card-tag">Sheets</span>
+                <span class="card-tag">Process design</span>
               </div>
             </div>
           </article>
@@ -819,7 +861,146 @@
       </section>
     </div>
 
-    <div class="modal pixel-modal" id="gallery-modal" aria-hidden="true">
+    
+    <div class="modal pixel-modal" id="casestudy-sentinela-modal" aria-hidden="true"
+         data-work-slug="sentinela"
+         data-work-title="sentinela &mdash; a watchman for the law an app is built on"
+         data-work-description="Case study: a scheduled GitHub Action that reads the official tax pages irs-pt depends on and opens an issue when the text changes.">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-sentinela-title">
+        <header class="modal-header">
+          <h2 id="casestudy-sentinela-title">sentinela — Case Study</h2>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close case study">&times;</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <div class="cs-meta">
+            <span class="card-tag">GitHub Actions</span>
+            <span class="card-tag">Python (stdlib only)</span>
+            <span class="card-tag">Diffing</span>
+          </div>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>irs-pt answers a tax question using numbers that Parliament changes every December. A tool built on a law has a quiet failure mode that a tool built on an API does not: nothing breaks. No test goes red, no request 500s. The skill keeps answering, confidently, with last year's thresholds. So who tells you the ground moved?</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>A watchman that runs on a schedule, reads the official pages the skill is built on &mdash; CIRS, CIVA, Social Security, e-Fatura &mdash; and opens a GitHub issue with the diff when the text changes. It never edits the skill. Deciding what a changed article means is the human's job; the watchman's only job is to make sure nobody finds out by accident.</p>
+          <ul class="cs-list">
+            <li>Runs on the 1st of each month, plus 15 January and 10 July &mdash; the dates the law actually moves</li>
+            <li>Opens one issue per run, carrying the diff of every source that changed</li>
+            <li>Watches PDFs (the practical guides) by hash of their bytes</li>
+            <li>A source that stops responding also opens an issue &mdash; a dead URL means the portal was rebuilt</li>
+            <li>First run writes the baseline and stays quiet</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>Alert first, baseline second</strong> &mdash; the run compares, then publishes the issue, and only then commits the new snapshots. If publishing fails, the baseline is not updated and the next run catches the same change again. A change is never absorbed in silence, which is the one outcome that would make the whole thing worse than nothing.</p>
+          <p><strong>Every source carries a marker</strong> &mdash; a string that has to be present for the page to count as read. A page that answers 200 with a cookie banner and a menu is a <em>failure</em>, not an all-clear. Pages on the tax portal are cropped from "Artigo N" onwards, so a SharePoint redesign doesn't register as the law changing.</p>
+          <p><strong>Scheduled, not real-time</strong> &mdash; the law moves on predictable dates: the budget in December and January, the IAS in December, rarely mid-year. Reading the source on a timer and having a person confirm it beats scraping on every request, which breaks without telling you.</p>
+          <p><strong>Adding a source is one line</strong> &mdash; sources live in a JSON file, so watching something new is a data change, not a code change.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>Most monitoring tells you a system is down. The interesting kind tells you a system is now <em>wrong</em> &mdash; still up, still fast, still answering, just no longer true. Building the second kind meant deciding, in advance, what evidence counts as "I really did read the page", and then being strict enough to call a 200 a failure. The ordering of three steps turned out to matter more than the diffing itself.</p>
+
+          <p class="cs-permalink"><a href="/work/sentinela/">bylx.dev/work/sentinela/</a></p>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-rapariga-modal" aria-hidden="true"
+         data-work-slug="rapariga"
+         data-work-title="Rapariga Social Club &mdash; the product I designed and did not ship"
+         data-work-description="Case study: an invite-only marketplace for women, designed to v1.2 and stopped at the go/no-go when the validation turned out not to exist.">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-rapariga-title">
+        <header class="modal-header">
+          <h2 id="casestudy-rapariga-title">Rapariga Social Club — Case Study</h2>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close case study">&times;</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <div class="cs-meta">
+            <span class="card-tag">Product</span>
+            <span class="card-tag">Design system</span>
+            <span class="card-tag">Research</span>
+          </div>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>Starting over costs money at the worst possible moment. Someone leaving a house has to furnish another one in a week, on whatever is left. The idea was an invite-only club where women pass on the furniture, the clothes and the things a restart needs &mdash; a marketplace where the community, not the catalogue, is the product.</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>An MVP of eight pages, a design system at v1.2, and a finished brand: a chrome tulip, "grow together, glow together", a deep purple that clears AA, copy in European Portuguese. The plan was deliberately staged &mdash; design and build, then a beta with five testers, then fifteen to twenty members, and only then money, trademark and a permanent domain. Product first, spend last.</p>
+          <ul class="cs-list">
+            <li>Eight pages plus a standalone flow, built against a documented token set</li>
+            <li>Brand, emblem and voice closed before a line of marketing</li>
+            <li>Payments, moderation and reporting obligations mapped before building any of them</li>
+            <li>A written go/no-go date, set months in advance</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>The riskiest part was never the code</strong> &mdash; it was holding other people's money. Taking payment between members means identity checks on every seller, invoicing the fee, and a legal shape for the whole arrangement. The plan was to run the first transactions by hand, with me as the clearing house, before writing a single line against a payments API.</p>
+          <p><strong>Points that never leave the club</strong> &mdash; a closed, non-transferable balance keeps the thing from becoming something I am not licensed to run. That constraint came from reading the rules first, not from a feature meeting.</p>
+          <p><strong>Moderation is a liability decision</strong> &mdash; a wall where members post reduces what I am responsible for in the transaction and increases what I am responsible for in the content. Those are different problems and they wanted different answers.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>At the go/no-go I went back to the file that said validation was complete &mdash; twenty contacts, around eighty-five per cent positive. It wasn't true. The twenty were twenty posts I had read, not twenty people I had spoken to. The three things I had genuinely verified were the brand, the domain and the handle: availability, not desire. The figure was even labelled "estimate" in my own notes, and the file meant to hold the feedback was empty.</p>
+          <p>Written down plainly: I was treating as validated what I had never tested, and as tested what I had only checked. The honest move was to stop, and the cost of stopping was one summer of design instead of a year of build. Everything I made &mdash; the system, the brand, the regulatory map &mdash; still exists and still works. What is missing is five real conversations, and that is a gap no amount of design closes.</p>
+
+          <p class="cs-permalink"><a href="/work/rapariga/">bylx.dev/work/rapariga/</a></p>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal pixel-modal" id="casestudy-guestops-modal" aria-hidden="true"
+         data-work-slug="guest-ops"
+         data-work-title="Guest ops &mdash; running a hundred invitations as a pipeline"
+         data-work-description="Case study: a guest pipeline for a hundred-person private event — two channels, delivery versus reply states, a shared cost and a contribution column.">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window modal-window--wide" role="dialog" aria-modal="true" aria-labelledby="casestudy-guestops-title">
+        <header class="modal-header">
+          <h2 id="casestudy-guestops-title">Guest ops — Case Study</h2>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close case study">&times;</button>
+        </header>
+
+        <div class="modal-body case-study-body">
+          <div class="cs-meta">
+            <span class="card-tag">Operations</span>
+            <span class="card-tag">Google Sheets</span>
+            <span class="card-tag">Process design</span>
+          </div>
+
+          <h3 class="cs-heading">The question</h3>
+          <p>A hundred-odd people, two messaging channels, a venue that had to be paid for up front, and a kitchen somebody had to fill. Run in a group chat, this is a week of answering the same four questions. The brief I set myself: know, at any moment and without asking anyone, who is coming, who has paid, and what is still missing from the table.</p>
+
+          <h3 class="cs-heading">What I built</h3>
+          <p>A guest pipeline in a spreadsheet &mdash; one row per person, one column per state they can be in &mdash; replacing the thread everyone scrolls. It is a small CRM wearing a party hat, and the design problems are the ones any outreach pipeline has: two channels with different delivery evidence, a funnel that only moves in one direction, and a money column that has to be reconciled against something real.</p>
+          <ul class="cs-list">
+            <li>One row per guest, with the channel the invitation went out on</li>
+            <li>Delivery state kept separate from reply state &mdash; sent, delivered, read</li>
+            <li>A reply column and a decision column, because "answered" and "coming" are not the same event</li>
+            <li>A contribution column for the shared cost, and a column for what each person is bringing</li>
+            <li>A free-text note per row for the reason &mdash; which is the only part a number cannot hold</li>
+          </ul>
+
+          <h3 class="cs-heading">Technical decisions</h3>
+          <p><strong>Delivered is not read, and read is not an answer</strong> &mdash; three separate states, because collapsing them is how you end up chasing someone who never got the message and ignoring someone who did. The channel with no read receipts gets its own state, rather than being guessed at.</p>
+          <p><strong>One row per person, never per message</strong> &mdash; a guest invited on two channels is still one guest. The duplicate is a note on the row, not a second row, so the headcount can be trusted.</p>
+          <p><strong>Decline with a reason</strong> &mdash; a no that records "away that weekend" or "working" is worth keeping; a blank cell is not. The reasons are what told me the real constraint was the date, not the plan.</p>
+          <p><strong>Money is tracked, never assumed</strong> &mdash; the contribution column holds what actually arrived, so the budget is reconciled against transfers instead of intentions.</p>
+
+          <h3 class="cs-heading">What I learned</h3>
+          <p>The useful output was not the headcount, it was the funnel: how many invitations converted at each step, which channel answered, and which day of the week a reply arrives on. The same pipeline, relabelled, is the one I use for job applications &mdash; and the one any small team uses for leads.</p>
+          <p>The other lesson was about people: a tracker with real names, numbers and reasons in it is a privacy problem the moment it leaves your hands. This write-up describes the system and none of the guests, and the file itself never went anywhere it did not need to go.</p>
+
+          <p class="cs-permalink"><a href="/work/guest-ops/">bylx.dev/work/guest-ops/</a></p>
+        </div>
+      </section>
+    </div>
+
+<div class="modal pixel-modal" id="gallery-modal" aria-hidden="true">
       <div class="modal-backdrop" data-close-modal></div>
 
       <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
@@ -945,6 +1126,81 @@
       <button class="lightbox-nav lightbox-next" type="button" data-lightbox-step="1" aria-label="Next piece">›</button>
     </div>
 
+
+    <!-- Feedback: five closed questions she can count, one open box she can read.
+         Posts through the same contact.php as the contact form. -->
+    <div class="modal pixel-modal" id="feedback-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+
+      <section class="modal-window" role="dialog" aria-modal="true" aria-labelledby="feedback-title">
+        <header class="modal-header">
+          <h2 id="feedback-title">Feedback</h2>
+          <button class="modal-close os-btn os-close" type="button" data-close-modal aria-label="Close feedback form">&times;</button>
+        </header>
+
+        <div class="modal-body">
+          <p class="feedback-intro">Five quick questions and one box. No account, no email needed — it takes about a minute and it genuinely changes what I build next.</p>
+
+          <form id="feedback-form" class="pixel-form" novalidate>
+            <fieldset class="fb-q">
+              <legend>1. What brings you here?</legend>
+              <label><input type="radio" name="q1" value="Recruiter / hiring" required> Recruiter or hiring</label>
+              <label><input type="radio" name="q1" value="Developer"> Developer</label>
+              <label><input type="radio" name="q1" value="Designer"> Designer</label>
+              <label><input type="radio" name="q1" value="Potential client"> Potential client</label>
+              <label><input type="radio" name="q1" value="Just curious"> Just curious</label>
+            </fieldset>
+
+            <fieldset class="fb-q">
+              <legend>2. In the first ten seconds, was it clear what I do?</legend>
+              <label><input type="radio" name="q2" value="Clear" required> Clear</label>
+              <label><input type="radio" name="q2" value="Roughly"> Roughly</label>
+              <label><input type="radio" name="q2" value="Not clear"> Not clear</label>
+            </fieldset>
+
+            <fieldset class="fb-q">
+              <legend>3. How easy was it to find the actual work?</legend>
+              <label><input type="radio" name="q3" value="Easy" required> Easy</label>
+              <label><input type="radio" name="q3" value="Took a moment"> Took a moment</label>
+              <label><input type="radio" name="q3" value="Hard"> Hard</label>
+            </fieldset>
+
+            <fieldset class="fb-q">
+              <legend>4. What stood out most?</legend>
+              <label><input type="radio" name="q4" value="The desk scene" required> The desk scene</label>
+              <label><input type="radio" name="q4" value="The case studies"> The case studies</label>
+              <label><input type="radio" name="q4" value="The writing"> The writing</label>
+              <label><input type="radio" name="q4" value="The visual identity"> The visual identity</label>
+              <label><input type="radio" name="q4" value="Nothing yet"> Nothing yet</label>
+            </fieldset>
+
+            <fieldset class="fb-q">
+              <legend>5. Would you hire me, or pass this on to someone who might?</legend>
+              <label><input type="radio" name="q5" value="Yes" required> Yes</label>
+              <label><input type="radio" name="q5" value="Maybe"> Maybe</label>
+              <label><input type="radio" name="q5" value="Not as it is"> Not as it is</label>
+            </fieldset>
+
+            <label class="field" for="feedback-open">
+              <span>6. Anything you would change, add or cut?</span>
+              <textarea id="feedback-open" name="open" rows="4" maxlength="2000" placeholder="Be blunt — that is the useful kind."></textarea>
+            </label>
+
+            <label class="field" for="feedback-email">
+              <span>Your email <em>(optional — only if you want a reply)</em></span>
+              <input type="email" id="feedback-email" name="email" autocomplete="email" />
+            </label>
+
+            <!-- honeypot, same as the contact form -->
+            <label class="hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+
+            <button class="pixel-button" type="submit">Send feedback</button>
+            <p class="form-status" id="feedback-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </div>
+
     <div class="modal pixel-modal" id="contact-modal" aria-hidden="true">
       <div class="modal-backdrop" data-close-modal></div>
 
@@ -1024,6 +1280,8 @@
         <li><a href="https://instagram.com/bylx.dev" target="_blank" rel="noopener noreferrer">Instagram</a></li>
         <li><a href="https://github.com/alinelx" target="_blank" rel="me noopener noreferrer">GitHub</a></li>
         <li><a href="https://www.linkedin.com/in/alinelx" target="_blank" rel="me noopener noreferrer">LinkedIn</a></li>
+        <li><a class="footer-kofi" href="https://ko-fi.com/alinelx" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a></li>
+        <li><button class="footer-feedback" type="button" data-modal-target="feedback-modal">Give feedback</button></li>
       </ul>
       <p class="footer-copy">© 2026 Aline Lopes Xavier · Built with vanilla HTML, CSS & JS.</p>
     </div>
@@ -1032,6 +1290,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=72788ead"></script>
+  <script type="module" src="script.js?v=a7301cec"></script>
 </body>
 </html>

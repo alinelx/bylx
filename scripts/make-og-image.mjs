@@ -13,30 +13,39 @@ import { chromium } from "playwright";
 const URL = process.env.OG_URL ?? "http://localhost:4173/";
 const OUT = "og-image.png";
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ channel: process.env.OG_CHANNEL || undefined });
 const page = await browser.newPage({
   viewport: { width: 1200, height: 630 },
   deviceScaleFactor: 1,
   // The scene's motion is decorative; a still card wants the static frame.
   reducedMotion: "reduce",
+  // PM is the signature: a headless browser would otherwise pick AM and the
+  // card would not look like the site people remember.
+  colorScheme: "dark",
 });
 
 await page.goto(URL, { waitUntil: "networkidle" });
 await page.evaluate(() => document.fonts.ready);
 
-// The hint is a first-visit nudge, not part of the brand card. The custom
-// cursor otherwise renders parked at 0,0 — a stray arrow in the corner.
+// Chrome that belongs to the live site, not to a share card: the first-visit
+// tip, the settings gear, the watermark and the drawn cursor (which otherwise
+// renders parked at 0,0 — a stray arrow in the corner).
 await page.addStyleTag({
-  content: ".desk-hint, .cursor, .sakura-bit { display: none !important; }",
+  content: `.desk-hint, .os-tip, .settings, .watermark,
+            .cursor, .sakura-cursor, .sakura-bit { display: none !important; }`,
 });
 
-// Every sprite decoded, or the card ships with holes in the desk.
-await page.evaluate(async () => {
-  const imgs = [...document.querySelectorAll("#hero img")];
-  await Promise.all(imgs.map((i) => (i.complete ? null : i.decode().catch(() => null))));
-});
+// The scene is a canvas now: wait for the engine to say it has finished its
+// opening, or the card catches the desk mid-assembly.
+await page.waitForFunction(
+  () => document.querySelector("#hero-scene")?.dataset.sceneReady === "1",
+  null,
+  { timeout: 15000 },
+);
 
-await page.locator("#hero").screenshot({ path: OUT });
+// Exactly 1200×630: the card is a crop of the top of the page, not of an
+// element, because the hero section is taller than the card.
+await page.screenshot({ path: OUT, clip: { x: 0, y: 0, width: 1200, height: 630 } });
 await browser.close();
 
 console.log(`wrote ${OUT} (1200x630) from ${URL}`);

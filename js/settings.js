@@ -13,6 +13,8 @@
    as escolhas seguem a pessoa por todo o site. O markup é criado aqui, para
    não haver uma cópia por página. */
 
+import { currentLang, setLang } from "./i18n.js?v=a7301cec";
+
 const SIZES = [90, 100, 112.5, 125, 137.5];
 const root = document.documentElement;
 const save = (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch { /* modo privado */ } };
@@ -44,6 +46,10 @@ export function buildSettings() {
             <output class="settings-value" aria-live="polite">100%</output>
             <button class="settings-switch" type="button" data-fs="1" aria-label="Larger text">A+</button>
           </span></div>
+        <div class="settings-row"><span class="settings-label">Language</span>
+          <button class="lang-toggle time-toggle" type="button" aria-label="Switch language (PT / EN)">
+            <span class="lang-pt" aria-hidden="true">PT</span><span class="lang-en" aria-hidden="true">EN</span>
+          </button></div>
         <div class="settings-row"><span class="settings-label">Motion</span>
           <button class="settings-switch" type="button" data-pref="motion" aria-pressed="false">REDUCE</button></div>
         <div class="settings-row"><span class="settings-label">Cursor</span>
@@ -87,6 +93,11 @@ export function initSettings() {
     });
   }
   renderFs();
+
+  /* Língua: PT ⇄ EN; recarrega a página para traduzir tudo de uma vez */
+  const lang = wrap.querySelector(".lang-toggle");
+  lang.dataset.lang = currentLang();
+  lang.addEventListener("click", () => setLang(currentLang() === "pt" ? "en" : "pt"));
 
   /* Interruptores simples: movimento e cursor */
   const PREFS = { motion: ["reduce", "bylx:motion"], cursor: ["native", "bylx:cursor"] };
