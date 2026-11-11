@@ -13,10 +13,11 @@
    as escolhas seguem a pessoa por todo o site. O markup é criado aqui, para
    não haver uma cópia por página. */
 
-import { currentLang, setLang } from "./i18n.js?v=9c22e86b";
+import { currentLang, setLang } from "./i18n.js?v=ba5de5bf";
 
 const SIZES = [90, 100, 112.5, 125, 137.5];
 const root = document.documentElement;
+const read = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
 const save = (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch { /* modo privado */ } };
 
 const GEAR = `<svg viewBox="0 0 11 11" width="22" height="22" shape-rendering="crispEdges" aria-hidden="true" fill="currentColor">
@@ -57,6 +58,34 @@ export function buildSettings() {
       </div>
     </div>`;
   document.body.prepend(wrap);
+  buildFeedbackTip(wrap);
+}
+
+/* O aviso do feedback: a mesma janelinha da dica da mesa, mas sem se apagar
+   sozinha — fica até a pessoa a fechar, e a escolha guarda-se. Só existe nas
+   páginas que têm o modal do feedback. */
+const TIP_KEY = "bylx:tip-feedback";
+
+function buildFeedbackTip(wrap) {
+  if (!document.querySelector("#feedback-modal")) return;
+  if (read(TIP_KEY) === "off") return;
+
+  const tip = document.createElement("div");
+  tip.className = "settings-tip os-tip";
+  tip.setAttribute("role", "note");
+  tip.innerHTML = `
+    <div class="os-titlebar">
+      <span class="os-title" aria-hidden="true">feedback.txt</span>
+      <span class="os-controls"><button class="os-btn os-close settings-tip-close" type="button" aria-label="Close feedback note"></button></span>
+    </div>
+    <p>Been here a minute? <button class="settings-tip-link" type="button" data-modal-target="feedback-modal">Tell me what you think</button></p>`;
+
+  tip.querySelector(".settings-tip-close").addEventListener("click", () => {
+    tip.remove();
+    save(TIP_KEY, "off");
+  });
+
+  wrap.prepend(tip);
 }
 
 export function initSettings() {

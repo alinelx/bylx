@@ -135,7 +135,8 @@
 /* Touch devices — pixel type stays tiny by design; grow the touch
    targets, not the type (footer links were an 8px-tall tap target) */
 @media (pointer: coarse) {
-  .footer-links a {
+  .footer-links a,
+  .footer-links .footer-feedback {
     display: inline-block;
     padding: 0.75rem 0.25rem;
   }

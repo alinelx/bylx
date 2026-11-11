@@ -581,6 +581,30 @@ body {
    O botão fica onde estavam o AM/PM e o 3BIT, por cima de tudo; a janelinha
    abre por baixo, encostada à direita. */
 .settings { align-items: flex-end; }
+
+/* Aviso do feedback: fica por cima da engrenagem, no mesmo canto, e só sai
+   quando a pessoa o fecha. */
+.settings-tip {
+  width: min(228px, calc(100vw - 2 * var(--win-pad-sm)));
+  text-align: left;
+}
+.settings-tip p {
+  font-family: var(--font-ui);
+  font-size: var(--fs-label);
+  line-height: 1.5;
+}
+.settings-tip-link {
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  background: none;
+  border: 0;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.settings-tip-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
 .settings-btn {
   display: grid; place-items: center;
   width: 38px; height: 38px; padding: 0;
@@ -637,16 +661,14 @@ html[data-lang="pt"]:not(.i18n-ready) body { visibility: hidden; }
 }
 
 /* ---------- Feedback ---------- */
+/* O "Give feedback" é um botão, mas no rodapé lê-se como mais um link: só o
+   reset do botão fica aqui, o aspeto vem das regras de .footer-links a. */
 .footer-feedback {
-  padding: 0;
-  color: inherit;
+  margin: 0;
   background: none;
   border: 0;
-  font: inherit;
-  text-decoration: underline;
   cursor: pointer;
 }
-.footer-feedback:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .feedback-intro { margin-bottom: 1rem; }
 .fb-q {
   margin: 0 0 1rem;
@@ -662,7 +684,49 @@ html[data-lang="pt"]:not(.i18n-ready) body { visibility: hidden; }
   cursor: pointer;
 }
 .fb-q input { accent-color: var(--accent-fill); }
+/* O formulário de feedback reusa a mesma estrutura do contacto: cada campo é
+   uma grelha de uma coluna, senão a legenda e a caixa ficam na mesma linha. */
+#feedback-form .field {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0 0 1rem;
+}
+
 #feedback-form .field em { font-style: normal; opacity: 0.75; }
+
+#feedback-form input[type="email"],
+#feedback-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 2px solid var(--ink);
+  background: var(--fg-fill);
+  color: var(--on-fill);
+  font: inherit;
+}
+
+#feedback-form textarea { resize: vertical; }
+
+#feedback-form .pixel-button {
+  padding: 0.45rem 0.65rem;
+  border: 2px solid var(--ink);
+  background: var(--accent-fill);
+  color: var(--on-fill);
+  font: inherit;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+#feedback-form .pixel-button:disabled { opacity: 0.6; cursor: wait; }
+
+/* honeypot — fora de vista, mas ainda no DOM para os bots */
+#feedback-form .hp {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
 
 /* O rodapé ganhou dois itens (Ko-fi e feedback): a lista quebra linha em vez
    de empurrar a página para o lado. */

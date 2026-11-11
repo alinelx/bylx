@@ -1062,7 +1062,8 @@
   flex: 1;
 }
 
-.footer-links a {
+.footer-links a,
+.footer-links .footer-feedback {
   font-family: var(--font-ui);
   font-size: var(--fs-label);
   color: var(--fg-2);
@@ -1071,13 +1072,15 @@
   transition: color 0.1s steps(2, end);
 }
 
-.footer-links a:hover {
+.footer-links a:hover,
+.footer-links .footer-feedback:hover {
   color: var(--link);
 }
 
 /* The colour swap alone was a 1.09:1 difference between focused and not —
    invisible as a focus indicator. */
-.footer-links a:focus-visible {
+.footer-links a:focus-visible,
+.footer-links .footer-feedback:focus-visible {
   color: var(--link);
   outline: 2px solid var(--line);
   outline-offset: 3px;
