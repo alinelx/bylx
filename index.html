@@ -136,7 +136,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=ba5de5bf" />
+  <link rel="stylesheet" href="styles.css?v=386b776a" />
 </head>
 
 <body>
@@ -900,8 +900,14 @@
           <p><strong>Scheduled, not real-time</strong> &mdash; the law moves on predictable dates: the budget in December and January, the IAS in December, rarely mid-year. Reading the source on a timer and having a person confirm it beats scraping on every request, which breaks without telling you.</p>
           <p><strong>Adding a source is one line</strong> &mdash; sources live in a JSON file, so watching something new is a data change, not a code change.</p>
 
+          <h3 class="cs-heading">Where it went</h3>
+          <p>A watchman that files issues is useful to one developer. The same engine, pointed at the people the law actually lands on, is a product &mdash; so it became one. <strong>Sentinela Fiscal</strong> watches the same official pages and sends a short email instead: what changed, whether it affects your tax regime, and what it is worth in euros for your case. The November 2026 one reads &ldquo;IRS brackets up 3.88%&rdquo; and, for fifteen thousand euros of taxable income, &ldquo;about ninety-five euros a year less&rdquo;.</p>
+          <p>Taking money changes what you have to build. There is a sole trader behind it with a tax number on the page, card payments through Stripe, invoices issued through the tax portal, fourteen days to cancel with no reason given, and a full refund if the service does not launch by 15 January 2027. The privacy notice names the controller, the legal basis and the fact that card details never reach me. None of that is code, and all of it had to exist before the first euro.</p>
+          <p>One decision shaped the rest: <strong>a person reads every alert before it is sent</strong>. The repetitive part &mdash; fetching, diffing, drafting &mdash; is software. The part where someone could act on a wrong number is not. That is slower and it does not scale, and it is the only version I was willing to charge for.</p>
+
           <h3 class="cs-heading">What I learned</h3>
           <p>Most monitoring tells you a system is down. The interesting kind tells you a system is now <em>wrong</em> &mdash; still up, still fast, still answering, just no longer true. Building the second kind meant deciding, in advance, what evidence counts as "I really did read the page", and then being strict enough to call a 200 a failure. The ordering of three steps turned out to matter more than the diffing itself.</p>
+          <p>The second lesson came later: the gap between a tool and a product is almost never the code. It was the refund policy, the invoice, the sentence explaining who is liable if the number is wrong. Writing those took longer than the watchman did.</p>
 
           <div class="cs-footer-links">
             <a href="https://sentinela.bylx.dev" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open sentinela.bylx.dev ↗</a>
@@ -950,7 +956,12 @@
 
           <h3 class="cs-heading">What I learned</h3>
           <p>At the go/no-go I went back to the file that said validation was complete &mdash; twenty contacts, around eighty-five per cent positive. It wasn't true. The twenty were twenty posts I had read, not twenty people I had spoken to. The three things I had genuinely verified were the brand, the domain and the handle: availability, not desire. The figure was even labelled "estimate" in my own notes, and the file meant to hold the feedback was empty.</p>
-          <p>Written down plainly: I was treating as validated what I had never tested, and as tested what I had only checked. The honest move was to stop, and the cost of stopping was one summer of design instead of a year of build. Everything I made &mdash; the system, the brand, the regulatory map &mdash; still exists and still works. What is missing is five real conversations, and that is a gap no amount of design closes.</p>
+          <p>Written down plainly: I was treating as validated what I had never tested, and as tested what I had only checked. The honest move was to stop, and the cost of stopping was one summer of design instead of a year of build. Everything I made &mdash; the system, the brand, the regulatory map &mdash; still exists and still works. What was missing was five real conversations, and that is a gap no amount of design closes.</p>
+
+          <h3 class="cs-heading">What I did about it</h3>
+          <p>So I went and got the conversations. <strong>raparigas.club</strong> is live and recruiting twenty beta testers &mdash; not a launch, a validation page. It asks for one thing, an application, and it says so at the top of the screen.</p>
+          <p>Building it forced the product to get specific, which the design system never had. Trust is a <strong>plant two members grow together</strong>, not a five-star average: a rating can be farmed in an afternoon, a plant takes two people and time. Entry is by a member's invite or a questionnaire read by hand. Handovers happen at public meeting points, so nobody has to give a stranger their address. And listings marked <strong>Recome&ccedil;o</strong> &mdash; starting over &mdash; get priority and fair prices, because the person furnishing a flat in a week on whatever is left is the person this was for in the first place.</p>
+          <p>Those four rules are answers to the question I had skipped: what, concretely, makes this safer than the marketplace that already exists? None of them came out of the design system. They came out of writing a page that had to convince someone to apply.</p>
 
           <div class="cs-footer-links">
             <a href="https://raparigas.club" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open raparigas.club ↗</a>
@@ -1020,124 +1031,647 @@
         </header>
 
         <div class="modal-body">
-          <p class="gallery-intro">Twelve years of making things look like something — pixel scenes, ink, posters, and the brands in between.</p>
+          <p class="gallery-intro">Twelve years of making things look like something. Pick a project.</p>
+          <div class="proj-index">
           <h3 class="gallery-head">pixel</h3>
-          <div class="gallery-grid">
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/desk-night.webp?v=78b64185" data-caption="desk · night">
-                <img src="assets/gallery/desk-night.webp?v=78b64185" alt="Pixel-art wallpaper: the night version of the desk, monitors glowing magenta." class="is-pixel" loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>desk · night</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/desk-day.webp?v=65f53782" data-caption="desk · day">
-                <img src="assets/gallery/desk-day.webp?v=65f53782" alt="Pixel-art wallpaper: the daylight version of the same desk, in cyan and cream." class="is-pixel" loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>desk · day</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/senparty.webp?v=002007e4" data-caption="senparty · 2018">
-                <img src="assets/gallery/senparty.webp?v=002007e4" alt="Pixel-art neon street at night, with a speech bubble reading Notice Me Senparty." class="is-pixel" loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>senparty · 2018</figcaption>
-            </figure>
-          </div>
-          <h3 class="gallery-head">ink &amp; paint</h3>
-          <div class="gallery-grid">
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/epa-baba.webp?v=e0dd9965" data-caption="épa babá">
-                <img src="assets/gallery/epa-baba.webp?v=e0dd9965" alt="Line illustration of an orixá in white robes, the words Épa Babá repeating behind." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>épa babá</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/orixas.webp?v=50a4ac1b" data-caption="oxóssi &amp; ogum">
-                <img src="assets/gallery/orixas.webp?v=50a4ac1b" alt="Flat vector illustration: two orixás in a green forest, with hand-lettered names." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>oxóssi &amp; ogum</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/walt.webp?v=e155cac9" data-caption="walt who? · 2014">
-                <img src="assets/gallery/walt.webp?v=e155cac9" alt="Marker illustration of a girl with orange hair surrounded by animals." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>walt who? · 2014</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/aves.webp?v=6a9c55ff" data-caption="walt who? ii · 2014">
-                <img src="assets/gallery/aves.webp?v=6a9c55ff" alt="Marker illustration of birds dressed in suits and hats." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>walt who? ii · 2014</figcaption>
-            </figure>
-          </div>
+          <ul class="proj-list">
+            <li><button type="button" class="proj-card" data-proj="bylx">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/bylx-v10.webp?v=7273b469" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/bylx-v01.webp?v=e61dfe8b" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/bylx-v05.webp?v=8c3473a9" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>bylx</b><em>Pixel art · 2026 · the site you are on</em></span>
+            </button></li>
+          </ul>
+          <h3 class="gallery-head">ink and paint</h3>
+          <ul class="proj-list">
+            <li><button type="button" class="proj-card" data-proj="smokers">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/smokers-grey.webp?v=ce037c89" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/smokers-nicholson.webp?v=41998c99" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/smokers-hepburn.webp?v=251fa7c1" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>Smokers</b><em>Graphite · 2013 · SENAC</em></span>
+            </button></li>
+            <li><button type="button" class="proj-card" data-proj="orixas">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/orixa-epa.webp?v=064fdd72" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/orixa-oxossi.webp?v=1b115f7c" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>Orixás</b><em>Illustration · 2026 · in progress</em></span>
+            </button></li>
+          </ul>
           <h3 class="gallery-head">print</h3>
-          <div class="gallery-grid">
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/soseba.webp?v=df5f2af0" data-caption="sos eba · 2017">
-                <img src="assets/gallery/soseba.webp?v=df5f2af0" alt="Red and black poster: the letters SOS and EBA built from modular blocks." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>sos eba · 2017</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/centeio.webp?v=ee8d700d" data-caption="centeio · 2017">
-                <img src="assets/gallery/centeio.webp?v=ee8d700d" alt="Book cover redesign for The Catcher in the Rye in red, grey and black." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>centeio · 2017</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/predictions.webp?v=a6ec6d6d" data-caption="predictions · 2014">
-                <img src="assets/gallery/predictions.webp?v=a6ec6d6d" alt="Black poster with the words Predictions of the Future in script and stencil type." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>predictions · 2014</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/rio.webp?v=34a45da6" data-caption="fire in rio · 2017">
-                <img src="assets/gallery/rio.webp?v=34a45da6" alt="Logo: the word RIO drawn from a fire extinguisher, the Christ statue and a flame." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>fire in rio · 2017</figcaption>
-            </figure>
-          </div>
+          <ul class="proj-list">
+            <li><button type="button" class="proj-card" data-proj="soseba">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/soseba.webp?v=018815ec" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>SOS EBA</b><em>Poster · 2017 · UFRJ</em></span>
+            </button></li>
+            <li><button type="button" class="proj-card" data-proj="centeio">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/centeio.webp?v=c53386bb" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>The Catcher in the Rye</b><em>Cover · 2017 · UFRJ</em></span>
+            </button></li>
+          </ul>
           <h3 class="gallery-head">identity</h3>
-          <div class="gallery-grid">
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/lupa.webp?v=0dcbcff3" data-caption="lupa.road">
-                <img src="assets/gallery/lupa.webp?v=0dcbcff3" alt="The b.d monogram over a portrait, used as the storefront's profile image." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>lupa.road</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/newsletter.webp?v=b1ee9f93" data-caption="newsletter">
-                <img src="assets/gallery/newsletter.webp?v=b1ee9f93" alt="Newsletter spread: a watercolour robin beside a yellow wash and a list of culture stories." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>newsletter</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/hanguk.webp?v=2134b599" data-caption="hanguk house · 2016">
-                <img src="assets/gallery/hanguk.webp?v=2134b599" alt="Social post: the words Hanguk House in heavy type over a temple at dusk." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>hanguk house · 2016</figcaption>
-            </figure>
-            <figure class="gallery-cell">
-              <button type="button" class="gallery-open" data-full="assets/gallery/soju.webp?v=44c19332" data-caption="soju · 2016">
-                <img src="assets/gallery/soju.webp?v=44c19332" alt="Social post explaining what soju is, with two bottles on a restaurant table." loading="lazy" decoding="async" />
-                <span class="gallery-zoom" aria-hidden="true">⤢</span>
-              </button>
-              <figcaption>soju · 2016</figcaption>
-            </figure>
+          <ul class="proj-list">
+            <li><button type="button" class="proj-card" data-proj="fireinrio">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/fire-logo.webp?v=cf224f30" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/fire-anim.webp?v=89b7dfba" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/fire-card.webp?v=c12f6465" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>Fire in Rio</b><em>Logo and motion · 2017</em></span>
+            </button></li>
+            <li><button type="button" class="proj-card" data-proj="social">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/soc-hanguk-1.webp?v=a4df1200" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/soc-derm-1.webp?v=e53b4a22" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/soc-foco-1.webp?v=12f60c6c" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>Social media · 2016–17</b><em>Social · three clients</em></span>
+            </button></li>
+            <li><button type="button" class="proj-card" data-proj="newsletters">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/clickrank-1.webp?v=a292d40a" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/clickrank-2.webp?v=f90db3ef" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>Internal newsletters</b><em>Email · 2014 and 2024</em></span>
+            </button></li>
+            <li><button type="button" class="proj-card" data-proj="predictions">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/pred-capa.webp?v=d49b93a0" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/pred-moodboard.webp?v=a33a3406" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/pred-plate4.webp?v=7666bf28" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>Predictions of the Future</b><em>Collection concept · 2014</em></span>
+            </button></li>
+            <li><button type="button" class="proj-card" data-proj="girazuka">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/gz-logo.webp?v=f234e115" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/gz-mascote.webp?v=ed9fec44" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/gz-miniaturas.webp?v=58692131" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>GiraZuka</b><em>Brand and production · 2026</em></span>
+            </button></li>
+          </ul>
+          <h3 class="gallery-head">tourism and events</h3>
+          <ul class="proj-list">
+            <li><button type="button" class="proj-card" data-proj="workshops">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/workshop-grupo.webp?v=bad284b5" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/workshop-roda.webp?v=1c5d9642" alt="" loading="lazy" decoding="async" /><img src="assets/gallery/workshop-material.webp?v=ebe91ba6" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>Illustration workshops</b><em>Teaching · Lisbon</em></span>
+            </button></li>
+            <li><button type="button" class="proj-card" data-proj="senparty">
+              <span class="proj-thumbs" aria-hidden="true"><img src="assets/gallery/senparty.webp?v=093b73b0" alt="" loading="lazy" decoding="async" /></span>
+              <span class="proj-text"><b>Notice Me Senparty</b><em>Event production · 2018</em></span>
+            </button></li>
+          </ul>
           </div>
+          <article class="proj-panel" id="proj-bylx" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Pixel art · 2026 · the site you are on</p>
+            <h3 class="proj-title">bylx</h3>
+            <p class="proj-lead">The desk started as a loose scribble and ended up an interface. Three versions, from the first line to a scene of twenty-nine sprites that answer the mouse.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">v0.1 · the sketch</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/bylx-v01.webp?v=e61dfe8b" data-caption="bylx — v0.1 · the sketch">
+                    <img src="assets/gallery/bylx-v01.webp?v=e61dfe8b" alt="bylx — v0.1 · the sketch" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Loose line over a purple and pink base. It fixes what never changed after: the CRT at the centre, the 日本 poster, the sushi boat, the glass of ice and the camera on the right.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">v0.5 · first pixel comp</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/bylx-v05.webp?v=8c3473a9" data-caption="bylx — v0.5 · first pixel comp">
+                    <img src="assets/gallery/bylx-v05.webp?v=8c3473a9" alt="bylx — v0.5 · first pixel comp" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Translated into pixel art and dithering. Christ the Redeemer and the 25 de Abril bridge arrive in the window, along with the pink phone and the XP wallpaper. The bylx tag still took up the whole wall.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">v1.0 · the room you can touch</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/bylx-v10.webp?v=7273b469" data-caption="bylx — v1.0 · the room you can touch">
+                    <img src="assets/gallery/bylx-v10.webp?v=7273b469" alt="bylx — v1.0 · the room you can touch" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The wall goes quiet and the brand becomes a watermark. In come the MP3 player, Pão de Açúcar, the Belém tower and the mascot on the CRT. Every object is its own sprite, recoloured at runtime for the day or the night palette.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-smokers" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Graphite · 2013 · SENAC</p>
+            <h3 class="proj-title">Smokers</h3>
+            <p class="proj-lead">Three graphite portraits from the drawing and illustration course at SENAC. The smoke is the exercise: it is the only part with no outline.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">i</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/smokers-grey.webp?v=ce037c89" data-caption="Smokers — i">
+                    <img src="assets/gallery/smokers-grey.webp?v=ce037c89" alt="Smokers — i" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The smoke crosses the whole sheet, which forces you to work the white of the paper as if it were paint.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">ii</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/smokers-nicholson.webp?v=41998c99" data-caption="Smokers — ii">
+                    <img src="assets/gallery/smokers-nicholson.webp?v=41998c99" alt="Smokers — ii" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>High contrast, almost no midtones: the form resolves through solid black and clean paper.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">iii</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/smokers-hepburn.webp?v=251fa7c1" data-caption="Smokers — iii">
+                    <img src="assets/gallery/smokers-hepburn.webp?v=251fa7c1" alt="Smokers — iii" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The opposite of the one before — all midtones, with black held back for the holder and the earrings.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-orixas" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Illustration · 2026 · in progress</p>
+            <h3 class="proj-title">Orixás</h3>
+            <p class="proj-lead">Sixteen orixás drawn from scratch for a mural of panels, each with its own iconographic research. Two are finished.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">research</p>
+              <p>Before the line comes deciding what is correct to draw. The disc behind the figure is built from the vocabulary of the Yoruba beaded crown, not from a halo; the head follows the ere ibeji canon, one fifth and a half of the figure, because it reads better from ten paces and it is culturally right. References: the adé crowns, Rubem Valentim's Afro-Atlantic constructivism, Carybé's panels at the MAFRO, and the Oshogbo school.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">Oxalá</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/orixa-epa.webp?v=064fdd72" data-caption="Orixás — Oxalá">
+                    <img src="assets/gallery/orixa-epa.webp?v=064fdd72" alt="Orixás — Oxalá" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The elder beneath the alá, with the greeting repeating behind him. The opaxorô belongs to Oxalufã alone; the adé with a fringe over the face is the royal convention, and it avoids the documented error of painting the skin white — the white is cloth, chalk and bead.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">Oxóssi and Ogum</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/orixa-oxossi.webp?v=1b115f7c" data-caption="Orixás — Oxóssi and Ogum">
+                    <img src="assets/gallery/orixa-oxossi.webp?v=1b115f7c" alt="Orixás — Oxóssi and Ogum" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Bahia turquoise, not Umbanda green — the right question is which nation the house belongs to. The ofá is a metal bow and arrow, the eruquerê an ox tail in a leather sheath. Honey stays out of every panel: it is the central interdiction and has an itan of its own.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-soseba" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Poster · 2017 · UFRJ</p>
+            <h3 class="proj-title">SOS EBA</h3>
+            <p class="proj-lead">A campaign poster after the fire at the School of Fine Arts. I drew a modular typeface after the Bauhaus, where the composition lets you read SOS several ways at once.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">the poster</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soseba.webp?v=018815ec" data-caption="SOS EBA — the poster">
+                    <img src="assets/gallery/soseba.webp?v=018815ec" alt="SOS EBA — the poster" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The same blocks spell SOS and EBA depending on where the eye enters. I played with the spaces inside the word itself, and with focus: what is urgent is solid, the rest is outlined. Black and red because the subject is fire and ash — there was never a third colour to argue about.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-centeio" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Cover · 2017 · UFRJ</p>
+            <h3 class="proj-title">The Catcher in the Rye</h3>
+            <p class="proj-lead">A cover redesign on the same principle as SOS EBA: the front is type alone, the illustration lives on the back.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">front and back</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/centeio.webp?v=c53386bb" data-caption="The Catcher in the Rye — front and back">
+                    <img src="assets/gallery/centeio.webp?v=c53386bb" alt="The Catcher in the Rye — front and back" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The front is white with heavy black letters and no image. The illustration sits behind: the protagonist in profile, with the blurb set inside his head, showing a young man who thinks too much. The red is his rebellion, and it is the only colour allowed in.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-fireinrio" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Logo and motion · 2017</p>
+            <h3 class="proj-title">Fire in Rio</h3>
+            <p class="proj-lead">A logo for a startup gamifying fire safety training. The blue is Rio's, from the state flag — not the green and yellow you expect.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">the logo</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/fire-logo.webp?v=cf224f30" data-caption="Fire in Rio — the logo">
+                    <img src="assets/gallery/fire-logo.webp?v=cf224f30" alt="Fire in Rio — the logo" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Every letter carries something of the city: the red extinguisher leans into the F, Christ the Redeemer opens his arms inside the R, and the O is the Copacabana pavement seen from above. The yellow flame closes it on top. The blue comes from the state flag.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">the animation</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/fire-anim.webp?v=89b7dfba" data-caption="Fire in Rio — the animation">
+                    <img src="assets/gallery/fire-anim.webp?v=89b7dfba" alt="Fire in Rio — the animation" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/fire-cena.webp?v=ea545f4b" data-caption="Fire in Rio — the animation">
+                    <img src="assets/gallery/fire-cena.webp?v=ea545f4b" alt="Fire in Rio — the animation" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/fire-card.webp?v=c12f6465" data-caption="Fire in Rio — the animation">
+                    <img src="assets/gallery/fire-card.webp?v=c12f6465" alt="Fire in Rio — the animation" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The promo builds the logo piece by piece, then walks through the game's isometric sets — offices, classrooms, auditoriums — until the fire. The game art is not mine; the brand and the opening are.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-social" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Social · three clients</p>
+            <h3 class="proj-title">Social media · 2016–17</h3>
+            <p class="proj-lead">Thirteen pieces for three clients in Londrina: a Korean restaurant, an aesthetics clinic and an imaging clinic. Square format, one idea per piece.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">Hanguk House</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-hanguk-1.webp?v=a4df1200" data-caption="Social media · 2016–17 — Hanguk House">
+                    <img src="assets/gallery/soc-hanguk-1.webp?v=a4df1200" alt="Social media · 2016–17 — Hanguk House" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-hanguk-2.webp?v=f5774cfe" data-caption="Social media · 2016–17 — Hanguk House">
+                    <img src="assets/gallery/soc-hanguk-2.webp?v=f5774cfe" alt="Social media · 2016–17 — Hanguk House" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-hanguk-3.webp?v=1d8a2bb7" data-caption="Social media · 2016–17 — Hanguk House">
+                    <img src="assets/gallery/soc-hanguk-3.webp?v=1d8a2bb7" alt="Social media · 2016–17 — Hanguk House" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-hanguk-4.webp?v=4ddd7b9a" data-caption="Social media · 2016–17 — Hanguk House">
+                    <img src="assets/gallery/soc-hanguk-4.webp?v=4ddd7b9a" alt="Social media · 2016–17 — Hanguk House" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-hanguk-5.webp?v=603f695e" data-caption="Social media · 2016–17 — Hanguk House">
+                    <img src="assets/gallery/soc-hanguk-5.webp?v=603f695e" alt="Social media · 2016–17 — Hanguk House" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-hanguk-6.webp?v=1463a062" data-caption="Social media · 2016–17 — Hanguk House">
+                    <img src="assets/gallery/soc-hanguk-6.webp?v=1463a062" alt="Social media · 2016–17 — Hanguk House" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The restaurant changed its name from Korean House to Hanguk House partway through, so the announcement had to work as a handover, not a launch. The rest alternates between explaining — what soju is, what bibimbap is — and converting, with the check-in discount.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">AestheticDerm</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-derm-1.webp?v=e53b4a22" data-caption="Social media · 2016–17 — AestheticDerm">
+                    <img src="assets/gallery/soc-derm-1.webp?v=e53b4a22" alt="Social media · 2016–17 — AestheticDerm" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-derm-2.webp?v=fe658988" data-caption="Social media · 2016–17 — AestheticDerm">
+                    <img src="assets/gallery/soc-derm-2.webp?v=fe658988" alt="Social media · 2016–17 — AestheticDerm" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-derm-3.webp?v=74b09ef9" data-caption="Social media · 2016–17 — AestheticDerm">
+                    <img src="assets/gallery/soc-derm-3.webp?v=74b09ef9" alt="Social media · 2016–17 — AestheticDerm" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-derm-4.webp?v=2597fb99" data-caption="Social media · 2016–17 — AestheticDerm">
+                    <img src="assets/gallery/soc-derm-4.webp?v=2597fb99" alt="Social media · 2016–17 — AestheticDerm" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>An aesthetics clinic, in a calmer register: light type, a lot of air, and skin photography. The pet-friendly mall piece is the only one out of key, and that was on purpose.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">Foco Imagem</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-foco-1.webp?v=12f60c6c" data-caption="Social media · 2016–17 — Foco Imagem">
+                    <img src="assets/gallery/soc-foco-1.webp?v=12f60c6c" alt="Social media · 2016–17 — Foco Imagem" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-foco-2.webp?v=f05be318" data-caption="Social media · 2016–17 — Foco Imagem">
+                    <img src="assets/gallery/soc-foco-2.webp?v=f05be318" alt="Social media · 2016–17 — Foco Imagem" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/soc-foco-3.webp?v=af153119" data-caption="Social media · 2016–17 — Foco Imagem">
+                    <img src="assets/gallery/soc-foco-3.webp?v=af153119" alt="Social media · 2016–17 — Foco Imagem" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>An imaging clinic. The job here was explaining scans to people who are afraid of them, so the language is a manual's, not an advert's.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-newsletters" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Email · 2014 and 2024</p>
+            <h3 class="proj-title">Internal newsletters</h3>
+            <p class="proj-lead">Two internal newsletters, ten years apart. Both were made to be read in a work inbox, not in a reader.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">Click Rank · 2014</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/clickrank-1.webp?v=a292d40a" data-caption="Internal newsletters — Click Rank · 2014">
+                    <img src="assets/gallery/clickrank-1.webp?v=a292d40a" alt="Internal newsletters — Click Rank · 2014" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/clickrank-2.webp?v=f90db3ef" data-caption="Internal newsletters — Click Rank · 2014">
+                    <img src="assets/gallery/clickrank-2.webp?v=f90db3ef" alt="Internal newsletters — Click Rank · 2014" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>A weekly team ranking, in email. Trophies for the top three, then a table by criterion — effectiveness, planning, deadline, cooperation, punctuality — and a prize at the end. The hierarchy had to read on a small screen with images switched off.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-predictions" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Collection concept · 2014</p>
+            <h3 class="proj-title">Predictions of the Future</h3>
+            <p class="proj-lead">A collection concept from the fashion production course: theme, audience, palette, materials, and the pieces, from basic to conceptual.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">the theme</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/pred-capa.webp?v=d49b93a0" data-caption="Predictions of the Future — the theme">
+                    <img src="assets/gallery/pred-capa.webp?v=d49b93a0" alt="Predictions of the Future — the theme" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/pred-moodboard.webp?v=a33a3406" data-caption="Predictions of the Future — the theme">
+                    <img src="assets/gallery/pred-moodboard.webp?v=a33a3406" alt="Predictions of the Future — the theme" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Predictions of the Future: divination, cards, crystal balls, palmistry. The board gathers the imagery of the oracle before a single piece is drawn.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">the audience</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/pred-publico.webp?v=e6d45e87" data-caption="Predictions of the Future — the audience">
+                    <img src="assets/gallery/pred-publico.webp?v=e6d45e87" alt="Predictions of the Future — the audience" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>An audience board for women, summer 2015 — where that person eats, where she travels, what she watches.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">palette and materials</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/pred-cores.webp?v=be35b9e0" data-caption="Predictions of the Future — palette and materials">
+                    <img src="assets/gallery/pred-cores.webp?v=be35b9e0" alt="Predictions of the Future — palette and materials" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/pred-materiais.webp?v=6e7c01d5" data-caption="Predictions of the Future — palette and materials">
+                    <img src="assets/gallery/pred-materiais.webp?v=6e7c01d5" alt="Predictions of the Future — palette and materials" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Eleven named colours, and the list of fabrics, trims and finishes: cool knit, chiffon, crystal organza, lace; digital print, sublimation, silk-screen.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">the pieces</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/pred-plate1.webp?v=bc2414b2" data-caption="Predictions of the Future — the pieces">
+                    <img src="assets/gallery/pred-plate1.webp?v=bc2414b2" alt="Predictions of the Future — the pieces" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/pred-plate2.webp?v=27851e3b" data-caption="Predictions of the Future — the pieces">
+                    <img src="assets/gallery/pred-plate2.webp?v=27851e3b" alt="Predictions of the Future — the pieces" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/pred-plate3.webp?v=b7b13f83" data-caption="Predictions of the Future — the pieces">
+                    <img src="assets/gallery/pred-plate3.webp?v=b7b13f83" alt="Predictions of the Future — the pieces" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/pred-plate4.webp?v=7666bf28" data-caption="Predictions of the Future — the pieces">
+                    <img src="assets/gallery/pred-plate4.webp?v=7666bf28" alt="Predictions of the Future — the pieces" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Four plates, each carrying the four tiers of the collection: day-by-day, basic, fashion and one-off. The conceptual one closes with the crystal-ball dress and the gold appliqué.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-girazuka" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Brand and production · 2026</p>
+            <h3 class="proj-title">GiraZuka</h3>
+            <p class="proj-lead">A channel built end to end: brand, a rigged mascot, an illustration library, scene templates, thumbnails, an ident and the edit.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">the brand</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/gz-logo.webp?v=f234e115" data-caption="GiraZuka — the brand">
+                    <img src="assets/gallery/gz-logo.webp?v=f234e115" alt="GiraZuka — the brand" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/gz-system.webp?v=78120e84" data-caption="GiraZuka — the brand">
+                    <img src="assets/gallery/gz-system.webp?v=78120e84" alt="GiraZuka — the brand" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The wordmark is one continuous ribbon weaving Portugal's red and green into Brazil's yellow and blue — the channel's premise in a single drawing. The system fixes six named colours and two typefaces: Fraunces 900 for titles, Inter for everything else.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">the mascot</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/gz-mascote.webp?v=ed9fec44" data-caption="GiraZuka — the mascot">
+                    <img src="assets/gallery/gz-mascote.webp?v=ed9fec44" alt="GiraZuka — the mascot" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/gz-expressoes.webp?v=eee28937" data-caption="GiraZuka — the mascot">
+                    <img src="assets/gallery/gz-expressoes.webp?v=eee28937" alt="GiraZuka — the mascot" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Mini Aline, with a rig in five versions and fifteen drawn, labelled expressions. Each expression has its own animation, exported as mp4 with a background and webm with alpha.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">the video system</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/gz-miniaturas.webp?v=58692131" data-caption="GiraZuka — the video system">
+                    <img src="assets/gallery/gz-miniaturas.webp?v=58692131" alt="GiraZuka — the video system" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Four categories, each with its colour and its thumbnail. Plus eight scene templates, the ident and six chapter transitions.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">the illustrations</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/gz-lisboa1755.webp?v=744084c6" data-caption="GiraZuka — the illustrations">
+                    <img src="assets/gallery/gz-lisboa1755.webp?v=744084c6" alt="GiraZuka — the illustrations" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/gz-pia.webp?v=3be9d7cb" data-caption="GiraZuka — the illustrations">
+                    <img src="assets/gallery/gz-pia.webp?v=3be9d7cb" alt="GiraZuka — the illustrations" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Around sixty vector illustrations, for everything there is no photograph of: the Lisbon waterfront after 1755, a baptism at a stone font, maps, ships, a family tree.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-workshops" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Teaching · Lisbon</p>
+            <h3 class="proj-title">Illustration workshops</h3>
+            <p class="proj-lead">Illustration workshops with materials bought in primaries only: cyan, magenta, yellow, black and white. Everyone mixes the rest.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">the exercise</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/workshop-roda.webp?v=1c5d9642" data-caption="Illustration workshops — the exercise">
+                    <img src="assets/gallery/workshop-roda.webp?v=1c5d9642" alt="Illustration workshops — the exercise" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/workshop-mesa.webp?v=43dd896a" data-caption="Illustration workshops — the exercise">
+                    <img src="assets/gallery/workshop-mesa.webp?v=43dd896a" alt="Illustration workshops — the exercise" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The twelve-step colour wheel is the first exercise and it settles half the questions of the day: once you have made one with your hands, nobody asks how to reach a tone.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">the table</p>
+              <div class="proj-shots">
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/workshop-material.webp?v=ebe91ba6" data-caption="Illustration workshops — the table">
+                    <img src="assets/gallery/workshop-material.webp?v=ebe91ba6" alt="Illustration workshops — the table" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+                <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/workshop-grupo.webp?v=bad284b5" data-caption="Illustration workshops — the table">
+                    <img src="assets/gallery/workshop-grupo.webp?v=bad284b5" alt="Illustration workshops — the table" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Materials laid out before anyone arrives, one palette per person. Outdoors whenever the weather allows.</p>
+            </section>
+          </article>
+          <article class="proj-panel" id="proj-senparty" hidden>
+            <button type="button" class="proj-back">&larr; all projects</button>
+            <p class="proj-kicker">Event production · 2018</p>
+            <h3 class="proj-title">Notice Me Senparty</h3>
+            <p class="proj-lead">Producing a party, run jointly with one of the DJs. The pixel art in the scene came from elsewhere; the flyers, the promo and the event itself are mine.</p>
+            <section class="proj-slide">
+              <p class="proj-badge">the square flyer</p>
+              <div class="proj-shots">
+              <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/senparty.webp?v=093b73b0" data-caption="Notice Me Senparty — the square flyer">
+                    <img src="assets/gallery/senparty.webp?v=093b73b0" alt="Notice Me Senparty — the square flyer" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>A neon street at night with the party's name in a speech bubble. The square cut is the one that went out as a post.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">the vertical flyer</p>
+              <div class="proj-shots">
+              <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/sp-flyer.webp?v=dd5a068a" data-caption="Notice Me Senparty — the vertical flyer">
+                    <img src="assets/gallery/sp-flyer.webp?v=dd5a068a" alt="Notice Me Senparty — the vertical flyer" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>The story format carries what the square one could not fit: date, time, venue, and the discount code for buying early.</p>
+            </section>
+            <section class="proj-slide">
+              <p class="proj-badge">the promo</p>
+              <div class="proj-shots">
+              <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/sp-promo-1.webp?v=f5ac88de" data-caption="Notice Me Senparty — the promo, opening">
+                    <img src="assets/gallery/sp-promo-1.webp?v=f5ac88de" alt="Notice Me Senparty — the promo, opening" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/sp-promo-2.webp?v=2b1b92ae" data-caption="Notice Me Senparty — the promo, the title">
+                    <img src="assets/gallery/sp-promo-2.webp?v=2b1b92ae" alt="Notice Me Senparty — the promo, the title" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              <figure class="gallery-cell proj-shot">
+                  <button type="button" class="gallery-open" data-full="assets/gallery/sp-promo-3.webp?v=40d4de70" data-caption="Notice Me Senparty — the promo, the details">
+                    <img src="assets/gallery/sp-promo-3.webp?v=40d4de70" alt="Notice Me Senparty — the promo, the details" loading="lazy" decoding="async" />
+                    <span class="gallery-zoom" aria-hidden="true">&#10530;</span>
+                  </button>
+                </figure>
+              </div>
+              <p>Fifteen seconds that travel down the street while the speech bubbles arrive one at a time — today, at eleven, the name, the address. The information lands in the order someone actually needs it, instead of all at once.</p>
+            </section>
+          </article>
+
         </div>
       </section>
     </div>
@@ -1317,6 +1851,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=ba5de5bf"></script>
+  <script type="module" src="script.js?v=386b776a"></script>
 </body>
 </html>

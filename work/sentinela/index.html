@@ -55,7 +55,7 @@
     href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="/styles.css?v=ba5de5bf" />
+  <link rel="stylesheet" href="/styles.css?v=386b776a" />
 
   <!-- Hovering a case-study link starts fetching it. "moderate" waits for the
        hover rather than firing on load: six pages, no idea which one the
@@ -108,8 +108,14 @@
           <p><strong>Scheduled, not real-time</strong> &mdash; the law moves on predictable dates: the budget in December and January, the IAS in December, rarely mid-year. Reading the source on a timer and having a person confirm it beats scraping on every request, which breaks without telling you.</p>
           <p><strong>Adding a source is one line</strong> &mdash; sources live in a JSON file, so watching something new is a data change, not a code change.</p>
 
+          <h2 class="cs-heading">Where it went</h2>
+          <p>A watchman that files issues is useful to one developer. The same engine, pointed at the people the law actually lands on, is a product &mdash; so it became one. <strong>Sentinela Fiscal</strong> watches the same official pages and sends a short email instead: what changed, whether it affects your tax regime, and what it is worth in euros for your case. The November 2026 one reads &ldquo;IRS brackets up 3.88%&rdquo; and, for fifteen thousand euros of taxable income, &ldquo;about ninety-five euros a year less&rdquo;.</p>
+          <p>Taking money changes what you have to build. There is a sole trader behind it with a tax number on the page, card payments through Stripe, invoices issued through the tax portal, fourteen days to cancel with no reason given, and a full refund if the service does not launch by 15 January 2027. The privacy notice names the controller, the legal basis and the fact that card details never reach me. None of that is code, and all of it had to exist before the first euro.</p>
+          <p>One decision shaped the rest: <strong>a person reads every alert before it is sent</strong>. The repetitive part &mdash; fetching, diffing, drafting &mdash; is software. The part where someone could act on a wrong number is not. That is slower and it does not scale, and it is the only version I was willing to charge for.</p>
+
           <h2 class="cs-heading">What I learned</h2>
           <p>Most monitoring tells you a system is down. The interesting kind tells you a system is now <em>wrong</em> &mdash; still up, still fast, still answering, just no longer true. Building the second kind meant deciding, in advance, what evidence counts as "I really did read the page", and then being strict enough to call a 200 a failure. The ordering of three steps turned out to matter more than the diffing itself.</p>
+          <p>The second lesson came later: the gap between a tool and a product is almost never the code. It was the refund policy, the invoice, the sentence explaining who is liable if the number is wrong. Writing those took longer than the watchman did.</p>
 
           <div class="cs-footer-links">
             <a href="https://sentinela.bylx.dev" class="cs-button cs-button--primary" target="_blank" rel="noopener noreferrer">Open sentinela.bylx.dev ↗</a>
@@ -145,6 +151,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="/js/work.js?v=ba5de5bf"></script>
+  <script type="module" src="/js/work.js?v=386b776a"></script>
 </body>
 </html>

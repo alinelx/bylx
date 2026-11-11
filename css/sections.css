@@ -367,6 +367,127 @@
 
 .gallery-head:first-of-type { margin-top: 0.4rem; }
 
+/* Uma linha de contexto quando a secção é um projeto, não uma gaveta. */
+.gallery-note {
+  margin: -0.2rem 0 0.6rem;
+  font-size: var(--fs-caption);
+  line-height: 1.55;
+  color: var(--fg-2);
+  max-width: 62ch;
+}
+
+/* ---------- Galeria: índice de projetos ---------- */
+
+.proj-list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.proj-card {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  border: 2px solid var(--line);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.proj-card:hover,
+.proj-card:focus-visible { border-color: var(--link); }
+.proj-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.proj-thumbs {
+  display: flex;
+  flex-shrink: 0;
+  gap: 2px;
+}
+
+.proj-thumbs img {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.proj-text { display: grid; gap: 0.15rem; min-width: 0; }
+.proj-text b { font-family: var(--font-pixel); font-size: var(--fs-label); }
+.proj-text em {
+  font-style: normal;
+  font-size: var(--fs-caption);
+  color: var(--fg-2);
+}
+
+/* ---------- Galeria: painel de um projeto ---------- */
+
+.proj-back {
+  margin: 0 0 0.9rem;
+  padding: 0.35rem 0.6rem;
+  border: 2px solid var(--line);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: var(--fs-caption);
+  cursor: pointer;
+}
+
+.proj-back:hover { border-color: var(--link); color: var(--link); }
+.proj-back:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.proj-kicker {
+  margin: 0;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-fg);
+}
+
+.proj-title { margin: 0.2rem 0 0.4rem; max-width: none; }
+/* O título recebe foco ao abrir o painel, para quem navega por teclado ou
+   leitor de ecrã saber onde caiu; não precisa de caixa à volta. */
+.proj-title:focus { outline: none; }
+.proj-lead { margin: 0 0 1.3rem; }
+
+.proj-slide {
+  margin: 0 0 1.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.proj-badge {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+.proj-shots {
+  display: grid;
+  gap: 0.4rem;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  margin: 0 0 0.7rem;
+}
+
+.proj-shots:has(.proj-shot:only-child) { grid-template-columns: 1fr; }
+
+.proj-shot { margin: 0; }
+.proj-shot .gallery-open { height: auto; aspect-ratio: 4 / 3; }
+.proj-shots:has(.proj-shot:only-child) .proj-shot .gallery-open { aspect-ratio: auto; }
+/* Mostrar a peça inteira: recortar uma prancha ou um cartaz esconde
+   justamente aquilo que se quer ver. */
+.proj-shot img { height: 100%; object-fit: contain; background: var(--shot-bg, rgba(255,255,255,0.05)); }
+.proj-shots:has(.proj-shot:only-child) .proj-shot img { height: auto; max-height: 420px; object-fit: contain; }
+
 .gallery-grid {
   display: grid;
   gap: 0.6rem;
