@@ -13,7 +13,7 @@
    leitor de ecrã não sabem que o desenho mudou de técnica.
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 
-import { prefersReducedMotion } from "./utils.js?v=6c5e4f8e";
+import { prefersReducedMotion } from "./utils.js?v=72788ead";
 
 /* O contorno de "seleccionado" dos jogos: ciano no dark, rosa no light */
 const OUTLINE = { dark: "#59f3ff", light: "#ff5dbb" };
@@ -126,7 +126,9 @@ function outline(s, rgba, colour = OUTLINE.dark) {
 export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json", onOpen, theme, anchors = [], hotspots = true, focus = null, cropTop = 0, onScene, intro = null, blink = [] } = {}) {
   const data = await (await fetch(src)).json();
   const [BW, BH] = data.base;
-  const reduced = prefersReducedMotion();
+  /* reduzir movimento: o do sistema ou o escolhido nas definições do site */
+  const reduced = prefersReducedMotion() || document.documentElement.dataset.motion === "reduce";
+  const stillNow = () => reduced || document.documentElement.dataset.motion === "reduce";
 
   const canvas = document.createElement("canvas");
   canvas.className = "scene-canvas";
@@ -325,7 +327,7 @@ export async function initSceneCanvas(root, { src = "/assets/scene/sprites.json"
       ctx.drawImage(images[l.name], x, y);
     }
     /* LEDs: alternam entre dois níveis da rampa do tema */
-    const r = blink.length && !reduced ? ramp() : [];
+    const r = blink.length && !stillNow() ? ramp() : [];
     if (r.length) {
       const now = performance.now();
       for (const b of blink) {

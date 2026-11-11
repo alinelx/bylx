@@ -14,9 +14,9 @@
 
   <!-- Her name is in the title on purpose: "bylx" is the brand, but a recruiter
        who has her CV searches the person. -->
-  <title>bylx · Aline Lopes Xavier — Front-end Developer &amp; Designer</title>
-  <meta name="description" content="Aline Lopes Xavier (bylx) — front-end developer and designer in Lisbon, open to remote work. Pixel art, vanilla JavaScript, React and Next.js." />
-  <meta property="og:title" content="bylx · Aline Lopes Xavier — Front-end Developer &amp; Designer" />
+  <title>bylx · Aline Lopes Xavier — Creative Technologist · Product, UI &amp; Front-end</title>
+  <meta name="description" content="Aline Lopes Xavier (bylx) — creative technologist in Lisbon: product, UI and front-end, with AI-assisted workflows. Pixel art, vanilla JavaScript, React and Next.js." />
+  <meta property="og:title" content="bylx · Aline Lopes Xavier — Creative Technologist · Product, UI &amp; Front-end" />
   <meta property="og:description" content="A pixel-art portfolio where Rio de Janeiro and Lisbon share a desk — six case studies, the code behind them, and a way to get in touch." />
   <meta property="og:url" content="https://bylx.dev/" />
   <meta property="og:type" content="website" />
@@ -31,7 +31,7 @@
   <meta name="theme-color" content="#f7f2ff" media="(prefers-color-scheme: light)" />
   <meta name="color-scheme" content="dark light" />
   <!-- AM/PM: aplica a escolha guardada antes da primeira pintura (js/theme.js) -->
-  <script>try{var t=localStorage.getItem("bylx:theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;if(localStorage.getItem("bylx:3bit")==="1")document.documentElement.dataset.bit="3"}catch(e){}</script>
+  <script>try{var d=document.documentElement,l=localStorage,t=l.getItem("bylx:theme");if(t==="light"||t==="dark")d.dataset.theme=t;if(l.getItem("bylx:3bit")==="1")d.dataset.bit="3";var f=l.getItem("bylx:fs");if(f)d.style.fontSize=f+"%";if(l.getItem("bylx:motion")==="reduce")d.dataset.motion="reduce";if(l.getItem("bylx:cursor")==="native")d.dataset.cursor="native"}catch(e){}</script>
   <link rel="canonical" href="https://bylx.dev/" />
 
   <!-- One graph, three jobs: say who she is (entity), say the site is hers,
@@ -45,8 +45,8 @@
           "@id": "https://bylx.dev/#aline",
           "name": "Aline Lopes Xavier",
           "alternateName": "bylx",
-          "jobTitle": "Front-end developer and designer",
-          "description": "Front-end developer and designer in Lisbon, working between design and code. Open to remote work.",
+          "jobTitle": "Creative technologist",
+          "description": "Creative technologist in Lisbon — product, UI and front-end, working between design and code. Open to hybrid or remote work.",
           "url": "https://bylx.dev/",
           "email": "geral@bylx.dev",
           "image": "https://bylx.dev/og-image.png",
@@ -133,19 +133,11 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css?v=6c5e4f8e" />
+  <link rel="stylesheet" href="styles.css?v=72788ead" />
 </head>
 
 <body>
   <a class="skip-link" href="#projects">Skip to projects</a>
-  <!-- Os modos ficam fora do hero: o hero isola o z-index, e estes botões
-       têm de ficar por cima de tudo, até dos fechar das janelas -->
-  <div class="mode-switches">
-    <button class="time-toggle" type="button" aria-pressed="false" aria-label="Switch to AM (light mode)">
-      <span class="time-am" aria-hidden="true">AM</span><span class="time-pm" aria-hidden="true">PM</span>
-    </button>
-    <button class="bit-toggle" type="button" aria-pressed="false" aria-label="3-bit mode: show everything in grayscale">3BIT</button>
-  </div>
   <!-- Marca d'água: o logo no tamanho original, fixo ao rolar -->
   <img class="watermark" src="assets/bylx-watermark.png?v=2803278b" width="55" height="51" alt="" aria-hidden="true" decoding="async" />
 
@@ -190,7 +182,7 @@
 
       <div class="hero-text os-window" data-window>
         <div class="os-titlebar">
-          <span class="os-title" aria-hidden="true">bylx · front-end developer</span>
+          <span class="os-title" aria-hidden="true">bylx · creative technologist</span>
           <div class="os-controls">
             <button class="os-btn os-min" type="button" aria-label="Minimize intro" aria-expanded="true" aria-controls="hero-window-body"></button>
             <button class="os-btn os-close" type="button" aria-label="Close intro" aria-controls="hero-window-body"></button>
@@ -252,7 +244,7 @@
               <p>Lisbon's Tram 28 reimagined as a dark tourism route — dictatorship, colonialism, and collective memory.</p>
               <div class="card-meta">
                 <span class="card-tag">Next.js</span>
-                <span class="card-tag">Typescript</span>
+                <span class="card-tag">TypeScript</span>
                 <span class="card-tag">React</span>
                 <span class="card-tag">Tailwind</span>
               </div>
@@ -372,13 +364,13 @@
         <h2 id="about-title" class="about-heading">The desk has a story.</h2>
         <div class="about-layout">
           <div class="about-text">
-            <p>I'm Aline — a front-end developer and designer built at the intersection of two cities. Brazil shaped how I see colour, texture, and warmth. Portugal taught me restraint, history, and how much can be said with very little. The desk you're looking at holds both.</p>
-            <p>I work in the space between design and code — where a layout decision is also a technical decision, and a pixel is never just a pixel. My stack is HTML, CSS, and vanilla JavaScript by default — not because I don't know frameworks (I do), but because starting from fundamentals means every abstraction I add is earned, not assumed.</p>
-            <p>This site is the work. The attention to detail you find here — the instax animation, the interactive objects, the skyline outside the window — is the same attention I bring to everything I build.</p>
+            <p>I'm Aline — a creative technologist built at the intersection of two cities. Brazil shaped how I see colour, texture, and warmth. Portugal taught me resilience, history, and how to start again and keep building. The desk you're looking at holds both.</p>
+            <p>I work where creativity, product and code meet: I design things, build them, and use AI to bring them to life faster — illustration, brands, interfaces and the front-end behind them. On the web my default is HTML, CSS and vanilla JavaScript — not because I don't know frameworks (I do), but because starting from fundamentals means every abstraction I add is earned, not assumed.</p>
+            <p>This site is the work. The attention to detail you find here — the objects you can click, the day and night palettes, the two skylines outside the window — is the same attention I bring to everything I build.</p>
             <!-- The one line a recruiter needs and the site did not say: what she
                  is looking for, from where, and how to reach her without a form. -->
             <p class="about-availability">
-              <strong>Open to remote front-end work</strong> — based in Lisbon (WET/CET), Portuguese and EU citizen,
+              <strong>Open to creative tech, product/UI design, front-end and AI content work</strong> — based in Lisbon (WET/CET), hybrid or remote, Portuguese and EU citizen,
               working in Portuguese and English. Freelance or employed.
               <a href="mailto:geral@bylx.dev">geral@bylx.dev</a>
             </p>
@@ -386,10 +378,10 @@
             <div class="about-actions">
               <button type="button" class="about-cta" data-modal-target="contact-modal">Get in touch</button>
 
-              <a class="about-link about-link--primary" href="assets/cv/aline-lopes-xavier-cv-frontend.pdf?v=bf145d2c" download>
+              <a class="about-link about-link--primary" href="assets/cv/aline-lopes-xavier-cv-frontend.pdf?v=7e00aac9" download>
                 CV · front-end <span aria-hidden="true">↓</span>
               </a>
-              <a class="about-link" href="assets/cv/aline-lopes-xavier-cv-design.pdf?v=21c92d42" download>
+              <a class="about-link" href="assets/cv/aline-lopes-xavier-cv-design.pdf?v=98d3e1d9" download>
                 CV · design <span aria-hidden="true">↓</span>
               </a>
               <a class="about-link" href="https://www.linkedin.com/in/alinelx" target="_blank" rel="me noopener noreferrer">
@@ -529,10 +521,11 @@
           <p>Developer portfolios all look the same: hero, grid, footer. Mine had to prove something instead of claiming it. Could a pixel-art desk — where Rio de Janeiro and Lisbon share a window — carry an entire portfolio, built with nothing but the fundamentals?</p>
 
           <h3 class="cs-heading">What I built</h3>
-          <p>An interactive scene where every object does what it looks like it should: the camera opens the gallery, the phone opens the contact form, the MP3 player opens a working player, the mouse runs from your cursor, and the keyboard lights up as you type.</p>
+          <p>An interactive scene where every object does what it looks like it should: the camera opens the gallery, the phone opens the contact form, the MP3 player opens a working player, the cocktail tells the story of the two cities, and the sushi tray explains how the desk was drawn.</p>
           <ul class="cs-list">
-            <li>Pixel-art parallax hero on a 64×64 grid with layered PNGs</li>
-            <li>Object hotspots with sprite-sheet and steps() hover animations</li>
+            <li>Canvas pixel-art scene on a 640×390 grid, always drawn at a whole-number scale</li>
+            <li>Every sprite drawn once in greyscale and recoloured into a day (AM) and a night (PM) palette, plus a 3-bit grey mode</li>
+            <li>Sections as program windows you can minimise, maximise, close and drag</li>
             <li>Custom pixel cursor with sakura-petal trail</li>
             <li>Working MP3 player with a 17-track lo-fi playlist</li>
             <li>PHP contact form with honeypot and graceful non-JS fallback</li>
@@ -540,10 +533,10 @@
           </ul>
 
           <h3 class="cs-heading">Technical decisions</h3>
-          <p><strong>Vanilla ES modules</strong> — parallax, cursor, audio, modals and forms are isolated modules with a single init each. There is nothing to hydrate, so a framework would only add weight.</p>
-          <p><strong>Coordinate-driven scene</strong> — layers map pixel-grid references to CSS custom properties; the whole parallax is one rAF listener writing <code>--move-x</code> and <code>--move-y</code>.</p>
-          <p><strong>CSS partials with explicit import order</strong> — tokens → base → cursor → hero → sections → responsive. The design system lives in <code>:root</code>.</p>
-          <p><strong>steps() everywhere</strong> — easing is quantised so motion stays pixel-crisp instead of smoothly un-retro.</p>
+          <p><strong>Vanilla ES modules</strong> — scene, windows, theme, cursor, audio, modals and forms are isolated modules with a single init each. There is nothing to hydrate, so a framework would only add weight.</p>
+          <p><strong>Greyscale in, palettes out</strong> — a small build script maps each grey level of every sprite to one of seven colours per theme, so a new palette is a JSON change, not a redraw. Clickable objects are real buttons laid over the canvas, so the scene stays keyboard- and screen-reader-accessible.</p>
+          <p><strong>Seven colours per mode</strong> — the whole site, not just the scene, uses only the seven colours of the active palette, through role tokens in <code>:root</code>.</p>
+          <p><strong>Pixel-crisp motion</strong> — the opening moves layers in whole-pixel steps, and it is skipped entirely when the system asks for reduced motion.</p>
 
           <h3 class="cs-heading">What I learned</h3>
           <p>Constraints are a design system. Refusing frameworks forced clean module boundaries; refusing smooth easing forced intentional animation. And accessibility inside a fully custom scene — focus states, aria labels, a form that works without JS — is where the real engineering happened.</p>
@@ -709,7 +702,7 @@
           <p><strong>WhatsApp as CRM</strong> — customers already live there; meeting them in their channel beat building one.</p>
 
           <h3 class="cs-heading">What I learned</h3>
-          <p>E-commerce is UX plus logistics — the interface is the easy half. Running the store taught me what "done" means when customers are real. The shop is currently on pause while I focus on development work; the brand, the systems, and the lessons stay.</p>
+          <p>E-commerce is UX plus logistics — the interface is the easy half. Running the store taught me what "done" means when customers are real. The shop is open again since October 2026, now with pieces made to order and an Etsy store alongside it.</p>
 
 
           <div class="cs-footer-links">
@@ -790,10 +783,8 @@
           <p>Colour, texture, warmth, and the nerve to use all three at once. I studied Design &amp; Visual Communication at UFRJ's Escola de Belas Artes, in a city where nothing is beige. The palette on this site — the cyan, the pink, the purple that has no business working next to either — is a Rio palette. So is the instinct that a portfolio should be somewhere you want to stay, not a document you scroll.</p>
 
           <h3 class="cs-heading">What Lisbon taught me</h3>
-          <p>Restraint, and how much can be said with very little. I took a CET in Cultural Tourism &amp; Heritage here, which is a formal way of saying I learned to read a place. dark28.pt came out of that — a dark-tourism route along Tram 28, written for people standing at the stop. konochan.pt is run from a flat in Greater Lisbon. Five years at Accenture happened here too, in three time zones at once.</p>
+          <p>Resilience — how to start again in a new country and keep building. I took a CET in Cultural Tourism &amp; Heritage here, which is a formal way of saying I learned to read a place. dark28.pt came out of that — a dark-tourism route along Tram 28, written for people standing at the stop. konochan.pt is run from a flat in Greater Lisbon, and my five years at Accenture happened here too.</p>
 
-          <h3 class="cs-heading">Why the drink</h3>
-          <p>Because it is the Rio half of the desk, sitting next to a Portuguese keyboard, in front of a window that cannot decide which city it is looking at. Neither can I. That turned out to be the useful part: Brazil taught me what to say, Portugal taught me how much to leave out, and the work happens where the two argue.</p>
         </div>
       </section>
     </div>
@@ -808,19 +799,22 @@
         </header>
 
         <div class="modal-body case-study-body">
-          <p>Every object you can click here was drawn, placed and measured by hand. This is how.</p>
+          <p>Every object on this desk was drawn by hand in shades of grey, laid out in a Photoshop file, and coloured by code. This is how.</p>
 
-          <h3 class="cs-heading">The grid</h3>
-          <p>The scene is laid out on a 64&times;64 grid translated into percentages, so nothing is positioned in pixels and the desk is the same desk at 320px and at 3440px. No object is ever repositioned for a smaller screen — the phone shows you the same room, further away.</p>
+          <h3 class="cs-heading">Drawn in grey</h3>
+          <p>Each sprite is drawn once, in seven levels of grey. Light and shadow are decided before colour exists, so a drawing never has to be redone when the palette changes. The 3BIT button in the settings shows you the desk exactly as it was drawn.</p>
 
-          <h3 class="cs-heading">The ruler</h3>
-          <p>The keyboard is a 36cm tenkeyless board, and everything else is measured against it. The monitor comes out at 0.95&times; life size, the CRT tube at exactly 1.00&times; — a real 15-inch — the instax at 0.94&times;, the cocktail at 0.88&times;. The desk reads about a metre across. It is a small desk, and the props fill it exactly, because they were checked against the real objects rather than eyeballed.</p>
+          <h3 class="cs-heading">Coloured by code</h3>
+          <p>A small build script maps every grey to one of seven colours per mode: PM runs from deep purple to pink, AM from navy to mint. In AM the walls, the hills, the bridge, the Sugarloaf and the Belém tower flip their scale, so daylight reads as daylight. The rest of the site uses the same seven colours, so the page and the desk never disagree.</p>
+
+          <h3 class="cs-heading">Placed by hand</h3>
+          <p>The scene is a 640&times;390 grid, and every position is copied from the Photoshop file where the desk was arranged. It is drawn on a canvas at whole-number scale only — 2&times;, 3&times;, 4&times; — so one pixel of the art is always a clean square on your screen, never a blur. On a phone you see the same desk, cropped around the monitor.</p>
 
           <h3 class="cs-heading">The rules</h3>
-          <p>Motion uses <code>steps()</code> easing, never smooth tweens: a tween between two pixel positions draws pixels that are not in the art. The one exception is a marquee, where stepping judders and linear is correct. Nothing on the desk asks to be clicked — a CRT may tick and a corner may blink, because a real object would do that while nobody watched, but no button here pulses at you.</p>
+          <p>Motion moves in whole pixels: the desk assembles itself once when the page opens, and the monitor's power light blinks slowly, because a real one would. Both stop when your system or the settings ask for reduced motion. The objects you can click are real buttons laid over the drawing, so the desk works with a keyboard and a screen reader, not just a mouse.</p>
 
           <h3 class="cs-heading">The parts</h3>
-          <p>Forty-odd sprites, seventeen lo-fi tracks the mp3 player genuinely streams, one design-token file, and a single dependency in the whole project — which only runs the tests. No framework, no build step for the page itself. The window you just dragged is a CSS border and one sprite.</p>
+          <p>Twenty-nine sprites, two seven-colour palettes, seventeen lo-fi tracks the mp3 player genuinely streams, and a single dependency in the whole project — which only runs the tests. No framework; the only build step turns the grey sprites into palettes. The windows you can drag around are plain HTML with a two-pixel border.</p>
         </div>
       </section>
     </div>
@@ -1038,6 +1032,6 @@
   <div class="sakura-cursor" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
 
-  <script type="module" src="script.js?v=6c5e4f8e"></script>
+  <script type="module" src="script.js?v=72788ead"></script>
 </body>
 </html>

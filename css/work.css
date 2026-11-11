@@ -77,6 +77,7 @@
 }
 
 .work-header h1 {
+  max-width: none; /* o h1 global tem 14ch: aqui é o nome da janela */
   margin: 0;
   font-size: clamp(1.1rem, 3vw, 1.4rem);
   line-height: 1.1;

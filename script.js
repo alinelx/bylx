@@ -3,21 +3,22 @@
    Import and initialise every feature module.
    ============================================================ */
 
-import { initParallax }                             from "./js/parallax.js?v=6c5e4f8e";
-import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=6c5e4f8e";
-import { initModals }                               from "./js/modals.js?v=6c5e4f8e";
-import { initDeeplink }                            from "./js/deeplink.js?v=6c5e4f8e";
-import { initGalleryViewer }                        from "./js/gallery.js?v=6c5e4f8e";
-import { initContactForm }                          from "./js/contact.js?v=6c5e4f8e";
-import { initAudio }                                from "./js/audio.js?v=6c5e4f8e";
-import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=6c5e4f8e";
-import { initPixelFit }                          from "./js/pixelfit.js?v=6c5e4f8e";
-import { initDesktop }                              from "./js/desktop.js?v=6c5e4f8e";
-import { initProjectsFilter } from "./js/projects-filter.js?v=6c5e4f8e";
-import { initSceneCanvas }                          from "./js/scene-canvas.js?v=6c5e4f8e";
-import { initWindows }                              from "./js/windows.js?v=6c5e4f8e";
-import { initThemeToggle, currentTheme, initBitToggle, bitMode } from "./js/theme.js?v=6c5e4f8e";
-import { themeImages }                              from "./js/themed-img.js?v=6c5e4f8e";
+import { initParallax }                             from "./js/parallax.js?v=72788ead";
+import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=72788ead";
+import { initModals }                               from "./js/modals.js?v=72788ead";
+import { initDeeplink }                            from "./js/deeplink.js?v=72788ead";
+import { initGalleryViewer }                        from "./js/gallery.js?v=72788ead";
+import { initContactForm }                          from "./js/contact.js?v=72788ead";
+import { initAudio }                                from "./js/audio.js?v=72788ead";
+import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=72788ead";
+import { initPixelFit }                          from "./js/pixelfit.js?v=72788ead";
+import { initDesktop }                              from "./js/desktop.js?v=72788ead";
+import { initProjectsFilter } from "./js/projects-filter.js?v=72788ead";
+import { initSceneCanvas }                          from "./js/scene-canvas.js?v=72788ead";
+import { initSettings }                             from "./js/settings.js?v=72788ead";
+import { initWindows }                              from "./js/windows.js?v=72788ead";
+import { initThemeToggle, currentTheme, initBitToggle, bitMode } from "./js/theme.js?v=72788ead";
+import { themeImages }                              from "./js/themed-img.js?v=72788ead";
 
 /* Each module is independent, and a throw in one used to take every module
    after it down with it — silently, since nothing here catches. */
@@ -43,6 +44,8 @@ start("scene", () => {
   themeImages(currentTheme());
   /* O interruptor não espera pela cena: o resto do site troca na mesma */
   let sceneApi = null;
+  /* a engrenagem cria os botões AM/PM e 3BIT antes de lhes ligarmos o comportamento */
+  try { initSettings(); } catch (e) { console.error("[bylx] settings failed to start", e); }
   /* 3BIT: a cena pinta-se nos cinzas de referência (sem mapa de tema) */
   const sceneTheme = (t) => (bitMode() ? "gray" : t);
   initThemeToggle((t) => { sceneApi?.setTheme(sceneTheme(t)); themeImages(t); });

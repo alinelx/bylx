@@ -245,7 +245,7 @@
   .hero-text {
     width: auto;
     /* em cima, espaço para o interruptor AM/PM fixo no canto */
-    margin: calc(var(--win-pad-sm) * 2 + 3.9rem) var(--gutter) calc(var(--gutter) / 2); /* AM/PM + 3BIT */
+    margin: calc(var(--win-pad-sm) * 2 + 2.6rem) var(--gutter) calc(var(--gutter) / 2); /* engrenagem */
   }
   .desk-hint.os-tip {
     width: calc(100% - 2 * var(--gutter));
@@ -386,7 +386,8 @@ body {
   text-overflow: ellipsis;
 }
 .os-titlebar > .os-title,
-.modal-header > h2 { flex: 1 1 auto; }
+.modal-header > h2,
+.work-sheet .modal-header > h1 { flex: 1 1 auto; }
 .os-controls,
 .modal-header > .modal-close { flex: none; }
 
@@ -476,7 +477,7 @@ body {
 /* ---------- Modos (AM/PM e 3BIT) por cima de tudo ----------
    Fora do hero (que isola o z-index): acima das janelas, dos modais e dos
    fechar; só o cursor desenhado fica mais alto. */
-.mode-switches {
+.mode-switches, .settings {
   position: fixed;
   top: var(--win-pad-sm);
   right: var(--win-pad-sm);
@@ -552,11 +553,8 @@ body {
 .projects-inner.is-moved,
 .os-window.is-moved:not(.hero-text) { position: relative; }
 
-/* "See the work": no dark, texto quase-preto em vez de roxo sobre o rosa */
-:root:not([data-theme="light"]) .hero-text a:not(.hero-link-ghost) { color: #09051b; }
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme]) .hero-text a:not(.hero-link-ghost) { color: var(--on-fill); }
-}
+/* "See the work": texto quase-preto nos dois modos */
+.hero-text a:not(.hero-link-ghost) { color: #09051b; }
 
 /* ---------- Onde a janela do hero começa ----------
    Presa à cena, não ao canto do ecrã: à esquerda da moldura da janela da
@@ -578,3 +576,52 @@ body {
   .hero-scene { overflow: visible; isolation: auto; }
   #hero-scene { clip-path: inset(0 0 max(0px, calc(100svh - var(--scene-bottom, 100svh))) 0); }
 }
+
+/* ---------- Definições (engrenagem) ----------
+   O botão fica onde estavam o AM/PM e o 3BIT, por cima de tudo; a janelinha
+   abre por baixo, encostada à direita. */
+.settings { align-items: flex-end; }
+.settings-btn {
+  display: grid; place-items: center;
+  width: 38px; height: 38px; padding: 0;
+  color: var(--ink); background: var(--fg-fill);
+  border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink);
+  cursor: pointer;
+}
+.settings-btn[aria-expanded="true"] { background: var(--win-title, var(--accent-fill)); }
+.settings-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.settings-panel { width: max-content; max-width: calc(100vw - 2 * var(--win-pad-sm)); }
+.settings-panel[hidden] { display: none; }
+.settings-body { display: grid; gap: 10px; padding: 12px 14px 14px; }
+.settings-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.settings-label { font-family: var(--font-pixel); font-size: 1rem; }
+.settings-steps { display: inline-flex; align-items: center; gap: 6px; }
+.settings-value { min-width: 4.2em; text-align: center; font-family: var(--font-pixel); }
+.settings-panel .time-toggle { position: static; }
+.settings-switch {
+  padding: 6px 9px;
+  color: var(--ink); background: var(--fg-fill);
+  border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink);
+  font-family: var(--font-ui); font-size: var(--fs-label); line-height: 1;
+  cursor: pointer;
+}
+.settings-switch[aria-pressed="true"] { color: var(--on-fill); background: var(--win-title, var(--accent-fill)); }
+.settings-switch:disabled { opacity: 0.45; cursor: default; }
+.settings-switch:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+/* Reduzir movimento escolhido no site (além do do sistema) */
+:root[data-motion="reduce"] *,
+:root[data-motion="reduce"] *::before,
+:root[data-motion="reduce"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+:root[data-motion="reduce"] .sakura-cursor { display: none !important; }
+
+/* Cursor do sistema em vez do de pixel */
+:root[data-cursor="native"],
+:root[data-cursor="native"] * { cursor: auto !important; }
+:root[data-cursor="native"] :is(a, button, [role="button"], label, summary, select, .is-draggable) { cursor: pointer !important; }
+:root[data-cursor="native"] :is(input, textarea) { cursor: text !important; }
+:root[data-cursor="native"] :is(.cursor, .sakura-cursor) { display: none !important; }

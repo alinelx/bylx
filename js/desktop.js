@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx desktop — monitor power, start menu, fullscreen */
 
-import { screenRect, clampToRect } from "./utils.js?v=6c5e4f8e";
+import { screenRect, clampToRect } from "./utils.js?v=72788ead";
 
 export function initDesktop() {
   const scene = document.getElementById("hero-scene");
