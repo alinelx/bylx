@@ -1113,6 +1113,8 @@
   gap: 1.75rem;
   position: sticky;
   top: 2rem;
+  /* item de grelha: sem isto não encolhe abaixo do próprio min-content */
+  min-width: 0;
 }
 
 /* The flex item here is the <picture>, not the <img> inside it. A width on the
@@ -1137,7 +1139,10 @@
 
 .about-icons {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* minmax(0, …): um "1fr" nu tem mínimo automático igual ao min-content da
+     imagem (64 px). Quatro pistas dessas somavam 286 px e empurravam o about
+     para fora do ecrã nos telemóveis estreitos (320 px). */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.65rem;
 }
 

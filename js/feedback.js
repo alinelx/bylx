@@ -64,7 +64,11 @@ export function initFeedbackForm() {
     submit.textContent = "Sending…";
     say("> transmitting…", "sending");
     try {
-      const res = await fetch(form.action || "/contact.php", {
+      /* form.action (a propriedade) devolve o URL do documento quando o
+         atributo não existe — era por aí que o POST ia parar a "/". Lê-se o
+         atributo, que é vazio quando falta. */
+      const endpoint = form.getAttribute("action") || "/contact.php";
+      const res = await fetch(endpoint, {
         method: "POST",
         body,
         headers: { Accept: "application/json" },

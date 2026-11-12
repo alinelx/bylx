@@ -735,3 +735,16 @@ html[data-lang="pt"]:not(.i18n-ready) body { visibility: hidden; }
   justify-content: center;
   max-width: 100%;
 }
+
+/* ---------- Canto das definições vs. janelas abertas ----------
+   O canto é fixo e, no telemóvel, a janela ocupa quase todo o ecrã: a dica e
+   a engrenagem ficavam por cima do título e do texto do modal. O aviso do
+   feedback sai sempre que há uma janela aberta — anunciar o formulário por
+   cima do próprio formulário não faz sentido. A engrenagem só sai onde
+   colide; no desktop o modal é estreito e o canto continua livre. */
+.modal-open .settings-tip { display: none; }
+
+@media (max-width: 900px), ((orientation: portrait) and (max-width: 1200px)) {
+  .modal-open .settings,
+  .modal-open .mode-switches { display: none; }
+}
