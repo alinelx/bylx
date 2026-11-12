@@ -26,7 +26,7 @@
     href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Press+Start+2P&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="/styles.css?v=8aa01a31" />
+  <link rel="stylesheet" href="/styles.css?v=88021b7b" />
 </head>
 <body>
   <main class="cab">
@@ -88,12 +88,12 @@
   <div class="cursor" aria-hidden="true"></div>
 
   <script type="module">
-    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=8aa01a31";
-    import { initArcade } from "/js/arcade.js?v=8aa01a31";
-    import { initPixelFit } from "/js/pixelfit.js?v=8aa01a31";
-    import { initI18n } from "/js/i18n.js?v=8aa01a31";
-    import { initSettings } from "/js/settings.js?v=8aa01a31";
-    import { initThemeToggle, initBitToggle } from "/js/theme.js?v=8aa01a31";
+    import { initCursor, initSakuraTrail } from "/js/cursor.js?v=88021b7b";
+    import { initArcade } from "/js/arcade.js?v=88021b7b";
+    import { initPixelFit } from "/js/pixelfit.js?v=88021b7b";
+    import { initI18n } from "/js/i18n.js?v=88021b7b";
+    import { initSettings } from "/js/settings.js?v=88021b7b";
+    import { initThemeToggle, initBitToggle } from "/js/theme.js?v=88021b7b";
 
     for (const [name, init] of [["i18n", initI18n], ["settings", () => { initSettings(); initThemeToggle(); initBitToggle(); }], ["cursor", initCursor], ["sakura", initSakuraTrail], ["arcade", initArcade], ["pixelfit", initPixelFit]]) {
       try {

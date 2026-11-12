@@ -125,6 +125,9 @@
   font: inherit;
   text-align: left;
   cursor: none;
+  /* "respondaja.click" e "luparoad.com" não têm onde quebrar: num ecrã de
+     320 px, e sobretudo em 3BIT, saíam do cartão. Partem-se a meio. */
+  overflow-wrap: anywhere;
 }
 
 .card-trigger::after {

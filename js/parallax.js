@@ -8,7 +8,7 @@
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 /* ᑲყᥣx parallax */
 
-import { prefersReducedMotion, lerp } from "./utils.js?v=8aa01a31";
+import { prefersReducedMotion, lerp } from "./utils.js?v=88021b7b";
 
 /* Só o fundo — o que se vê pela janela. A mesa e tudo o que está em cima dela
    ficam parados (decidido 2026-09-22): a profundidade lê-se na paisagem, e os

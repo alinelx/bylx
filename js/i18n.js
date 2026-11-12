@@ -60,8 +60,17 @@ const PT = {
   /* ---- case studies: comum ---- */
   "The question": "A pergunta", "What I built": "O que construí", "Technical decisions": "Decisões técnicas", "What I learned": "O que aprendi",
   "Code on GitHub ↗": "Código no GitHub ↗",
-  "Dark28 — Case Study": "Dark28 — Case study", "bylx.dev — Case Study": "bylx.dev — Case study", "irs-pt — Case Study": "irs-pt — Case study",
-  "respondaja.click — Case Study": "respondaja.click — Case study", "konochan.pt — Case Study": "konochan.pt — Case study", "luparoad.com — Case Study": "luparoad.com — Case study",
+  /* Títulos das janelas de estudo de caso. Estavam a traduzir "Case Study"
+     por "Case study" — minúscula, não português. */
+  "Dark28 — Case Study": "Dark28 — Estudo de caso",
+  "bylx.dev — Case Study": "bylx.dev — Estudo de caso",
+  "irs-pt — Case Study": "irs-pt — Estudo de caso",
+  "respondaja.click — Case Study": "respondaja.click — Estudo de caso",
+  "konochan.pt — Case Study": "konochan.pt — Estudo de caso",
+  "luparoad.com — Case Study": "luparoad.com — Estudo de caso",
+  "sentinela — Case Study": "sentinela — Estudo de caso",
+  "Rapariga Social Club — Case Study": "Rapariga Social Club — Estudo de caso",
+  "Guest ops — Case Study": "Guest ops — Estudo de caso",
 
   /* dark28 */
   "Lisbon's Tram 28 passes through layers of history that most tourist guides ignore. I kept finding apps that told the same polished story and skipped the uncomfortable parts — the dictatorship, the colonial memory, the religious weight embedded in the architecture. What if a route helped you understand a city instead of just photograph it?": "O elétrico 28 de Lisboa atravessa camadas de história que a maioria dos guias turísticos ignora. Encontrava sempre apps que contavam a mesma história polida e saltavam as partes incómodas — a ditadura, a memória colonial, o peso religioso entranhado na arquitetura. E se uma rota te ajudasse a perceber uma cidade em vez de só a fotografar?",
