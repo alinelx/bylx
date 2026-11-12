@@ -12,10 +12,10 @@
    owes the visitor is the cursor, because base.css hides the native one for
    the whole document. Importing the real module keeps one implementation. */
 
-import { initCursor, initSakuraTrail } from "./cursor.js?v=88021b7b";
-import { initI18n } from "./i18n.js?v=88021b7b";
-import { initSettings } from "./settings.js?v=88021b7b";
-import { initThemeToggle, initBitToggle } from "./theme.js?v=88021b7b";
+import { initCursor, initSakuraTrail } from "./cursor.js?v=648f1cf0";
+import { initI18n } from "./i18n.js?v=648f1cf0";
+import { initSettings } from "./settings.js?v=648f1cf0";
+import { initThemeToggle, initBitToggle } from "./theme.js?v=648f1cf0";
 
 function start(name, init) {
   try {

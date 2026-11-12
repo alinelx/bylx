@@ -14,6 +14,17 @@
   box-sizing: border-box;
 }
 
+/* Nenhuma palavra sai da caixa, em lado nenhum. A letra de pixel é larga e
+   em português as palavras são longas: a 320 px "secretária" não cabia na
+   janela do about e passava por cima da moldura. break-word (e não anywhere)
+   porque só parte a palavra que sozinha não cabe na linha — o min-content
+   continua a ser a palavra inteira, por isso nenhuma grelha encolhe por
+   causa disto. Quem tem white-space: nowrap (as etiquetas de tecnologia, o
+   marquee do mp3) não é afectado. */
+body {
+  overflow-wrap: break-word;
+}
+
 :root {
 
   /* Two palettes used to live here: a legacy set (--midnight, --neonCyan,

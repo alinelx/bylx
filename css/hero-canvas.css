@@ -69,6 +69,13 @@
     position: relative;
     inset: auto;
     width: 100%;
+    /* A grade tem 640 px de largura. Num ecrã de 320 o motor só consegue um
+       pixel de dispositivo por pixel da grade — meio pixel CSS — e a cena
+       fica a metade do tamanho desenhado. O palco mantém os 640 e o que
+       sobra sai pelos lados: .hero-scene corta, e o motor já centra a cena
+       em cx = 640/2, por isso é a secretária que fica no meio. */
+    min-width: 640px;
+    margin-inline-start: min(0px, calc((100% - 640px) / 2));
     height: min(78svh, 100vw * 1.05);
   }
 }
