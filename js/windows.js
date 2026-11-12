@@ -50,9 +50,14 @@ export function initWindows() {
 }
 
 /* ---------- Arrastar as janelas pela barra de título ----------
-   Só com rato/caneta (pointer: fine): no toque a barra continua a deixar rolar
-   a página. A barra nunca sai do ecrã. A janela agarrada passa para a frente
-   das outras e fica lá.
+   Com rato ou caneta pega-se logo. No toque é preciso manter o dedo na barra
+   meio segundo: a janela levanta e passa a seguir o dedo. Sem isso as janelas
+   do telemóvel sobrepunham-se sem remédio — a dica e a engrenagem tapam o
+   painel do hero e não havia como as afastar. O limiar existe para não roubar
+   o scroll: se o dedo andar mais de 10 px antes de o tempo passar, desiste-se
+   e a página rola como sempre. Duplo toque ficou de fora de propósito — é o
+   gesto de zoom do sistema. A barra nunca sai do ecrã. A janela agarrada
+   passa para a frente das outras e fica lá.
    - Janelas no fluxo (as das secções): o vertical anda com margin-top, por isso
      a página cresce ou encolhe com o espaço que as janelas ocupam; o
      horizontal anda com `translate`.
@@ -60,6 +65,10 @@ export function initWindows() {
      hero, por serem absolutas sem corte, também alargam a página se descerem.
    Maximizar (ou fechar um modal) devolve a janela ao lugar. */
 let topZ = 43;
+/* Toque longo: meio segundo é o que o sistema usa para "pegar" num ícone, e
+   10 px de folga chegam para o tremor do dedo sem apanhar um scroll. */
+const HOLD_MS = 450;
+const HOLD_SLOP = 10;
 const reset = (win) => {
   win.style.translate = "";
   if (win.dataset.baseMt !== undefined) win.style.marginTop = "";
@@ -76,22 +85,55 @@ function initDrag() {
     bar.addEventListener("pointerenter", () => { if (fine.matches) cursor()?.classList.add("hover"); });
     bar.addEventListener("pointerleave", () => { if (!start) cursor()?.classList.remove("hover"); });
     let start = null;
-    bar.addEventListener("pointerdown", (e) => {
-      if (!fine.matches || e.button !== 0) return;
-      if (e.target.closest("button, a, input, select, textarea")) return;
-      if (win.classList.contains("is-maximized")) return;
+    let hold = null;   // temporizador do toque longo
+    let armed = null;  // onde o dedo pousou, enquanto se espera
+
+    /* Pegar na janela: comum ao rato (imediato) e ao toque (após o limiar) */
+    const grab = (e) => {
       const pos = getComputedStyle(win).position;
       const flow = pos === "static" || pos === "relative";
       if (flow && win.dataset.baseMt === undefined) win.dataset.baseMt = parseFloat(getComputedStyle(win).marginTop) || 0;
       start = { x: e.clientX, y: e.clientY, dx: +win.dataset.dx || 0, dy: +win.dataset.dy || 0, flow, bar: bar.getBoundingClientRect() };
       win.classList.add("is-dragging", "is-moved");
       win.style.zIndex = String(++topZ);
-      bar.setPointerCapture(e.pointerId);
+      try { bar.setPointerCapture(e.pointerId); } catch { /* o ponteiro já saiu */ }
       cursor()?.classList.add("dragging");
+    };
+
+    const disarm = () => { clearTimeout(hold); hold = null; armed = null; bar.classList.remove("is-holding"); };
+
+    bar.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      if (e.target.closest("button, a, input, select, textarea")) return;
+      if (win.classList.contains("is-maximized")) return;
+
+      if (e.pointerType === "touch") {
+        /* Nada de preventDefault aqui: até o limiar passar, o gesto ainda pode
+           ser um scroll e a página tem de poder ficar com ele. */
+        armed = { x: e.clientX, y: e.clientY, id: e.pointerId };
+        bar.classList.add("is-holding");
+        hold = setTimeout(() => {
+          hold = null;
+          if (!armed) return;
+          const a = armed; armed = null;
+          bar.classList.remove("is-holding");
+          grab({ clientX: a.x, clientY: a.y, pointerId: a.id });
+        }, HOLD_MS);
+        return;
+      }
+
+      if (!fine.matches) return;
+      grab(e);
       e.preventDefault();
     });
     bar.addEventListener("pointermove", (e) => {
+      if (armed) {
+        /* O dedo andou antes do tempo: é scroll, não é arrastar. */
+        if (Math.hypot(e.clientX - armed.x, e.clientY - armed.y) > HOLD_SLOP) disarm();
+        return;
+      }
       if (!start) return;
+      if (e.cancelable) e.preventDefault();
       let mx = e.clientX - start.x, my = e.clientY - start.y;
       const b = start.bar, m = 40;
       mx = Math.min(Math.max(mx, m - b.right), innerWidth - m - b.left);
@@ -106,6 +148,7 @@ function initDrag() {
       }
     });
     const end = () => {
+      disarm();
       if (!start) return;
       start = null;
       win.classList.remove("is-dragging");

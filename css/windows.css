@@ -550,6 +550,21 @@ body {
 @media (pointer: fine) {
   .is-draggable { user-select: none; }
 }
+
+/* No toque a barra é uma pega: o dedo pode ficar lá meio segundo sem que o
+   sistema ofereça seleção de texto ou o menu de contexto, e sem que a página
+   role por baixo. A barra tem 40 px — o resto da janela rola como sempre. */
+@media (pointer: coarse) {
+  .is-draggable {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+  /* Enquanto o dedo espera, a barra afunda um pixel: diz que algo vai
+     acontecer sem prometer nada se a pessoa levantar o dedo antes. */
+  .is-draggable.is-holding { translate: 0 1px; }
+}
 /* Uma janela que já foi arrastada fica com o z-index que o JS lhe deu (por
    cima das outras); as das secções são static e precisam de position para
    ele valer */
