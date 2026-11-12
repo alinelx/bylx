@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O teu Wrapped do mês</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+  :root{--ink:#15111F;--paper:#F5F0E6;--lime:#D7F75B;--lilac:#B9A6FF;--muted:#CFC7DA;--line:#3A3247}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ink);color:var(--paper);font-family:Inter,system-ui,sans-serif;line-height:1.5}
+  main{max-width:620px;margin:0 auto;padding:48px 20px 80px}
+  .eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--lime)}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(40px,9vw,64px);line-height:.98;letter-spacing:-.03em;margin:12px 0 16px}
+  h2{font-family:"Space Grotesk",sans-serif;font-size:26px;margin:0 0 6px}
+  p.lead{font-size:19px;color:var(--muted);margin:0 0 32px}
+  .card{background:#1E1830;border:1px solid var(--line);border-radius:24px;padding:24px;margin-bottom:20px}
+  fieldset{border:0;padding:0;margin:0 0 24px}
+  legend{font-weight:600;font-size:17px;margin-bottom:10px}
+  .hint{font-size:14px;color:var(--muted);margin:-6px 0 10px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips label{position:relative}
+  .chips input{position:absolute;opacity:0;inset:0;cursor:pointer}
+  .chips span{display:inline-block;padding:10px 16px;min-height:44px;border:2px solid var(--line);border-radius:999px;font-size:15px}
+  .chips input:checked + span{background:var(--lime);color:var(--ink);border-color:var(--lime);font-weight:600}
+  .chips input:focus-visible + span{outline:3px solid var(--lilac);outline-offset:2px}
+  label.field{display:block;font-weight:600;margin-bottom:6px}
+  input[type=email],textarea{width:100%;padding:14px;border-radius:14px;border:2px solid var(--line);background:var(--ink);color:var(--paper);font:inherit}
+  input[type=email]:focus,textarea:focus{outline:none;border-color:var(--lilac)}
+  .consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted);margin:14px 0 20px}
+  .consent input{width:20px;height:20px;margin-top:2px;accent-color:var(--lime)}
+  button{font:inherit;font-weight:700;font-size:18px;border:0;border-radius:16px;padding:16px 22px;min-height:52px;cursor:pointer;background:var(--lime);color:var(--ink);width:100%}
+  button.secondary{background:var(--lilac);width:auto}
+  .err{color:#FFB4A3;font-size:15px;min-height:1.2em;margin-top:10px}
+  pre{white-space:pre-wrap;word-wrap:break-word;background:var(--ink);border:1px solid var(--line);border-radius:14px;padding:16px;font-size:14px;max-height:420px;overflow:auto;color:var(--paper)}
+  .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
+  .small{font-size:13px;color:var(--muted)}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Wrapped do mês · grátis</div>
+  <h1>O teu mês, em números.</h1>
+  <p class="lead">Responde a 5 perguntas rápidas e recebe o prompt que eu usei para a IA fazer a minha retrospectiva de outubro. Funciona no Claude ou no ChatGPT.</p>
+
+  <form id="f" class="card" novalidate>
+    <fieldset>
+      <legend>1. Que números da tua vida gostavas de ver?</legend>
+      <p class="hint">Escolhe todos os que quiseres.</p>
+      <div class="chips" id="q1">
+        <label><input type="checkbox" name="numeros" value="passos e sono"><span>Passos e sono</span></label>
+        <label><input type="checkbox" name="numeros" value="musica"><span>Música</span></label>
+        <label><input type="checkbox" name="numeros" value="series e filmes"><span>Séries e filmes</span></label>
+        <label><input type="checkbox" name="numeros" value="livros"><span>Livros</span></label>
+        <label><input type="checkbox" name="numeros" value="tempo de ecra"><span>Tempo de ecrã</span></label>
+        <label><input type="checkbox" name="numeros" value="sitios visitados"><span>Sítios visitados</span></label>
+        <label><input type="checkbox" name="numeros" value="jantares fora"><span>Jantares fora</span></label>
+        <label><input type="checkbox" name="numeros" value="pessoas com quem estive"><span>Pessoas com quem estive</span></label>
+        <label><input type="checkbox" name="numeros" value="humor"><span>Humor / como me senti</span></label>
+        <label><input type="checkbox" name="numeros" value="gastos"><span>Onde gastei dinheiro</span></label>
+        <label><input type="checkbox" name="numeros" value="fotos"><span>Fotos tiradas</span></label>
+        <label><input type="checkbox" name="numeros" value="seguidores"><span>Seguidores</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. De quanto em quanto tempo queres a retrospectiva?</legend>
+      <div class="chips">
+        <label><input type="radio" name="frequencia" value="diaria"><span>Todos os dias</span></label>
+        <label><input type="radio" name="frequencia" value="semanal"><span>Semanal</span></label>
+        <label><input type="radio" name="frequencia" value="mensal"><span>Mensal</span></label>
+        <label><input type="radio" name="frequencia" value="anual"><span>Só no fim do ano</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Já usaste um diário ou app de hábitos?</legend>
+      <div class="chips">
+        <label><input type="radio" name="historico" value="desisti em dias"><span>Sim, desisti em dias</span></label>
+        <label><input type="radio" name="historico" value="desisti em semanas"><span>Sim, desisti em semanas</span></label>
+        <label><input type="radio" name="historico" value="ainda uso"><span>Ainda uso</span></label>
+        <label><input type="radio" name="historico" value="nunca"><span>Nunca usei</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. Se existisse uma app que fizesse isto sozinha, pagarias?</legend>
+      <div class="chips">
+        <label><input type="radio" name="preco" value="nao"><span>Só se fosse grátis</span></label>
+        <label><input type="radio" name="preco" value="ate 2"><span>Até 2 €/mês</span></label>
+        <label><input type="radio" name="preco" value="2 a 5"><span>2 a 5 €/mês</span></label>
+        <label><input type="radio" name="preco" value="mais de 5"><span>Mais de 5 €/mês</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>5. Que telemóvel usas?</legend>
+      <div class="chips">
+        <label><input type="radio" name="telemovel" value="iphone"><span>iPhone</span></label>
+        <label><input type="radio" name="telemovel" value="android"><span>Android</span></label>
+      </div>
+    </fieldset>
+
+    <label class="field" for="email">O teu email</label>
+    <input type="email" id="email" name="email" autocomplete="email" placeholder="nome@exemplo.com" required>
+    <label class="consent"><input type="checkbox" id="consent" name="consentimento" value="sim"> <span>Aceito receber o prompt e novidades sobre a app por email. Posso cancelar quando quiser e os meus dados não são partilhados.</span></label>
+
+    <button type="submit">Quero o meu prompt</button>
+    <div class="err" id="err" role="alert"></div>
+  </form>
+
+  <section class="card" id="result" hidden aria-live="polite">
+    <h2>Aqui está o teu prompt</h2>
+    <p class="small">Copia, cola no Claude ou no ChatGPT e segue as instruções. Se a IA tiver acesso ao teu calendário ou Drive, ela usa-os sozinha; se não, pede-te capturas de ecrã.</p>
+    <pre id="prompt"></pre>
+    <div class="row">
+      <button class="secondary" type="button" id="copy">Copiar prompt</button>
+      <span class="small" id="copied" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <p class="small">Feito por bylx. Não guardamos nada do que colas na IA — o prompt corre na tua conta.</p>
+</main>
+
+<script>
+// Cola aqui o URL da Web App do Google Apps Script (termina em /exec).
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3PcWDrfJB_ltdPXFrrY6h3scKPgeU_RgQ_d51kqIdK9vB53pnggaxAECW5Ne-HWvX/exec";
+
+const PROMPT = `Quero que faças a minha retrospectiva do mês de [MÊS], ao estilo do Spotify Wrapped.
+
+1. RECOLHA
+- Se tiveres acesso ao meu calendário, Drive, email ou histórico de conversas, usa-os. Diz-me primeiro que fontes conseguiste ler.
+- Se não tiveres, pede-me (uma de cada vez): captura do tempo de ecrã, captura dos passos/saúde, as minhas músicas mais ouvidas, fotos do mês (só a quantidade e os sítios), e qualquer nota que eu queira acrescentar.
+- Não inventes números. Se um dado faltar, salta esse cartão.
+
+2. PRIVACIDADE
+- Deixa de fora saúde, dinheiro, assuntos legais e nomes de outras pessoas, a não ser que eu peça.
+
+3. CARTÕES (6 a 8, formato stories 9:16)
+Para cada cartão dá-me: título curto, o número grande, uma frase com humor e a fonte do número.
+Ideias: total de coisas feitas, o dia mais intenso, a semana mais calma, o dia da semana favorito, a noite mais criativa, a pessoa/sítio/tema mais frequente, algo que comecei e algo que acabei.
+
+4. FECHO
+- Dá-me um "arquétipo do mês" com nome criativo e uma frase que me descreva.
+- Termina com 1 coisa para repetir e 1 coisa para mudar no próximo mês.
+
+Se puderes, desenha os cartões como imagem ou página. Escreve em português.`;
+
+const f = document.getElementById('f');
+const err = document.getElementById('err');
+document.getElementById('prompt').textContent = PROMPT;
+
+f.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  err.textContent = '';
+  const email = f.email.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Escreve um email válido.'; f.email.focus(); return; }
+  if (!document.getElementById('consent').checked) { err.textContent = 'Precisas de aceitar para receber o prompt por email.'; return; }
+  const data = new URLSearchParams();
+  data.append('email', email);
+  data.append('numeros', [...f.querySelectorAll('input[name=numeros]:checked')].map(i => i.value).join(', '));
+  ['frequencia','historico','preco','telemovel'].forEach(n => {
+    const c = f.querySelector('input[name=' + n + ']:checked');
+    data.append(n, c ? c.value : '');
+  });
+  data.append('consentimento', 'sim');
+  data.append('origem', new URLSearchParams(location.search).get('utm_source') || 'direto');
+  const btn = f.querySelector('button[type=submit]');
+  btn.disabled = true; btn.textContent = 'A enviar...';
+  try {
+    if (SCRIPT_URL) await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
+  } catch (_) { /* mostra o prompt na mesma */ }
+  f.hidden = true;
+  const r = document.getElementById('result');
+  r.hidden = false;
+  r.scrollIntoView({ behavior: 'smooth' });
+});
+
+document.getElementById('copy').addEventListener('click', async () => {
+  const msg = document.getElementById('copied');
+  try { await navigator.clipboard.writeText(PROMPT); msg.textContent = 'Copiado!'; }
+  catch (_) { msg.textContent = 'Seleciona o texto acima e copia à mão.'; }
+});
+</script>
+</body>
+</html>
