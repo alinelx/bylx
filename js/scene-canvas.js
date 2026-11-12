@@ -13,7 +13,7 @@
    leitor de ecrã não sabem que o desenho mudou de técnica.
 *:･ﾟ✧*:･ﾟ✧*:･ﾟ✧*:･ﾟ✧ */
 
-import { prefersReducedMotion } from "./utils.js?v=842a5994";
+import { prefersReducedMotion } from "./utils.js?v=cfaa29f0";
 
 /* O contorno de "seleccionado" dos jogos: ciano no dark, rosa no light */
 const OUTLINE = { dark: "#59f3ff", light: "#ff5dbb" };

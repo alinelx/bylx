@@ -3,25 +3,25 @@
    Import and initialise every feature module.
    ============================================================ */
 
-import { initParallax }                             from "./js/parallax.js?v=842a5994";
-import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=842a5994";
-import { initModals }                               from "./js/modals.js?v=842a5994";
-import { initDeeplink }                            from "./js/deeplink.js?v=842a5994";
-import { initGalleryViewer }                        from "./js/gallery.js?v=842a5994";
-import { initGalleryProjects }                     from "./js/gallery-projects.js?v=842a5994";
-import { initContactForm }                          from "./js/contact.js?v=842a5994";
-import { initFeedbackForm }                        from "./js/feedback.js?v=842a5994";
-import { initAudio }                                from "./js/audio.js?v=842a5994";
-import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=842a5994";
-import { initPixelFit }                          from "./js/pixelfit.js?v=842a5994";
-import { initDesktop }                              from "./js/desktop.js?v=842a5994";
-import { initProjectsFilter } from "./js/projects-filter.js?v=842a5994";
-import { initSceneCanvas }                          from "./js/scene-canvas.js?v=842a5994";
-import { initI18n }                                 from "./js/i18n.js?v=842a5994";
-import { initSettings }                             from "./js/settings.js?v=842a5994";
-import { initWindows }                              from "./js/windows.js?v=842a5994";
-import { initThemeToggle, currentTheme, initBitToggle, bitMode } from "./js/theme.js?v=842a5994";
-import { themeImages }                              from "./js/themed-img.js?v=842a5994";
+import { initParallax }                             from "./js/parallax.js?v=cfaa29f0";
+import { initCursor, initSakuraTrail }              from "./js/cursor.js?v=cfaa29f0";
+import { initModals }                               from "./js/modals.js?v=cfaa29f0";
+import { initDeeplink }                            from "./js/deeplink.js?v=cfaa29f0";
+import { initGalleryViewer }                        from "./js/gallery.js?v=cfaa29f0";
+import { initGalleryProjects }                     from "./js/gallery-projects.js?v=cfaa29f0";
+import { initContactForm }                          from "./js/contact.js?v=cfaa29f0";
+import { initFeedbackForm }                        from "./js/feedback.js?v=cfaa29f0";
+import { initAudio }                                from "./js/audio.js?v=cfaa29f0";
+import { initMouseFlee, initKeyboardRgb, initTechPopovers, initDeskHint } from "./js/interactions.js?v=cfaa29f0";
+import { initPixelFit }                          from "./js/pixelfit.js?v=cfaa29f0";
+import { initDesktop }                              from "./js/desktop.js?v=cfaa29f0";
+import { initProjectsFilter } from "./js/projects-filter.js?v=cfaa29f0";
+import { initSceneCanvas }                          from "./js/scene-canvas.js?v=cfaa29f0";
+import { initI18n }                                 from "./js/i18n.js?v=cfaa29f0";
+import { initSettings }                             from "./js/settings.js?v=cfaa29f0";
+import { initWindows }                              from "./js/windows.js?v=cfaa29f0";
+import { initThemeToggle, currentTheme, initBitToggle, bitMode } from "./js/theme.js?v=cfaa29f0";
+import { themeImages }                              from "./js/themed-img.js?v=cfaa29f0";
 
 /* Each module is independent, and a throw in one used to take every module
    after it down with it — silently, since nothing here catches. */

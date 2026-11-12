@@ -551,6 +551,14 @@ body {
   .is-draggable { user-select: none; }
 }
 
+/* A linha da dica que só é verdade no toque. Fica antes do @media de
+   propósito: tem a mesma especificidade que a regra de lá, e declarada
+   depois escondia a dica também no telemóvel. Cada <p> da dica traz a sua
+   própria almofada (.os-tip p), por isso o segundo não leva a de cima —
+   dois seguidos abriam o dobro do espaço. */
+.hint-touch { display: none; }
+.os-tip p.hint-touch { margin: 0; padding-top: 0; }
+
 /* No toque a barra é uma pega: o dedo pode ficar lá meio segundo sem que o
    sistema ofereça seleção de texto ou o menu de contexto, e sem que a página
    role por baixo. A barra tem 40 px — o resto da janela rola como sempre. */
@@ -564,6 +572,10 @@ body {
   /* Enquanto o dedo espera, a barra afunda um pixel: diz que algo vai
      acontecer sem prometer nada se a pessoa levantar o dedo antes. */
   .is-draggable.is-holding { translate: 0 1px; }
+
+  /* Pegar numa janela com o dedo não se descobre sozinho: a dica diz-o, e só
+     onde a frase é verdade. No rato a barra já mostra a mão aberta. */
+  .hint-touch { display: block; }
 }
 /* Uma janela que já foi arrastada fica com o z-index que o JS lhe deu (por
    cima das outras); as das secções são static e precisam de position para

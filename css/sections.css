@@ -88,6 +88,18 @@
   padding-top: 0.25rem;
 }
 
+/* A fila de etiquetas do estudo de caso não tinha regra nenhuma: os <span>
+   ficavam inline, e a altura de uma linha inline ignora o padding e a borda
+   verticais. No telemóvel, onde as etiquetas passam a duas linhas, as caixas
+   montavam umas em cima das outras. É a mesma fila do cartão. */
+.cs-meta {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 1.25rem;
+}
+
 .card-status {
   font-family: var(--font-ui);
   font-size: var(--fs-label);

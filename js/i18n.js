@@ -27,6 +27,7 @@ const PT = {
   "I build web things that make you feel something. Pixel art, vanilla code, and AI-assisted workflows.": "Faço coisas para a web que fazem sentir alguma coisa. Pixel art, código simples e fluxos de trabalho com IA.",
   "See the work": "Ver o trabalho",
   "Try clicking the desk — the objects work.": "Experimenta clicar na secretária — os objetos funcionam.",
+  "Hold a title bar to move a window.": "Segura numa barra de título para mover a janela.",
   "Projects": "Projetos",
   "All": "Todos", "Product": "Produto", "Client": "Cliente", "Tool": "Ferramenta",
   "LIVE": "NO AR", "OPEN SOURCE": "CÓDIGO ABERTO", "SHIPPED": "LANÇADO", "CLIENT WORK": "PARA CLIENTE",
