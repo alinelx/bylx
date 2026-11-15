@@ -19,7 +19,28 @@
 
 const HOME = "/";
 
+/* O feedback não é uma case study — não tem slug nem página gerada — mas
+   precisava de um endereço para pôr num post ou no fim de uma candidatura.
+   O .htaccess serve a home em /feedback e isto abre lá a janela. Fica aqui
+   porque este é o único módulo que fala as duas línguas, rotas e modais. */
+function initFeedbackRoute() {
+  const modal = document.getElementById("feedback-modal");
+  if (!modal) return;
+  const onFeedbackPath = () => /^\/feedback\/?$/i.test(location.pathname);
+
+  modal.addEventListener("bylx:modal-close", () => {
+    /* Só reescreve se o endereço ainda for este: fechar a janela não pode
+       apagar um /work/<slug>/ que alguém tenha aberto por cima. */
+    if (onFeedbackPath()) history.replaceState({}, "", "/");
+  });
+
+  if (!onFeedbackPath()) return;
+  document.dispatchEvent(new CustomEvent("bylx:open-modal", { detail: { id: modal.id } }));
+}
+
 export function initDeeplink() {
+  initFeedbackRoute();
+
   const modals = [...document.querySelectorAll(".modal[data-work-slug]")];
   if (!modals.length || !window.history?.pushState) return;
 

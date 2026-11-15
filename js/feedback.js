@@ -20,6 +20,18 @@ export function initFeedbackForm() {
   const form = document.getElementById("feedback-form");
   if (!form) return;
   const status = document.getElementById("feedback-status");
+  const intro = document.querySelector(".feedback-intro");
+
+  /* Uma janela fechada e reaberta tem de voltar ao princípio: sem isto, quem
+     enviasse uma vez encontrava a janela vazia para sempre. */
+  form.closest(".modal")?.addEventListener("bylx:modal-open", () => {
+    if (!form.hidden) return;
+    form.hidden = false;
+    intro?.removeAttribute("hidden");
+    form.reset();
+    status.textContent = "";
+    status.dataset.state = "";
+  });
   const submit = form.querySelector('button[type="submit"]');
   const label = submit.textContent;
 
@@ -76,7 +88,9 @@ export function initFeedbackForm() {
       const json = await res.json().catch(() => ({}));
       if (!res.ok || !json.ok) throw new Error(json.error || "send_failed");
       form.hidden = true;
-      say("> thank you — that is exactly what I needed ✓", "success");
+      /* A intro convida a responder: depois de respondido já não é verdade. */
+      document.querySelector(".feedback-intro")?.setAttribute("hidden", "");
+      say("> thank you — that is exactly what I needed ✓\nYou can close this window.", "success");
     } catch (error) {
       say("> transmission failed ✗ try again or email geral@bylx.dev", "error");
       console.error("[bylx] feedback failed", error);

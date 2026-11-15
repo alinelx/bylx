@@ -56,6 +56,12 @@ FileETag MTime Size
   # redirects rather than 404s — a renamed URL that dies throws away whatever
   # the old one earned.
   RewriteRule ^arcade/purikura/?$ /arcade/cutegal/ [R=301,L]
+
+  # /feedback é um endereço para partilhar, não uma página à parte: serve a
+  # home sem mexer na barra de endereço, e o js/deeplink.js abre a janela do
+  # feedback ao ver este caminho. Uma cópia do formulário numa página própria
+  # eram dois sítios a manter com as mesmas seis perguntas.
+  RewriteRule ^feedback/?$ /index.html [L]
 </IfModule>
 
 # 404.html existed but nothing pointed Apache at it, so Apache served its own
